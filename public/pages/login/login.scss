@@ -1,0 +1,134 @@
+$color_mail: #008079;
+
+*{
+    font-family: Helvetica, Arial, san-serif
+}
+
+.login_window{
+    display: flex;
+    flex-direction: column;
+    margin: 136px auto auto auto;
+    padding: 12px 24px 0px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    width: 360px;
+    height: 400px;
+    .login_window_div_title{
+        width: 100%;
+        // height: 40px;
+        display: flex;
+        flex-direction: row;
+        font-weight: bold;
+        font-size: xx-large;
+        justify-content: center;
+        .login_window_title{
+            position: absolute;
+        }
+        .login_window_title_pic{
+            margin-left: auto; 
+            margin-right: 0px;
+        }
+        
+    }
+    .login_window_form{
+        margin-top: 24px; 
+    }
+
+    .form_window{
+        margin: 8px 0px 8px 0px;
+        height: 32px;
+        padding-left: 8px;
+        font-weight: bolder;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .input_div_pass, .input_div_login{
+        display: flex;
+        flex-direction: row;
+        position: relative;
+    }
+
+    .login_window_pic{
+        position: absolute;
+        right: 12px;
+        top: 20px
+    }
+
+    .forgot_pass{
+        display: flex;
+        flex-direction: row;
+        margin-top: 4px;
+        .checkbox:checked{
+            background: $color_mail;
+        }
+        a{
+            margin-left: auto;
+            text-decoration: none;
+        }
+    }
+    .sign_in{
+        text-align: center;
+        margin-top: 16px; 
+        input{
+            font-weight: bolder;
+            font-size: 16px;
+            background-color: $color_mail;
+            color: white;
+            border-radius: 4px;
+            height: 40px;
+            width: 160px;
+        }
+    }
+    .sign_in_continue{
+        color: gray;
+        text-align: center;
+        font-size: 12px;
+        margin-top: 12px;
+    }
+    .sign_in_with_soc{
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+        a{
+            
+            margin: 0px 4px 0px 4px;
+            
+        }
+        .sign_in_socblock_1{
+            border: 1px solid #4a76a8;
+            height: 40px;
+            width: 28px;
+            border-radius: 4px;
+            text-align: center;
+            align-content: center;
+            background-color: #4a76a8;
+            fill: white;
+            svg{
+                margin: 12px 0px 0px 0px;
+            }
+        }
+        .sign_in_socblock_2{
+            @extend .sign_in_socblock_1;
+            border: 1px solid #3b5898;
+            background-color: #3b5898;
+        }
+        .sign_in_socblock_3{
+            @extend .sign_in_socblock_1;
+            border: 1px solid #ea8008;
+            background-color: #ea8008;
+        }
+    }
+    .sign_in_bottom{
+        position: relative;
+        border-top: 1px solid #e0e0e0;
+        margin: 24px -24px 0px -12px;
+        padding-top: 16px;
+        text-align: center;
+        align-content: center;
+        a{
+            text-decoration: none;
+        }
+    }
+
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="login.css">
+    <script src="login.js"></script>
+</head>
+<body>
+    
+    <div class="login_window">
+        <div class="login_window_div_title">
+            <div class="login_window_title">Войти</div>
+            <div class="login_window_title_pic">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M6.586 8L4.293 5.707a.999.999 0 1 1 1.414-1.414L8 6.586l2.293-2.293a1 1 0 0 1 1.414 1.414L9.414 8l2.293 2.293a1 1 0 0 1-1.414 1.414L8 9.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L6.586 8z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="login_window_form">
+            <form action="#" method="POST">
+                <div class="login_window_div_in_form">
+                    <div class="input_div_login">
+                        <input type="text" class="login_window_phone form_window" placeholder="Телефон и электронная почта">
+                    </div>
+                    <div class="input_div_pass">
+                        <input class="form_window" type="password" placeholder="Пароль">
+                        <div class="login_window_pic">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.488c-5.302 0-8 5.21-8 6.512 0 1.302 2.791 6.512 8 6.512S16 9.302 16 8c0-1.302-2.698-6.512-8-6.512zm0 10.233A3.731 3.731 0 0 1 4.279 8 3.731 3.731 0 0 1 8 4.279 3.731 3.731 0 0 1 11.721 8 3.731 3.731 0 0 1 8 11.721zM8 6c1.143 0 2 .953 2 2 0 1.143-.952 2-2 2-1.143 0-2-.952-2-2 0-1.142.857-2 2-2z"/>
+                            </svg>  
+                        </div>
+                    </div>
+                    <div class="forgot_pass">
+                        <input class="checkbox" type="checkbox" checked="checked">
+                        <span class="checkbox_icon"></span>
+                        <div class="forgot_pass_checkbox_text">Запомнить пароль</div>
+                        <a href="">Забыли пароль?</a>
+                    </div>
+                    <div class="sign_in"><input type="submit" value="Войти"></div>
+                    <div class="sign_in_continue">или продолжить через</div>
+                    <div class="sign_in_with_soc">
+                        <a href="#" class="sign_in_socblock_1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15.623 3.901c.119-.373 0-.644-.525-.644h-1.745c-.441 0-.644.238-.763.492 0 0-.898 2.169-2.152 3.575-.406.407-.593.542-.813.542-.119 0-.271-.135-.271-.508V3.884c0-.44-.136-.644-.509-.644H6.1c-.271 0-.44.204-.44.407 0 .424.627.525.694 1.712v2.575c0 .559-.101.661-.322.661-.593 0-2.033-2.186-2.897-4.677-.17-.491-.339-.678-.78-.678H.593c-.508 0-.593.238-.593.492 0 .457.593 2.762 2.762 5.812 1.44 2.084 3.491 3.203 5.338 3.203 1.118 0 1.254-.255 1.254-.678v-1.576c0-.508.101-.593.457-.593.254 0 .712.135 1.746 1.135 1.186 1.186 1.389 1.729 2.05 1.729h1.745c.509 0 .746-.255.61-.746-.152-.491-.728-1.203-1.474-2.05-.407-.475-1.017-1-1.203-1.254-.254-.339-.186-.475 0-.78-.017 0 2.118-3.016 2.338-4.033"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="sign_in_socblock_2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.614 8.147h2.097s.217-.663.289-1.62v-.148.074-.368H8.542v-2.36c0-.22.362-.59.65-.59h1.519V1H9.41C6.663 1 6.446 3.505 6.446 3.874v2.284H5v2.21h1.446V15h2.168V8.147z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="sign_in_socblock_3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 8.262c1.999 0 3.584-1.606 3.584-3.631C11.584 2.676 9.999 1 8 1S4.416 2.606 4.416 4.63c0 2.026 1.585 3.632 3.584 3.632zm0-5.097c.827 0 1.516.698 1.516 1.466 0 .838-.689 1.466-1.516 1.466-.827 0-1.516-.698-1.516-1.466S7.173 3.165 8 3.165zm1.447 8.03l2.137 2.024a1.022 1.022 0 0 1 0 1.467 1.072 1.072 0 0 1-1.516 0l-2-1.955-1.998 1.955c-.207.21-.482.28-.758.28s-.551-.07-.758-.28a1.022 1.022 0 0 1 0-1.467l1.999-2.024c-.69-.14-1.448-.42-2.068-.838-.482-.35-.62-.978-.344-1.467.275-.489.964-.628 1.447-.349 1.447.908 3.377.908 4.824 0 .483-.28 1.172-.14 1.447.35.276.488.138 1.186-.344 1.466-.62.419-1.31.698-2.068.838z"/>
+                            </svg>
+                        </a>
+                        
+                    </div>
+                    <div class="sign_in_bottom">
+                            <a href="#">Зарегистрироваться</a>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>
