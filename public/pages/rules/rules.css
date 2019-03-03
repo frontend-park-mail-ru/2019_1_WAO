@@ -1,0 +1,73 @@
+body {
+	font-family: Helvetica, Arial, san-serif;
+	font-size: 20px;
+}
+
+.container {
+	background-color: none;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #DFDFDF;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 20px 15% auto 15%;
+	text-align: center;
+
+	display: grid;
+	grid-template-rows: auto;
+	grid-row-gap: 30px;
+	grid-template-areas: 
+		"r0"
+		"r1"
+		"r2"
+		"r3"
+		"r4"
+		"r5"
+		"r6"
+		"r7"
+		"r8";
+}
+
+
+.rule {
+
+}
+
+.r0 {
+	font-size: 24px;
+	border-bottom: 1px solid #E0E0E0;
+}
+
+.r1 {
+	grid-area: r1;
+}
+
+.r2 {
+	grid-area: r2;
+}
+
+.r3 {
+	grid-area: r3;
+}
+
+.r4 {
+	grid-area: r4;
+}
+
+.r5 {
+	grid-area: r5;
+}
+
+.r6 {
+	grid-area: r6;
+}
+
+.r7 {
+	grid-area: r7;
+}
+
+.r8 {
+	grid-area: r8;
+}
+
+

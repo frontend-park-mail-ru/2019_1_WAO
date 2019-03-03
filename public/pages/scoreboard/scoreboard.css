@@ -1,0 +1,127 @@
+body {
+	font-family: Helvetica, Arial, san-serif;
+	font-size: 16px;
+}
+
+.container {
+	background-color: none;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 20px 15% auto 15%;
+	text-align: center;
+
+	display: grid;
+	grid-template-rows: 150px auto;
+	grid-row-gap: 50px;
+}
+
+
+.header {
+	background-color: #E1E1E1;
+	border-radius: 10px;
+	padding: 10px;
+
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	grid-template-rows: auto;
+	grid-template-areas: 
+		"user_data score_data";
+
+}
+
+.user_data {
+	grid-area: "user_data";
+
+	display: grid;
+	grid-template-rows: 80% 20%;
+	grid-template-areas: 
+		"user_img"
+		"user_name";
+	justify-content: center;
+}
+
+.img {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+}
+
+.user_img {
+	grid-area: "user_img";
+}
+
+.user_name {
+	grid-area: "user_name";
+}
+
+.score_data {
+	grid-area: score_data;
+	padding-right: 50px;
+	text-align: right;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-template-areas: 
+		"score_data_1"
+		"score_data_2"
+		"score_data_3";
+
+}
+
+.score_data_1 {
+	grid-area: "score_data_1";
+}
+
+.score_data_2 {
+	grid-area: "score_data_2";
+}
+
+.score_data_3 {
+	grid-area: "score_data_3";
+}
+
+.table {
+	background-color: #E1E1E1;;
+	border-radius: 10px;
+	padding: 10px;
+
+	display: grid;
+	grid-gap: 10px;
+	grid-template-rows: repeat(10, 1fr);
+}
+
+.table-row {
+	display: grid;
+	grid-template-columns: 1fr 4fr 2fr 2fr;
+	grid-gap: 10px;
+	grid-template-areas: 
+		"column_1 column_2 column_3 column_4"
+}
+
+.col {
+	padding: 20px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #A1A1A1;
+	background-color: none;
+	border-radius: 10px;
+}
+
+.col_head {
+	background-color: #71A1A1;
+}
+
+.column_1 {
+	grid-area: column_1;
+}
+
+.column_2 {
+	grid-area: column_2;
+}
+
+.column_3 {
+	grid-area: column_3;
+}
+
+.column_4 {
+	grid-area: column_4;
+}
