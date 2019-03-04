@@ -11,10 +11,20 @@ body {
 	text-align: center;
 
 	display: grid;
-	grid-template-rows: 150px auto;
-	grid-row-gap: 50px;
+	grid-template-rows: 40px 150px auto;
+	grid-row-gap: 30px;
 }
 
+.menu_btn {
+	background-color: #A1A1A1;
+	border-radius: 10px;
+	padding: 10px;
+	font-style: bold;
+}
+
+.menu_btn:hover {
+	background-color: #919191;
+}
 
 .header {
 	background-color: #E1E1E1;
@@ -80,7 +90,7 @@ body {
 }
 
 .table {
-	background-color: #E1E1E1;;
+	background-color: #E1E1E1;
 	border-radius: 10px;
 	padding: 10px;
 
@@ -95,6 +105,10 @@ body {
 	grid-gap: 10px;
 	grid-template-areas: 
 		"column_1 column_2 column_3 column_4"
+}
+
+.table-row:hover {	
+	background-color: #EFEFEF;
 }
 
 .col {
