@@ -11,19 +11,8 @@ body {
 	text-align: center;
 
 	display: grid;
-	grid-template-rows: 40px 150px auto;
+	grid-template-rows: 150px auto;
 	grid-row-gap: 30px;
-}
-
-.menu_btn {
-	background-color: #A1A1A1;
-	border-radius: 10px;
-	padding: 10px;
-	font-style: bold;
-}
-
-.menu_btn:hover {
-	background-color: #919191;
 }
 
 .header {
