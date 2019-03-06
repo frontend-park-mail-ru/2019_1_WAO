@@ -9,6 +9,21 @@
     <script src="registration.js"></script>
 </head>
 <body>
-    .registration_container>.registration_title+.registration_body>form>(.registration_inscription_name+input[type="text" placeholder="Имя"].registration_input_name+.registration_input_name_bottom+input[type="text" placeholder="Фамилия"].registration_input_lastname+.registration_input_birthday_divblock>input[type="day" placeholder="Дата"].registration_input_birthday_day+input[type="month" placeholder="Месяц"].registration_input_birthday_month+input[type="year" placeholder="Год"].registration_input_birthday_month^.registration_input_phone_divblock>input[type="country"].registration_input_phone_country)+.registration_footer
+    <div class="registration_container">
+        <div class="registration_title">Регистрация</div>
+        <div class="registration_body">
+            <form action="#" method="POST">
+                <input type="text" placeholder="Имя" class="registration_input_name">
+                <input type="text" placeholder="Фамилия" class="registration_input_lastname">
+                <input type="email" placeholder="Email" class="registration_input_email">
+                <input type="password" placeholder="Пароль" class="registration_input_password">
+                <input type="password" placeholder="Повторите пароль" class="registration_input_repassword">
+                <div class="registration_input_footer_divblock">
+                    <a href="#" class="registration_input_footer_divblock_registration">Зарегистрироваться</a>
+                    <a href="#" class="registration_input_footer_divblock_menu">К Меню</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

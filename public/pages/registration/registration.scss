@@ -1,0 +1,88 @@
+$input_height: 36px;
+
+*{
+    font-family: Helvetica, Arial, san-serif;
+}
+
+.registration_container{
+    margin: 8px 0px 0px 420px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    width: 420px;
+    height: auto;
+    .registration_title{
+        font-weight: bold;
+        font-size: 32px;
+        padding: 16px 0px 12px 20px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .registration_body{
+        padding: 16px 16px 24px 16px;
+        form{
+            display: flex;
+            flex-direction: column;
+            .registration_inscription_name{
+                font-size: 15px;
+                color: #9d9d9d;
+            }
+            .registration_input_name{
+                margin: 8px 0px 4px 0px;
+                padding: 4px 0px 0px 12px;
+                border: 1px solid #e5e5e5;
+                border-radius: 4px;
+                height: $input_height;
+                font-weight: 500;
+                font-size: 16px;
+            }
+            .registration_input_lastname{
+                @extend .registration_input_name;
+            }
+            .registration_input_email{
+                @extend .registration_input_name;
+            }
+            .registration_input_password{
+                @extend .registration_input_name;
+            }
+            .registration_input_repassword{
+                @extend .registration_input_name;
+            }
+            .registration_input_footer_divblock{
+                margin: 32px 0px 8px 0px;
+                // display: flex;
+                // flex-direction: row;
+                .registration_input_footer_divblock_registration{
+                    margin-right: 8px;
+                    font-weight: 700;
+                    color: white;
+                    text-decoration: none;
+                    padding: .8em 1em calc(.8em + 3px);
+                    border-radius: 3px;
+                    background: rgb(64,199,129);
+                    box-shadow: 0 -3px rgb(53,167,110) inset;
+                    transition: 0.2s;
+                }
+                .registration_input_footer_divblock_registration:hover{
+                    background: rgb(53, 167, 110); 
+                }
+                .registration_input_footer_divblock_registration:active{
+                    background: rgb(33,147,90);
+                    box-shadow: 0 3px rgb(33,147,90) inset;
+                }
+                .registration_input_footer_divblock_menu{
+                    @extend .registration_input_footer_divblock_registration;
+                    margin-right: 0px;
+                    padding-right: 100px;
+                    background: rgb(29, 101, 194);
+                    box-shadow: 0 -3px rgb(27, 23, 216) inset;
+                }
+                .registration_input_footer_divblock_menu:hover{
+                    background: rgb(27, 23, 216); 
+                }
+                .registration_input_footer_divblock_menu:active{
+                    background: rgb(93, 91, 221);
+                    box-shadow: 0 3px rgb(93, 91, 221) inset;
+                }
+            }
+        }
+    }
+}
