@@ -6,11 +6,11 @@ export function createMenu() {
 	container.classList.add("menu_container");
 
 	const menuTitles = [
-		{name: "Играть",	href: "#",			styles: ['menu_btn',	'm1']},
-		{name: "Профиль",	href: "#",			styles: ['menu_btn',	'm2']},
+		{name: "Играть",	href: "signup",		styles: ['menu_btn',	'm1']},
+		{name: "Профиль",	href: "profile",	styles: ['menu_btn',	'm2']},
 		{name: "Лидеры",	href: "scoreboard",	styles: ['menu_btn',	'm3']},
 		{name: "Правила",	href: "rules",		styles: ['menu_btn',	'm4']},
-		{name: "Авторы",	href: "#",			styles: ['menu_btn',	'm5']}
+		{name: "Авторы",	href: "signin",		styles: ['menu_btn',	'm5']}
 	];
 
 	menuTitles.forEach(item => {

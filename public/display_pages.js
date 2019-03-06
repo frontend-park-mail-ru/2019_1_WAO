@@ -9,7 +9,7 @@ const application = document.getElementById('application');
 //     application.appendChild(link);
 // }
 
-function renderRegistrationPage() {
+export function renderRegistrationPage() {
     // let stylePath = "./pages/login/login.css";
     // addCustomLinkCss(stylePath);
 
@@ -80,7 +80,7 @@ function renderRegistrationPage() {
     application.appendChild(container);
 }
 
-function renderProfilePage() {
+export function renderProfilePage() {
     let container = document.createElement('div');
     container.classList.add("profile_container");
     let containerTop = document.createElement('div');
@@ -168,7 +168,7 @@ function renderProfilePage() {
     application.appendChild(container);
 }
 
-function renderLoginPage() {
+export function renderLoginPage() {
     let container = document.createElement('div');
     container.classList.add("login_window");
 
@@ -285,7 +285,7 @@ function renderLoginPage() {
 
 }
 
-renderLoginPage();
+//renderLoginPage();
 
 // renderRegistrationPage()
 // renderProfilePage();

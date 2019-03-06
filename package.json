@@ -4,15 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-<<<<<<< HEAD
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
-    "uuid": "^3.3.2"
-=======
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4"
->>>>>>> hw_2_Howle_branch
+    "uuid": "^3.3.2",
+    "body-parser": "^1.18.3"
   },
   "devDependencies": {},
   "scripts": {

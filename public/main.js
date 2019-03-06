@@ -5,6 +5,8 @@ import {createMenu} from './pages/menu/menu.js';
 import {createScoreBoard} from './pages/scoreboard/scoreboard.js';
 import {createRules} from './pages/rules/rules.js';
 
+import {renderRegistrationPage, renderLoginPage, renderProfilePage} from "./display_pages.js"
+
 const application = document.getElementById('application');
 
 function ajax (callback, method, path, body) {
@@ -30,82 +32,39 @@ function ajax (callback, method, path, body) {
 	}
 }
 
-/*
-function createSignIn () {
-	const signInSection = document.createElement('section');
-	signInSection.dataset.sectionName = 'sign_in';
+// К-К-К-КОСТЫЛЬ //
 
-	const header = document.createElement('h1');
-	header.textContent = 'Sign In';
-
-
-	const form = document.createElement('form');
-
-	const inputs = [
-		{
-			name: 'email',
-			type: 'email',
-			placeholder: 'Email'
-		},
-		{
-			name: 'password',
-			type: 'password',
-			placeholder: 'Password'
-		},
-		{
-			name: 'submit',
-			type: 'submit'
-		}
-	];
-
-	inputs.forEach(function (item) {
-		const input = document.createElement('input');
-
-		input.name = item.name;
-		input.type = item.type;
-
-		input.placeholder = item.placeholder;
-
-		form.appendChild(input);
-		form.appendChild(document.createElement('br'));
-	});
-
-	signInSection.appendChild(header);
-	signInSection.appendChild(form);
-
-	form.addEventListener('submit', function (event) {
-		event.preventDefault();
-
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
-
-		ajax(function (xhr) {
-			application.innerHTML = '';
-			//createProfile();
-			createNavbar();
-		}, 'POST', '/login', {
-			email: email,
-			password: password
-		});
-	});
-
-	application.appendChild(signInSection);
+function createNavbarMenu() {
+	createNavbar();
+	createMenu();	
 }
-createSignIn();
-*/
+
+function createNavbarScoreBoard() {
+	createNavbar();
+	createScoreBoard();	
+}
+
+function createNavbarRules() {
+	createNavbar();
+	createRules();	
+}
+
+function createNavbarProfile() {
+	createNavbar();
+	renderProfilePage();	
+}
+///
 
 const pages = {
-	"menu": 		createMenu,
-	"scoreboard": 	createScoreBoard,	
-	"rules": 		createRules
+	"menu": 		createNavbarMenu,
+	"scoreboard": 	createNavbarScoreBoard,	
+	"rules": 		createNavbarRules,
+	"profile": 		createNavbarProfile,
+	"signin": 		renderLoginPage,
+	"signup": 		renderRegistrationPage
 };
 
-
-createNavbar();
-createMenu();
-//createScoreBoard();
-<<<<<<< HEAD
-//createRules();
+createNavbarMenu();
 
 application.addEventListener('click', function(event) {
 	if (!(event.target instanceof HTMLAnchorElement)) {
@@ -124,7 +83,4 @@ application.addEventListener('click', function(event) {
 		pages[link.dataset.href]();
 	}
 
-})
-=======
-createRule();
->>>>>>> hw_2_Howle_branch
+});

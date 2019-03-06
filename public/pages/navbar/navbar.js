@@ -7,6 +7,7 @@ export function createNavbar() {
 
 	const backBtn = document.createElement('a');
 	backBtn.textContent = "В меню";
+	backBtn.dataset.href = "menu";
 	backBtn.classList.add("navbar_back_btn");
 	container.appendChild(backBtn);
 
@@ -17,6 +18,7 @@ export function createNavbar() {
 
 	const user = document.createElement('a');
 	user.textContent = "Пользователь";
+	user.dataset.href = "profile";
 	user.classList.add("navbar_user");
 	container.appendChild(user);	
 
