@@ -1,41 +1,41 @@
-const impPath = "./img/";
+const impPath = "../../img/";
 
 export function createScoreBoard () {
 	const scoreBoardSection = document.createElement('section');
 	scoreBoardSection.dataset.sectionName = 'scoreboard';
 
 	const container = document.createElement('div');
-	container.classList.add("container");
+	container.classList.add("scoreboard_container");
 
 	const header = document.createElement('div');
-	header.classList.add("header");
+	header.classList.add("scoreboard_header");
 
 	const user_data = document.createElement('div');
-	user_data.classList.add("user_data");
+	user_data.classList.add("scoreboard_user_data");
 
 	const user_img = document.createElement('img');
 	user_img.src = impPath + "user.png";
-	user_img.classList.add("img");
-	user_img.classList.add("user_img");
+	user_img.classList.add("scoreboard_img");
+	user_img.classList.add("scoreboard_user_img");
 
 	const user_name = document.createElement('a');		
 	user_name.href = "#";
 	//user_name.dataset.href = href;
 	user_name.textContent = "Гошан";
-	user_name.classList.add("user_name");
+	user_name.classList.add("scoreboard_user_name");
 
 	const score_data = document.createElement('div');
-	score_data.classList.add("score_data");
+	score_data.classList.add("scoreboard_score_data");
 
 	const score_data_1 = document.createElement('a');
 	score_data_1.textContent = "Счёт: 1000";
-	score_data_1.classList.add("score_data_1");
+	score_data_1.classList.add("scoreboard_score_data_1");
 	const score_data_2 = document.createElement('a');
 	score_data_2.textContent = "Побед: 0";
-	score_data_2.classList.add("score_data_2");
+	score_data_2.classList.add("scoreboard_score_data_2");
 	const score_data_3 = document.createElement('a');
 	score_data_3.textContent = "Поражений: 999";
-	score_data_3.classList.add("score_data_3");
+	score_data_3.classList.add("scoreboard_score_data_3");
 
 
 	user_data.appendChild(user_img);
@@ -49,50 +49,50 @@ export function createScoreBoard () {
 	container.appendChild(header);
 
 	const table = document.createElement('div');
-	table.classList.add("table");
+	table.classList.add("scoreboard_table");
 
 	const tableContent = [
 		[
-			{name: "№", 		styles : ["col", "col_head", "column_1"]},
-			{name: "nickname", 	styles : ["col", "col_head", "column_2"]},
-			{name: "score", 	styles : ["col", "col_head", "column_3"]},
-			{name: "ratio", 	styles : ["col", "col_head", "column_4"]}
+			{name: "№", 		styles : ["scoreboard_col", "scoreboard_col_head", "scoreboard_column_1"]},
+			{name: "nickname", 	styles : ["scoreboard_col", "scoreboard_col_head", "scoreboard_column_2"]},
+			{name: "score", 	styles : ["scoreboard_col", "scoreboard_col_head", "scoreboard_column_3"]},
+			{name: "ratio", 	styles : ["scoreboard_col", "scoreboard_col_head", "scoreboard_column_4"]}
 		],
 		[
-			{name: "1", 		styles : ["col", "column_1"]},
-			{name: "Ибрагим", 	styles : ["col", "column_2"]},
-			{name: "9999", 		styles : ["col", "column_3"]},
-			{name: "10.0", 		styles : ["col", "column_4"]}
+			{name: "1", 		styles : ["scoreboard_col", "scoreboard_column_1"]},
+			{name: "Ибрагим", 	styles : ["scoreboard_col", "scoreboard_column_2"]},
+			{name: "9999", 		styles : ["scoreboard_col", "scoreboard_column_3"]},
+			{name: "10.0", 		styles : ["scoreboard_col", "scoreboard_column_4"]}
 		],
 		[
-			{name: "2", 		styles : ["col", "column_1"]},
-			{name: "Гошан", 	styles : ["col", "column_2"]},
-			{name: "1000", 		styles : ["col", "column_3"]},
-			{name: "0", 		styles : ["col", "column_4"]}
+			{name: "2", 		styles : ["scoreboard_col", "scoreboard_column_1"]},
+			{name: "Гошан", 	styles : ["scoreboard_col", "scoreboard_column_2"]},
+			{name: "1000", 		styles : ["scoreboard_col", "scoreboard_column_3"]},
+			{name: "0", 		styles : ["scoreboard_col", "scoreboard_column_4"]}
 		],
 		[
-			{name: "3", 		styles : ["col", "column_1"]},
-			{name: "Ахмед", 	styles : ["col", "column_2"]},
-			{name: "999", 		styles : ["col", "column_3"]},
-			{name: "1", 		styles : ["col", "column_4"]}
+			{name: "3", 		styles : ["scoreboard_col", "scoreboard_column_1"]},
+			{name: "Ахмед", 	styles : ["scoreboard_col", "scoreboard_column_2"]},
+			{name: "999", 		styles : ["scoreboard_col", "scoreboard_column_3"]},
+			{name: "1", 		styles : ["scoreboard_col", "scoreboard_column_4"]}
 		],
 		[
-			{name: "4", 		styles : ["col", "column_1"]},
-			{name: "Димас", 	styles : ["col", "column_2"]},
-			{name: "777", 		styles : ["col", "column_3"]},
-			{name: "0.5", 		styles : ["col", "column_4"]}
+			{name: "4", 		styles : ["scoreboard_col", "scoreboard_column_1"]},
+			{name: "Димас", 	styles : ["scoreboard_col", "scoreboard_column_2"]},
+			{name: "777", 		styles : ["scoreboard_col", "scoreboard_column_3"]},
+			{name: "0.5", 		styles : ["scoreboard_col", "scoreboard_column_4"]}
 		],
 		[
-			{name: "5", 		styles : ["col", "column_1"]},
-			{name: "Лёха", 		styles : ["col", "column_2"]},
-			{name: "19", 		styles : ["col", "column_3"]},
-			{name: "0.1", 		styles : ["col", "column_4"]}
+			{name: "5", 		styles : ["scoreboard_col", "scoreboard_column_1"]},
+			{name: "Лёха", 		styles : ["scoreboard_col", "scoreboard_column_2"]},
+			{name: "19", 		styles : ["scoreboard_col", "scoreboard_column_3"]},
+			{name: "0.1", 		styles : ["scoreboard_col", "scoreboard_column_4"]}
 		]
 	]
 
 	tableContent.forEach(row => {
 		const table_row = document.createElement('div');
-		table_row.classList.add("table-row");
+		table_row.classList.add("scoreboard_table-row");
 
 		row.forEach(column => {
 			const col = document.createElement('div');
