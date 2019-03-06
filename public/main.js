@@ -104,6 +104,7 @@ const pages = {
 createNavbar();
 createMenu();
 //createScoreBoard();
+<<<<<<< HEAD
 //createRules();
 
 application.addEventListener('click', function(event) {
@@ -124,3 +125,6 @@ application.addEventListener('click', function(event) {
 	}
 
 })
+=======
+createRule();
+>>>>>>> hw_2_Howle_branch
