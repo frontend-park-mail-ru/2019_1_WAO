@@ -1,6 +1,7 @@
 body {
 	font-family: Helvetica, Arial, san-serif;
 	font-size: 32px;
+	background-image: url("../../img/background1.jpg");
 }
 
 .menu_container {
@@ -51,16 +52,16 @@ body {
 
 .menu_btn {
 	border-style: solid;
-	border-color: #AFAFAF;
-	border-width: 1px;
+	border-color: #1D8C00;
+	border-width: 3px;
 	border-radius: 100px;
 	width: 100%;
 	padding: 15px;
 }
 
 .menu_btn:hover {
-	background-color: #9F9F9F;
-	border-color: #AFAFAF;
+	background-color: #1D8C00;
+	border-color: #1D8C00;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 	transition: 0.3s;
 }
@@ -70,8 +71,7 @@ body {
 }
 
 .menu_btn:active {
-	background-color: #7F7F7F;
-	font-size: 30px;	
+	background-color: #0D7C00;	
 }
 
 .menu_title {
