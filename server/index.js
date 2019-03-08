@@ -17,29 +17,13 @@ app.use(cookie());
 
 
 const users = {
-	'a.ostapenko@corp.mail.ru': {
-		email: 'a.ostapenko@corp.mail.ru',
+	'example@pochta.ru': {
+		email: 'example@pochta.ru',
 		password: 'password',
-		nick: "Joe",
-		score: 72,
-	},
-	'd.dorofeev@corp.mail.ru': {
-		email: 'd.dorofeev@corp.mail.ru',
-		password: 'password',
-		nick: "Tom",
-		score: 100500,
-	},
-	's.volodin@corp.mail.ru': {
-		email: 'marina.titova@corp.mail.ru',
-		password: 'password',
-		nick: "Kot",
-		score: 72,
-	},
-	'a.tyuldyukov@corp.mail.ru': {
-		email: 'a.tyuldyukov@corp.mail.ru',
-		password: 'password',
-		nick: "Lor",
-		score: 72,
+		nick: "Exp",
+		score: 100,
+		kda: 10.0,
+		img: "default",
 	},
 };
 const ids = {};
@@ -50,10 +34,10 @@ app.post('/signup', function (req, res) {
 	const nick = req.body.nick;
 	console.log("This data was send: pass: ", password, "email: ", email, "nick: ", nick);
 	if (
-		!password || !email || !nick ||
-		!password.match(/^\S{4,}$/) ||
-		!email.match(/@/) ||
-		!nick.match(/^\S{4,}$/)
+		!password || !email || !nick //||
+		//!password.match(/^\S{4,}$/) ||
+		//!email.match(/@/) ||
+		//!nick.match(/^\S{4,}$/)
 	) {
 		return res.status(400).json({error: 'Не валидные данные пользователя'});
 	}
@@ -62,7 +46,7 @@ app.post('/signup', function (req, res) {
 	}
 
 	const id = uuid();
-	const user = {password, email, nick, score: 0};
+	const user = {password, email, nick, score: 0, kda: 0.0, img: "./../img/user.png"};
 	console.log("User: ", user);
 	ids[id] = email;  
 	users[email] = user;

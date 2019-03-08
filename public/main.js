@@ -90,7 +90,7 @@ export function renderRegistrationPage() {
     footerA1.addEventListener('click', function (event) {
 		event.preventDefault();
 
-        const nick = parseInt(form.elements[ 'nick' ].value);
+        const nick = form.elements[ 'nick' ].value;
 		const email = form.elements[ 'email' ].value;
 		const password = form.elements[ 'password' ].value;
 		const password_repeat = form.elements[ 'password_repeat' ].value;
@@ -104,6 +104,7 @@ export function renderRegistrationPage() {
 		AjaxModule.doPost({
 			callback() {
 				application.innerHTML = '';
+                //renderRegistrationPage();
 				renderProfilePage();
 			},
 			path: '/signup',
@@ -178,17 +179,18 @@ export function renderProfilePage(me) {
     application.appendChild(container);
     let listDivs = [{}];
     if (me) {
-        const listDivs = [
-            {left: "Никнейм", right: "${me.nick}"},
-            {left: "Email", right: "${me.email}"},
-            {left: "Очки", right: "${me.score}"},
-            {left: "KDA", right: "${me.kda}"},
+        listDivs = [
+            {left: "Никнейм", right: me.nick},
+            {left: "Email", right: me.email},
+            {left: "Очки", right: me.score},
+            {left: "KDA", right: me.kda},
         ];
     } else {
 		AjaxModule.doGet({
 			callback(xhr) {
 				if (!xhr.responseText) {
-					alert('Unauthorized');
+                    console.log('Unauthorized');
+					//alert('Unauthorized');
 					application.innerHTML = '';
 					createNavbarProfile();
 					return;
