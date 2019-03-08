@@ -5,14 +5,72 @@ const body = require('body-parser');
 const cookie = require('cookie-parser');
 // morgan = require('morgan');
 const uuid = require('uuid/v4');
-//const path = require('path');
+const path = require('path');
 const app = express();
 
 
-//app.use(morgan('dev'));
-//app.use(express.static(path.resolve(__dirname, '..', 'public')));
+// app.use(morgan('dev'));
+// app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(express.static('./public'));
+app.use(body.json());
+app.use(cookie());
 
+
+const users = {
+	'a.ostapenko@corp.mail.ru': {
+		email: 'a.ostapenko@corp.mail.ru',
+		password: 'password',
+		nick: "Joe",
+		score: 72,
+	},
+	'd.dorofeev@corp.mail.ru': {
+		email: 'd.dorofeev@corp.mail.ru',
+		password: 'password',
+		nick: "Tom",
+		score: 100500,
+	},
+	's.volodin@corp.mail.ru': {
+		email: 'marina.titova@corp.mail.ru',
+		password: 'password',
+		nick: "Kot",
+		score: 72,
+	},
+	'a.tyuldyukov@corp.mail.ru': {
+		email: 'a.tyuldyukov@corp.mail.ru',
+		password: 'password',
+		nick: "Lor",
+		score: 72,
+	},
+};
+const ids = {};
+
+app.post('/signup', function (req, res) {
+	const password = req.body.password;
+	const email = req.body.email;
+	const nick = req.body.nick;
+	console.log("This data was send: pass: ", password, "email: ", email, "nick: ", nick);
+	if (
+		!password || !email || !nick ||
+		!password.match(/^\S{4,}$/) ||
+		!email.match(/@/) ||
+		!nick.match(/^\S{4,}$/)
+	) {
+		return res.status(400).json({error: 'Не валидные данные пользователя'});
+	}
+	if (users[email]) {
+		return res.status(400).json({error: 'Пользователь уже существует'});
+	}
+
+	const id = uuid();
+	const user = {password, email, nick, score: 0};
+	console.log("User: ", user);
+	ids[id] = email;  
+	users[email] = user;
+	console.log("ids[id]: ", ids, "users[email]: ", users );
+
+	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+	res.status(201).json({id});
+});
 
 app.post('/login', function (req, res) {
 	const password = req.body.password;
@@ -31,7 +89,36 @@ app.post('/login', function (req, res) {
 	res.status(200).json({id});
 });
 
-const port = process.env.PORT || 3000;
+app.get('/me', function (req, res) {
+	const id = req.cookies['sessionid'];
+	console.log("Give Id ", id);
+	const email = ids[id];
+	console.log("Give email ", email);
+	if (!email || !users[email]) {
+		return res.status(401).end();
+	}
+
+	users[email].score += 1;
+
+	res.json(users[email]);
+});
+
+app.get('/users', function (req, res) {
+	const scorelist = Object.values(users)
+		.sort((l, r) => r.score - l.score)
+		.map(user => {
+			return {
+				email: user.email,
+				age: user.age,
+				score: user.score,
+			}
+		});
+
+	res.json(scorelist);
+});
+
+
+const port = process.env.PORT || 3003;
 app.listen(port, function () {
 	console.log(`Server listening port ${port}`);
 });
