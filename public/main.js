@@ -1,5 +1,6 @@
 'use strict';
 
+<<<<<<< HEAD
 import './pages/login/login.css';
 import './pages/menu/menu.css';
 import './pages/navbar/navbar.css';
@@ -38,17 +39,23 @@ function createNavbarProfile() {
 	renderProfilePage();	
 }
 ///
+=======
+import AjaxModule from './modules/ajax.js';
+import * as Add_router from './routers_functions.js'
+
+const application = document.getElementById('application');
+>>>>>>> exp_Howle_branch
 
 const pages = {
-	"menu": 		createNavbarMenu,
-	"scoreboard": 	createNavbarScoreBoard,	
-	"rules": 		createNavbarRules,
-	"profile": 		createNavbarProfile,
-	"signin": 		renderLoginPage,
-	"signup": 		renderRegistrationPage
-};
+	"menu": 		Add_router.createNavbarMenu,
+	"scoreboard": 	Add_router.createNavbarScoreBoard,	
+	"rules": 		Add_router.createNavbarRules,
+	"profile": 		Add_router.createNavbarProfile,
+	"signin": 		Add_router.createLoginPage,
+	"signup": 		Add_router.createRegistrationPage
+}
 
-createNavbarMenu();
+Add_router.createNavbarMenu();
 
 application.addEventListener('click', function(event) {
 	if (!(event.target instanceof HTMLAnchorElement)) {
