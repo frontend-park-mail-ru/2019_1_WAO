@@ -1,6 +1,13 @@
 'use strict';
 
-import './styles.css';
+import './pages/login/login.css';
+import './pages/menu/menu.css';
+import './pages/navbar/navbar.css';
+import './pages/profile/profile.css';
+import './pages/registration/registration.css';
+import './pages/rules/rules.css';
+import './pages/scoreboard/scoreboard.css';
+
 import {createNavbar} from './pages/navbar/navbar.js';
 import {createMenu} from './pages/menu/menu.js';
 import {createScoreBoard} from './pages/scoreboard/scoreboard.js';
