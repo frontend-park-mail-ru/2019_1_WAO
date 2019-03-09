@@ -1,16 +1,12 @@
 {
   "name": "2019_1_wao",
   "version": "1.0.0",
-<<<<<<< HEAD
   "description": "",
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-=======
-  "description": ".",
->>>>>>> exp_Howle_branch
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.18.3",

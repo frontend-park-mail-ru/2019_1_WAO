@@ -1,6 +1,7 @@
 import {RENDER_TYPES} from '../../utils/constants.js';
 import {makeSafe} from '../../utils/safe.js';
 
+// пока просто копипаст из sample-lesson-4/public/components/Board
 export class MenuComponent {
 	constructor({
 		el = document.body,

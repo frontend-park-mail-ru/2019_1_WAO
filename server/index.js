@@ -8,19 +8,11 @@ const uuid = require('uuid/v4');
 const path = require('path');
 const app = express();
 
-
-<<<<<<< HEAD
-//app.use(morgan('dev'));
-//app.use(express.static(path.resolve(__dirname, '..', 'public')));
-app.use(express.static('./public/dist'));
-=======
 // app.use(morgan('dev'));
 // app.use(express.static(path.resolve(__dirname, '..', 'public')));
-app.use(express.static('./public'));
+app.use(express.static('./public/dist'));
 app.use(body.json());
 app.use(cookie());
->>>>>>> exp_Howle_branch
-
 
 const users = {
 	'example@pochta.ru': {
