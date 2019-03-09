@@ -1,0 +1,55 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+	<div class="scoreboard_container">
+		<div class="scoreboard_header">
+			<div class="scoreboard_user_data">				
+				<a class="scoreboard_user_name" href="#">Гошан</a>
+			</div>
+			<div class="scoreboard_score_data">
+				<a class="scoreboard_score_data_1">Счет: 17</a>
+				<a class="scoreboard_score_data_2">Побед: 0</a>
+				<a class="scoreboard_score_data_3">Поражений: 9999</a>
+			</div>
+		</div>
+		<div class="scoreboard_table">
+			<div class="scoreboard_table-row">
+				<div class="scoreboard_col scoreboard_col_head scoreboard_column_1">
+					<a>№</a>
+				</div>
+				<div class="scoreboard_col scoreboard_col_head scoreboard_column_2">
+					<a href="#">Ник</a>
+				</div>
+				<div class="scoreboard_col scoreboard_col_head scoreboard_column_3">
+					<a>Счет</a>
+				</div>
+				<div class="scoreboard_col scoreboard_col_head scoreboard_column_4">
+					<a>Отношение побед</a>
+				</div>
+			</div>
+			<fest:for iterate="data" index="i" value="v">
+				<div class="scoreboard_table-row">
+					<div class="scoreboard_col column_1">
+						<a>
+							<fest:value>i+1</fest:value>
+						</a>
+					</div>
+					<div class="scoreboard_col column_2">
+						<a href="#">
+							<fest:value>v.nickname</fest:value>
+						</a>
+					</div>
+					<div class="scoreboard_col column_3">
+						<a>
+							<fest:value>v.score</fest:value>
+						</a>
+					</div>
+					<div class="scoreboard_col column_4">
+						<a>
+							<fest:value>v.fda</fest:value>
+						</a>
+					</div>
+				</div>
+			</fest:for>
+		</div>
+	</div>
+
+</fest:template>

@@ -1,9 +1,9 @@
 import {RENDER_TYPES} from '../../utils/constants.js';
 import {makeSafe} from '../../utils/safe.js';
 
-import template from './Menu.tmpl.xml';
+import template from './ScoreBoard.tmpl.xml';
 
-export class MenuComponent {
+export class ScoreBoardComponent {
 	constructor({
 		el = document.body,
 		type = RENDER_TYPES.TMPL,
@@ -22,10 +22,8 @@ export class MenuComponent {
 	}
 
 	__renderTmpl() {
-		//this._el.innerHTML = window.fest['./Menu.tmpl']();
-		//this._el.innerHTML = window.fest['./components/Menu/Menu.tmpl']();
-		//this._el.innerHTML = window.fest['./Menu.tmpl']();
-		this._el.innerHTML = this._fest();
+		//this._el.innerHTML = window.fest['./ScoreBoard.tmpl'](this._data);
+		this._el.innerHTML = this._fest(this._data);
 	}
 
 	render() {

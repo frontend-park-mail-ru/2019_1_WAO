@@ -51,6 +51,14 @@ module.exports = {
         options: {
           // eslint options (if necessary)
         }
+      },
+      {
+        test: /\.xml$/,
+        use: [
+          {
+            loader: 'fest-webpack-loader'
+          }
+        ]
       }
        
     ]

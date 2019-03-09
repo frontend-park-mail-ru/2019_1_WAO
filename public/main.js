@@ -8,7 +8,6 @@ import './pages/registration/registration.css';
 import './pages/rules/rules.css';
 import './pages/scoreboard/scoreboard.css';
 
-import AjaxModule from './modules/ajax.js';
 import * as Add_router from './routers_functions.js'
 
 const application = document.getElementById('application');

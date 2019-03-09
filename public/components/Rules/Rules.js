@@ -1,16 +1,13 @@
 import {RENDER_TYPES} from '../../utils/constants.js';
 import {makeSafe} from '../../utils/safe.js';
 
-import template from './Menu.tmpl.xml';
-
-export class MenuComponent {
+export class RulesComponent {
 	constructor({
 		el = document.body,
 		type = RENDER_TYPES.TMPL,
 	} = {}) {
 		this._el = el;
 		this._type = type;
-		this._fest = template;
 	}
 
 	get data() {
@@ -22,13 +19,10 @@ export class MenuComponent {
 	}
 
 	__renderTmpl() {
-		//this._el.innerHTML = window.fest['./Menu.tmpl']();
-		//this._el.innerHTML = window.fest['./components/Menu/Menu.tmpl']();
-		//this._el.innerHTML = window.fest['./Menu.tmpl']();
-		this._el.innerHTML = this._fest();
+		this._el.innerHTML = window.fest['./Rules.tmpl']();
 	}
 
 	render() {
-		this.__renderTmpl();
+		__renderTmpl();
 	}
 }
