@@ -1,0 +1,9 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+	<div class="menu_container">
+		<a class="menu_btn m1" href="#">Играть</a>
+		<a class="menu_btn m2" href="#">Профиль</a>
+		<a class="menu_btn m3" href="#">Лидеры</a>
+		<a class="menu_btn m4" href="#">Правила</a>
+		<a class="menu_btn m5" href="#">Авторы</a>
+	</div>
+</fest:template>

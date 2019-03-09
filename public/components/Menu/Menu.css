@@ -1,0 +1,90 @@
+body {
+	font-family: Helvetica, Arial, san-serif;
+	font-size: 32px;
+	background-image: url("../../img/background1.jpg");
+}
+
+.menu_container {
+	margin: 80px 10% auto 10%;
+	display: grid;
+
+	grid-template-rows: repeat(9, 1fr);
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-areas: 
+	"m3 m3 m3 . . . . . . . . . . . ."
+	". . . . . . . . . . . . . . ."
+	". . . . . . . . . m4 m4 m4 . . ."
+	". . . . . . . . . . . . . . ."
+	". . . . . m1 m1 m1 . . . . . . ."
+	". . . . . . . . . . . . . . ."
+	". . . . . . . . . . . . . . ."
+	". . . . . . . . . . . . m5 m5 m5"
+	". m2 m2 m2 . . . . . . . . . . .";
+
+	grid-gap: 5px;
+	text-align: center;
+	vertical-align: middle;
+	justify-content: center;
+	user-select: none;
+}
+
+
+.m1 {
+	grid-area: m1;
+}
+
+.m2 {
+	grid-area: m2;
+}
+
+.m3 {
+	grid-area: m3;
+}
+
+.m4 {
+	grid-area: m4;
+}
+
+.m5 {
+	grid-area: m5;
+}
+
+
+.menu_btn {
+	border-style: solid;
+	border-color: #1D8C00;
+	border-width: 3px;
+	border-radius: 100px;
+	width: 100%;
+	padding: 15px;
+}
+
+.menu_btn:hover {
+	background-color: #1D8C00;
+	border-color: #1D8C00;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	transition: 0.3s;
+}
+
+.menu_btn:not(hover) {
+	transition: 0.6s;
+}
+
+.menu_btn:active {
+	background-color: #0D7C00;	
+}
+
+.menu_title {
+	font-size: 42px;
+	font-style: bold;
+	text-shadow: 0px 0px 10px #7F7F7F;
+
+}
+
+a,
+a:link,
+a:active, 
+a:hover {
+	color: #000000;
+	text-decoration: none;
+}
