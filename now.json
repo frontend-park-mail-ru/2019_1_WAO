@@ -4,5 +4,11 @@
   "builds": [
     { "src": "./server/index.js", "use": "@now/node" },
     { "src": "./public/dist", "use": "@now/static" }
-  ]
+  ],
+	"routes": [
+			{ "src": "/", "dest": "/public/dest/index.html"}       
+		],
+	"github": {
+		"enabled": false
+	}
 }
