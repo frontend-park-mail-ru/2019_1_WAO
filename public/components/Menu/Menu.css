@@ -5,17 +5,17 @@ body {
 }
 
 .menu_container {
-	margin: 80px 10% auto 10%;
+	margin: 100px 10% auto 10%;
 	display: grid;
 
 	grid-template-rows: repeat(9, 1fr);
 	grid-template-columns: repeat(15, 1fr);
 	grid-template-areas: 
+	". . . . . . m6 m6 m6 . . . . . ."
 	"m3 m3 m3 . . . . . . . . . . . ."
 	". . . . . . . . . . . . . . ."
-	". . . . . . . . . m4 m4 m4 . . ."
-	". . . . . . . . . . . . . . ."
-	". . . . . m1 m1 m1 . . . . . . ."
+	". . . . . . . . . . m4 m4 m4 . ."
+	". . . . m1 m1 m1 . . . . . . . ."
 	". . . . . . . . . . . . . . ."
 	". . . . . . . . . . . . . . ."
 	". . . . . . . . . . . . m5 m5 m5"
@@ -49,13 +49,17 @@ body {
 	grid-area: m5;
 }
 
+.m6 {
+	grid-area: m6;
+}
+
 
 .menu_btn {
 	border-style: solid;
 	border-color: #1D8C00;
 	border-width: 3px;
 	border-radius: 100px;
-	width: 100%;
+	width: 90%;
 	padding: 15px;
 }
 

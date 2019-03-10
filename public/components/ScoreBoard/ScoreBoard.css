@@ -11,11 +11,15 @@ body {
 	text-align: center;
 
 	display: grid;
-	grid-template-rows: 150px auto;
+	grid-template-rows: auto auto;
 	grid-row-gap: 30px;
+	grid-template-areas: 
+		"scoreboard_header"
+		"scoreboard_table";
 }
 
 .scoreboard_header {
+	grid-area: scoreboard_header;
 	background-color: #E1E1E1;
 	border-radius: 10px;
 	padding: 10px;
@@ -29,7 +33,7 @@ body {
 }
 
 .scoreboard_user_data {
-	grid-area: "user_data";
+	grid-area: user_data;
 
 	display: grid;
 	grid-template-rows: 80% 20%;
@@ -46,11 +50,11 @@ body {
 }
 
 .scoreboard_user_img {
-	grid-area: "user_img";
+	grid-area: user_img;
 }
 
 .scoreboard_user_name {
-	grid-area: "user_name";
+	grid-area: user_name;
 }
 
 .scoreboard_score_data {
@@ -67,18 +71,19 @@ body {
 }
 
 .scoreboard_score_data_1 {
-	grid-area: "scoreboard_score_data_1";
+	grid-area: scoreboard_score_data_1;
 }
 
 .scoreboard_score_data_2 {
-	grid-area: "scoreboard_score_data_2";
+	grid-area: scoreboard_score_data_2;
 }
 
 .scoreboard_score_data_3 {
-	grid-area: "scoreboard_score_data_3";
+	grid-area: scoreboard_score_data_3;
 }
 
 .scoreboard_table {
+	grid-area: scoreboard_table;
 	background-color: #E1E1E1;
 	border-radius: 10px;
 	padding: 10px;

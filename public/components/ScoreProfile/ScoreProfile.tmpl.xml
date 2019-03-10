@@ -1,0 +1,24 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+	<div class="scoreboard_header">
+		<div class="scoreboard_user_data">
+					
+			<a class="scoreboard_user_name" href="#">
+				<fest:value>data.nick</fest:value>
+			</a>
+		</div>
+		<div class="scoreboard_score_data">
+			<a class="scoreboard_score_data_1">
+				Счет:
+				<fest:value>data.score</fest:value>
+			</a>
+			<a class="scoreboard_score_data_2">
+				Побед:
+				<fest:value>data.wins</fest:value>
+			</a>
+			<a class="scoreboard_score_data_3">
+				Поражений:
+				<fest:value>data.games</fest:value>
+			</a>
+		</div>
+	</div>
+</fest:template>

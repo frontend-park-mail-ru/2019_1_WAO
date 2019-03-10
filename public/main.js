@@ -1,12 +1,12 @@
 'use strict';
 
 import './pages/login/login.css';
-import './pages/menu/menu.css';
-import './pages/navbar/navbar.css';
+import './components/Menu/menu.css';
+import './components/Navbar/navbar.css';
 import './pages/profile/profile.css';
 import './pages/registration/registration.css';
-import './pages/rules/rules.css';
-import './pages/scoreboard/scoreboard.css';
+import './components/Rules/rules.css';
+import './components/ScoreBoard/scoreboard.css';
 
 import * as Add_router from './routers_functions.js'
 
@@ -21,6 +21,7 @@ const pages = {
 	"signup": 		Add_router.createRegistrationPage
 }
 
+//Add_router.createLoginPage();
 Add_router.createNavbarMenu();
 
 application.addEventListener('click', function(event) {

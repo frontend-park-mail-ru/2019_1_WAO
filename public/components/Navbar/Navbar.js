@@ -1,9 +1,9 @@
 import {RENDER_TYPES} from '../../utils/constants.js';
 import {makeSafe} from '../../utils/safe.js';
 
-import template from './Rules.tmpl.xml';
+import template from './Navbar.tmpl.xml';
 
-export class RulesComponent {
+export class NavbarComponent {
 	constructor({
 		el = document.body,
 		type = RENDER_TYPES.TMPL,
@@ -22,7 +22,6 @@ export class RulesComponent {
 	}
 
 	__renderTmpl() {
-		//this._el.innerHTML = window.fest['./Rules.tmpl']();
 		this._el.innerHTML = this._fest();
 	}
 

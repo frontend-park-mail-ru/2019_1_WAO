@@ -1,0 +1,13 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<div class="navbar_container">
+		<a class="navbar_back_btn" href="menu" data-href="menu">
+			В меню
+		</a>
+		<a class="navbar_page_name">
+			Меню
+		</a>
+		<a class="navbar_user" href="profile" data-href="profile">
+			Пользователь
+		</a>
+	</div>
+</fest:template>

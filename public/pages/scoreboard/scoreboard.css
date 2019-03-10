@@ -13,6 +13,8 @@ body {
 	display: grid;
 	grid-template-rows: 150px auto;
 	grid-row-gap: 30px;
+	grid-template-areas: 
+		"user_data score_data";
 }
 
 .scoreboard_header {

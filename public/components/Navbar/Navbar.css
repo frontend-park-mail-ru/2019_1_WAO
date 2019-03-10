@@ -1,0 +1,35 @@
+body {
+	margin: 0px;
+	font-family: Helvetica, Arial, san-serif;
+	font-size: 24px;
+}
+
+.navbar_container {
+
+	width: 100%;
+	height: 50px;
+	background-color: #1D8C00;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	user-select: none;
+}
+
+.navbar_back_btn {
+	color: #FFFFFF;
+	font-style: bold;
+	margin: 0px 0px 0px 30px;
+}
+
+.navbar_page_name {
+	color: #FFFFFF;
+	font-style: bold;
+	margin: auto auto auto auto;
+}
+
+.navbar_user {
+	color: #FFFFFF;
+	font-style: bold;
+	margin: 0px 30px 0px 0px;
+}

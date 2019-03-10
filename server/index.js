@@ -15,13 +15,50 @@ app.use(body.json());
 app.use(cookie());
 
 const users = {
-	'example@pochta.ru': {
-		email: 'example@pochta.ru',
-		password: 'password',
-		nick: "Exp",
-		score: 100,
-		kda: 10.0,
-		img: "default",
+	'goshan@pochta.ru': {
+		email: 'goshan@pochta.ru',
+		password: '1234',
+		nick: "Гошан",
+		score: 700,
+		games: 101,
+		wins: 100,
+		img: "./images/background1.jpg",
+	},
+	'pashok@pochta.ru': {
+		email: 'pashok@pochta.ru',
+		password: '2345',
+		nick: "Пашок",
+		score: 600,
+		games: 121,
+		wins: 50,
+		img: "./images/background1.jpg",
+	},
+	'LexaXXX@pochta.ru': {
+		email: 'LexaXXX@pochta.ru',
+		password: '3456',
+		nick: "Лёха",
+		score: 1,
+		games: 1000,
+		wins: 7,
+		img: "./images/background1.jpg",
+	},
+	'Igor@pochta.ru': {
+		email: 'LexaXXX@pochta.ru',
+		password: '4567',
+		nick: "Игорь",
+		score: 0,
+		games: 1000,
+		wins: 0,
+		img: "./images/background1.jpg",
+	},
+	'karman@pochta.ru': {
+		email: 'karman@pochta.ru',
+		password: '5678',
+		nick: "Карман",
+		score: 6,
+		games: 4,
+		wins: 1,
+		img: "./images/background1.jpg",
 	},
 };
 const ids = {};
@@ -44,7 +81,7 @@ app.post('/signup', function (req, res) {
 	}
 
 	const id = uuid();
-	const user = {password, email, nick, score: 0, kda: 0.0, img: "./../img/user.png"};
+	const user = {password, email, nick, score: 0, games: 0, wins: 0, img: "./images/background1.jpg"};
 	console.log("User: ", user);
 	ids[id] = email;  
 	users[email] = user;
@@ -90,9 +127,10 @@ app.get('/users', function (req, res) {
 		.sort((l, r) => r.score - l.score)
 		.map(user => {
 			return {
-				email: user.email,
-				age: user.age,
+				nick: user.nick,
 				score: user.score,
+				games: user.games,
+				wins: user.wins
 			}
 		});
 
@@ -100,7 +138,7 @@ app.get('/users', function (req, res) {
 });
 
 
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 3000;
 app.listen(port, function () {
 	console.log(`Server listening port ${port}`);
 });
