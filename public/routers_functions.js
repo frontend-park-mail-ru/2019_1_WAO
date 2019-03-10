@@ -120,11 +120,6 @@ export function createNavbarRules() {
 }
 
 export function createNavbarProfile(me) {
-<<<<<<< HEAD
-	createNavbar();
-
-	renderProfilePage(AjaxModule, me);	
-=======
 	// createNavbar();
 	// renderProfilePage(AjaxModule, me);
 
@@ -167,7 +162,6 @@ export function createNavbarProfile(me) {
 		console.log("END ajax");
 	}
 	signin.render();
->>>>>>> exp_Howle3
 }
 
 export function createLoginPage() {
