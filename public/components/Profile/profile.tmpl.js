@@ -1,0 +1,30 @@
+;(function(){var x=Function('return this')();if(!x.fest)x.fest={};x.fest['components/Profile/profile.tmpl']=function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_element_stack = [],__fest_short_tags = {"area": true, "base": true, "br": true, "col": true, "command": true, "embed": true, "hr": true, "img": true, "input": true, "keygen": true, "link": true, "meta": true, "param": true, "source": true, "wbr": true},__fest_jschars = /[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test = /[\\'"\/\n\r\t\b\f<>]/,__fest_htmlchars = /[&<>"]/g,__fest_htmlchars_test = /[&<>"]/,__fest_jshash = {"\"": "\\\"", "\\": "\\\\", "/": "\\/", "\n": "\\n", "\r": "\\r", "\t": "\\t", "\b": "\\b", "\f": "\\f", "'": "\\'", "<": "\\u003C", ">": "\\u003E"},__fest_htmlhash = {"&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;"},__fest_escapeJS = function __fest_escapeJS(value) {
+		if (typeof value === 'string') {
+			if (__fest_jschars_test.test(value)) {
+				return value.replace(__fest_jschars, __fest_replaceJS);
+			}
+		}
+
+		return value == null ? '' : value;
+	},__fest_replaceJS = function __fest_replaceJS(chr) {
+		return __fest_jshash[chr];
+	},__fest_escapeHTML = function __fest_escapeHTML(value) {
+		if (typeof value === 'string') {
+			if (__fest_htmlchars_test.test(value)) {
+				return value.replace(__fest_htmlchars, __fest_replaceHTML);
+			}
+		}
+
+		return value == null ? '' : value;
+	},__fest_replaceHTML = function __fest_replaceHTML(chr) {
+		return __fest_htmlhash[chr];
+	},__fest_extend = function __fest_extend(dest, src) {
+		for (var key in src) {
+			if (src.hasOwnProperty(key)) {
+				dest[key] = src[key];
+			}
+		}
+	},__fest_param = function __fest_param(fn) {
+		fn.param = true;
+		return fn;
+	},i18n=__fest_self && typeof __fest_self.i18n === "function" ? __fest_self.i18n : function (str) {return str;},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}var data=__fest_context;__fest_buf+=("<div class=\"profile_container\"><div class=\"profile_container_top\"><div class=\"profile_title\">Профиль</div><div class=\"profile_photo\">ИИ</div><div class=\"profile_container_gridblock\"><div class=\"profile_data_1\"><div class=\"profile_data_bottom_border_div\"><div class=\"left_data\">Никнейм</div><div class=\"right_data\">");try{__fest_buf+=(data.nick)}catch(e){__fest_log_error(e.message + "10");}__fest_buf+=("</div></div></div><div class=\"profile_data_2\"><div class=\"profile_data_bottom_border_div\"><div class=\"left_data\">Email</div><div class=\"right_data\">");try{__fest_buf+=(data.email)}catch(e){__fest_log_error(e.message + "18");}__fest_buf+=("</div></div></div><div class=\"profile_data_3\"><div class=\"profile_data_bottom_border_div\"><div class=\"left_data\">Очки</div><div class=\"right_data\">");try{__fest_buf+=(data.score)}catch(e){__fest_log_error(e.message + "26");}__fest_buf+=("</div></div></div><div class=\"profile_data_4\"><div class=\"profile_data_bottom_border_div\"><div class=\"left_data\">KDA</div><div class=\"right_data\">");try{__fest_buf+=(data.kda)}catch(e){__fest_log_error(e.message + "34");}__fest_buf+=("</div></div></div></div></div><div class=\"profile_data_footer\"><a class=\"profile_change_button\" href=\"#\"><div class=\"profile_change_button_pic\"><svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><path fill-rule=\"evenodd\" d=\"M7.627 13.203l4.237-4.237 2.17 2.17-3.152 3.152-1.085 1.085c-.001.001-.243.225-.712.314l-1.621.306a.438.438 0 0 1-.36-.097.438.438 0 0 1-.097-.36l.306-1.621c.089-.468.312-.71.314-.712zM5.557 14H2.013a1 1 0 0 1-1-1v-.3c0-2.48 2.01-4.494 4.488-4.5v-.796a3 3 0 0 1-1.488-2.591V3a3.001 3.001 0 0 1 6 0v1.813a3 3 0 0 1-1.488 2.591V8.2a4.52 4.52 0 0 1 1.199.165 2477.73 2477.73 0 0 0-3.326 3.329c-.004.004-.509.552-.71 1.611L5.557 14zm8.994-6.812a.643.643 0 0 0-.909 0l-.856.856 2.17 2.17.856-.856a.643.643 0 0 0 0-.909l-1.261-1.261z\"></path></svg></div><div class=\"profile_change_button_text\">Изменить</div></a><a class=\"profile_delete_button\" href=\"#\"><div class=\"profile_delete_button_pic\"><svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><path fill-rule=\"evenodd\" d=\"M7.627 13.203l4.237-4.237 2.17 2.17-3.152 3.152-1.085 1.085c-.001.001-.243.225-.712.314l-1.621.306a.438.438 0 0 1-.36-.097.438.438 0 0 1-.097-.36l.306-1.621c.089-.468.312-.71.314-.712zM5.557 14H2.013a1 1 0 0 1-1-1v-.3c0-2.48 2.01-4.494 4.488-4.5v-.796a3 3 0 0 1-1.488-2.591V3a3.001 3.001 0 0 1 6 0v1.813a3 3 0 0 1-1.488 2.591V8.2a4.52 4.52 0 0 1 1.199.165 2477.73 2477.73 0 0 0-3.326 3.329c-.004.004-.509.552-.71 1.611L5.557 14zm8.994-6.812a.643.643 0 0 0-.909 0l-.856.856 2.17 2.17.856-.856a.643.643 0 0 0 0-.909l-1.261-1.261z\"></path></svg></div><div class=\"profile_delete_button_text\">Удалить</div></a></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}}})();

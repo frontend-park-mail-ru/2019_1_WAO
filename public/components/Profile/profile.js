@@ -1,8 +1,8 @@
 import {RENDER_TYPES} from '../../utils/constants.js';
 import {makeSafe} from '../../utils/safe.js';
 
-import template from './signin.tmpl.xml';
-export class Signin {
+import template from './profile.tmpl.xml';
+export class Profile {
 	constructor({
 		el = document.body,
 		type = RENDER_TYPES.TMPL,
@@ -21,7 +21,8 @@ export class Signin {
 	}
 
 	__renderTmpl() {
-		this._el.innerHTML = this._fest();
+		//this._el.innerHTML = window.fest['./ScoreBoard.tmpl'](this._data);
+		this._el.innerHTML = this._fest(this._data);
 	}
 
 	render() {
