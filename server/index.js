@@ -119,8 +119,40 @@ app.get('/me', function (req, res) {
 	}
 
 	users[email].score += 1;
+	const send = {
+		nick: users[email].nick,
+		email: users[email].email,
+		score: users[email].score,
+		games: users[email].games,
+		wins: users[email].wins,
+	}
+	res.json(send);
+});
 
-	res.json(users[email]);
+app.post('/change_profile', function(req, res) {
+	const nick = req.body.nick;
+	const email = req.body.email;
+	const old_email = req.body.old_email;
+
+	const id = uuid();
+	const user = {
+		password: users[old_email].password,
+		email, 
+		nick, 
+		score: users[old_email].score, 
+		games: users[old_email].games, 
+		wins: users[old_email].wins, 
+		img: "./images/background1.jpg"
+	};
+	delete users[old_email];
+	console.log("User: ", user);
+	ids[id] = email;  
+	users[email] = user;
+	console.log("ids[id]: ", ids[id], "users[email]: ", users[email] );
+
+	console.log("Changed user: ", old_email);
+	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+	res.status(201).json({id});
 });
 
 app.get('/users', function (req, res) {

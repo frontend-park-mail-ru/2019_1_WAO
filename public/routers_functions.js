@@ -136,26 +136,24 @@ export function createNavbarProfile(me) {
         //     {left: "Очки", right: me.score},
         //     {left: "KDA", right: me.kda},
 		// ];
-		/*
-		signin.data = {
-			nick: me.nick,
-			email: me.email,
-			score: me.score,
-			kda: me.kda
-		};
-		*/
+
+		// signin.data = {
+		// 	nick: me.nick,
+		// 	email: me.email,
+		// 	score: me.score,
+		// 	kda: me.kda
+		// };
+		
 		signin.data = JSON.parse(JSON.stringify(me));
     } else {
 		AjaxModule.doGet({
 			callback(xhr) {
 				if (!xhr.responseText) {
-                    console.log('Unauthorized');
 					//alert('Unauthorized');
 					application.innerHTML = '';
 					createNavbarProfile(AjaxModule);
 					return;
 				}
-				console.log("Sent");
 				const user = JSON.parse(xhr.responseText);
                 application.innerHTML = '';
                 createNavbarProfile(user);
@@ -163,10 +161,34 @@ export function createNavbarProfile(me) {
 			},
 			path: '/me',
 		});
-		console.log("END ajax");
 	}
 	signin.render();
 	application.appendChild(profileSection);
+	// Обработка изменений
+	let form = document.getElementsByTagName('form')[0];
+	let button = document.getElementsByClassName('profile_change_button')[0];
+	button.addEventListener("click", function (event) {
+		event.preventDefault();
+		const email = form.elements[ 'email' ].value;
+		const nick = form.elements[ 'nick' ].value;
+		if ( email === me.email && nick === me.nick ){
+			console.log('Equal!', email, nick);
+		} else {
+			AjaxModule.doPost({
+				callback() {
+					application.innerHTML = '';
+					createNavbarProfile();
+					console.log("Sent");
+				},
+				path: '/change_profile',
+				body: {
+					email,
+					nick,
+					old_email: me.email,
+				},
+			});
+		}
+	});
 }
 
 export function createLoginPage(me) {
@@ -199,7 +221,6 @@ export function createLoginPage(me) {
 
 export function createRegistrationPage() {
 	// renderRegistrationPage(AjaxModule);
-
 	const signin = new Registration({
 		el: application,
 		type: RENDER_TYPES.TMPL,
@@ -208,6 +229,7 @@ export function createRegistrationPage() {
 	const form = document.getElementsByTagName('form')[0];
 	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
 	footer.addEventListener('click', function (event) {
+		let errList = [""];
 		event.preventDefault();
 
         const nick = form.elements[ 'nick' ].value;
@@ -216,10 +238,19 @@ export function createRegistrationPage() {
 		const password_repeat = form.elements[ 'password_repeat' ].value;
 
 		if (password !== password_repeat) {
-			alert('Passwords is not equals');
+			errList.push("Пароли не одинаковые!")
+		}
+		if (!email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
+			errList.push("Неверно введена почта!")
+		}
+		if (password.length < 6){
+			errList.push("Пароль короче 6 символов!")
+		}
+		if (errList.length > 1) {
+			const errBlock = document.getElementsByClassName('registration_err_list')[0];
+			ShowErrMassage(errBlock, errList);
 			return;
 		}
-
 		AjaxModule.doPost({
 			callback() {
                 application.innerHTML = '';
@@ -235,4 +266,12 @@ export function createRegistrationPage() {
 			},
 		});
 	});
+	function ShowErrMassage(errBlock, errList) {
+		errBlock.innerHTML = '';
+		errList.forEach(elm => {
+			console.log(elm, errList.length);
+			errBlock.innerHTML += elm + "<br>"; 
+		});
+			
+	}
 }
