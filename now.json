@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "alias": ["wao2019.now.sh", "www.wao2019.now.sh"],
+  "alias": ["wao2019v2.now.sh", "www.wao2019v2.now.sh"],
     "builds": [
-        { "src": "server/index.js", "use": "@now/node" }
+        { "src": "server/index.js", "use": "@now/static" },
+        { "src": "public/dist/*", "use": "@now/static" }
+    ],
+    "routes": [
+        { "src": "/(.*)", "dest": "public/dist/index.html" }
     ],
 	"github": {
 		"enabled": false
