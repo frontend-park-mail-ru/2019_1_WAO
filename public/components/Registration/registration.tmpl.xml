@@ -7,6 +7,9 @@
                 <input type="email" placeholder="Email" class="registration_input_email" name="email"/>
                 <input type="password" placeholder="Пароль" class="registration_input_password" name="password"/>
                 <input type="password" placeholder="Повторите пароль" class="registration_input_repassword" name="password_repeat"/>
+                <div class="registration_err_list">
+                    
+                </div>
                 <div class="registration_input_footer_divblock">
                     <a class="registration_input_footer_divblock_registration" href="#">Зарегистрироваться</a>
                     <a class="registration_input_footer_divblock_menu" href="#" data-href="menu">К Меню</a>

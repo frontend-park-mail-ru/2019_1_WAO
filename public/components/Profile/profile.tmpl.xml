@@ -4,30 +4,46 @@
             <div class="profile_title">Профиль</div>
             <div class="profile_photo">ИИ</div>
             <div class="profile_container_gridblock">
-                <div class="profile_data_1">
-                    <div class="profile_data_bottom_border_div">
-                        <div class="left_data">Никнейм</div>
-                        <div class="right_data">
-                            <fest:value output="text">data.nick</fest:value>
+                <form action="/change_profile" method="post">
+                    <div class="profile_data_1">
+                        <div class="profile_data_bottom_border_div">
+                            <div class="left_data">Никнейм</div>
+                            <div class="right_data">
+                                <fest:element name="input">
+                                    <fest:attributes>
+                                        <fest:attribute name="type">text</fest:attribute>
+                                        <fest:attribute name="class">profile_data_input</fest:attribute>
+                                        <fest:attribute name="value"><fest:value>data.nick</fest:value></fest:attribute>
+                                        <fest:attribute name="name">nick</fest:attribute>
+                                    </fest:attributes>
+                                </fest:element>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="profile_data_2">
-                    <div class="profile_data_bottom_border_div">
-                        <div class="left_data">Email</div>
-                        <div class="right_data">
-                            <fest:value output="text">data.email</fest:value>
+                    <div class="profile_data_2">
+                        <div class="profile_data_bottom_border_div">
+                            <div class="left_data">Email</div>
+                            <div class="right_data">
+                                <fest:element name="input">
+                                    <fest:attributes>
+                                        <fest:attribute name="type">email</fest:attribute>
+                                        <fest:attribute name="class">profile_data_input</fest:attribute>
+                                        <fest:attribute name="value"><fest:value>data.email</fest:value></fest:attribute>
+                                        <fest:attribute name="name">email</fest:attribute>
+                                    </fest:attributes>
+                                </fest:element>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="profile_data_3">
-                    <div class="profile_data_bottom_border_div">
-                        <div class="left_data">Очки</div>
-                        <div class="right_data">
-                            <fest:value output="text">data.score</fest:value>
+                    <div class="profile_data_3">
+                        <div class="profile_data_bottom_border_div">
+                            <div class="left_data">Очки</div>
+                            <div class="right_data">
+                                <fest:value output="text">data.score</fest:value>  
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <div class="profile_data_4">
                     <div class="profile_data_bottom_border_div">
                         <div class="left_data">Игр</div>
@@ -46,8 +62,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="profile_data_footer">
+        <div class="profile_data_footer">
         <a class="profile_change_button" href="#">
             <div class="profile_change_button_pic">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.627 13.203l4.237-4.237 2.17 2.17-3.152 3.152-1.085 1.085c-.001.001-.243.225-.712.314l-1.621.306a.438.438 0 0 1-.36-.097.438.438 0 0 1-.097-.36l.306-1.621c.089-.468.312-.71.314-.712zM5.557 14H2.013a1 1 0 0 1-1-1v-.3c0-2.48 2.01-4.494 4.488-4.5v-.796a3 3 0 0 1-1.488-2.591V3a3.001 3.001 0 0 1 6 0v1.813a3 3 0 0 1-1.488 2.591V8.2a4.52 4.52 0 0 1 1.199.165 2477.73 2477.73 0 0 0-3.326 3.329c-.004.004-.509.552-.71 1.611L5.557 14zm8.994-6.812a.643.643 0 0 0-.909 0l-.856.856 2.17 2.17.856-.856a.643.643 0 0 0 0-.909l-1.261-1.261z"></path></svg>
@@ -61,4 +76,5 @@
             <div class="profile_delete_button_text">Удалить</div>
         </a>
     </div>
+</div>
 </fest:template>
