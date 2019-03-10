@@ -9,13 +9,13 @@
             </div>
         </div>
         <div class="login_window_form">
-            <form action="#" method="POST">
+            <form action="/login" method="POST" class="form_login">
                 <div class="login_window_div_in_form">
                     <div class="input_div_login">
-                        <input name="email" class="login_window_phone form_window" type="text" placeholder="Электронная почта"/>>
+                        <input name="email" class="login_window_phone form_window" type="text" placeholder="Электронная почта"/>
                     </div>
                     <div class="input_div_pass">
-                        <input class="form_window" name="password" type="password" placeholder="Пароль"/>>
+                        <input class="form_window" name="password" type="password" placeholder="Пароль"/>
                         <div class="login_window_pic">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 1.488c-5.302 0-8 5.21-8 6.512 0 1.302 2.791 6.512 8 6.512S16 9.302 16 8c0-1.302-2.698-6.512-8-6.512zm0 10.233A3.731 3.731 0 0 1 4.279 8 3.731 3.731 0 0 1 8 4.279 3.731 3.731 0 0 1 11.721 8 3.731 3.731 0 0 1 8 11.721zM8 6c1.143 0 2 .953 2 2 0 1.143-.952 2-2 2-1.143 0-2-.952-2-2 0-1.142.857-2 2-2z">
