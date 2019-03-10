@@ -246,7 +246,7 @@ export function createRegistrationPage() {
 		if (password.length < 6){
 			errList.push("Пароль короче 6 символов!")
 		}
-		if (errList.length > 0) {
+		if (errList.length > 1) {
 			const errBlock = document.getElementsByClassName('registration_err_list')[0];
 			ShowErrMassage(errBlock, errList);
 			return;
@@ -267,10 +267,11 @@ export function createRegistrationPage() {
 		});
 	});
 	function ShowErrMassage(errBlock, errList) {
-		let elm;
-		for (elm of errList) {
-			console.log(elm);
+		errBlock.innerHTML = '';
+		errList.forEach(elm => {
+			console.log(elm, errList.length);
 			errBlock.innerHTML += elm + "<br>"; 
-		}
+		});
+			
 	}
 }
