@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <div class="sign_in_bottom">
-                        <a href="#">Зарегистрироваться</a>`
+                        <a href="signup" data-href="signup">Зарегистрироваться</a>`
                     </div>
                 </div>
             </form>

@@ -30,9 +30,18 @@
                 </div>
                 <div class="profile_data_4">
                     <div class="profile_data_bottom_border_div">
-                    <div class="left_data">KDA</div>
-                    <div class="right_data">
-                        <fest:value output="text">data.kda</fest:value>
+                        <div class="left_data">Игр</div>
+                        <div class="right_data">
+                            <fest:value output="text">data.games</fest:value>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile_data_5">
+                    <div class="profile_data_bottom_border_div">
+                        <div class="left_data">Побед</div>
+                        <div class="right_data">
+                            <fest:value output="text">data.wins</fest:value>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,5 +61,4 @@
             <div class="profile_delete_button_text">Удалить</div>
         </a>
     </div>
-</div>
 </fest:template>

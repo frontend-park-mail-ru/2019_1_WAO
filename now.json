@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "alias": ["wao2019.now.sh", "www.wao2019.now.sh"],
+  "builds": [
+    { "src": "./server/index.js", "use": "@now/node" },
+    { "src": "./public/dist", "use": "@now/static" }
+  ]
+}

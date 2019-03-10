@@ -1,17 +1,17 @@
 import AjaxModule from './modules/ajax.js';
 
-import {renderLoginPage} from './pages/login/login.js';
-import {renderProfilePage} from './pages/profile/profile.js';
-import {renderRegistrationPage} from './pages/registration/registration.js';
+//import {renderLoginPage} from './pages/login/login.js';
+//import {renderProfilePage} from './pages/profile/profile.js';
+//import {renderRegistrationPage} from './pages/registration/registration.js';
 
 import {NavbarComponent} from './components/Navbar/Navbar.js';
 import {MenuComponent} from './components/Menu/Menu.js';
 import {RulesComponent} from './components/Rules/Rules.js';
+import {ScoreBoardComponent} from './components/ScoreBoard/ScoreBoard.js';
+import {ScoreProfileComponent} from './components/ScoreProfile/ScoreProfile.js';
 import {Signin} from './components/Signin/signin.js';
 import {Registration} from './components/Registration/registration.js';
 import {Profile} from './components/Profile/profile.js';
-import {ScoreBoardComponent} from './components/ScoreBoard/ScoreBoard.js';
-import {ScoreProfileComponent} from './components/ScoreProfile/ScoreProfile.js';
 
 import {RENDER_TYPES} from './utils/constants.js';
 
@@ -55,7 +55,7 @@ function createScoreProfile(element, user) {
 			callback(xhr) {
 				if (!xhr.responseText) {
 					console.log('Unauthorized');
-					element.add("scoreboard_score_data");
+					//element.add("scoreboard_score_data");
 					//element.innerHTML = 'Че не авторизовался';
 					//createMenu();
 					return;
@@ -75,11 +75,10 @@ export function createNavbarScoreBoard(users) {
 	const scoreBoardSection = document.createElement('section');
 	scoreBoardSection.dataset.sectionName = 'scoreboard';
 	const container = document.createElement('div');
-
-	createScoreProfile(container);
 	container.classList.add("scoreboard_container");
 	scoreBoardSection.appendChild(container);
 
+	//createScoreProfile(container);
 	if (users) {
 		const scoreboard = new ScoreBoardComponent({
 			el: container,
@@ -120,11 +119,13 @@ export function createNavbarRules() {
 }
 
 export function createNavbarProfile(me) {
-	// createNavbar();
+	createNavbar();	
+	const profileSection = document.createElement('section');
+	profileSection.dataset.sectionName = 'profile';
 	// renderProfilePage(AjaxModule, me);
 
 	const signin = new Profile({
-		el: application,
+		el: profileSection,
 		type: RENDER_TYPES.TMPL,
 	})
 	// let listDivs = [{}];
@@ -135,12 +136,15 @@ export function createNavbarProfile(me) {
         //     {left: "Очки", right: me.score},
         //     {left: "KDA", right: me.kda},
 		// ];
+		/*
 		signin.data = {
 			nick: me.nick,
 			email: me.email,
 			score: me.score,
 			kda: me.kda
 		};
+		*/
+		signin.data = JSON.parse(JSON.stringify(me));
     } else {
 		AjaxModule.doGet({
 			callback(xhr) {
@@ -162,10 +166,10 @@ export function createNavbarProfile(me) {
 		console.log("END ajax");
 	}
 	signin.render();
+	application.appendChild(profileSection);
 }
 
-export function createLoginPage() {
-	// renderLoginPage(AjaxModule);
+export function createLoginPage(me) {
 
 	const signin = new Signin({
 		el: application,
@@ -180,7 +184,8 @@ export function createLoginPage() {
 		AjaxModule.doPost({
 			callback() {
 				application.innerHTML = '';
-				createNavbarProfile();
+				//createNavbarProfile();
+				createNavbarMenu();
 			},
 			path: '/login',
 			body: {
@@ -218,7 +223,8 @@ export function createRegistrationPage() {
 		AjaxModule.doPost({
 			callback() {
                 application.innerHTML = '';
-                createNavbarProfile();
+                //createNavbarProfile();
+                createNavbarMenu();
 				// renderProfilePage();
 			},
 			path: '/signup',
