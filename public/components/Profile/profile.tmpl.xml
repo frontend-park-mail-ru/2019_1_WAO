@@ -2,7 +2,12 @@
     <div class="profile_container">
         <div class="profile_container_top">
             <div class="profile_title">Профиль</div>
-            <div class="profile_photo">ИИ</div>
+            <fest:element name="img">
+                <fest:attributes>
+                    <fest:attribute name="class">profile_photo</fest:attribute>
+                    <fest:attribute name="src"><fest:value>data.img</fest:value></fest:attribute>
+                </fest:attributes>
+            </fest:element>
             <div class="profile_container_gridblock">
                 <form action="/change_profile" method="post">
                     <div class="profile_data_1">

@@ -3,6 +3,7 @@
 const express = require('express');
 const body = require('body-parser');
 const cookie = require('cookie-parser');
+const fs = require('fs');
 // morgan = require('morgan');
 const uuid = require('uuid/v4');
 const path = require('path');
@@ -68,6 +69,22 @@ app.post('/signup', function (req, res) {
 	const password = req.body.password;
 	const email = req.body.email;
 	const nick = req.body.nick;
+	let img = req.body.img;
+	if (img) {
+		img = "./images/" + img;
+	} else  {
+		img = "./images/background1.jpg";
+	} 
+	/*
+	console.log(img);
+	fs.writeFile("./public/dist/images/img.png", img, function(error) {
+		if (error) {
+			throw error;
+		}
+		console.log('чет сохранил');
+	});
+	*/
+
 	console.log("This data was send: pass: ", password, "email: ", email, "nick: ", nick);
 	if (
 		!password || !email || !nick //||
@@ -82,7 +99,7 @@ app.post('/signup', function (req, res) {
 	}
 
 	const id = uuid();
-	const user = {password, email, nick, score: 0, games: 0, wins: 0, img: "./images/background1.jpg"};
+	const user = {password, email, nick, img, score: 0, games: 0, wins: 0};
 	console.log("User: ", user);
 	ids[id] = email;  
 	users[email] = user;
@@ -125,6 +142,7 @@ app.get('/me', function (req, res) {
 		score: users[email].score,
 		games: users[email].games,
 		wins: users[email].wins,
+		img: users[email].img,
 	}
 	res.json(send);
 });

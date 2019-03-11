@@ -8,6 +8,7 @@
                 <input type="password" placeholder="Пароль" class="registration_input_password" name="password"/>
                 <input type="password" placeholder="Повторите пароль" class="registration_input_repassword" name="password_repeat"/>
                 <div class="registration_err_list">
+                <input type="file" placeholder="Картинка" name="img"/>
                     
                 </div>
                 <div class="registration_input_footer_divblock">

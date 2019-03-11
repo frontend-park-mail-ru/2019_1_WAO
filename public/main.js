@@ -1,5 +1,6 @@
 'use strict';
 
+import './img/user.png';
 import './pages/login/login.css';
 import './components/Menu/menu.css';
 import './components/Navbar/navbar.css';

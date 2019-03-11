@@ -236,15 +236,16 @@ export function createRegistrationPage() {
 		const email = form.elements[ 'email' ].value;
 		const password = form.elements[ 'password' ].value;
 		const password_repeat = form.elements[ 'password_repeat' ].value;
+		const img = form.elements[ 'img' ].files[0].name;
 
 		if (password !== password_repeat) {
-			errList.push("Пароли не одинаковые!")
+			errList.push("Пароли не одинаковые!");
 		}
 		if (!email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
-			errList.push("Неверно введена почта!")
+			errList.push("Неверно введена почта!");
 		}
 		if (password.length < 6){
-			errList.push("Пароль короче 6 символов!")
+			errList.push("Пароль короче 6 символов!")ж
 		}
 		if (errList.length > 1) {
 			const errBlock = document.getElementsByClassName('registration_err_list')[0];
@@ -263,6 +264,7 @@ export function createRegistrationPage() {
                 nick,
 				email,
 				password,
+				img
 			},
 		});
 	});

@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
 	<div class="scoreboard_header">
 		<div class="scoreboard_user_data">
-					
+			<img src="./image/background1.jpg" class="scoreboard_img scoreboard_user_img"></img>
 			<a class="scoreboard_user_name" href="#">
 				<fest:value>data.nick</fest:value>
 			</a>
