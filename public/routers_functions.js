@@ -226,6 +226,68 @@ export function createRegistrationPage() {
 		type: RENDER_TYPES.TMPL,
 	})
 	signin.render();
+	const form = document.querySelector("form");
+	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
+	//const formdata = new FormData(form);
+	footer.addEventListener('click', function (event, formdata) {
+		let errList = [""];
+		event.preventDefault();
+
+        const nick = form.elements[ 'nick' ].value;
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+		const password_repeat = form.elements[ 'password_repeat' ].value;
+		const img = form.elements[ 'img' ].files[0].name;
+
+		if (password !== password_repeat) {
+			errList.push("Пароли не одинаковые!");
+		}
+		if (!email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
+			errList.push("Неверно введена почта!");
+		}
+		if (password.length < 6){
+			errList.push("Пароль короче 6 символов!");
+		}
+		if (errList.length > 1) {
+			const errBlock = document.getElementsByClassName('registration_err_list')[0];
+			ShowErrMassage(errBlock, errList);
+			return;
+		}
+		AjaxModule.doPost({
+			callback() {
+                application.innerHTML = '';
+                //createNavbarProfile();
+                createNavbarMenu();
+				// renderProfilePage();
+			},
+			path: '/signup',
+			//body: formdata
+			body: {
+                nick,
+				email,
+				password,
+				img
+			},
+		});
+	});
+	function ShowErrMassage(errBlock, errList) {
+		errBlock.innerHTML = '';
+		errList.forEach(elm => {
+			console.log(elm, errList.length);
+			errBlock.innerHTML += elm + "<br>"; 
+		});
+			
+	}
+}
+
+/*
+export function createRegistrationPage() {
+	// renderRegistrationPage(AjaxModule);
+	const signin = new Registration({
+		el: application,
+		type: RENDER_TYPES.TMPL,
+	})
+	signin.render();
 	const form = document.getElementsByTagName('form')[0];
 	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
 	footer.addEventListener('click', function (event) {
@@ -277,3 +339,4 @@ export function createRegistrationPage() {
 			
 	}
 }
+*/
