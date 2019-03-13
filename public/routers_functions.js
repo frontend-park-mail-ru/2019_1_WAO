@@ -61,7 +61,7 @@ function createScoreProfile(element, user) {
 				element.innerHTML = '';
 				createScoreProfile(element, user);
 			},
-			path: '/me',
+			path: '/users/' + user.nickname,
 		});
 	}
 }
@@ -127,20 +127,7 @@ export function createNavbarProfile(me) {
 	})
 	// let listDivs = [{}];
 	if (me) {
-        // listDivs = [
-        //     {left: "Никнейм", right: me.nick},
-        //     {left: "Email", right: me.email},
-        //     {left: "Очки", right: me.score},
-        //     {left: "KDA", right: me.kda},
-		// ];
-
-		// signin.data = {
-		// 	nick: me.nick,
-		// 	email: me.email,
-		// 	score: me.score,
-		// 	kda: me.kda
-		// };
-		
+	
 		signin.data = JSON.parse(JSON.stringify(me));
     } else {
 		AjaxModule.doGet({
@@ -156,7 +143,7 @@ export function createNavbarProfile(me) {
                 createNavbarProfile(user);
 				// renderProfilePage(user);
 			},
-			path: '/me',
+			path: '/users/' + user.nickname,
 		});
 	}
 	signin.render();
@@ -166,10 +153,9 @@ export function createNavbarProfile(me) {
 	let button = document.getElementsByClassName('profile_change_button')[0];
 	button.addEventListener("click", function (event) {
 		event.preventDefault();
-		const email = form.elements[ 'email' ].value;
-		const nick = form.elements[ 'nick' ].value;
-		if ( email === me.email && nick === me.nick ){
-			console.log('Equal!', email, nick);
+		const nickname = form.elements[ 'nickname' ].value;
+		if ( nickname === me.nickname ){
+			console.log('Equal!', nickname);
 		} else {
 			AjaxModule.doPost({
 				callback() {
@@ -177,11 +163,11 @@ export function createNavbarProfile(me) {
 					createNavbarProfile();
 					console.log("Sent");
 				},
-				path: '/change_profile',
+				path: '/users/' + me.nickname,
 				body: {
-					email,
-					nick,
-					old_email: me.email,
+					nickname,
+					password: me.password,
+					image: me.image
 				},
 			});
 		}
@@ -198,7 +184,7 @@ export function createLoginPage(me) {
 	let form = document.getElementsByTagName('form')[0];
 	form.addEventListener("submit", function (event) {
 		event.preventDefault();
-		const email = form.elements[ 'email' ].value;
+		const nickname = form.elements[ 'nickname' ].value;
 		const password = form.elements[ 'password' ].value;
 		AjaxModule.doPost({
 			callback() {
@@ -206,9 +192,9 @@ export function createLoginPage(me) {
 				//createNavbarProfile();
 				createNavbarMenu();
 			},
-			path: '/login',
+			path: '/signin',
 			body: {
-				email,
+				nickname,
 				password,
 			},
 		});
@@ -218,11 +204,11 @@ export function createLoginPage(me) {
 
 export function createRegistrationPage() {
 	// renderRegistrationPage(AjaxModule);
-	const signin = new Registration({
+	const signup = new Registration({
 		el: application,
 		type: RENDER_TYPES.TMPL,
 	})
-	signin.render();
+	signup.render();
 	const form = document.querySelector("form");
 	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
 	//const formdata = new FormData(form);
@@ -230,18 +216,22 @@ export function createRegistrationPage() {
 		let errList = [""];
 		event.preventDefault();
 
-        const nick = form.elements[ 'nick' ].value;
-		const email = form.elements[ 'email' ].value;
+        const nick = form.elements[ 'nickname' ].value;
 		const password = form.elements[ 'password' ].value;
 		const password_repeat = form.elements[ 'password_repeat' ].value;
-		const img = form.elements[ 'img' ].files[0].name;
+		const image = form.elements[ 'image' ].files[0].name;
 
 		if (password !== password_repeat) {
 			errList.push("Пароли не одинаковые!");
 		}
+		if (nickname.length < 4) {
+			errList.push("Плохой ник!");
+		}
+		/*
 		if (!email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
 			errList.push("Неверно введена почта!");
 		}
+		*/
 		if (password.length < 6){
 			errList.push("Пароль короче 6 символов!");
 		}
@@ -260,10 +250,9 @@ export function createRegistrationPage() {
 			path: '/signup',
 			//body: formdata
 			body: {
-                nick,
-				email,
+                nickname,
 				password,
-				img
+				image
 			},
 		});
 	});
@@ -276,64 +265,3 @@ export function createRegistrationPage() {
 			
 	}
 }
-
-/*
-export function createRegistrationPage() {
-	// renderRegistrationPage(AjaxModule);
-	const signin = new Registration({
-		el: application,
-		type: RENDER_TYPES.TMPL,
-	})
-	signin.render();
-	const form = document.getElementsByTagName('form')[0];
-	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
-	footer.addEventListener('click', function (event) {
-		let errList = [""];
-		event.preventDefault();
-
-        const nick = form.elements[ 'nick' ].value;
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
-		const password_repeat = form.elements[ 'password_repeat' ].value;
-		const img = form.elements[ 'img' ].files[0].name;
-
-		if (password !== password_repeat) {
-			errList.push("Пароли не одинаковые!");
-		}
-		if (!email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
-			errList.push("Неверно введена почта!");
-		}
-		if (password.length < 6){
-			errList.push("Пароль короче 6 символов!")ж
-		}
-		if (errList.length > 1) {
-			const errBlock = document.getElementsByClassName('registration_err_list')[0];
-			ShowErrMassage(errBlock, errList);
-			return;
-		}
-		AjaxModule.doPost({
-			callback() {
-                application.innerHTML = '';
-                //createNavbarProfile();
-                createNavbarMenu();
-				// renderProfilePage();
-			},
-			path: '/signup',
-			body: {
-                nick,
-				email,
-				password,
-				img
-			},
-		});
-	});
-	function ShowErrMassage(errBlock, errList) {
-		errBlock.innerHTML = '';
-		errList.forEach(elm => {
-			console.log(elm, errList.length);
-			errBlock.innerHTML += elm + "<br>"; 
-		});
-			
-	}
-}
-*/

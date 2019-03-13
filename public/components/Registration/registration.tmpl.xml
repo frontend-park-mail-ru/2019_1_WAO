@@ -3,7 +3,7 @@
         <div class="registration_title">Регистрация</div>
         <div class="registration_body">
             <form enctype="multipart/form-data" action="#" method="POST">
-                <input type="text" placeholder="Ник" class="registration_input_lastname" name="nick"/>
+                <input type="text" placeholder="Ник" class="registration_input_lastname" name="nickname"/>
                 <input type="email" placeholder="Email" class="registration_input_email" name="email"/>
                 <input type="password" placeholder="Пароль" class="registration_input_password" name="password"/>
                 <input type="password" placeholder="Повторите пароль" class="registration_input_repassword" name="password_repeat"/>

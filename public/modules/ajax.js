@@ -1,5 +1,6 @@
 const noop = () => null;
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://127.0.0.1:3000';
+const apiPath = '/api/v1'
 const REQ_STATE = 4;
 
 class AjaxModule {
@@ -10,7 +11,7 @@ class AjaxModule {
         body = {}
     } = {}) {
         const xhr = new XMLHttpRequest();
-        xhr.open(method, baseUrl + path, true);
+        xhr.open(method, baseUrl + apiPath + path, true);
         xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {

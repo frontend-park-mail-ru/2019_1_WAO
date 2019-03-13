@@ -5,7 +5,7 @@
             <fest:element name="img">
                 <fest:attributes>
                     <fest:attribute name="class">profile_photo</fest:attribute>
-                    <fest:attribute name="src"><fest:value>data.img</fest:value></fest:attribute>
+                    <fest:attribute name="src"><fest:value>data.image</fest:value></fest:attribute>
                 </fest:attributes>
             </fest:element>
             <div class="profile_container_gridblock">
@@ -18,7 +18,7 @@
                                     <fest:attributes>
                                         <fest:attribute name="type">text</fest:attribute>
                                         <fest:attribute name="class">profile_data_input</fest:attribute>
-                                        <fest:attribute name="value"><fest:value>data.nick</fest:value></fest:attribute>
+                                        <fest:attribute name="value"><fest:value>data.nickname</fest:value></fest:attribute>
                                         <fest:attribute name="name">nick</fest:attribute>
                                     </fest:attributes>
                                 </fest:element>
@@ -33,7 +33,7 @@
                                     <fest:attributes>
                                         <fest:attribute name="type">email</fest:attribute>
                                         <fest:attribute name="class">profile_data_input</fest:attribute>
-                                        <fest:attribute name="value"><fest:value>data.email</fest:value></fest:attribute>
+                                        <fest:attribute name="value"><fest:value>data.nickname</fest:value></fest:attribute>
                                         <fest:attribute name="name">email</fest:attribute>
                                     </fest:attributes>
                                 </fest:element>

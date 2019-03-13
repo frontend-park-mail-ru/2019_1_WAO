@@ -12,7 +12,7 @@
             <form action="/login" method="POST" class="form_login">
                 <div class="login_window_div_in_form">
                     <div class="input_div_login">
-                        <input name="email" class="login_window_phone form_window" type="text" placeholder="Электронная почта"/>
+                        <input name="nickname" class="login_window_phone form_window" type="text" placeholder="Логин"/>
                     </div>
                     <div class="input_div_pass">
                         <input class="form_window" name="password" type="password" placeholder="Пароль"/>

@@ -3,7 +3,7 @@
 		<div class="scoreboard_user_data">
 			<img src="./image/background1.jpg" class="scoreboard_img scoreboard_user_img"></img>
 			<a class="scoreboard_user_name" href="#">
-				<fest:value>data.nick</fest:value>
+				<fest:value>data.nickname</fest:value>
 			</a>
 		</div>
 		<div class="scoreboard_score_data">

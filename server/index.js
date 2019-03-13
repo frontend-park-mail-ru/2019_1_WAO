@@ -17,50 +17,29 @@ app.use(body.json());
 app.use(cookie());
 
 const users = {
-	'goshan@pochta.ru': {
-		email: 'goshan@pochta.ru',
-		password: '1234',
-		nick: "Гошан",
+	'Гошан': {
+		nickname: 'Гошан',
+		password: '123456',
 		score: 700,
 		games: 101,
 		wins: 100,
-		img: "./images/background1.jpg",
+		image: "./images/background1.jpg",
 	},
-	'pashok@pochta.ru': {
-		email: 'pashok@pochta.ru',
-		password: '2345',
-		nick: "Пашок",
+	'Пашок': {
+		nickname: 'Пашок',
+		password: '123456',
 		score: 600,
-		games: 121,
-		wins: 50,
-		img: "./images/background1.jpg",
+		games: 51,
+		wins: 20,
+		image: "./images/background1.jpg",
 	},
-	'LexaXXX@pochta.ru': {
-		email: 'LexaXXX@pochta.ru',
-		password: '3456',
-		nick: "Лёха",
-		score: 1,
-		games: 1000,
-		wins: 7,
-		img: "./images/background1.jpg",
-	},
-	'Igor@pochta.ru': {
-		email: 'LexaXXX@pochta.ru',
-		password: '4567',
-		nick: "Игорь",
-		score: 0,
-		games: 1000,
-		wins: 0,
-		img: "./images/background1.jpg",
-	},
-	'karman@pochta.ru': {
-		email: 'karman@pochta.ru',
-		password: '5678',
-		nick: "Карман",
-		score: 6,
-		games: 4,
+	'Ахмед': {
+		nickname: 'Ахмед',
+		password: '777777',
+		score: 13,
+		games: 10000,
 		wins: 1,
-		img: "./images/background1.jpg",
+		image: "./images/background1.jpg",
 	},
 };
 const ids = {};
@@ -84,25 +63,26 @@ app.use(function(req, res, next) {
 
 
 function setHeaders(res) {
-	res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh/');
+	//res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh/');
+	res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000/');
 	res.header('Access-Control-Allow-Credentials', 'true');
+	res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
 	return res
 }
 
-app.post('/signup', function (req, res) {
+app.post('/api/v1/signup', function (req, res) {
 	res = setHeaders(res);
 	const password = req.body.password;
-	const email = req.body.email;
-	const nick = req.body.nick;
-	let img = req.body.img;
-	if (img) {
-		img = "./images/" + img;
+	const nickname = req.body.nickname;
+	let image = req.body.image;
+	if (image) {
+		image = "./images/" + image;
 	} else  {
-		img = "./images/background1.jpg";
+		image = "./images/background1.jpg";
 	} 
 	/*
-	console.log(img);
-	fs.writeFile("./public/dist/images/img.png", img, function(error) {
+	console.log(image);
+	fs.writeFile("./public/dist/images/img.png", image, function(error) {
 		if (error) {
 			throw error;
 		}
@@ -110,9 +90,9 @@ app.post('/signup', function (req, res) {
 	});
 	*/
 
-	console.log("This data was send: pass: ", password, "email: ", email, "nick: ", nick);
+	console.log("This data was send: pass: ", password, "nickname: ", nickname);
 	if (
-		!password || !email || !nick //||
+		!password || !nickname //||
 		//!password.match(/^\S{4,}$/) ||
 		//!email.match(/@/) ||
 		//!nick.match(/^\S{4,}$/)
@@ -124,91 +104,88 @@ app.post('/signup', function (req, res) {
 	}
 
 	const id = uuid();
-	const user = {password, email, nick, img, score: 0, games: 0, wins: 0};
+	const user = {nickname, password, image, score: 0, games: 0, wins: 0};
 	console.log("User: ", user);
-	ids[id] = email;  
-	users[email] = user;
-	console.log("ids[id]: ", ids, "users[email]: ", users );
+	ids[id] = nickname;  
+	users[nickname] = user;
+	console.log("ids[id]: ", ids, "users[nickname]: ", users );
 
 	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.status(201).json({id});
 });
 
-app.post('/login', function (req, res) {
+app.post('/api/v1/signin', function (req, res) {
 	res = setHeaders(res);
 
 	const password = req.body.password;
-	const email = req.body.email;
-	if (!password || !email) {
+	const nickname = req.body.nickname;
+	if (!password || !nickname) {
 		return res.status(400).json({error: 'Не указан E-Mail или пароль'});
 	}
-	if (!users[email] || users[email].password !== password) {
+	if (!users[nickname] || users[nickname].password !== password) {
 		return res.status(400).json({error: 'Не верный E-Mail и/или пароль'});
 	}
 
 	const id = uuid();
-	ids[id] = email;
+	ids[id] = nickname;
 
 	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.status(200).json({id});
 });
 
-app.get('/me', function (req, res) {
+app.get('/api/v1/users/Гошан', function (req, res) {
 	res = setHeaders(res);
 	const id = req.cookies['sessionid'];
 	console.log("Give Id ", id);
-	const email = ids[id];
-	console.log("Give email ", email);
-	if (!email || !users[email]) {
+	const nickname = ids[id];
+	console.log("Give nickname ", nickname);
+	if (!nickname || !users[nickname]) {
 		return res.status(401).end();
 	}
 
-	users[email].score += 1;
+	users[nickname].score += 1;
 	const send = {
-		nick: users[email].nick,
-		email: users[email].email,
+		nickname: users[nickname].nickname,
 		score: users[email].score,
 		games: users[email].games,
 		wins: users[email].wins,
-		img: users[email].img,
+		image: users[email].image,
 	}
 	res.json(send);
 });
 
-app.post('/change_profile', function(req, res) {
+app.post('/api/v1/users/Гошан/change', function(req, res) {
 	res = setHeaders(res);
-	const nick = req.body.nick;
-	const email = req.body.email;
-	const old_email = req.body.old_email;
+	const nickname = req.body.nickname;
+	const old_nickname = req.body.old_nickname;
 
 	const id = uuid();
 	const user = {
-		password: users[old_email].password,
-		email, 
-		nick, 
-		score: users[old_email].score, 
-		games: users[old_email].games, 
-		wins: users[old_email].wins, 
-		img: "./images/background1.jpg"
+		nickname,
+		password: users[old_nickname].password,
+		score: users[old_nickname].score, 
+		games: users[old_nickname].games, 
+		wins: users[old_nickname].wins, 
+		image: "./images/background1.jpg"
 	};
-	delete users[old_email];
+	delete users[old_nickname];
 	console.log("User: ", user);
-	ids[id] = email;  
-	users[email] = user;
-	console.log("ids[id]: ", ids[id], "users[email]: ", users[email] );
+	ids[id] = nickname;  
+	users[nickname] = user;
+	console.log("ids[id]: ", ids[id], "users[nickname]: ", users[nickname] );
 
-	console.log("Changed user: ", old_email);
+	console.log("Changed user: ", old_nickname);
 	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.status(201).json({id});
 });
 
-app.get('/users', function (req, res) {
+app.get('/api/v1/users', function (req, res) {
 	res = setHeaders(res);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
 		.map(user => {
 			return {
-				nick: user.nick,
+				nickname: user.nickname,
 				score: user.score,
 				games: user.games,
 				wins: user.wins
