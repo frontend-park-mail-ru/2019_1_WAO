@@ -45,11 +45,11 @@ const users = {
 const ids = {};
 
 /// не заработало
-/*
+
 app.use(function(req, res, next) {
 	if (req.method === 'OPTIONS') {
 		console.log("OPTIONS")
-		res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+		res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
 		res.header('Access-Control-Allow-Credentials', 'true');
     	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS');
 		res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
@@ -59,12 +59,11 @@ app.use(function(req, res, next) {
 	}
 	next();
 })
-*/
 
 
 function setHeaders(res) {
-	//res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh/');
-	res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000/');
+	res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
+	//res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000/');
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
 	return res
