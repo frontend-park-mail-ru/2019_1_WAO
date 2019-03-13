@@ -1,4 +1,6 @@
 const noop = () => null;
+const baseUrl = 'http://localhost:3000';
+const REQ_STATE = 4;
 
 class AjaxModule {
     _ajax({
@@ -8,12 +10,11 @@ class AjaxModule {
         body = {}
     } = {}) {
         const xhr = new XMLHttpRequest();
-        xhr.open(method, path, true);
-
+        xhr.open(method, baseUrl + path, true);
         xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState !== 4) {
+            if (xhr.readyState !== REQ_STATE) {
                 return;
             }
 
@@ -49,6 +50,25 @@ class AjaxModule {
             path,
             body
         });
+    }
+
+    doFetchGet({path = '/',} = {}) {
+        return fetch(baseUrl + path, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            body: null,
+        });
+    }
+
+    doPromiseGet({path = '/',} = {}) {
+        return new Promise(function (resolve, reject) {
+            this._ajax({
+                callback: resolve,
+                path,
+                method: 'GET',
+            });
+        }.bind(this));
     }
 }
 

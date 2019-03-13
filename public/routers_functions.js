@@ -1,9 +1,6 @@
+'use strict'
+
 import AjaxModule from './modules/ajax.js';
-
-//import {renderLoginPage} from './pages/login/login.js';
-//import {renderProfilePage} from './pages/profile/profile.js';
-//import {renderRegistrationPage} from './pages/registration/registration.js';
-
 import {NavbarComponent} from './components/Navbar/Navbar.js';
 import {MenuComponent} from './components/Menu/Menu.js';
 import {RulesComponent} from './components/Rules/Rules.js';

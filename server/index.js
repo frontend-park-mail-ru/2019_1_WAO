@@ -65,7 +65,32 @@ const users = {
 };
 const ids = {};
 
+/// не заработало
+/*
+app.use(function(req, res, next) {
+	if (req.method === 'OPTIONS') {
+		console.log("OPTIONS")
+		res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+		res.header('Access-Control-Allow-Credentials', 'true');
+    	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS');
+		res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
+
+		res.end();
+		return;
+	}
+	next();
+})
+*/
+
+
+function setHeaders(res) {
+	res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh/');
+	res.header('Access-Control-Allow-Credentials', 'true');
+	return res
+}
+
 app.post('/signup', function (req, res) {
+	res = setHeaders(res);
 	const password = req.body.password;
 	const email = req.body.email;
 	const nick = req.body.nick;
@@ -110,6 +135,8 @@ app.post('/signup', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
+	res = setHeaders(res);
+
 	const password = req.body.password;
 	const email = req.body.email;
 	if (!password || !email) {
@@ -127,6 +154,7 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/me', function (req, res) {
+	res = setHeaders(res);
 	const id = req.cookies['sessionid'];
 	console.log("Give Id ", id);
 	const email = ids[id];
@@ -148,6 +176,7 @@ app.get('/me', function (req, res) {
 });
 
 app.post('/change_profile', function(req, res) {
+	res = setHeaders(res);
 	const nick = req.body.nick;
 	const email = req.body.email;
 	const old_email = req.body.old_email;
@@ -174,6 +203,7 @@ app.post('/change_profile', function(req, res) {
 });
 
 app.get('/users', function (req, res) {
+	res = setHeaders(res);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
 		.map(user => {

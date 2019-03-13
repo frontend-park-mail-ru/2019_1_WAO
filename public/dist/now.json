@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "alias": ["front-wao.now.sh", "www.front-wao.now.sh"],
+	"github": {
+		"enabled": false
+	}
+}

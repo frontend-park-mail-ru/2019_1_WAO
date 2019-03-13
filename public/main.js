@@ -1,11 +1,12 @@
 'use strict';
 
 import './img/user.png';
-import './pages/login/login.css';
+
+import './components/Signin/login.css';
 import './components/Menu/menu.css';
 import './components/Navbar/navbar.css';
-import './pages/profile/profile.css';
-import './pages/registration/registration.css';
+import './components/Profile/profile.css';
+import './components/Registration/registration.css';
 import './components/Rules/rules.css';
 import './components/ScoreBoard/scoreboard.css';
 
