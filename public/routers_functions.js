@@ -211,12 +211,12 @@ export function createRegistrationPage() {
 	signup.render();
 	const form = document.querySelector("form");
 	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
-	//const formdata = new FormData(form);
+	const formdata = new FormData(form);
 	footer.addEventListener('click', function (event, formdata) {
 		let errList = [""];
 		event.preventDefault();
 
-        const nick = form.elements[ 'nickname' ].value;
+        const nickname = form.elements[ 'nickname' ].value;
 		const password = form.elements[ 'password' ].value;
 		const password_repeat = form.elements[ 'password_repeat' ].value;
 		const image = form.elements[ 'image' ].files[0].name;
@@ -248,7 +248,7 @@ export function createRegistrationPage() {
 				// renderProfilePage();
 			},
 			path: '/signup',
-			//body: formdata
+			//body: formdata,
 			body: {
                 nickname,
 				password,

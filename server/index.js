@@ -99,7 +99,7 @@ app.post('/api/v1/signup', function (req, res) {
 	) {
 		return res.status(400).json({error: 'Не валидные данные пользователя'});
 	}
-	if (users[email]) {
+	if (users[nickname]) {
 		return res.status(400).json({error: 'Пользователь уже существует'});
 	}
 
@@ -146,10 +146,10 @@ app.get('/api/v1/users/Гошан', function (req, res) {
 	users[nickname].score += 1;
 	const send = {
 		nickname: users[nickname].nickname,
-		score: users[email].score,
-		games: users[email].games,
-		wins: users[email].wins,
-		image: users[email].image,
+		score: users[nickname].score,
+		games: users[nickname].games,
+		wins: users[nickname].wins,
+		image: users[nickname].image,
 	}
 	res.json(send);
 });
