@@ -3,11 +3,11 @@
 import './img/user.png';
 
 import './components/Signin/login.css';
-import './components/Menu/menu.css';
-import './components/Navbar/navbar.css';
+import './components/Menu/Menu.css';
+import './components/Navbar/Navbar.css';
 import './components/Profile/profile.css';
 import './components/Registration/registration.css';
-import './components/Rules/rules.css';
+import './components/Rules/Rules.css';
 import './components/ScoreBoard/scoreboard.css';
 
 import * as Add_router from './routers_functions.js'

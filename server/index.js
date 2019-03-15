@@ -49,7 +49,9 @@ const ids = {};
 app.use(function(req, res, next) {
 	if (req.method === 'OPTIONS') {
 		console.log("OPTIONS")
-		res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
+		res.setHeader('Access-Control-Allow-Origin', 'https://wao2019.herokuapp.com/');
+		res.setHeader('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
+		res.setHeader('Access-Control-Allow-Origin', 'https://127.0.0.1:3000');
 		res.header('Access-Control-Allow-Credentials', 'true');
     	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS');
 		res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
