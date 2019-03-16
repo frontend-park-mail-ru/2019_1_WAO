@@ -42,5 +42,5 @@ application.addEventListener('click', function(event) {
 		application.innerHTML = '';
 		pages[link.dataset.href]();
 	}
-
 });
+

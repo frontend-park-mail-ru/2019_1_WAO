@@ -1,6 +1,7 @@
 'use strict'
 
-import AjaxModule from './modules/ajax.js';
+import Auth from './modules/auth.js';
+import Ajax from './modules/ajax.js';
 import {NavbarComponent} from './components/Navbar/Navbar.js';
 import {MenuComponent} from './components/Menu/Menu.js';
 import {RulesComponent} from './components/Rules/Rules.js';
@@ -26,17 +27,23 @@ function createNavbar() {
 }
 
 export function createNavbarMenu() {
-	createNavbar();
+	//Auth.check()
+	//	.then(result => {
+			createNavbar();
 
-	const menuSection = document.createElement('section');
-	menuSection.dataset.sectionName = 'menu';
+			const menuSection = document.createElement('section');
+			menuSection.dataset.sectionName = 'menu';
 
-	const menu = new MenuComponent({
-		el: menuSection,
-		type: RENDER_TYPES.TMPL,
-	})
-	menu.render();
-	application.appendChild(menuSection);
+			const menu = new MenuComponent({
+				el: menuSection,
+				type: RENDER_TYPES.TMPL,
+			})
+			menu.render();
+			application.appendChild(menuSection);			
+	//	})
+	//	.catch(() => {
+			//createSignIn();
+	//	})
 }
 
 function createScoreProfile(element, user) {
@@ -48,7 +55,7 @@ function createScoreProfile(element, user) {
 		scoreprofile.data = JSON.parse(JSON.stringify(user));
 		scoreprofile.render();	
 	} else {
-		AjaxModule.doGet({
+		Ajax.doGet({
 			callback(xhr) {
 				if (!xhr.responseText) {
 					console.log('Unauthorized');
@@ -88,7 +95,7 @@ export function createNavbarScoreBoard(users) {
 		em.textContent = 'Loading';
 		container.appendChild(em);
 
-		AjaxModule.doGet({
+		Ajax.doGet({
 			callback(xhr) {
 				const users = JSON.parse(xhr.responseText);
 				application.innerHTML = '';
@@ -119,7 +126,7 @@ export function createNavbarProfile(me) {
 	createNavbar();	
 	const profileSection = document.createElement('section');
 	profileSection.dataset.sectionName = 'profile';
-	// renderProfilePage(AjaxModule, me);
+	// renderProfilePage(Ajax, me);
 
 	const signin = new Profile({
 		el: profileSection,
@@ -130,12 +137,12 @@ export function createNavbarProfile(me) {
 	
 		signin.data = JSON.parse(JSON.stringify(me));
     } else {
-		AjaxModule.doGet({
+		Ajax.doGet({
 			callback(xhr) {
 				if (!xhr.responseText) {
 					//alert('Unauthorized');
 					application.innerHTML = '';
-					createNavbarProfile(AjaxModule);
+					createNavbarProfile(Ajax);
 					return;
 				}
 				const user = JSON.parse(xhr.responseText);
@@ -157,7 +164,7 @@ export function createNavbarProfile(me) {
 		if ( nickname === me.nickname ){
 			console.log('Equal!', nickname);
 		} else {
-			AjaxModule.doPost({
+			Ajax.doPost({
 				callback() {
 					application.innerHTML = '';
 					createNavbarProfile();
@@ -175,35 +182,43 @@ export function createNavbarProfile(me) {
 }
 
 export function createLoginPage(me) {
-
-	const signin = new Signin({
-		el: application,
-		type: RENDER_TYPES.TMPL,
-	})
-	signin.render();
-	let form = document.getElementsByTagName('form')[0];
-	form.addEventListener("submit", function (event) {
-		event.preventDefault();
-		const nickname = form.elements[ 'nickname' ].value;
-		const password = form.elements[ 'password' ].value;
-		AjaxModule.doPost({
-			callback() {
-				application.innerHTML = '';
-				//createNavbarProfile();
-				createNavbarMenu();
-			},
-			path: '/signin',
-			body: {
-				nickname,
-				password,
-			},
-		});
-	});
-
+	Auth.check()
+		.then(result => {
+			createNavbarMenu();
+		})
+		.catch(() => {
+			const signin = new Signin({
+				el: application,
+				type: RENDER_TYPES.TMPL,
+			})
+			signin.render();
+			let form = document.getElementsByTagName('form')[0];
+			form.addEventListener("submit", function (event) {
+				event.preventDefault();
+				const nickname = form.elements[ 'nickname' ].value;
+				const password = form.elements[ 'password' ].value;
+				Ajax.doPost({
+					callback: (xhr) => {
+						if (xhr.status === 200) {
+							application.innerHTML = '';
+							createNavbarMenu();
+						} else {
+							application.innerHTML = '';
+							createLoginPage();					
+						}
+					},
+					path: '/signin',
+					body: {
+						nickname,
+						password,
+					},
+				});
+			});		
+		})
 }
 
 export function createRegistrationPage() {
-	// renderRegistrationPage(AjaxModule);
+	// renderRegistrationPage(Ajax);
 	const signup = new Registration({
 		el: application,
 		type: RENDER_TYPES.TMPL,
@@ -240,7 +255,7 @@ export function createRegistrationPage() {
 			ShowErrMassage(errBlock, errList);
 			return;
 		}
-		AjaxModule.doPost({
+		Ajax.doPost({
 			callback() {
                 application.innerHTML = '';
                 //createNavbarProfile();

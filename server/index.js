@@ -11,10 +11,9 @@ const app = express();
 
 // app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'public', 'dist')));
-//app.use(express.static('./public/dist/'));
-//app.use(express.static('./public/dist/'));
 app.use(body.json());
 app.use(cookie());
+//app.use(express.session());
 
 const users = {
 	'Гошан': {
@@ -71,7 +70,32 @@ function setHeaders(res) {
 	return res
 }
 
+
+app.get('/api/v1/sessions', function(req, res) {
+	console.log("sessions");
+	const id = req.cookies.sessionid;
+	console.log(id);
+	if (!id) {
+		return res.status(400).json({error: 'Не валидный Ник'});
+	}
+
+	//if (Object.keys(ids).find(id => ids[id] == nickname)) {
+	console.log(ids);
+	if (ids.hasOwnProperty(id)) {
+		return res.status(200).json({id});
+	} else {
+		return res.status(400).json({error: 'Fff'});
+	}
+
+});
+
+
 app.post('/api/v1/signup', function (req, res) {
+	/*
+	if (!req.cookie) {
+		return res.status(400).json({error: 'Не валидные данные пользователя'});
+	}
+	*/
 	res = setHeaders(res);
 	const password = req.body.password;
 	const nickname = req.body.nickname;
