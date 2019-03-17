@@ -11,9 +11,10 @@ const app = express();
 
 // app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'public', 'dist')));
+//app.use(express.static('./public/dist/'));
+//app.use(express.static('./public/dist/'));
 app.use(body.json());
 app.use(cookie());
-//app.use(express.session());
 
 const users = {
 	'Гошан': {
@@ -43,18 +44,25 @@ const users = {
 };
 const ids = {};
 
-/// не заработало
+const setHeadearListOnPage = {
+	'Access-Control-Allow-Origin': 'https://front-wao.now.sh',
+	'Access-Control-Allow-Credentials': 'true',
+	'Access-Control-Allow-Headers': 'Content-Type,Origin',
+	"Content-Security-Policy": "default-src 'self'",
+};
 
+const setHraderListAdditionInAppUse = {
+	'Access-Control-Allow-Origin': 'https://wao2019.herokuapp.com/',
+	'Access-Control-Allow-Origin': 'https://127.0.0.1:3000',
+	'Access-Control-Allow-Methods': 'GET,PUT,POST,OPTIONS',
+};
+
+/// не заработало
 app.use(function(req, res, next) {
 	if (req.method === 'OPTIONS') {
-		console.log("OPTIONS")
-		res.setHeader('Access-Control-Allow-Origin', 'https://wao2019.herokuapp.com/');
-		res.setHeader('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
-		res.setHeader('Access-Control-Allow-Origin', 'https://127.0.0.1:3000');
-		res.header('Access-Control-Allow-Credentials', 'true');
-    	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS');
-		res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
-
+		console.log("OPTIONS");
+		setHeaders(res, setHeadearListOnPage);
+		setHeaders(res, setHraderListAdditionInAppUse);
 		res.end();
 		return;
 	}
@@ -62,41 +70,18 @@ app.use(function(req, res, next) {
 })
 
 
-function setHeaders(res) {
-	res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
-	//res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000/');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
+function setHeaders(res, list) {
+	for (const key in list) {
+		if (list.hasOwnProperty(key)) {
+			const element = list[key];
+			res.header(key, element);
+		}
+	}
 	return res
 }
 
-
-app.get('/api/v1/sessions', function(req, res) {
-	console.log("sessions");
-	const id = req.cookies.sessionid;
-	console.log(id);
-	if (!id) {
-		return res.status(400).json({error: 'Не валидный Ник'});
-	}
-
-	//if (Object.keys(ids).find(id => ids[id] == nickname)) {
-	console.log(ids);
-	if (ids.hasOwnProperty(id)) {
-		return res.status(200).json({id});
-	} else {
-		return res.status(400).json({error: 'Fff'});
-	}
-
-});
-
-
 app.post('/api/v1/signup', function (req, res) {
-	/*
-	if (!req.cookie) {
-		return res.status(400).json({error: 'Не валидные данные пользователя'});
-	}
-	*/
-	res = setHeaders(res);
+	res = setHeaders(res, setHeadearListOnPage);
 	const password = req.body.password;
 	const nickname = req.body.nickname;
 	let image = req.body.image;
@@ -140,7 +125,7 @@ app.post('/api/v1/signup', function (req, res) {
 });
 
 app.post('/api/v1/signin', function (req, res) {
-	res = setHeaders(res);
+	res = setHeaders(res, setHeadearListOnPage);
 
 	const password = req.body.password;
 	const nickname = req.body.nickname;
@@ -157,9 +142,9 @@ app.post('/api/v1/signin', function (req, res) {
 	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.status(200).json({id});
 });
-
+// !!! Хардкод !!!
 app.get('/api/v1/users/Гошан', function (req, res) {
-	res = setHeaders(res);
+	res = setHeaders(res, setHeadearListOnPage);
 	const id = req.cookies['sessionid'];
 	console.log("Give Id ", id);
 	const nickname = ids[id];
@@ -180,7 +165,7 @@ app.get('/api/v1/users/Гошан', function (req, res) {
 });
 
 app.post('/api/v1/users/Гошан/change', function(req, res) {
-	res = setHeaders(res);
+	res = setHeaders(res, setHeadearListOnPage);
 	const nickname = req.body.nickname;
 	const old_nickname = req.body.old_nickname;
 
@@ -205,7 +190,7 @@ app.post('/api/v1/users/Гошан/change', function(req, res) {
 });
 
 app.get('/api/v1/users', function (req, res) {
-	res = setHeaders(res);
+	res = setHeaders(res, setHeadearListOnPage);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
 		.map(user => {
