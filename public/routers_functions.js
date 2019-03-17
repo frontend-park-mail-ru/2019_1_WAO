@@ -2,6 +2,7 @@
 
 import Auth from './modules/auth.js';
 import Ajax from './modules/ajax.js';
+import User from './modules/user.js';
 import {NavbarComponent} from './components/Navbar/Navbar.js';
 import {MenuComponent} from './components/Menu/Menu.js';
 import {RulesComponent} from './components/Rules/Rules.js';
@@ -13,6 +14,7 @@ import {Profile} from './components/Profile/profile.js';
 
 import {RENDER_TYPES} from './utils/constants.js';
 
+// ВСЕ ЭТО НАДО РАЗНЕСТИ ПО КЛАССАМ КОМПОНЕНТОВ
 
 function createNavbar() {
 	const navbarSection = document.createElement('section');
@@ -150,13 +152,13 @@ export function createNavbarProfile(me) {
                 createNavbarProfile(user);
 				// renderProfilePage(user);
 			},
-			path: '/users/' + user.nickname,
+			path: '/users/' + User.nickname,
 		});
 	}
 	signin.render();
 	application.appendChild(profileSection);
 	// Обработка изменений
-	let form = document.getElementsByTagName('form')[0];
+	let form = document.getElementById('form');
 	let button = document.getElementsByClassName('profile_change_button')[0];
 	button.addEventListener("click", function (event) {
 		event.preventDefault();
@@ -174,11 +176,35 @@ export function createNavbarProfile(me) {
 				body: {
 					nickname,
 					password: me.password,
-					image: me.image
 				},
 			});
 		}
 	});
+
+	let inputImg = document.getElementById('inputImg');
+	let buttonImg = document.getElementById('buttonImg');
+	buttonImg.addEventListener("click", function(event) {
+		event.preventDefault();		
+		var formData = new FormData();
+		formData.append('image', inputImg.files[0]);
+        //const xhr = new XMLHttpRequest();
+        //xhr.open('POST', '/api/v1/users/testuser/image', true);
+        //xhr.withCredentials = true;
+        //xhr.setRequestHeader("Content-Type", "multipart/form-data");
+        //xhr.send(formData);
+
+		Ajax.doPost({
+			callback() {				
+				createNavbarProfile();
+				console.log("Sent Img");
+			},
+			path: '/users/testuser/image',
+			body: {
+				formData
+			},
+		})
+	});
+
 }
 
 export function createLoginPage(me) {
@@ -201,6 +227,7 @@ export function createLoginPage(me) {
 					callback: (xhr) => {
 						if (xhr.status === 200) {
 							application.innerHTML = '';
+							User.update();
 							createNavbarMenu();
 						} else {
 							application.innerHTML = '';
@@ -226,15 +253,14 @@ export function createRegistrationPage() {
 	signup.render();
 	const form = document.querySelector("form");
 	const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
-	const formdata = new FormData(form);
 	footer.addEventListener('click', function (event, formdata) {
 		let errList = [""];
 		event.preventDefault();
 
-        const nickname = form.elements[ 'nickname' ].value;
-		const password = form.elements[ 'password' ].value;
-		const password_repeat = form.elements[ 'password_repeat' ].value;
-		const image = form.elements[ 'image' ].files[0].name;
+        const nickname 			= form.elements[ 'nickname' ].value;
+		const email 			= form.elements[ 'email' ].value;
+		const password 			= form.elements[ 'password' ].value;
+		const password_repeat 	= form.elements[ 'password_repeat' ].value;
 
 		if (password !== password_repeat) {
 			errList.push("Пароли не одинаковые!");
@@ -263,11 +289,10 @@ export function createRegistrationPage() {
 				// renderProfilePage();
 			},
 			path: '/signup',
-			//body: formdata,
 			body: {
                 nickname,
-				password,
-				image
+                email,
+				password
 			},
 		});
 	});

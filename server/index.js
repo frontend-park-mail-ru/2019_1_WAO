@@ -16,24 +16,27 @@ app.use(cookie());
 //app.use(express.session());
 
 const users = {
-	'Гошан': {
-		nickname: 'Гошан',
+	'Goshan': {
+		nickname: 'Goshan',
+		email: 'gosha@mail.ru',
 		password: '123456',
 		score: 700,
 		games: 101,
 		wins: 100,
 		image: "./images/background1.jpg",
 	},
-	'Пашок': {
-		nickname: 'Пашок',
+	'Pashok': {
+		nickname: 'Pashok',
+		email: 'pasha@mail.ru',
 		password: '123456',
 		score: 600,
 		games: 51,
 		wins: 20,
 		image: "./images/background1.jpg",
 	},
-	'Ахмед': {
-		nickname: 'Ахмед',
+	'Axmed': {
+		nickname: 'Axmed',
+		email: 'axmed@mail.ru',
 		password: '777777',
 		score: 13,
 		games: 10000,
@@ -61,16 +64,6 @@ app.use(function(req, res, next) {
 	next();
 })
 
-
-function setHeaders(res) {
-	res.header('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
-	//res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000/');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
-	return res
-}
-
-
 app.get('/api/v1/sessions', function(req, res) {
 	console.log("sessions");
 	const id = req.cookies.sessionid;
@@ -82,13 +75,20 @@ app.get('/api/v1/sessions', function(req, res) {
 	//if (Object.keys(ids).find(id => ids[id] == nickname)) {
 	console.log(ids);
 	if (ids.hasOwnProperty(id)) {
-		return res.status(200).json({id});
+		const nickname = ids[id];
+		const send = {
+			nickname: 	users[nickname].nickname,
+			email: 		users[nickname].email,
+			score: 		users[nickname].score,
+			games: 		users[nickname].games,
+			wins: 		users[nickname].wins,
+		}
+		res.json(send);
 	} else {
 		return res.status(400).json({error: 'Fff'});
 	}
 
 });
-
 
 app.post('/api/v1/signup', function (req, res) {
 	/*
@@ -96,15 +96,10 @@ app.post('/api/v1/signup', function (req, res) {
 		return res.status(400).json({error: 'Не валидные данные пользователя'});
 	}
 	*/
-	res = setHeaders(res);
-	const password = req.body.password;
 	const nickname = req.body.nickname;
-	let image = req.body.image;
-	if (image) {
-		image = "./images/" + image;
-	} else  {
-		image = "./images/background1.jpg";
-	} 
+	const email = req.body.email;
+	const password = req.body.password;
+	const image = "./images/background1.jpg";
 	/*
 	console.log(image);
 	fs.writeFile("./public/dist/images/img.png", image, function(error) {
@@ -139,9 +134,28 @@ app.post('/api/v1/signup', function (req, res) {
 	res.status(201).json({id});
 });
 
-app.post('/api/v1/signin', function (req, res) {
-	res = setHeaders(res);
+app.post('/api/v1/users/testuser/image', function (req, res) {
+	console.log("RX image");
+	console.log(req.body);
+	const image = req.body.image;
 
+	const id = req.cookies.sessionid;
+	const nickname = ids[id];
+	const path = "./public/dist/images/" + nickname + ".png";
+
+	console.log(image);
+	fs.writeFile(path, image, function(error) {
+		if (error) {
+			throw error;
+		}
+		console.log('чет сохранил');
+	});
+
+	users[nickname].image = path;
+	res.status(200).json({id});
+});
+
+app.post('/api/v1/signin', function (req, res) {
 	const password = req.body.password;
 	const nickname = req.body.nickname;
 	if (!password || !nickname) {
@@ -158,8 +172,7 @@ app.post('/api/v1/signin', function (req, res) {
 	res.status(200).json({id});
 });
 
-app.get('/api/v1/users/Гошан', function (req, res) {
-	res = setHeaders(res);
+app.get('/api/v1/users/Goshan', function (req, res) {
 	const id = req.cookies['sessionid'];
 	console.log("Give Id ", id);
 	const nickname = ids[id];
@@ -171,6 +184,7 @@ app.get('/api/v1/users/Гошан', function (req, res) {
 	users[nickname].score += 1;
 	const send = {
 		nickname: users[nickname].nickname,
+		email: users[nickname].email,
 		score: users[nickname].score,
 		games: users[nickname].games,
 		wins: users[nickname].wins,
@@ -179,8 +193,7 @@ app.get('/api/v1/users/Гошан', function (req, res) {
 	res.json(send);
 });
 
-app.post('/api/v1/users/Гошан/change', function(req, res) {
-	res = setHeaders(res);
+app.post('/api/v1/users/Goshan/change', function(req, res) {
 	const nickname = req.body.nickname;
 	const old_nickname = req.body.old_nickname;
 
@@ -205,7 +218,6 @@ app.post('/api/v1/users/Гошан/change', function(req, res) {
 });
 
 app.get('/api/v1/users', function (req, res) {
-	res = setHeaders(res);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
 		.map(user => {

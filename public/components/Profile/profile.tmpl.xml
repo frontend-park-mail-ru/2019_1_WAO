@@ -7,9 +7,11 @@
                     <fest:attribute name="class">profile_photo</fest:attribute>
                     <fest:attribute name="src"><fest:value>data.image</fest:value></fest:attribute>
                 </fest:attributes>
-            </fest:element>
+            </fest:element>    
+            <input id="inputImg" type="file" placeholder="Картинка" name="image"/>
+            <input id="buttonImg" type="button" value="Сменить картинку"/>
             <div class="profile_container_gridblock">
-                <form action="/change_profile" method="post">
+                <form id="form" action="/change_profile" method="post">
                     <div class="profile_data_1">
                         <div class="profile_data_bottom_border_div">
                             <div class="left_data">Никнейм</div>
@@ -33,7 +35,7 @@
                                     <fest:attributes>
                                         <fest:attribute name="type">email</fest:attribute>
                                         <fest:attribute name="class">profile_data_input</fest:attribute>
-                                        <fest:attribute name="value"><fest:value>data.nickname</fest:value></fest:attribute>
+                                        <fest:attribute name="value"><fest:value>data.email</fest:value></fest:attribute>
                                         <fest:attribute name="name">email</fest:attribute>
                                     </fest:attributes>
                                 </fest:element>
