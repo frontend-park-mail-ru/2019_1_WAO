@@ -1,5 +1,6 @@
 import {RENDER_TYPES} from '../../utils/constants.js';
 import {makeSafe} from '../../utils/safe.js';
+import {NavbarComponent} from '../Navbar/Navbar.js';
 
 import template from './Menu.tmpl.xml';
 
@@ -22,13 +23,26 @@ export class MenuComponent {
 	}
 
 	__renderTmpl() {
-		//this._el.innerHTML = window.fest['./Menu.tmpl']();
-		//this._el.innerHTML = window.fest['./components/Menu/Menu.tmpl']();
-		//this._el.innerHTML = window.fest['./Menu.tmpl']();
 		this._el.innerHTML = this._fest();
 	}
 
 	render() {
 		this.__renderTmpl();
+	}
+
+	create() {
+		const application = document.getElementById('application');
+
+		const navbar = new NavbarComponent();
+		navbar.create();
+
+		const menuSection = document.createElement('section');
+		menuSection.dataset.sectionName = 'menu';
+
+		this._el = menuSection;
+		this._type = RENDER_TYPES.TMPL;
+
+		this.render();
+		application.appendChild(menuSection);
 	}
 }

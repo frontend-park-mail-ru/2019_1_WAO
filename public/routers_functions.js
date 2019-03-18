@@ -7,7 +7,7 @@ import {NavbarComponent} from './components/Navbar/Navbar.js';
 import {MenuComponent} from './components/Menu/Menu.js';
 import {RulesComponent} from './components/Rules/Rules.js';
 import {ScoreBoardComponent} from './components/ScoreBoard/ScoreBoard.js';
-import {ScoreProfileComponent} from './components/ScoreProfile/ScoreProfile.js';
+//import {ScoreProfileComponent} from './components/ScoreProfile/ScoreProfile.js';
 import {Signin} from './components/Signin/signin.js';
 import {Registration} from './components/Registration/registration.js';
 import {Profile} from './components/Profile/profile.js';
@@ -16,63 +16,14 @@ import {RENDER_TYPES} from './utils/constants.js';
 
 // ВСЕ ЭТО НАДО РАЗНЕСТИ ПО КЛАССАМ КОМПОНЕНТОВ
 
-function createNavbar() {
-	const navbarSection = document.createElement('section');
-	navbarSection.dataset.sectionName = 'navbar';	
-
-	const navbar = new NavbarComponent({
-		el: navbarSection,
-		type: RENDER_TYPES.TMPL,
-	})
-	navbar.render();
-	application.appendChild(navbarSection);
+function createNavbar() {	
+	const navbar = new NavbarComponent();
+	navbar.create();
 }
 
 export function createNavbarMenu() {
-	//Auth.check()
-	//	.then(result => {
-			createNavbar();
-
-			const menuSection = document.createElement('section');
-			menuSection.dataset.sectionName = 'menu';
-
-			const menu = new MenuComponent({
-				el: menuSection,
-				type: RENDER_TYPES.TMPL,
-			})
-			menu.render();
-			application.appendChild(menuSection);			
-	//	})
-	//	.catch(() => {
-			//createSignIn();
-	//	})
-}
-
-function createScoreProfile(element, user) {
-	if (user) {
-		const scoreprofile = new ScoreProfileComponent({		
-			el: element,
-			type: RENDER_TYPES.TMPL,
-		});			
-		scoreprofile.data = JSON.parse(JSON.stringify(user));
-		scoreprofile.render();	
-	} else {
-		Ajax.doGet({
-			callback(xhr) {
-				if (!xhr.responseText) {
-					console.log('Unauthorized');
-					//element.add("scoreboard_score_data");
-					//element.innerHTML = 'Че не авторизовался';
-					//createMenu();
-					return;
-				}
-				const user = JSON.parse(xhr.responseText);
-				element.innerHTML = '';
-				createScoreProfile(element, user);
-			},
-			path: '/users/' + user.nickname,
-		});
-	}
+	const menu = new MenuComponent();
+	menu.create();
 }
 
 export function createNavbarScoreBoard(users) {

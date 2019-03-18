@@ -28,4 +28,16 @@ export class NavbarComponent {
 	render() {
 		this.__renderTmpl();
 	}
+
+	create() {
+		const application = document.getElementById('application');
+		const navbarSection = document.createElement('section');
+		navbarSection.dataset.sectionName = 'navbar';	
+
+		this._el = navbarSection;
+		this._type = RENDER_TYPES.TMPL;
+
+		this.render();
+		application.appendChild(navbarSection);
+	}
 }
