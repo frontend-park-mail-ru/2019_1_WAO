@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node server",
     "build": "webpack",
-    "lint": "eslint --ext .js public/"
+    "lint_show": "eslint --ext .js public/",
+    "lint_fix": "eslint --fix public/"
+
   },
   "main": "index.js",
   "dependencies": {

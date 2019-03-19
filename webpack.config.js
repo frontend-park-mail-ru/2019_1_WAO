@@ -44,6 +44,7 @@ module.exports = {
               } 
           }]
       },
+      /* Пока вручную, а то и без него проблем не мало
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -52,6 +53,7 @@ module.exports = {
           // eslint options (if necessary)
         }
       },
+      */
       {
         test: /\.xml$/,
         use: [
