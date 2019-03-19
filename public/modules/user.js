@@ -1,5 +1,13 @@
+/**
+ * @module models/user
+ */
+
 import Ajax from './ajax.js';
 
+/**
+ * UserModel user
+ * @class UserModel
+ */
 class UserModel {
 	constructor() {
 		this.nickname 	= null;
@@ -7,8 +15,13 @@ class UserModel {
 		this.score 		= null;
 		this.wins 		= null;
 		this.games 		= null;
+		this.image		= null;
 	}
 
+    /**
+     * Получаем данные пользователя
+     * @return {Object} data
+     */
 	get() {
 		return {			
 			nickname: 	this.nickname,
@@ -16,17 +29,24 @@ class UserModel {
 			score: 		this.score,
 			wins: 		this.wins,
 			games: 		this.games,
+			image: 		this.image,
 		}
 	}
 
+    /**
+     * Заполняем поля пользователя
+     * @param {Object} data
+     */
 	set(data) {
 		this.nickname 	= data.nickname;
 		this.email	 	= data.email;
 		this.score 		= data.score;
 		this.wins 		= data.wins;
 		this.games 		= data.games;	
+		this.image 		= data.image || './images/default_image.png';
 	}
 
+	// это дело в сеть
 	update() { 
 		Ajax.doGet({
 			callback(xhr) {

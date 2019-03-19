@@ -1,7 +1,9 @@
 module.exports = {
+    "extends": "google",
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "node": true
     },
     "globals": {
         "Atomics": "readonly",
@@ -14,6 +16,8 @@ module.exports = {
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "rules": {
+    "rules": {    
+        "no-console":"off",
+        "no-multi-spaces":"off",
     }
-};
+}

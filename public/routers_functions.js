@@ -151,7 +151,7 @@ export function createNavbarProfile(me) {
 			},
 			path: '/users/testuser/image',
 			body: {
-				formData
+				image: inputImg.files[0]
 			},
 		})
 	});

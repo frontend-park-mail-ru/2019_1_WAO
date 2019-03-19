@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "eslint --ext .js public/"
   },
   "main": "index.js",
   "dependencies": {
@@ -36,7 +36,8 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2019_1_WAO#readme",
   "devDependencies": {
-    "eslint": "^5.15.1",
+    "eslint": "^5.15.3",
+    "eslint-config-google": "^0.12.0",
     "eslint-loader": "^2.1.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fest-webpack-loader": "^1.1.1",
