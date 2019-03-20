@@ -24,7 +24,6 @@ const pages = {
 };
 
 Add_router.createLoginPage();
-// Add_router.createNavbarMenu();
 
 application.addEventListener('click', function(event) {
   if (!(event.target instanceof HTMLAnchorElement)) {

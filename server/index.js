@@ -11,8 +11,6 @@ const app = express();
 
 // app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
-//app.use(express.static('./public/dist/'));
-//app.use(express.static('./public/dist/'));
 app.use(body.json());
 app.use(cookie());
 
@@ -79,7 +77,6 @@ app.get('/api/v1/sessions', function(req, res) {
 		return res.status(400).json({error: 'Не валидный Ник'});
 	}
 
-	//if (Object.keys(ids).find(id => ids[id] == nickname)) {
 	console.log(ids);
 	if (ids.hasOwnProperty(id)) {
 		const nickname = ids[id];
