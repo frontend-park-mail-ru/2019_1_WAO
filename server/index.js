@@ -57,7 +57,6 @@ const setHraderListAdditionInAppUse = {
 	'Access-Control-Allow-Methods': 'GET,PUT,POST,OPTIONS',
 };
 
-/// не заработало
 app.use(function(req, res, next) {
 	if (req.method === 'OPTIONS') {
 		console.log("OPTIONS");
@@ -69,7 +68,7 @@ app.use(function(req, res, next) {
 	next();
 })
 
-
+// Добавляет заголовки в html pdu
 function setHeaders(res, list) {
 	for (const key in list) {
 		if (list.hasOwnProperty(key)) {
@@ -102,7 +101,8 @@ app.post('/api/v1/signup', function (req, res) {
 
 	console.log("This data was send: pass: ", password, "nickname: ", nickname);
 	if (
-		!password || !nickname //||
+		!password || !nickname 
+		//||
 		//!password.match(/^\S{4,}$/) ||
 		//!email.match(/@/) ||
 		//!nick.match(/^\S{4,}$/)

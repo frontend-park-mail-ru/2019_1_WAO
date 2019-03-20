@@ -1,6 +1,7 @@
 const noop = () => null;
 const baseUrl = 'http://127.0.0.1:3000';
 const apiPath = '/api/v1'
+// const apiPath = '/v1'
 const REQ_STATE = 4;
 
 class AjaxModule {
@@ -73,5 +74,5 @@ class AjaxModule {
     }
 }
 
-const Ajax = new AjaxModule();
-export default Ajax;
+const AjaxMod = new AjaxModule();
+export default AjaxMod;
