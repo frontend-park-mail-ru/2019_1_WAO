@@ -27,20 +27,20 @@ Add_router.createLoginPage();
 // Add_router.createNavbarMenu();
 
 application.addEventListener('click', function(event) {
-  if (!(event.target instanceof HTMLAnchorElement)) {
-    return;
-  }
-  event.preventDefault();
-  const link = event.target;
+	if (!(event.target instanceof HTMLAnchorElement)) {
+		return;
+	}
+	event.preventDefault();
+	const link = event.target;
 
-  console.log({
-    href: link.href,
-    dataHref: link.dataset.href,
-  });
+	console.log({
+		href: link.href,
+		dataHref: link.dataset.href		
+	});
 
-  if (pages.hasOwnProperty(link.dataset.href)) {
-    application.innerHTML = '';
-    pages[link.dataset.href]();
-  }
+	if (pages.hasOwnProperty(link.dataset.href)) {
+		application.innerHTML = '';
+		pages[link.dataset.href]();
+	}
+
 });
-

@@ -1,9 +1,0 @@
-.palette_container_table{
-    display: grid;
-    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
-    color: whitesmoke;
-}
-
-.palette_color_div_1{
-       background-color: # 
-}

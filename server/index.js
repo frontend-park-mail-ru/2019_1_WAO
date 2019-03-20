@@ -10,10 +10,11 @@ const path = require('path');
 const app = express();
 
 // app.use(morgan('dev'));
-app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+app.use(express.static(path.resolve(__dirname, '..', 'public', 'dist')));
+//app.use(express.static('./public/dist/'));
+//app.use(express.static('./public/dist/'));
 app.use(body.json());
 app.use(cookie());
-//app.use(express.session());
 
 const users = {
 	'Goshan': {
@@ -46,18 +47,24 @@ const users = {
 };
 const ids = {};
 
-/// не заработало
+const setHeadearListOnPage = {
+	'Access-Control-Allow-Origin': 'https://front-wao.now.sh',
+	'Access-Control-Allow-Credentials': 'true',
+	'Access-Control-Allow-Headers': 'Content-Type,Origin',
+	"Content-Security-Policy": "default-src 'self'",
+};
+
+const setHraderListAdditionInAppUse = {
+	'Access-Control-Allow-Origin': 'https://wao2019.herokuapp.com/',
+	'Access-Control-Allow-Origin': 'https://127.0.0.1:3000',
+	'Access-Control-Allow-Methods': 'GET,PUT,POST,OPTIONS',
+};
 
 app.use(function(req, res, next) {
 	if (req.method === 'OPTIONS') {
-		console.log("OPTIONS")
-		res.setHeader('Access-Control-Allow-Origin', 'https://wao2019.herokuapp.com/');
-		res.setHeader('Access-Control-Allow-Origin', 'https://front-wao.now.sh');
-		res.setHeader('Access-Control-Allow-Origin', 'https://127.0.0.1:3000');
-		res.header('Access-Control-Allow-Credentials', 'true');
-    	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS');
-		res.header('Access-Control-Allow-Headers', 'Content-Type,Origin');
-
+		console.log("OPTIONS");
+		setHeaders(res, setHeadearListOnPage);
+		setHeaders(res, setHraderListAdditionInAppUse);
 		res.end();
 		return;
 	}
@@ -90,12 +97,20 @@ app.get('/api/v1/sessions', function(req, res) {
 
 });
 
-app.post('/api/v1/signup', function (req, res) {
-	/*
-	if (!req.cookie) {
-		return res.status(400).json({error: 'Не валидные данные пользователя'});
+// Добавляет заголовки в html pdu
+function setHeaders(res, list) {
+	for (const key in list) {
+		if (list.hasOwnProperty(key)) {
+			const element = list[key];
+			res.header(key, element);
+		}
 	}
-	*/
+	return res
+}
+
+app.post('/api/v1/signup', function (req, res) {
+	res = setHeaders(res, setHeadearListOnPage);
+	const password = req.body.password;
 	const nickname = req.body.nickname;
 	const email = req.body.email;
 	const password = req.body.password;
@@ -112,7 +127,8 @@ app.post('/api/v1/signup', function (req, res) {
 
 	console.log("This data was send: pass: ", password, "nickname: ", nickname);
 	if (
-		!password || !nickname //||
+		!password || !nickname 
+		//||
 		//!password.match(/^\S{4,}$/) ||
 		//!email.match(/@/) ||
 		//!nick.match(/^\S{4,}$/)
@@ -142,6 +158,7 @@ app.post('/api/v1/users/testuser/image', function (req, res) {
 	const id = req.cookies.sessionid;
 	const nickname = ids[id];
 	const path = "./public/dist/images/" + nickname + ".png";
+	res = setHeaders(res, setHeadearListOnPage);
 
 	console.log(image);
 	fs.writeFile(path, image, function(error) {
@@ -173,6 +190,7 @@ app.post('/api/v1/signin', function (req, res) {
 });
 
 app.get('/api/v1/users/Goshan', function (req, res) {
+	res = setHeaders(res, setHeadearListOnPage);
 	const id = req.cookies['sessionid'];
 	console.log("Give Id ", id);
 	const nickname = ids[id];
@@ -194,6 +212,7 @@ app.get('/api/v1/users/Goshan', function (req, res) {
 });
 
 app.post('/api/v1/users/Goshan/change', function(req, res) {
+	res = setHeaders(res, setHeadearListOnPage);
 	const nickname = req.body.nickname;
 	const old_nickname = req.body.old_nickname;
 
@@ -218,6 +237,7 @@ app.post('/api/v1/users/Goshan/change', function(req, res) {
 });
 
 app.get('/api/v1/users', function (req, res) {
+	res = setHeaders(res, setHeadearListOnPage);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
 		.map(user => {
