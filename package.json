@@ -7,7 +7,6 @@
     "build": "webpack",
     "lint_show": "eslint --ext .js public/",
     "lint_fix": "eslint --fix public/"
-
   },
   "main": "index.js",
   "dependencies": {

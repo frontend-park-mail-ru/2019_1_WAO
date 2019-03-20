@@ -43,8 +43,8 @@ class AuthModule {
           }
         },
         path: '/sessions',
-      })
-    })
+      });
+    });
   }
 //* /
 }
