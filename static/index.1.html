@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,user-scalable=no"/>
+	<title>Минимальный игровой код PointJS</title>
+</head>
+<body>
+<script type="text/javascript" src="/static/js/point.js"></script>
+<script type="text/javascript" src="/static/js/init.js"></script>
+<script type="text/javascript" src="/static/js/grid.js"></script>
+<script type="text/javascript" src="/static/js/menu.js"></script>
+
+
+<script type="text/javascript">
+	
+game.newLoop('menu', function () {
+	game.fill('#D9D9D9');
+	drawGrid(); // вот наша сетка
+	drawMenu(); // а вот и меню с обработчиком
+});
+
+game.startLoop('menu'); // стартуем игровой цикл menu
+
+</script>
+
+</body>
+</html>
