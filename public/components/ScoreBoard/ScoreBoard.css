@@ -98,7 +98,7 @@ body {
 	grid-template-columns: 1fr 4fr 2fr 2fr;
 	grid-gap: 10px;
 	grid-template-areas: 
-		"scoreboard_column_1 scoreboard_column_2 scoreboard_column_3 scoreboard_column_4"
+		"scoreboard_column_1 scoreboard_column_2 scoreboard_column_3 scoreboard_column_4";
 }
 
 .scoreboard_table-row:hover {	

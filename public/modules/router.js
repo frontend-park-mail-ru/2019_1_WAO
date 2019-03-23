@@ -35,11 +35,11 @@ class RouterModule {
    * @param {string} path
    * */
   route(path = '/') {
-    if (!this._paths.hasOwnProperty(path)) {
+    if (!this._views.hasOwnProperty(path)) {
       // открыть свою 404 либо вызвать уведомление
     }
 
-    if (!this._paths.hasOwnProperty(this._prevPath)) {
+    if (this._views.hasOwnProperty(this._prevPath)) {
       this._views[this._prevPath].hide();
     }
     this._prevPath = path;
@@ -49,11 +49,10 @@ class RouterModule {
     }
     this._views[path].show();
 
-    _set
-    _history();
+    this._history(path);
   }
 
-  _history() {
+  _history(path) {
      window.history.pushState(null, null, path);
   }
 

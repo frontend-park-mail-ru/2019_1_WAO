@@ -1,9 +1,11 @@
 'use strict';
 
-import {MenuView} from './views/menu/MenuView.js';
+import MenuView from './views/menu/MenuView.js';
+import BaseView from './views/view/BaseView.js';
 import Router from './modules/router.js';
 //import {EventBus, EVENTS} from './modules/eventbus.js';
-import eventBus from './modules/eventbus.js';
+import EventBus from './modules/eventbus.js';
+//import eventBus from './modules/eventbus.js';
 
 import './img/user.png';
 import './components/Signin/login.css';
@@ -12,17 +14,21 @@ import './components/Navbar/Navbar.css';
 import './components/Profile/profile.css';
 import './components/Registration/registration.css';
 import './components/Rules/Rules.css';
-import './components/ScoreBoard/scoreboard.css';
+import './components/ScoreBoard/ScoreBoard.css';
 
 import * as Add_router from './routers_functions.js';
 
+document.addEventListener('DOMContentLoaded', () => {
+  const eventBus = new EventBus();
+
+  const application = document.getElementById('application');
+  Router.setRoot(application);
+  const menu = new MenuView(application, eventBus);
+  Router.addView('/', menu);
+  Router.route('/');
+});
+
 //const eventBus = new EventBus(EVENTS);
-//const eventBus = new EventBus();
-
-const application = document.getElementById('application');
-Router.setRoot(application);
-
-Router.addView('/', new MenuView(application, eventBus));
 
 const pages = {
   'menu': Add_router.createNavbarMenu,
@@ -34,7 +40,7 @@ const pages = {
 };
 
 //Add_router.createLoginPage();
-
+const application = document.getElementById('application');
 application.addEventListener('click', function(event) {
   if (!(event.target instanceof HTMLAnchorElement)) {
     return;

@@ -1,10 +1,11 @@
 //import {eventBus} from '../modules/eventbus.js';
 import template from './Base.tmpl.xml';
+//import template from '../menu/Menu.tmpl.xml';
+
 /**
  * BaseView view
- * @class BaseView
+ *@class BaseView
  */
-
 export default class BaseView {
   constructor(el, eventBus) {
     this._template  = template;
@@ -32,10 +33,10 @@ export default class BaseView {
    * Отрендерить вьюху
    *@param {Array} d - входной массив данных
    */
-  render(root, data = []) {
+  render(root, data = []) { // root == _el !! но зачем?
     this._el.innerHTML = this._template(data);
-    root.innerHTML = '';
-    root.appendChild(this._el);
+    //root.innerHTML = '';
+    //root.appendChild(this._el);
   }
 
   /**
