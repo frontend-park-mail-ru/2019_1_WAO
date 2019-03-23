@@ -1,7 +1,11 @@
 'use strict';
 
-import './img/user.png';
+import {MenuView} from './views/menu/MenuView.js';
+import Router from './modules/router.js';
+//import {EventBus, EVENTS} from './modules/eventbus.js';
+import eventBus from './modules/eventbus.js';
 
+import './img/user.png';
 import './components/Signin/login.css';
 import './components/Menu/Menu.css';
 import './components/Navbar/Navbar.css';
@@ -12,7 +16,13 @@ import './components/ScoreBoard/scoreboard.css';
 
 import * as Add_router from './routers_functions.js';
 
+//const eventBus = new EventBus(EVENTS);
+//const eventBus = new EventBus();
+
 const application = document.getElementById('application');
+Router.setRoot(application);
+
+Router.addView('/', new MenuView(application, eventBus));
 
 const pages = {
   'menu': Add_router.createNavbarMenu,
@@ -23,7 +33,7 @@ const pages = {
   'signup': Add_router.createRegistrationPage,
 };
 
-Add_router.createLoginPage();
+//Add_router.createLoginPage();
 
 application.addEventListener('click', function(event) {
   if (!(event.target instanceof HTMLAnchorElement)) {

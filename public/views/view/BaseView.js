@@ -1,15 +1,17 @@
+//import {eventBus} from '../modules/eventbus.js';
+import template from './Base.tmpl.xml';
 /**
  * BaseView view
  * @class BaseView
  */
 
 export default class BaseView {
-  constructor(template, el, parent) {
+  constructor(el, eventBus) {
     this._template  = template;
-    this._parent    = parent;
     this._el = el || document.createElement('div');
-    this._isActive = false;
+    this._eventBus = eventBus;
     this._rendered = false;
+    this.hide();
   }
 
   /**
