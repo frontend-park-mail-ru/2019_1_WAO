@@ -1,16 +1,17 @@
-import {EVENTS} from '../modules/eventbus.js';
-import Auth from './modules/auth.js';
+import Auth from '../modules/auth.js';
 
-export default class MenuModel extends BaseModel {
+export default class MenuModel {
 	constructor(eventBus) {
 		this._eventBus = eventBus;
-		this._eventBus.subscribe(AUTH_CHECK, this.__checkAuth.bind(this));
+		this._eventBus.on("auth_check", this._checkAuth.bind(this));
 	}
 
-	_checkAuth() {
+	_checkAuth() {		
+	/*
 		Auth.check()
 			.then(result => {
 				this._eventBus.trigger(AUTH_OK)
 			})
+	*/
 	}
 }

@@ -1,4 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" data="params">
 	<div class="rules_container">
 		<a class="rule r0">Правила</a>
 		<a class="rule r1">Правило 1. Не делать верстку до конца</a>

@@ -1,4 +1,4 @@
-import {BaseView} from '../view/BaseView.js'
+import BaseView from '../view/BaseView.js'
 import template from './Menu.tmpl.xml';
 
 /**
@@ -7,7 +7,7 @@ import template from './Menu.tmpl.xml';
  */
 export default class MenuView extends BaseView {
   constructor(el, eventBus) {
-  	super(el, eventBus);
-    this._eventBus.trigger("auth_check");
+  	super(el, eventBus, template);
+    //this._eventBus.trigger("auth_check");
   }
 }

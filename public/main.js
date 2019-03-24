@@ -1,11 +1,14 @@
 'use strict';
 
-import MenuView from './views/menu/MenuView.js';
-import BaseView from './views/view/BaseView.js';
 import Router from './modules/router.js';
-//import {EventBus, EVENTS} from './modules/eventbus.js';
 import EventBus from './modules/eventbus.js';
-//import eventBus from './modules/eventbus.js';
+
+import MenuPresenter from './presenters/MenuPresenter.js';
+import RulesPresenter from './presenters/RulesPresenter.js';
+import ScoreBoardPresenter from './presenters/ScoreBoardPresenter.js';
+import ProfilePresenter from './presenters/ProfilePresenter.js';
+import SignInPresenter from './presenters/SignInPresenter.js';
+import SignUpPresenter from './presenters/SignUpPresenter.js';
 
 import './img/user.png';
 import './components/Signin/login.css';
@@ -18,43 +21,22 @@ import './components/ScoreBoard/ScoreBoard.css';
 
 import * as Add_router from './routers_functions.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function start() {
   const eventBus = new EventBus();
 
   const application = document.getElementById('application');
   Router.setRoot(application);
-  const menu = new MenuView(application, eventBus);
-  Router.addView('/', menu);
+  Router.add('/',         new MenuPresenter(eventBus));
+  Router.add('/rules',    new RulesPresenter(eventBus));
+  Router.add('/users',    new ScoreBoardPresenter(eventBus));
+  Router.add('/profile',  new ProfilePresenter(eventBus));
+  Router.add('/signin',   new SignInPresenter(eventBus));
+  Router.add('/signup',   new SignUpPresenter(eventBus));
+
   Router.route('/');
-});
+  Router.listen();
+}
 
-//const eventBus = new EventBus(EVENTS);
-
-const pages = {
-  'menu': Add_router.createNavbarMenu,
-  'scoreboard': Add_router.createNavbarScoreBoard,
-  'rules': Add_router.createNavbarRules,
-  'profile': Add_router.createNavbarProfile,
-  'signin': Add_router.createLoginPage,
-  'signup': Add_router.createRegistrationPage,
-};
-
-//Add_router.createLoginPage();
-const application = document.getElementById('application');
-application.addEventListener('click', function(event) {
-  if (!(event.target instanceof HTMLAnchorElement)) {
-    return;
-  }
-  event.preventDefault();
-  const link = event.target;
-
-  console.log({
-    href: link.href,
-    dataHref: link.dataset.href,
-  });
-
-  if (pages.hasOwnProperty(link.dataset.href)) {
-    application.innerHTML = '';
-    pages[link.dataset.href]();
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  start();
 });
