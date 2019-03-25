@@ -12,7 +12,7 @@ func GameLoop() {
 		wg.Add(1)
 		go func(pl *Player) {
 			defer wg.Done()
-			Gravity(pl, 9.81)
+			pl.Gravity(9.81)
 			pl.Move(Vector{pl.vx, pl.vy})
 		}(player)
 	}

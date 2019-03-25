@@ -10,12 +10,12 @@ import (
 func TestGameLoop(t *testing.T) {
 	player1 := Player{2, 6, 0, 0, 1, 1}
 	// player2 := Player{50, 60, 0, 0, 10, 10}
-	block := Block{2, 36.43, 2, 1}
-	// players = append(players, &player1, &player2)
+	block := Block{2, 36.43, 1, 2}
+	// players = append(playrs, &player1, &player2)
 	players = append(players, &player1)
 	wgr := sync.WaitGroup{}
 	for i := 0; i < 20; i++ {
-		timer1 := time.NewTimer(time.Second / 8)
+		timer1 := time.NewTimer(time.Second / 16)
 		<-timer1.C
 		fmt.Print(i+1, " sec\n")
 		GameLoop()
@@ -36,3 +36,9 @@ func TestGameLoop(t *testing.T) {
 		fmt.Printf("player %x, x: %f, y: %f\n", index+1, player.x, player.y)
 	}
 }
+
+// func TestSin(t *testing.T) {
+// 	for i := 0.0; i < 10; i += 0.1 {
+// 		fmt.Println(math.Sin(float64(i)))
+// 	}
+// }
