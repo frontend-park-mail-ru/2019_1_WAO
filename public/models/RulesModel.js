@@ -3,8 +3,9 @@ import Auth from '../modules/auth.js';
 export default class RulesModel {
 	constructor(eventBus) {
 		this._eventBus = eventBus;
-		//this._eventBus.on("auth_check", this._checkAuth.bind(this));
-		this._checkAuth();
+		this._eventBus.on("view_show", () => {
+			this._checkAuth();
+		});
 	}
 
 	_checkAuth() {		

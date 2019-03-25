@@ -2,11 +2,6 @@ import MenuView from '../views/menu/MenuView.js';
 import MenuModel from '../models/MenuModel.js';
 import EventBus from '../modules/eventbus.js';
 
-const eventList = [
-	'auth_check',
-	'auth_bad'
-];
-
 /**
  * MenuPresenter view
  * @class MenuPresenter
@@ -20,6 +15,6 @@ export default class MenuPresenter {
 
 		eventBus.on('auth_bad', () => {
 			Router.route('/signin');
-		})
+		});
 	}
 }

@@ -13,9 +13,17 @@ export default class ScoreBoardPresenter {
 		this.view = new ScoreBoardView(application, eventBus);
 		this.model = new ScoreBoardModel(eventBus);
 
+		/*
+		eventBus.on('auth_ok', (d) => {
+			eventBus.trigger('users_req');
+		});
+		*/
+
 		eventBus.on('users_rx', (data) => {
 			console.log(data);			
 			this.view.render(application, data);
 		});
+
+		eventBus.trigger('auth_check');
 	}
 }

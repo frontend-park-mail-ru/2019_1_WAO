@@ -5,8 +5,9 @@ import User from '../modules/user.js';
 export default class SignInModel {
 	constructor(eventBus) {
 		this._eventBus = eventBus;
-		//this._eventBus.on("auth_check", this._checkAuth.bind(this));
-		this._checkAuth();
+		this._eventBus.on("view_show", () => {
+			this._checkAuth();
+		});
 	}
 
 	_checkAuth() {		
@@ -22,7 +23,7 @@ export default class SignInModel {
 
 	_makeSignin() {
 		const form = document.querySelector('form');
-		form.addEventListener('submit', function(event) {
+		form.addEventListener('submit', event => {
 		  event.preventDefault();
 		  const nickname = form.elements['nickname'].value;
 		  const password = form.elements['password'].value;

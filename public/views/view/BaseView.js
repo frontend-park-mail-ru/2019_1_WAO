@@ -46,6 +46,7 @@ export default class BaseView {
       this.render();
     }
     this._el.style.display = null;
+    this._eventBus.trigger('view_show');
   }
 
   /**
@@ -54,5 +55,6 @@ export default class BaseView {
   hide() {
     this._isActive = false;
     this._el.style.setProperty('display', 'none', 'important');
+    this._eventBus.trigger('view_hide');
   }
 }

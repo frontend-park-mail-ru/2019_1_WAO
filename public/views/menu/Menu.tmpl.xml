@@ -1,10 +1,10 @@
 <fest:template xmlns:fest="http://fest.mail.ru" data="params">
 	<div class="menu_container">
-		<a class="menu_btn m1" href="#" data-href="#">Играть</a>
+		<a class="menu_btn m1" href="/" data-href="/">Играть</a>
 		<a class="menu_btn m2" href="/profile" data-href="/profile">Профиль</a>
 		<a class="menu_btn m3" href="/users" data-href="/users">Лидеры</a>
 		<a class="menu_btn m4" href="/rules" data-href="/rules">Правила</a>
-		<a class="menu_btn m5" href="#" data-href="#">Авторы</a>
-		<a class="menu_btn m6" href="#" data-href="#">Магазин</a>
+		<a class="menu_btn m5" href="/" data-href="/">Авторы</a>
+		<a class="menu_btn m6" href="/" data-href="/">Магазин</a>
 	</div>
 </fest:template>

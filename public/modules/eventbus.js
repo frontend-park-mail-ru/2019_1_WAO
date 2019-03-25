@@ -6,7 +6,10 @@ export const EVENTS = [
 	"signin_bad",
 	"signup_ok",
 	"signup_bad",
-	"users_rx"
+	"users_rx",
+	'view_show',
+	'view_hide',
+	'users_req'
 ];
 
 /**
