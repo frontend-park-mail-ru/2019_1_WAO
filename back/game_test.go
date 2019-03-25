@@ -2,44 +2,37 @@ package game
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 )
 
-type Moves struct {
-	vector    Vector
-	expectedX float32
-	expectedY float32
-}
-
-var moves = []Moves{
-	{Vector{-5, 5}, 5, 15},
-	{Vector{-10, -10}, 0, 0},
-	{Vector{10, 10}, 20, 20},
-	{Vector{3.55, -6.1}, 13.55, 3.9},
-	{Vector{0, 0}, 10, 10},
-	{Vector{0.00, 0.00}, 10, 10},
-}
-
-func TestMove(t *testing.T) {
-
-	for _, pair := range moves {
-		player := Player{10, 10, 0, 0}
-		player.Move(pair.vector)
-		if player.x != pair.expectedX || player.y != pair.expectedY {
-			t.Error("Expected x:", pair.expectedX, "y:", pair.expectedY,
-				"but got x:", player.x, "y:", player.y)
-		}
-	}
-
-}
-
-func TestGravity(t *testing.T) {
-	player := Player{10, 10, 0, 0}
+func TestGameLoop(t *testing.T) {
+	player1 := Player{2, 6, 0, 0, 1, 1}
+	// player2 := Player{50, 60, 0, 0, 10, 10}
+	block := Block{2, 36.43, 2, 1}
+	// players = append(players, &player1, &player2)
+	players = append(players, &player1)
+	wgr := sync.WaitGroup{}
 	for i := 0; i < 20; i++ {
-		timer1 := time.NewTimer(time.Second)
+		timer1 := time.NewTimer(time.Second / 8)
 		<-timer1.C
-		fmt.Print(i+1, " sec:	")
-		Gravity(&player, 9.81)
+		fmt.Print(i+1, " sec\n")
+		GameLoop()
+		for _, plr := range players {
+			wgr.Add(1)
+			go func(pl *Player) {
+				defer wgr.Done()
+				if pl.CheckCollision(block) {
+					pl.y = block.y - 1
+					pl.vy = -15
+					fmt.Println("Collision was occured")
+				}
+			}(plr)
+		}
+		wgr.Wait()
+	}
+	for index, player := range players {
+		fmt.Printf("player %x, x: %f, y: %f\n", index+1, player.x, player.y)
 	}
 }

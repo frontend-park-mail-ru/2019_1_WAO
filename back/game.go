@@ -1,26 +1,21 @@
 package game
 
-import "fmt"
+import (
+	"sync"
+)
 
-type Vector struct {
-	x float32
-	y float32
-}
+var players []*Player
 
-type Player struct {
-	x  float32
-	y  float32
-	vx float32
-	vy float32
-}
+func GameLoop() {
+	var wg sync.WaitGroup
+	for _, player := range players {
+		wg.Add(1)
+		go func(pl *Player) {
+			defer wg.Done()
+			Gravity(pl, 9.81)
+			pl.Move(Vector{pl.vx, pl.vy})
+		}(player)
+	}
+	wg.Wait()
 
-func (player *Player) Move(vector Vector) {
-	player.x += vector.x
-	player.y += vector.y
-}
-
-func Gravity(player *Player, g float32) {
-	player.vy += g
-	player.y += player.vy
-	fmt.Printf("x: %f, y: %f\n", player.x, player.y)
 }
