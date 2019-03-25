@@ -1,7 +1,12 @@
 export const EVENTS = [
 	"auth_check",
 	"auth_ok",
-	"auth_bad"
+	"auth_bad",
+	"signin_ok",
+	"signin_bad",
+	"signup_ok",
+	"signup_bad",
+	"users_rx"
 ];
 
 /**
@@ -24,7 +29,7 @@ export default class EventBus {
      * */
 	on(event, callback) {
 		if (!this._events.hasOwnProperty(event)) {
-			throw new Error('Нет эвента: ${event}');
+			throw new Error(event);
 		}
 
 		this._events[event].push(callback)
@@ -37,7 +42,7 @@ export default class EventBus {
      * */
 	off(event, callback) {
 		if (!this._events.hasOwnProperty(event)) {
-			throw new Error('Нет эвента: ${event}');
+			throw new Error(event);
 		}
 
 		this._events[event] = this._events[event].filter(deleted => deleted !== callback) // hope it works
@@ -50,7 +55,7 @@ export default class EventBus {
      * */
 	trigger(event, ...pagams) {
 		if (!this._events.hasOwnProperty(event)) {
-			throw new Error('Нет эвента: ${event}');
+			throw new Error(event);
 		}
 
 		this._events[event].forEach(callback => {

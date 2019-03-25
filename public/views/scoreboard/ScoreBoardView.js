@@ -8,6 +8,5 @@ import template from './ScoreBoard.tmpl.xml';
 export default class ScoreBoardView extends BaseView  {
   constructor(el, eventBus) {
     super(el, eventBus, template);
-    //this._eventBus.trigger("auth_check");
   }
 }

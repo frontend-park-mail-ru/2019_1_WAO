@@ -26,12 +26,12 @@ function start() {
 
   const application = document.getElementById('application');
   Router.setRoot(application);
-  Router.add('/',         new MenuPresenter(eventBus));
+  Router.add('/',         new MenuPresenter(Router, eventBus));
   Router.add('/rules',    new RulesPresenter(eventBus));
   Router.add('/users',    new ScoreBoardPresenter(eventBus));
   Router.add('/profile',  new ProfilePresenter(eventBus));
-  Router.add('/signin',   new SignInPresenter(eventBus));
-  Router.add('/signup',   new SignUpPresenter(eventBus));
+  Router.add('/signin',   new SignInPresenter(Router, eventBus));
+  Router.add('/signup',   new SignUpPresenter(Router, eventBus));
 
   Router.route('/');
   Router.listen();

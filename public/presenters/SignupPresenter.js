@@ -3,7 +3,8 @@ import SignUpModel from '../models/SignUpModel.js';
 import EventBus from '../modules/eventbus.js';
 
 const eventList = [
-	'auth_check'
+	'auth_check',
+	'signup_ok'
 ];
 
 /**
@@ -11,10 +12,14 @@ const eventList = [
  * @class SignInView
  */
 export default class SignUpPresenter {
-	constructor(globalEventBus) {
+	constructor(Router, globalEventBus) {
 		const application = document.getElementById('application');
 		const eventBus = new EventBus();
 		this.view = new SignUpView(application, eventBus);
 		this.model = new SignUpModel(eventBus);
+
+		eventBus.on('signup_ok', () => {
+			Router.route('/');
+		});
 	}
 }
