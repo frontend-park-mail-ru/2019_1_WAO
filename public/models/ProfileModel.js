@@ -8,6 +8,7 @@ export default class ProfileModel {
 		});
 	}
 
+
 	_checkAuth() {		
 		Api.getAuth()
 			.then((res) => {

@@ -3,11 +3,9 @@ const apiUrl = '/api/v1';
 const reqUrl = baseUrl + apiUrl;
 
 export default class Api {
-
 	
 	// добавить PUT и DELETE запросы
 	// добавить походы за картинками
-
 
 	/**
 	 * Выполнить GET-запрос с помощью FetchAPI

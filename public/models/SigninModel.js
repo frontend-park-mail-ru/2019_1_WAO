@@ -9,6 +9,7 @@ export default class SignInModel {
 		});
 	}
 
+
 	_checkAuth() {		
 		Api.getAuth()
 			.then((res) => {

@@ -8,6 +8,7 @@ export default class MenuModel {
 		});
 	}
 
+
 	_checkAuth() {		
 		Api.getAuth()
 			.then((res) => {

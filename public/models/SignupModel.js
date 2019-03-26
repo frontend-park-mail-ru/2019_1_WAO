@@ -5,5 +5,4 @@ export default class SignUpModel {
 		this._eventBus = eventBus;
 	}
 
-
 }

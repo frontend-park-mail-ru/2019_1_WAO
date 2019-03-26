@@ -8,6 +8,7 @@ export default class RulesModel {
 		});
 	}
 
+
 	_checkAuth() {		
 		Api.getAuth()
 			.then((res) => {

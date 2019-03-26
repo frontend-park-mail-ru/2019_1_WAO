@@ -13,6 +13,7 @@ export default class ScoreBoardModel {
 		*/
 	}
 
+
 	_checkAuth() {		
 		Api.getAuth()
 			.then((res) => {
