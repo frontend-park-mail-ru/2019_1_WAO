@@ -2,11 +2,6 @@ import SignUpView from '../views/signup/SignUpView.js';
 import SignUpModel from '../models/SignUpModel.js';
 import EventBus from '../modules/eventbus.js';
 
-const eventList = [
-	'auth_check',
-	'signup_ok'
-];
-
 /**
  * SignInView view
  * @class SignInView
@@ -20,6 +15,10 @@ export default class SignUpPresenter {
 
 		eventBus.on('signup_ok', () => {
 			Router.route('/');
+		});
+
+		eventBus.on('signup_bad', () => {
+			Router.route('/signup');
 		});
 	}
 }

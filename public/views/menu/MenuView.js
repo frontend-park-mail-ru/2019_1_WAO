@@ -10,4 +10,10 @@ export default class MenuView extends BaseView {
   	super(el, eventBus, template);
     //this._eventBus.trigger("auth_check");
   }
+
+  render(root, data = []) {
+    this._el.innerHTML = this._template(data);
+  }
+
+
 }

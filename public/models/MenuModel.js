@@ -1,4 +1,4 @@
-import Api from '../modules/api.js'
+import Api from '../modules/api.js';
 
 export default class MenuModel {
 	constructor(eventBus) {

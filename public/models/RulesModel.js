@@ -1,4 +1,4 @@
-import Auth from '../modules/auth.js';
+import Api from '../modules/api.js';
 
 export default class RulesModel {
 	constructor(eventBus) {

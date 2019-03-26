@@ -105,7 +105,6 @@ function setHeaders(res, list) {
 
 app.post('/api/v1/signup', function (req, res) {
 	res = setHeaders(res, setHeadearListOnPage);
-	const password = req.body.password;
 	const nickname = req.body.nickname;
 	const email = req.body.email;
 	const password = req.body.password;
