@@ -11,7 +11,7 @@ const eventList = [
  * @class ProfilePresenter
  */
 export default class ProfilePresenter {
-	constructor(globalEventBus) {
+	constructor(Router, globalEventBus) {
 		const application = document.getElementById('application');
 		const eventBus = new EventBus();
 		this.view = new ProfileView(application, eventBus);

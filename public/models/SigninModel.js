@@ -1,6 +1,5 @@
-import Auth from '../modules/auth.js';
-import Ajax from '../modules/ajax.js';
 import User from '../modules/user.js';
+import Api from '../modules/api.js';
 
 export default class SignInModel {
 	constructor(eventBus) {
@@ -11,13 +10,18 @@ export default class SignInModel {
 	}
 
 	_checkAuth() {		
-		Auth.check()
-			.then(result => {
-				console.log("authorized");
-				this._eventBus.trigger("auth_ok");	
+		Api.getAuth()
+			.then((res) => {
+				if (res.status == 200 || res.status == 304) {
+					console.log("authorized");
+					this._eventBus.trigger("auth_ok");
+				} else {
+					this._makeSignin();
+				}
 			})
-			.catch(result => {
-				this._makeSignin();
+			.catch((err) => {	
+				console.log(err);
+				this._eventBus.trigger("auth_bad");
 			});
 	}
 
@@ -27,21 +31,31 @@ export default class SignInModel {
 		  event.preventDefault();
 		  const nickname = form.elements['nickname'].value;
 		  const password = form.elements['password'].value;
-		  Ajax.doPost({
-		    callback: (xhr) => {
-		      if (xhr.status === 200) {
-		        User.update();
-		        this._eventBus.trigger("signin_ok");
-		      } else {
-		        this._eventBus.trigger("signin_bad");
-		      }
-		    },
-		    path: '/signin',
-		    body: {
-		      nickname,
-		      password,
-		    },
-		  });
+		  const body = {
+		  	nickname: nickname,
+		  	password: password
+		  };
+		  Api.postSignIn(body)
+		  	.then((res) => {
+		  		if (res.status == 200 || res.status == 304) {		
+		        	//User.update();
+		        	this._eventBus.trigger("signin_ok");
+		        	return Api.getAuth();
+		  		} else {
+		        	this._eventBus.trigger("signin_bad");
+		  		}
+		  	})
+		  	.then((res) => {
+		  		if (res.status == 200 || res.status == 304) {
+		  			res.json().then((user) => {
+		  				User.set(user);
+		  			});
+		  		}
+		  	})
+			.catch((err) => {	
+				console.log(err);
+				this._eventBus.trigger("auth_bad");
+			});
 		});	
 	}
 }

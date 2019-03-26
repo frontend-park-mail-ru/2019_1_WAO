@@ -1,3 +1,5 @@
+/// НЕ ИСПОЛЬЗУЕМ
+
 const noop = () => null;
 const baseUrl = 'http://127.0.0.1:3000';
 
@@ -31,6 +33,25 @@ class AjaxModule {
     }
   }
 
+  doFetchGet({path = '/'} = {}) {
+    return fetch(baseUrl + path, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      body: null,
+    });
+  }
+
+  doPromiseGet({path = '/'} = {}) {
+    return new Promise(function(resolve, reject) {
+      this._ajax({
+        callback: resolve,
+        path,
+        method: 'GET',
+      });
+    }.bind(this));
+  }
+
   doPost({callback = noop,
     path = '/',
     body = {},
@@ -55,25 +76,7 @@ class AjaxModule {
     });
   }
 
-  doFetchGet({path = '/'} = {}) {
-    return fetch(baseUrl + path, {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      body: null,
-    });
-  }
-
-  doPromiseGet({path = '/'} = {}) {
-    return new Promise(function(resolve, reject) {
-      this._ajax({
-        callback: resolve,
-        path,
-        method: 'GET',
-      });
-    }.bind(this));
-  }
 }
 
-const AjaxMod = new AjaxModule();
-export default AjaxMod;
+const Ajax = new AjaxModule();
+export default Ajax;

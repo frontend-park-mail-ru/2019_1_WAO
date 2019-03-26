@@ -2,7 +2,7 @@
  * @module models/user
  */
 
-import Ajax from './ajax.js';
+//import Api from './api.js';
 
 /**
  * UserModel user
@@ -38,7 +38,7 @@ class UserModel {
      * @param {Object} data
      */
   set(data) {
-    this.nickname 	= data.nickname;
+    this.nickname = data.nickname;
     this.email	 	= data.email;
     this.score 		= data.score;
     this.wins 		= data.wins;
@@ -58,19 +58,19 @@ class UserModel {
     this.image    = null;
   }
 
-  // это дело в сеть
+/*
   update() {
-    Ajax.doGet({
-      callback(xhr) {
-        if (xhr.status === 200 || xhr.status === 304) {
-          User.set(JSON.parse(xhr.responseText));
-          console.log(User.get());
+    Api.getAuth()
+      .then((res) => {
+        if (res.status == 200 || res.status == 304) {
+          res.json().then((user) => {
+            User.set(user);
+            console.log(User.get());
+          });
         }
-      },
-      path: '/sessions',
-    });
+      });
   }
+*/
 }
-
 const User = new UserModel();
 export default User;

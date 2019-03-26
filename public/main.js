@@ -21,15 +21,21 @@ import './components/ScoreBoard/ScoreBoard.css';
 
 import * as Add_router from './routers_functions.js';
 
+/**
+TO DO
+session storage!!! (try catch)
+local storage ?
+**/
+
 function start() {
   const eventBus = new EventBus();
 
   const application = document.getElementById('application');
   Router.setRoot(application);
   Router.add('/',         new MenuPresenter(Router, eventBus));
-  Router.add('/rules',    new RulesPresenter(eventBus));
-  Router.add('/users',    new ScoreBoardPresenter(eventBus));
-  Router.add('/profile',  new ProfilePresenter(eventBus));
+  Router.add('/rules',    new RulesPresenter(Router, eventBus));
+  Router.add('/users',    new ScoreBoardPresenter(Router, eventBus));
+  Router.add('/profile',  new ProfilePresenter(Router, eventBus));
   Router.add('/signin',   new SignInPresenter(Router, eventBus));
   Router.add('/signup',   new SignUpPresenter(Router, eventBus));
 

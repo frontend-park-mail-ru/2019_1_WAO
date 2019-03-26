@@ -11,7 +11,7 @@ const eventList = [
  * @class RulesPresenter
  */
 export default class RulesPresenter {
-	constructor(globalEventBus) {
+	constructor(Router, globalEventBus) {
 		const application = document.getElementById('application');
 		const eventBus = new EventBus();
 		this.view = new RulesView(application, eventBus);

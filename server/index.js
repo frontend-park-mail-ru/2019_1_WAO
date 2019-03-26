@@ -170,6 +170,7 @@ app.post('/api/v1/users/testuser/image', function (req, res) {
 });
 
 app.post('/api/v1/signin', function (req, res) {
+	console.log(req.body);
 	const password = req.body.password;
 	const nickname = req.body.nickname;
 	if (!password || !nickname) {
@@ -245,7 +246,23 @@ app.get('/api/v1/users', function (req, res) {
 				wins: user.wins
 			}
 		});
+	console.log(scorelist);
+	res.json(scorelist);
+});
 
+app.get('/api/v1/users/1', function (req, res) {
+	res = setHeaders(res, setHeadearListOnPage);
+	const scorelist = Object.values(users)
+		.sort((l, r) => r.score - l.score)
+		.map(user => {
+			return {
+				nickname: user.nickname,
+				score: user.score,
+				games: user.games,
+				wins: user.wins
+			}
+		});
+	console.log(scorelist);
 	res.json(scorelist);
 });
 

@@ -9,12 +9,17 @@ export default class ProfileModel {
 	}
 
 	_checkAuth() {		
-		Auth.check()
-			.then(result => {
-				console.log("authorized");
+		Api.getAuth()
+			.then((res) => {
+				if (res.status == 200 || res.status == 304) {
+					console.log("authorized");
+				} else {
+					this._eventBus.trigger("auth_bad");
+				}
 			})
-			.catch(result => {
-				this._eventBus.trigger("auth_bad");	
+			.catch((err) => {	
+				console.log(err);
+				this._eventBus.trigger("auth_bad");
 			});
 	}
 
