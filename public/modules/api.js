@@ -38,6 +38,21 @@ export default class Api {
 	}
 
 	/**
+	 * Выполнить PUT-запрос с помощью FetchAPI
+	 *@param {path} string
+	 *@param {Object} body
+	 *return {Promise}
+	 */
+	static _putFetch(path = '/', body = {}) {
+		return fetch(reqUrl + path, {
+			method: 'PUT',
+			mode: 'cors',
+			credentials: 'include',
+			body: JSON.stringify(body),
+			headers: {'Content-Type': 'multipart/form-data; boundary=boundary'}
+		})		
+	}
+	/**
 	 * Обертка над GET-запросом для получения сессии
 	 *return {Promise}
 	 */
@@ -82,5 +97,14 @@ export default class Api {
 		return this._postFetch('/signup', body);
 	}
 
+	/**
+	 * Обертка над PUT-запросом для обновления профиля
+	 *@param {nickname} String
+	 *@param {body} Object
+	 *return {Promise}
+	 */
+	static putProfile(nickname, body = {}) {
+		return this._putFetch('/users/' + nickname, body);
+	}
 
 }

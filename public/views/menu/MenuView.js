@@ -1,5 +1,6 @@
 import BaseView from '../view/BaseView.js'
 import template from './Menu.tmpl.xml';
+//import {NavbarComponent} from '../components/Navbar/Navbar.js';
 
 /**
  * MenuView view
@@ -12,6 +13,8 @@ export default class MenuView extends BaseView {
   }
 
   render(root, data = []) {
+
+  	
     this._el.innerHTML = this._template(data);
   }
 

@@ -24,12 +24,12 @@ class UserModel {
      */
   get() {
     return {
-      nickname: this.nickname,
-      email: this.email,
-      score: this.score,
-      wins: this.wins,
-      games: this.games,
-      image: this.image,
+      nickname:   this.nickname,
+      email:      this.email,
+      score:      this.score,
+      wins:       this.wins,
+      games:      this.games,
+      image:      this.image,
     };
   }
 

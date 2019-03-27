@@ -1,4 +1,5 @@
 import Api from '../modules/api.js';
+import User from '../modules/user.js';
 
 export default class ProfileModel {
 	constructor(eventBus) {
@@ -8,12 +9,17 @@ export default class ProfileModel {
 		});
 	}
 
-
 	_checkAuth() {		
 		Api.getAuth()
 			.then((res) => {
-				if (res.status == 200 || res.status == 304) {
-					console.log("authorized");
+				if (res.status == 200 || res.status == 201 || res.status == 304) {
+					res.json().then((user) => {
+						User.set(user);
+						this._eventBus.trigger('users_rx', user);
+						this._updateUser();
+					});
+					//console.log("authorized");
+					//this._eventBus.trigger('users_rx', User.get());
 				} else {
 					this._eventBus.trigger("auth_bad");
 				}
@@ -24,4 +30,35 @@ export default class ProfileModel {
 			});
 	}
 
+	_updateUser() {
+	  const form = document.getElementsByTagName('form')[0];
+	  const button = document.getElementsByClassName('profile_change_button')[0];
+	  button.addEventListener('click', function(event) {
+	    event.preventDefault();
+	    const nickname = form.elements['nickname'].value;
+	    const email = form.elements['email'].value;
+	    //const password = form.elements['password'].value;
+	    const password = '222222';
+	  	const image = document.getElementById('inputImg').files[0];
+
+	    let formData = new FormData();
+	    formData.append('nickname', nickname);
+	    formData.append('email', email);
+	    formData.append('password', password);
+	    formData.append('image', image);
+
+	    Api.putProfile(nickname, formData)
+	    	.then((res) => {
+	    		if (res.status == 200 || res.status == 201 || res.status == 304) {
+	    			console.log('Нормас');
+	    		} else {	    			
+	    			console.log('Не нормас');
+	    		}
+	    	})
+			.catch((err) => {	
+				console.log(err);
+				this._eventBus.trigger("update_bad");
+			});
+	  });
+	}
 }

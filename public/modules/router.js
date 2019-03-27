@@ -22,7 +22,7 @@ class RouterModule {
   }
 
   /**
-   * Срабатывание на событие
+   * Добавление элемента
    * @param {string} path
    * @param {string} presenter
    * */
@@ -31,7 +31,7 @@ class RouterModule {
   }
 
   /**
-   * Срабатывание на событие
+   * Открытие страницы
    * @param {string} path
    * */
   route(path = '/') {

@@ -109,15 +109,7 @@ app.post('/api/v1/signup', function (req, res) {
 	const email = req.body.email;
 	const password = req.body.password;
 	const image = "./images/background1.jpg";
-	/*
-	console.log(image);
-	fs.writeFile("./public/dist/images/img.png", image, function(error) {
-		if (error) {
-			throw error;
-		}
-		console.log('чет сохранил');
-	});
-	*/
+
 
 	console.log("This data was send: pass: ", password, "nickname: ", nickname);
 	if (
@@ -206,21 +198,44 @@ app.get('/api/v1/users/Goshan', function (req, res) {
 	res.json(send);
 });
 
-app.post('/api/v1/users/Goshan/change', function(req, res) {
+app.put('/api/v1/users/Goshan', function(req, res) {
+	console.log(req.body);
 	res = setHeaders(res, setHeadearListOnPage);
-	const nickname = req.body.nickname;
-	const old_nickname = req.body.old_nickname;
+	const id = req.cookies['sessionid'];
+	const old_nickname = ids[id];
 
-	const id = uuid();
+	const nickname = req.body.nickname;
+	const email = req.body.email;
+	const password = req.body.password;
+	const image = req.body.image;
+
+	const imagePath = "../dist/images/Goshan.png"; 
+	fs.writeFile(imagePath, image, function(error) {
+		if (error) {
+			throw error;
+		}
+		console.log('чет сохранил');
+		//console.log(image);
+	});
+
 	const user = {
-		nickname,
-		password: users[old_nickname].password,
-		score: users[old_nickname].score, 
-		games: users[old_nickname].games, 
-		wins: users[old_nickname].wins, 
-		image: "./images/background1.jpg"
-	};
-	delete users[old_nickname];
+		nickname: nickname,
+		email: email,
+		password: password,
+		score: users[old_nickname].score,
+		games: users[old_nickname].games,
+		wins: users[old_nickname].wins,
+		image: imagePath
+
+	}
+
+	if (nickname != old_nickname) {
+		delete users[old_nickname];
+		ids[id] = nickname;
+	}
+
+	users[nickname] = user;
+
 	console.log("User: ", user);
 	ids[id] = nickname;  
 	users[nickname] = user;
