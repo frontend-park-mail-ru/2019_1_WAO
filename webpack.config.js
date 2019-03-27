@@ -1,6 +1,7 @@
 'use strict'
 
 const HtmlWebPackPlugin  = require('html-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 //const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -69,6 +70,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./public/index.html",
       filename: "./index.html"
+    }),
+    new ServiceWorkerWebpackPlugin({
+      entry: __dirname + '/public/sw.js',
     }),
     /*
     new MiniCssExtractPlugin({
