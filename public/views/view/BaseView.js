@@ -9,7 +9,6 @@ export default class BaseView {
     this._template  = template;
     this._el = el || document.createElement('div');
     this._eventBus = eventBus;
-    this._rendered = false;
     this.hide();
   }
 
@@ -34,7 +33,8 @@ export default class BaseView {
   render(root, data = []) { // root == _el !! но зачем?
     this._el.innerHTML = this._template(data);
     //root.innerHTML = '';
-    //root.appendChild(this._el);
+    //root.appendChild(this._el);   
+    this._rendered = true;
   }
 
   /**

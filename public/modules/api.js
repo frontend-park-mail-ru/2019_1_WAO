@@ -43,13 +43,13 @@ export default class Api {
 	 *@param {Object} body
 	 *return {Promise}
 	 */
-	static _putFetch(path = '/', body = {}) {
+	static _putFetch(path = '/', body) {
 		return fetch(reqUrl + path, {
 			method: 'PUT',
 			mode: 'cors',
 			credentials: 'include',
-			body: JSON.stringify(body),
-			headers: {'Content-Type': 'multipart/form-data; boundary=boundary'}
+			body: body,
+			//headers: {'Content-Type': 'multipart/form-data; boundary=boundary'}
 		})		
 	}
 	/**

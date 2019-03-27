@@ -1,7 +1,11 @@
 'use strict';
 
 const express = require('express');
+//const formData = require("express-form-data");
 const body = require('body-parser');
+var formidable = require('formidable');
+//const multer = require('multer');
+//const upload = multer();
 const cookie = require('cookie-parser');
 const fs = require('fs');
 const uuid = require('uuid/v4');
@@ -10,6 +14,7 @@ const app = express();
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(body.json());
+//app.use(upload.array());
 app.use(cookie());
 
 const users = {
@@ -197,7 +202,7 @@ app.get('/api/v1/users/Goshan', function (req, res) {
 	}
 	res.json(send);
 });
-
+/*
 app.put('/api/v1/users/Goshan', function(req, res) {
 	console.log(req.body);
 	res = setHeaders(res, setHeadearListOnPage);
@@ -244,6 +249,34 @@ app.put('/api/v1/users/Goshan', function(req, res) {
 	console.log("Changed user: ", old_nickname);
 	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.status(201).json({id});
+});
+*/
+
+app.put('/api/v1/users/Goshan', function(req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req);
+
+    let user = {};
+
+    form.on('field', function(name, value) {
+    	user[name] = value;
+    	console.log(name);
+    	console.log(value);
+	});
+
+    form.on('fileBegin', function (name, file) {
+        file.path = __dirname + '/uploads/' + file.name;
+    });
+
+    form.on('file', function (name, file) {
+        console.log('Uploaded ' + file.name);
+		user.image =  __dirname + '/uploads/' + file.name;
+    });
+
+	users[user.nickname] = user;
+
+	res.status(201).json({user});
+
 });
 
 app.get('/api/v1/users', function (req, res) {

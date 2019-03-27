@@ -9,6 +9,7 @@ import ScoreBoardPresenter from './presenters/ScoreBoardPresenter.js';
 import ProfilePresenter from './presenters/ProfilePresenter.js';
 import SignInPresenter from './presenters/SignInPresenter.js';
 import SignUpPresenter from './presenters/SignUpPresenter.js';
+import ExamplePresenter from './example.js';
 
 import './img/user.png';
 import './components/Signin/login.css';
@@ -32,6 +33,7 @@ function start() {
 
   const application = document.getElementById('application');
   Router.setRoot(application);
+  //Router.add('/',         new ExamplePresenter(Router, eventBus));
   Router.add('/',         new MenuPresenter(Router, eventBus));
   Router.add('/rules',    new RulesPresenter(Router, eventBus));
   Router.add('/users',    new ScoreBoardPresenter(Router, eventBus));
