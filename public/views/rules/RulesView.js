@@ -8,6 +8,6 @@ import template from './Rules.tmpl.xml';
 export default class RulesView extends BaseView {
   constructor(el, eventBus) {
     super(el, eventBus, template);
-    //this._eventBus.trigger("auth_check");
+    // this._eventBus.trigger("auth_check");
   }
 }

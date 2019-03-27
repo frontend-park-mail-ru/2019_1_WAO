@@ -13,11 +13,6 @@ const R_ATTRIBUTES = /(\w+\s*)=(\s*".*?")/g;
 
 export function makeSafe(unsafeString = '') {
   return unsafeString
-      .replace(R_TAG, (match, g1) => {
-        return BLACKLIST_TAGS.includes(g1) ? '' : match;
-      })
-      .replace(R_ATTRIBUTES, (match, g1) => {
-        return WHITELIST_ATTRS.includes(g1) ? match : '';
-      })
-  ;
+    .replace(R_TAG, (match, g1) => (BLACKLIST_TAGS.includes(g1) ? '' : match))
+    .replace(R_ATTRIBUTES, (match, g1) => (WHITELIST_ATTRS.includes(g1) ? match : ''));
 }

@@ -1,7 +1,7 @@
-/// НЕ ИСПОЛЬЗУЕМ
+// / НЕ ИСПОЛЬЗУЕМ
 import Ajax from './ajax.js';
 import User from './user.js';
-import {routerPaths} from '../utils/constants.js';
+import { routerPaths } from '../utils/constants.js';
 
 class AuthModule {
 /*

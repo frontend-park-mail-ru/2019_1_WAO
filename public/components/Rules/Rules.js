@@ -1,5 +1,5 @@
-import {RENDER_TYPES} from '../../utils/constants.js';
-import {makeSafe} from '../../utils/safe.js';
+import { RENDER_TYPES } from '../../utils/constants.js';
+import { makeSafe } from '../../utils/safe.js';
 
 import template from './Rules.tmpl.xml';
 

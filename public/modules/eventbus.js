@@ -1,17 +1,17 @@
 export const EVENTS = [
-	"auth_check",
-	"auth_ok",
-	"auth_bad",
-	"signin_ok",
-	"signin_bad",
-	"signup_ok",
-	"signup_bad",
-	"users_rx",
-	'view_show',
-	'view_hide',
-	'users_req',
-	'update_ok',
-	'update_bad'
+  'auth_check',
+  'auth_ok',
+  'auth_bad',
+  'signin_ok',
+  'signin_bad',
+  'signup_ok',
+  'signup_bad',
+  'users_rx',
+  'view_show',
+  'view_hide',
+  'users_req',
+  'update_ok',
+  'update_bad',
 ];
 
 /**
@@ -19,52 +19,51 @@ export const EVENTS = [
  *@class EventBus
  */
 export default class EventBus {
+  constructor(eventsList = EVENTS) {
+    this._events = {};
+    eventsList.forEach((event) => {
+      this._events[event] = [];
+    });
+  }
 
-	constructor(eventsList = EVENTS) {
-		this._events = {};
-		eventsList.forEach(event => {
-			this._events[event] = [];
-		});
-	}
-
-    /**
+  /**
      * Подписаться на событие
      * @param {string} event
      * @param {function} callback
      * */
-	on(event, callback) {
-		if (!this._events.hasOwnProperty(event)) {
-			throw new Error(event);
-		}
+  on(event, callback) {
+    if (!this._events.hasOwnProperty(event)) {
+      throw new Error(event);
+    }
 
-		this._events[event].push(callback)
-	}
+    this._events[event].push(callback);
+  }
 
-    /**
+  /**
      * Отписка
      * @param {string} event
      * @param {function} callback
      * */
-	off(event, callback) {
-		if (!this._events.hasOwnProperty(event)) {
-			throw new Error(event);
-		}
+  off(event, callback) {
+    if (!this._events.hasOwnProperty(event)) {
+      throw new Error(event);
+    }
 
-		this._events[event] = this._events[event].filter(deleted => deleted !== callback) // hope it works
-	}
+    this._events[event] = this._events[event].filter(deleted => deleted !== callback); // hope it works
+  }
 
-    /**
+  /**
      * Срабатывание на событие
      * @param {string} event
      * @param {Array} params
      * */
-	trigger(event, ...pagams) {
-		if (!this._events.hasOwnProperty(event)) {
-			throw new Error(event);
-		}
+  trigger(event, ...pagams) {
+    if (!this._events.hasOwnProperty(event)) {
+      throw new Error(event);
+    }
 
-		this._events[event].forEach(callback => {
-			callback(...pagams);
-		});
-	}
+    this._events[event].forEach((callback) => {
+      callback(...pagams);
+    });
+  }
 }

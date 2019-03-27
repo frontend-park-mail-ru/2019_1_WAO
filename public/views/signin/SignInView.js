@@ -1,4 +1,4 @@
-import BaseView from '../view/BaseView.js'
+import BaseView from '../view/BaseView.js';
 import template from './signin.tmpl.xml';
 
 /**
@@ -8,6 +8,6 @@ import template from './signin.tmpl.xml';
 export default class SignInView extends BaseView {
   constructor(el, eventBus) {
     super(el, eventBus, template);
-    //this._eventBus.trigger("auth_check");
+    // this._eventBus.trigger("auth_check");
   }
 }

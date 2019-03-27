@@ -1,4 +1,4 @@
-'use strict';
+
 
 import Router from './modules/router.js';
 import EventBus from './modules/eventbus.js';
@@ -20,18 +20,18 @@ import './components/Registration/registration.css';
 import './components/Rules/Rules.css';
 import './components/ScoreBoard/ScoreBoard.css';
 
-//import * as Add_router from './routers_functions.js';
+// import * as Add_router from './routers_functions.js';
 
 /**
 TO DO
 session storage!!! (try catch)
 local storage ?
-**/
+* */
 
 if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === '127.0.0.1')) {
   navigator.serviceWorker.register('/sw.js')
-    .then((reg) => console.error('SW success: ', reg))
-    .catch((err) => console.error('SW fail: ', err));
+    .then(reg => console.error('SW success: ', reg))
+    .catch(err => console.error('SW fail: ', err));
 }
 
 function start() {
@@ -39,7 +39,7 @@ function start() {
 
   const application = document.getElementById('application');
   Router.setRoot(application);
-  //Router.add('/',         new ExamplePresenter(Router, eventBus));
+  // Router.add('/',         new ExamplePresenter(Router, eventBus));
   Router.add('/',         new MenuPresenter(Router, eventBus));
   Router.add('/rules',    new RulesPresenter(Router, eventBus));
   Router.add('/users',    new ScoreBoardPresenter(Router, eventBus));

@@ -1,4 +1,4 @@
-//import {eventBus} from '../modules/eventbus.js';
+// import {eventBus} from '../modules/eventbus.js';
 
 /**
  * BaseView view
@@ -32,8 +32,8 @@ export default class BaseView {
    */
   render(root, data = []) { // root == _el !! но зачем?
     this._el.innerHTML = this._template(data);
-    //root.innerHTML = '';
-    //root.appendChild(this._el);   
+    // root.innerHTML = '';
+    // root.appendChild(this._el);
     this._rendered = true;
   }
 

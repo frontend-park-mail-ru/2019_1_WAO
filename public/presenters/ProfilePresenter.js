@@ -7,15 +7,15 @@ import EventBus from '../modules/eventbus.js';
  * @class ProfilePresenter
  */
 export default class ProfilePresenter {
-	constructor(Router, globalEventBus) {
-		const application = document.getElementById('application');
-		const eventBus = new EventBus();
-		this.view = new ProfileView(application, eventBus);
-		this.model = new ProfileModel(eventBus);
+  constructor(Router, globalEventBus) {
+    const application = document.getElementById('application');
+    const eventBus = new EventBus();
+    this.view = new ProfileView(application, eventBus);
+    this.model = new ProfileModel(eventBus);
 
-		eventBus.on('users_rx', (data) => {
-			console.log(data);			
-			this.view.render(application, data);
-		});
-	}
+    eventBus.on('users_rx', (data) => {
+      console.log(data);
+      this.view.render(application, data);
+    });
+  }
 }

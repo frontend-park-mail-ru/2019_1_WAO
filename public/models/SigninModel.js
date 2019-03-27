@@ -2,49 +2,48 @@ import User from '../modules/user.js';
 import Api from '../modules/api.js';
 
 export default class SignInModel {
-	constructor(eventBus) {
-		this._eventBus = eventBus;
-		this._eventBus.on("view_show", () => {
-			this._checkAuth();
-		});
-	}
+  constructor(eventBus) {
+    this._eventBus = eventBus;
+    this._eventBus.on('view_show', () => {
+      this._checkAuth();
+    });
+  }
 
 
-	_checkAuth() {		
-		Api.getAuth()
-			.then((res) => {
-				if (res.status == 200 || res.status == 304) {
-					console.log("authorized");
-					this._eventBus.trigger("auth_ok");
-				} else {
-					this._makeSignin();
-				}
-			})
-			.catch((err) => {	
-				console.log(err);
-				this._eventBus.trigger("auth_bad");
-			});
-	}
+  _checkAuth() {
+    Api.getAuth()
+      .then((res) => {
+        if (res.status == 200 || res.status == 304) {
+          console.log('authorized');
+          this._eventBus.trigger('auth_ok');
+        } else {
+          this._makeSignin();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this._eventBus.trigger('auth_bad');
+      });
+  }
 
-	_makeSignin() {
-		const form = document.querySelector('form');
-		form.addEventListener('submit', event => {
+  _makeSignin() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
 		  event.preventDefault();
-		  const nickname = form.elements['nickname'].value;
-		  const password = form.elements['password'].value;
+		  const nickname = form.elements.nickname.value;
+		  const password = form.elements.password.value;
 		  const body = {
-		  	nickname: nickname,
-		  	password: password
+		  	nickname,
+		  	password,
 		  };
 		  Api.postSignIn(body)
 		  	.then((res) => {
-		  		if (res.status == 200 || res.status == 304) {		
-		        	//User.update();
-		        	this._eventBus.trigger("signin_ok");
+		  		if (res.status == 200 || res.status == 304) {
+		        	// User.update();
+		        	this._eventBus.trigger('signin_ok');
 		        	return Api.getAuth();
-		  		} else {
-		        	this._eventBus.trigger("signin_bad");
 		  		}
+		        	this._eventBus.trigger('signin_bad');
 		  	})
 		  	.then((res) => {
 		  		if (res.status == 200 || res.status == 304) {
@@ -53,10 +52,10 @@ export default class SignInModel {
 		  			});
 		  		}
 		  	})
-			.catch((err) => {	
-				console.log(err);
-				this._eventBus.trigger("auth_bad");
-			});
-		});	
-	}
+        .catch((err) => {
+          console.log(err);
+          this._eventBus.trigger('auth_bad');
+        });
+    });
+  }
 }

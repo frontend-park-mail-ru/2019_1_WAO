@@ -1,22 +1,22 @@
-'use strict';
+
 
 import Auth from './modules/auth.js';
 import Ajax from './modules/ajax.js';
 import User from './modules/user.js';
 // Подгружаем дополнительные модули для сети
-import {RENDER_TYPES} from './utils/constants.js';
+import { RENDER_TYPES } from './utils/constants.js';
 
 // Подгружаем дополнительные модули для валидации и отображения ошибок
-import {ShowErrMassage} from './utils/errorRender.js';
+import { ShowErrMassage } from './utils/errorRender.js';
 
 // Подгружаем классы с шаблонами
-import {NavbarComponent} from './components/Navbar/Navbar.js';
-import {MenuComponent} from './components/Menu/Menu.js';
-import {RulesComponent} from './components/Rules/Rules.js';
-import {ScoreBoardComponent} from './components/ScoreBoard/ScoreBoard.js';
-import {Signin} from './components/Signin/signin.js';
-import {Registration} from './components/Registration/registration.js';
-import {Profile} from './components/Profile/profile.js';
+import { NavbarComponent } from './components/Navbar/Navbar.js';
+import { MenuComponent } from './components/Menu/Menu.js';
+import { RulesComponent } from './components/Rules/Rules.js';
+import { ScoreBoardComponent } from './components/ScoreBoard/ScoreBoard.js';
+import { Signin } from './components/Signin/signin.js';
+import { Registration } from './components/Registration/registration.js';
+import { Profile } from './components/Profile/profile.js';
 
 // ВСЕ ЭТО НАДО РАЗНЕСТИ ПО КЛАССАМ КОМПОНЕНТОВ
 
@@ -106,7 +106,7 @@ export function createNavbarProfile(me) {
         createNavbarProfile(user);
         // renderProfilePage(user);
       },
-      path: '/users/' + User.nickname,
+      path: `/users/${User.nickname}`,
     });
   }
   signin.render();
@@ -114,10 +114,10 @@ export function createNavbarProfile(me) {
   // Обработка изменений
   const form = document.getElementsByTagName('form')[0];
   const button = document.getElementsByClassName('profile_change_button')[0];
-  button.addEventListener('click', function(event) {
+  button.addEventListener('click', (event) => {
     event.preventDefault();
-    const nickname = form.elements['nickname'].value;
-    if ( nickname === me.nickname ) {
+    const nickname = form.elements.nickname.value;
+    if (nickname === me.nickname) {
       console.log('Equal!', nickname);
     } else {
       Ajax.doPost({
@@ -126,7 +126,7 @@ export function createNavbarProfile(me) {
           createNavbarProfile();
           console.log('Sent');
         },
-        path: '/users/' + me.nickname,
+        path: `/users/${me.nickname}`,
         body: {
           nickname,
           password: me.password,
@@ -137,7 +137,7 @@ export function createNavbarProfile(me) {
 
   const inputImg = document.getElementById('inputImg');
   const buttonImg = document.getElementById('buttonImg');
-  buttonImg.addEventListener('click', function(event) {
+  buttonImg.addEventListener('click', (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('image', inputImg.files[0]);
@@ -162,39 +162,39 @@ export function createNavbarProfile(me) {
 
 export function createLoginPage(me) {
   Auth.check()
-      .then((result) => {
-        createNavbarMenu();
-      })
-      .catch(() => {
-        const signin = new Signin({
-          el: application,
-          type: RENDER_TYPES.TMPL,
-        });
-        signin.render();
-        const form = document.getElementsByTagName('form')[0];
-        form.addEventListener('submit', function(event) {
-          event.preventDefault();
-          const nickname = form.elements['nickname'].value;
-          const password = form.elements['password'].value;
-          Ajax.doPost({
-            callback: (xhr) => {
-              if (xhr.status === 200) {
-                application.innerHTML = '';
-                User.update();
-                createNavbarMenu();
-              } else {
-                application.innerHTML = '';
-                createLoginPage();
-              }
-            },
-            path: '/signin',
-            body: {
-              nickname,
-              password,
-            },
-          });
+    .then((result) => {
+      createNavbarMenu();
+    })
+    .catch(() => {
+      const signin = new Signin({
+        el: application,
+        type: RENDER_TYPES.TMPL,
+      });
+      signin.render();
+      const form = document.getElementsByTagName('form')[0];
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const nickname = form.elements.nickname.value;
+        const password = form.elements.password.value;
+        Ajax.doPost({
+          callback: (xhr) => {
+            if (xhr.status === 200) {
+              application.innerHTML = '';
+              User.update();
+              createNavbarMenu();
+            } else {
+              application.innerHTML = '';
+              createLoginPage();
+            }
+          },
+          path: '/signin',
+          body: {
+            nickname,
+            password,
+          },
         });
       });
+    });
 }
 
 export function createRegistrationPage() {
@@ -206,14 +206,14 @@ export function createRegistrationPage() {
   signup.render();
   const form = document.querySelector('form');
   const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
-  footer.addEventListener('click', function(event, formdata) {
+  footer.addEventListener('click', (event, formdata) => {
     const errList = [''];
     event.preventDefault();
 
-    const nickname      = form.elements['nickname'].value;
-    const email       = form.elements['email'].value;
-    const password      = form.elements['password'].value;
-    const password_repeat   = form.elements['password_repeat'].value;
+    const nickname      = form.elements.nickname.value;
+    const email       = form.elements.email.value;
+    const password      = form.elements.password.value;
+    const password_repeat   = form.elements.password_repeat.value;
 
     if (password !== password_repeat) {
       errList.push('Пароли не одинаковые!');
@@ -253,7 +253,7 @@ export function createRegistrationPage() {
     errBlock.innerHTML = '';
     errList.forEach((elm) => {
       console.log(elm, errList.length);
-      errBlock.innerHTML += elm + '<br>';
+      errBlock.innerHTML += `${elm}<br>`;
     });
   }
 }

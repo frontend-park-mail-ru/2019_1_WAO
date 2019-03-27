@@ -1,4 +1,4 @@
-import BaseView from '../view/BaseView.js'
+import BaseView from '../view/BaseView.js';
 import template from './ScoreBoard.tmpl.xml';
 
 /**

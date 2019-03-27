@@ -55,7 +55,7 @@ class RouterModule {
   }
 
   _history(path) {
-     window.history.pushState(null, null, path);
+    window.history.pushState(null, null, path);
   }
 
   listen() {

@@ -1,7 +1,8 @@
-import {RENDER_TYPES} from '../../utils/constants.js';
-import {makeSafe} from '../../utils/safe.js';
+import { RENDER_TYPES } from '../../utils/constants.js';
+import { makeSafe } from '../../utils/safe.js';
 
 import template from './registration.tmpl.xml';
+
 export class Registration {
   constructor({
     el = document.body,

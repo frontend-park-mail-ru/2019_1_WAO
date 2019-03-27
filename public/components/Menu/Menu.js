@@ -1,6 +1,6 @@
-import {RENDER_TYPES} from '../../utils/constants.js';
-import {makeSafe} from '../../utils/safe.js';
-import {NavbarComponent} from '../Navbar/Navbar.js';
+import { RENDER_TYPES } from '../../utils/constants.js';
+import { makeSafe } from '../../utils/safe.js';
+import { NavbarComponent } from '../Navbar/Navbar.js';
 
 import template from './Menu.tmpl.xml';
 
