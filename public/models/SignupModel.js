@@ -1,4 +1,5 @@
 import Api from '../modules/api.js';
+import {makeSafeList} from '../utils/safe.js';
 
 export default class SignUpModel {
   constructor(eventBus) {
@@ -22,6 +23,12 @@ export default class SignUpModel {
 		  	email,
 		  	password,
 		  };
+		  
+		  if (!(makeSafeList(body))) {
+		    alert('Попытка XSS атаки');
+		    return;
+		  }
+
 		  Api.postSignUp(body)
 		  	.then((res) => {
 		  		if (res.status == 200 || res.status == 304) {

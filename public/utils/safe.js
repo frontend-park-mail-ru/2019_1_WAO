@@ -50,18 +50,18 @@ export function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, sc
     ];
 }
 
-export function makeSafeList(unsafeStringList = []) {
-  if (!Array.isArray(unsafeStringList)) {
-    return true;
-  }
+export function makeSafeList(unsafeStringList = {}) {
+  //if (!Array.isArray(unsafeStringList)) {
+  //  return true;
+  //}
   let errList = [''];
-  let isSafe;
-  unsafeStringList.foreach(unsafeString => {
-    isSafe = makeSafe(unsafeString);
+  // let isSafe;
+  for (let field in unsafeStringList) {
+    let isSafe = makeSafe(unsafeStringList[field]);
     if (isSafe[1] == false) {
       errList.push('Текст содержит недопустимые теги или атрибуты!');
     }
-  });
+  }
   if (errList.length > 1) {
     console.log(errList);
     return false;

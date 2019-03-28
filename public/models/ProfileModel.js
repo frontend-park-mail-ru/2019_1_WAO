@@ -1,5 +1,6 @@
 import Api from '../modules/api.js';
 import User from '../modules/user.js';
+import {makeSafeList} from '../utils/safe.js';
 
 export default class ProfileModel {
   constructor(eventBus) {
@@ -40,6 +41,15 @@ export default class ProfileModel {
 	    // const password = form.elements['password'].value;
 	    const password = '222222';
 	  	const image = document.getElementById('inputImg').files[0];
+      
+      if (!(makeSafeList({
+        nickname,
+        email,
+        password
+      }))) {
+        alert('Попытка XSS атаки');
+        return;
+      }
 
 	    const formData = new FormData();
 	    formData.append('nickname', nickname);
