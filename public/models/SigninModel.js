@@ -1,5 +1,6 @@
 import User from '../modules/user.js';
 import Api from '../modules/api.js';
+import {safe} from '../utils/safe.js';
 
 export default class SignInModel {
   constructor(eventBus) {
@@ -32,6 +33,12 @@ export default class SignInModel {
 		  event.preventDefault();
 		  const nickname = form.elements.nickname.value;
 		  const password = form.elements.password.value;
+
+      if (!(makeSafeList([nickname, password]))) {
+        console.log('Попытка XSS атаки');
+        return;
+      }
+
 		  const body = {
 		  	nickname,
 		  	password,
