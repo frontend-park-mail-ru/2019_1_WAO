@@ -27,14 +27,17 @@ TO DO
 session storage!!! (try catch)
 local storage ?
 * */
-
-if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === '127.0.0.1')) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(reg => console.error('SW success: ', reg))
-    .catch(err => console.error('SW fail: ', err));
+function registerSW() {
+  if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === '127.0.0.1')) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW success: ', reg))
+      .catch(err => console.error('SW fail: ', err));
+  }
 }
 
 function start() {
+  registerSW();
+  console.log('Start');
   const eventBus = new EventBus();
 
   const application = document.getElementById('application');
@@ -47,7 +50,8 @@ function start() {
   Router.add('/signin',   new SignInPresenter(Router, eventBus));
   Router.add('/signup',   new SignUpPresenter(Router, eventBus));
 
-  Router.route('/');
+  //Router.route('/');
+  Router.route(window.location.pathname);
   Router.listen();
 }
 

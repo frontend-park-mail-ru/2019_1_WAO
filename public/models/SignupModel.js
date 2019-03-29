@@ -1,5 +1,6 @@
 import Api from '../modules/api.js';
 import {makeSafeList} from '../utils/safe.js';
+import {isCorrectNickname, isCorrectEmail, isCorrectPassword} from '../utils/validation.js';
 
 export default class SignUpModel {
   constructor(eventBus) {
@@ -17,17 +18,22 @@ export default class SignUpModel {
 		  event.preventDefault();
 		  const nickname = form.elements.nickname.value;
 		  const email = form.elements.email.value;
-		  const password = form.elements.password.value;
+		  const password1 = form.elements.password.value;
+		  const password2 = form.elements.password_repeat.value;
+
 		  const body = {
 		  	nickname,
 		  	email,
-		  	password,
-		  };
-		  
-		  if (!(makeSafeList(body))) {
-		    alert('Попытка XSS атаки');
-		    return;
-		  }
+		  	password1,
+		  };		  
+      
+	      if (!this.checkValidation(nickname, email, password1, password2)) {
+	        return;
+	      }    
+
+	      if (!this.checkXSS(body)) {
+	        return;
+	      }
 
 		  Api.postSignUp(body)
 		  	.then((res) => {
@@ -50,5 +56,26 @@ export default class SignUpModel {
           this._eventBus.trigger('auth_bad');
         });
     });
+  }
+
+  checkValidation(nickname, email, password1, password2) {
+    let errList = [];
+    isCorrectNickname(nickname, errList);
+    isCorrectEmail(email, errList);
+    isCorrectPassword(password1, password2, errList);
+
+    if (errList.length > 0) {
+      alert(errList);
+      return false;
+    }
+    return true;
+  }
+
+  checkXSS(body) {
+    if (!(makeSafeList(body))) {
+      alert('Попытка XSS атаки');
+      return false;
+    }
+    return true;
   }
 }

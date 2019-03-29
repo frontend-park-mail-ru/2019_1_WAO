@@ -11,6 +11,7 @@ class RouterModule {
     this._root  = root;
     this._presenters = {};
     this._prevPath = null;
+    
   }
 
   /**
@@ -55,6 +56,7 @@ class RouterModule {
   }
 
   _history(path) {
+    console.log('To history: ', path);
     window.history.pushState(null, null, path);
   }
 

@@ -1,6 +1,7 @@
 import User from '../modules/user.js';
 import Api from '../modules/api.js';
 import {makeSafeList} from '../utils/safe.js';
+import {isCorrectNickname, isCorrectPassword} from '../utils/validation.js';
 
 export default class SignInModel {
   constructor(eventBus) {
@@ -9,7 +10,6 @@ export default class SignInModel {
       this._checkAuth();
     });
   }
-
 
   _checkAuth() {
     Api.getAuth()
@@ -38,8 +38,12 @@ export default class SignInModel {
 		  	password,
 		  };
       
-      if (!(makeSafeList(body))) {
-        alert('Попытка XSS атаки');
+      
+      if (!this.checkValidation(nickname, password)) {
+        return;
+      }    
+
+      if (!this.checkXSS(body)) {
         return;
       }
 
@@ -65,4 +69,25 @@ export default class SignInModel {
         });
     });
   }
+
+  checkValidation(nickname, password) {
+    let errList = [];
+    isCorrectNickname(nickname, errList);
+    isCorrectPassword(password, password, errList);
+
+    if (errList.length > 0) {
+      alert(errList);
+      return false;
+    }
+    return true;
+  }
+
+  checkXSS(body) {
+    if (!(makeSafeList(body))) {
+      alert('Попытка XSS атаки');
+      return false;
+    }
+    return true;
+  }
+
 }

@@ -1,5 +1,6 @@
 'use strict';
 
+const fallback = require('express-history-api-fallback');
 const express = require('express');
 //const formData = require("express-form-data");
 const body = require('body-parser');
@@ -13,6 +14,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+app.use(fallback('index.html', { root: 'dist' }));
 app.use(body.json());
 //app.use(upload.array());
 app.use(cookie());
