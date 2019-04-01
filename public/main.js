@@ -25,6 +25,9 @@ session storage!!!
 local storage
 * */
 
+/**
+ * Регистрация Service Worker
+ */
 function registerSW() {
   if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === '127.0.0.1')) {
     navigator.serviceWorker.register('/sw.js')
@@ -33,6 +36,9 @@ function registerSW() {
   }
 }
 
+/**
+ * Точка входа
+ */
 function start() {
   // registerSW();
   console.log('Start');
@@ -51,6 +57,9 @@ function start() {
   Router.listen();
 }
 
+/**
+ * На самом деле это точка входа
+ */
 document.addEventListener('DOMContentLoaded', () => {
   start();
 });

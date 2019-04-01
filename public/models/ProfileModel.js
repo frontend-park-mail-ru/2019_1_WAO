@@ -5,7 +5,15 @@ import User from '../modules/user';
 import checkXSS from '../utils/safe';
 import { checkValidationNEP } from '../utils/validation';
 
-export default class ProfileModel {
+/**
+ * Модель Профиля пользователя
+ * Умеет проверять авторизацию, и обновлять данные о пользователе
+ */
+export default class ProfileModel {  
+  /**
+   * Конструктор. Подписывает на проверку авторизации
+   * @param {EventBus} eventBus 
+   */
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.eventBus.on('view_show', () => {
@@ -13,6 +21,9 @@ export default class ProfileModel {
     });
   }
 
+  /**
+   * Проверка авторизации
+   */
   checkAuth() {
     getAuth()
       .then(checkStatus)
@@ -30,6 +41,10 @@ export default class ProfileModel {
       });
   }
 
+  /**
+   * Обновление информации о пользователе
+   * Делает POST-запрос с параметрами: ник, почта, пароль, картинка
+   */
   updateUser() {
     const form = document.querySelector('form');
     const button = document.getElementsByClassName('profile_change_button')[0];

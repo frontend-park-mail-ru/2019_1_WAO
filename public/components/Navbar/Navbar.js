@@ -1,24 +1,32 @@
 import { RENDER_TYPES } from '../../utils/constants';
 import template from './Navbar.tmpl.xml';
 
+/**
+ * Класс навбара
+ */
 export default class NavbarComponent {
+  /**
+   * Конструктор для навбара 
+   * @param {document.body} el Куда рендерить
+   */
   constructor({
-    el = document.body,
-    type = RENDER_TYPES.TMPL,
+    el = document.body
   } = {}) {
     this.el = el;
     this.type = type;
     this.fest = template;
   }
 
-  renderTmpl() {
+  /**
+   * Рендер шаблона
+   */
+  render() {
     this.el.innerHTML = this.fest();
   }
 
-  render() {
-    this.renderTmpl();
-  }
-
+  /**
+   * Создает навбар
+   */
   create() {
     const application = document.getElementById('application');
     const navbarSection = document.createElement('section');

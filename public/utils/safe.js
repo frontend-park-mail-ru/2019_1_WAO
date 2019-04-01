@@ -11,6 +11,13 @@ const WHITELIST_ATTRS = [
 const R_TAG = /<(\w+)\s?(.*?)>.*?(<\/(.*?)>)?/;
 const R_ATTRIBUTES = /(\w+\s*)=(\s*".*?")/g;
 
+/**
+ * Проверяет входную строку на отстутствие губительных тэгов и атрибутов
+ * @param {String} unsafeString 
+ * @param {boolean} isSafe1 
+ * @param {boolean} isSafe2 
+ * @param {number} schet 
+ */
 function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0) {
   console.log(isSafe1, isSafe2);
   unsafeString = unsafeString
@@ -48,6 +55,10 @@ function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0
   ];
 }
 
+/**
+ * Проверяет список строк на XSS атаку
+ * @param {Array<String>} unsafeStringList 
+ */
 function makeSafeList(unsafeStringList = {}) {
   const errList = [''];
   for (const field in unsafeStringList) {
@@ -65,6 +76,10 @@ function makeSafeList(unsafeStringList = {}) {
   return true;
 }
 
+/**
+ * Проверяет данные на XSS атаку
+ * @param {Object} body Тело будующего запроса
+ */
 export default function checkXSS(body) {
   if (!(makeSafeList(body))) {
     alert('Попытка XSS атаки');

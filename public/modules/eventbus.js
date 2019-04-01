@@ -1,3 +1,6 @@
+/**
+ * Список событий
+ */
 export const EVENTS = [
   'auth_check',
   'auth_ok',
@@ -15,8 +18,8 @@ export const EVENTS = [
 ];
 
 /**
- * EventBus module
- *@class EventBus
+ * Модуль шины событий
+ * @class EventBus
  */
 export default class EventBus {
   constructor(eventsList = EVENTS) {
@@ -28,9 +31,9 @@ export default class EventBus {
 
   /**
      * Подписаться на событие
-     * @param {string} event
-     * @param {function} callback
-     * */
+     * @param {string} event Имя события
+     * @param {function} callback Колбэк на это событие
+     **/
   on(event, callback) {
     if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);
@@ -41,8 +44,8 @@ export default class EventBus {
 
   /**
      * Отписка
-     * @param {string} event
-     * @param {function} callback
+     * @param {string} event Имя события
+     * @param {function} callback Колбэк на это событие
      * */
   off(event, callback) {
     if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
@@ -54,8 +57,8 @@ export default class EventBus {
 
   /**
      * Срабатывание на событие
-     * @param {string} event
-     * @param {Array} params
+     * @param {string} event Имя события
+     * @param {Array} params Параметры, передаваемые в колбэк
      * */
   trigger(event, ...pagams) {
     if (!Object.prototype.hasOwnProperty.call(this.events, event)) {

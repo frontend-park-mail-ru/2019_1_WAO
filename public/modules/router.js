@@ -1,7 +1,7 @@
 // import EventBus from './eventbus';
 
 /**
- * RouterModel presenter
+ * Роутер. Переключавет страницы
  * @class RouterModel
  */
 class Router {
@@ -16,7 +16,7 @@ class Router {
   /**
    * Изменить root
    * @param {string} root
-   * */
+   **/
   setRoot(root) {
     this.root = root;
   }
@@ -24,7 +24,7 @@ class Router {
   /**
    * Добавление элемента
    * @param {string} path
-   * @param {string} presenter
+   * @param {Presenter} presenter Представитель элемента
    * */
   add(path, presenter) {
     this.presenters[path] = presenter;
@@ -32,7 +32,8 @@ class Router {
 
   /**
    * Открытие страницы
-   * @param {string} path
+   * @param {string} path 
+   * @param {string} page Страница
    * */
   route(path = '/', page = '') {
     if (!Object.prototype.hasOwnProperty.call(this.presenters, path)) {
@@ -56,7 +57,9 @@ class Router {
     window.history.pushState(null, null, path);
   }
 
-
+  /**
+   * Ловим переходы по страницам
+   **/
   listen() {
     this.root.addEventListener('click', (event) => {
       if (!(event.target instanceof HTMLAnchorElement)) {

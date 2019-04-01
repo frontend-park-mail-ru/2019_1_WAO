@@ -2,6 +2,9 @@ import { postSignUp, checkStatus } from '../modules/api';
 import checkXSS from '../utils/safe';
 import { checkValidationNEP } from '../utils/validation';
 
+/**
+ * Модель Регистрации
+ */
 export default class SignUpModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
@@ -10,6 +13,9 @@ export default class SignUpModel {
     });
   }
 
+  /**
+   * Делает POST-запрос с данными для регистрации
+   */
   makeSignUp() {
     const form = document.querySelector('form');
     // form.addEventListener('submit', event => {

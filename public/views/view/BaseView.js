@@ -1,8 +1,14 @@
 /**
- * BaseView view
- *@class BaseView
+ * Базовый клас View
+ * @class BaseView
  */
 export default class BaseView {
+  /**
+   * Конструктор класса View
+   * @param {document.body} el Куда отображать
+   * @param {EventBus} eventBus Локальная шина событий
+   * @param {String} template Шаблон страницы 
+   */
   constructor(el, eventBus, template) {
     this.el = el || document.createElement('div');
     this.eventBus = eventBus;

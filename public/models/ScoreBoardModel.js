@@ -2,6 +2,10 @@ import {
   getAuth, getScoreBoard, checkStatus, parseJSON,
 } from '../modules/api';
 
+/**
+ * Таблица лидеров
+ * Проверяет авторизацию и загружает инфу о пользователях
+ */
 export default class ScoreBoardModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
@@ -10,7 +14,9 @@ export default class ScoreBoardModel {
     });
   }
 
-
+  /**
+   * Проверяет авторизацию и загружает инфу о пользователях
+   */
   checkAuth() {
     getAuth()
       .then(checkStatus)

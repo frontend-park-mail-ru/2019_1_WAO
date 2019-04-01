@@ -2,10 +2,8 @@
  * @module models/user
  */
 
-// import Api from './api.js';
-
 /**
- * UserModel user
+ * Модель пользователя.
  * @class UserModel
  */
 class User {

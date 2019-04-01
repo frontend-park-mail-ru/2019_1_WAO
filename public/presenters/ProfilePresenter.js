@@ -7,6 +7,13 @@ import EventBus from '../modules/eventbus';
  * @class ProfilePresenter
  */
 export default class ProfilePresenter {
+  /**
+   * Конструктор
+   * Создает Модель и Представление элемента
+   * Подписывается на события
+   * @param {Router} Router 
+   * @param {EventBus} globalEventBus Глобальная шина событий
+   */
   constructor(Router, globalEventBus) {
     const application = document.getElementById('application');
     const eventBus = new EventBus();

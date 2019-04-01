@@ -3,10 +3,17 @@ import MenuModel from '../models/MenuModel';
 import EventBus from '../modules/eventbus';
 
 /**
- * MenuPresenter view
+ * Представитель Меню
  * @class MenuPresenter
  */
 export default class MenuPresenter {
+  /**
+   * Конструктор
+   * Создает Модель и Представление элемента
+   * Подписывается на события
+   * @param {Router} Router 
+   * @param {EventBus} globalEventBus Глобальная шина событий
+   */
   constructor(Router, globalEventBus) {
     const application = document.getElementById('application');
     const eventBus = new EventBus();

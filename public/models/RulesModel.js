@@ -1,5 +1,8 @@
 import { getAuth, checkStatus, parseJSON } from '../modules/api';
 
+/**
+ * Модель Правил
+ */
 export default class RulesModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
@@ -8,7 +11,10 @@ export default class RulesModel {
     });
   }
 
-
+  /**
+   * Проверка авторизации
+   * Неавторизованный пользоватеь ни в коем случае не должен узнать правила
+   */
   checkAuth() {
     getAuth()
       .then(checkStatus)

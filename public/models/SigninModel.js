@@ -5,6 +5,9 @@ import {
 import checkXSS from '../utils/safe';
 import { checkValidationNP } from '../utils/validation';
 
+/**
+ * Модель Входа в приложение
+ */
 export default class SignInModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
@@ -13,6 +16,10 @@ export default class SignInModel {
     });
   }
 
+  /**
+   * Проверяет авторизацию
+   * Если пользователь не авторизован, то просит ввести логин и пароль
+   */
   checkAuth() {
     getAuth()
       .then(checkStatus)
@@ -28,6 +35,9 @@ export default class SignInModel {
       });
   }
 
+  /**
+   * Делает POST-запрос с логином и паролем
+   */
   makeSignin() {
     const form = document.querySelector('form');
     form.addEventListener('submit', (event) => {

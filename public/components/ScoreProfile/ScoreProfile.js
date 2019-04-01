@@ -1,25 +1,24 @@
-import { RENDER_TYPES } from '../../utils/constants';
 import template from './ScoreProfile.tmpl.xml';
 
+/**
+ * Класс для карточки профиля пользователя
+ */
 export default class ScoreProfileComponent {
+  /**
+   * Конструктор класса
+   * @param {document.body} el Куда рендерить
+   */
   constructor({
     el = document.body,
-    type = RENDER_TYPES.TMPL,
   } = {}) {
     this.el = el;
-    this.type = type;
     this.fest = template;
   }
 
-  set data(d = {}) {
-    this.data = d;
-  }
-
-  renderTmpl() {
-    this.el.innerHTML = this.fest(this.data);
-  }
-
+  /**
+   * Рендер шаблона
+   */
   render() {
-    this.renderTmpl();
+    this.el.innerHTML = this.fest(this.data);
   }
 }
