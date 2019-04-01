@@ -6,7 +6,7 @@ import { getAuth, checkStatus, parseJSON } from '../modules/api';
 export default class MenuModel {
   /**
    * Конструктор. Подписывает на проверку авторизации
-   * @param {EventBus} eventBus 
+   * @param {EventBus} eventBus
    */
   constructor(eventBus) {
     this.eventBus = eventBus;

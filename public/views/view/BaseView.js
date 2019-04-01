@@ -7,7 +7,7 @@ export default class BaseView {
    * Конструктор класса View
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
-   * @param {String} template Шаблон страницы 
+   * @param {String} template Шаблон страницы
    */
   constructor(el, eventBus, template) {
     this.el = el || document.createElement('div');
@@ -22,7 +22,7 @@ export default class BaseView {
    *@param {document.body} - элемент, в который вставить вьюху
    *@param {Array} data - входной массив данных
    */
-  render(root, data = []) {
+  render(root, data = {}) {
     this.el = root;
     this.el.innerHTML = this.template(data);
     this.rendered = true;

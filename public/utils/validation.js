@@ -1,7 +1,7 @@
 /**
  * Проверяет коректность ника
- * @param {String} nickname 
- * @param {Array<String>} errList 
+ * @param {String} nickname
+ * @param {Array<String>} errList
  */
 function isCorrectNickname(nickname = '', errList = ['']) {
   if (nickname.length < 6) {
@@ -15,8 +15,8 @@ function isCorrectNickname(nickname = '', errList = ['']) {
 
 /**
  * Проверяет коректность почты
- * @param {String} email 
- * @param {Array<String>} errList 
+ * @param {String} email
+ * @param {Array<String>} errList
  */
 function isCorrectEmail(email = '', errList = ['']) {
   if (!email.match(/^([a-z0-9_\\-]+\.)*[a-z0-9_\\-]+@([a-z0-9][a-z0-9\\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)) {
@@ -29,7 +29,7 @@ function isCorrectEmail(email = '', errList = ['']) {
  * Проверяет коректность пароля
  * @param {String} password1 Пароль
  * @param {String} password2 И его повторение
- * @param {Array<String>} errList 
+ * @param {Array<String>} errList
  */
 function isCorrectPassword(password1 = '', password2 = '', errList = ['']) {
   if (password1 !== password2) {
@@ -46,7 +46,7 @@ function isCorrectPassword(password1 = '', password2 = '', errList = ['']) {
  * Проверяет валидность Ник-Пароль
  * @param {String} nickname
  * @param {String} password
- * @param {Array<String>} errList 
+ * @param {Array<String>} errList
  */
 export function checkValidationNP(nickname, password) {
   const errList = [];
@@ -64,7 +64,7 @@ export function checkValidationNP(nickname, password) {
  * Проверяет валидность Ник-Почта-Пароль
  * @param {String} nickname
  * @param {String} password
- * @param {Array<String>} errList 
+ * @param {Array<String>} errList
  */
 export function checkValidationNEP(nickname, email, password1, password2) {
   const errList = [];

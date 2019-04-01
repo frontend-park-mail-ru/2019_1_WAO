@@ -134,7 +134,10 @@ app.post('/api/v1/signup', (req, res) => {
 		return res.status(400).json({ error: 'Пользователь уже существует' });
 	}
 
-	const id = uuid();
+	let id = req.cookies.sessionid;
+	if (!id) {
+		id = uuid();		
+	}
 	const user = { nickname, password, image, score: 0, games: 0, wins: 0 };
 	console.log("User: ", user);
 	ids[id] = nickname;

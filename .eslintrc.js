@@ -21,5 +21,6 @@ module.exports = {
         "no-multi-spaces":"off",
         "no-restricted-syntax": ["error", "WithStatement"],
         "no-param-reassign": 0,
+        "linebreak-style": 0,
     }
 }

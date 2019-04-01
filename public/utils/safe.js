@@ -13,10 +13,10 @@ const R_ATTRIBUTES = /(\w+\s*)=(\s*".*?")/g;
 
 /**
  * Проверяет входную строку на отстутствие губительных тэгов и атрибутов
- * @param {String} unsafeString 
- * @param {boolean} isSafe1 
- * @param {boolean} isSafe2 
- * @param {number} schet 
+ * @param {String} unsafeString
+ * @param {boolean} isSafe1
+ * @param {boolean} isSafe2
+ * @param {number} schet
  */
 function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0) {
   console.log(isSafe1, isSafe2);
@@ -57,7 +57,7 @@ function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0
 
 /**
  * Проверяет список строк на XSS атаку
- * @param {Array<String>} unsafeStringList 
+ * @param {Array<String>} unsafeStringList
  */
 function makeSafeList(unsafeStringList = {}) {
   const errList = [''];

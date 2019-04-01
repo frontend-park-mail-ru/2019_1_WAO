@@ -11,7 +11,7 @@ export default class MenuPresenter {
    * Конструктор
    * Создает Модель и Представление элемента
    * Подписывается на события
-   * @param {Router} Router 
+   * @param {Router} Router
    * @param {EventBus} globalEventBus Глобальная шина событий
    */
   constructor(Router, globalEventBus) {

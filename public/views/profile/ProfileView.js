@@ -1,5 +1,6 @@
 import BaseView from '../view/BaseView';
 import template from './profile.tmpl.xml';
+import NavbarTemplate from '../../components/Navbar/Navbar.tmpl.xml';
 
 /**
  * ProfileView view
@@ -13,5 +14,12 @@ export default class ProfileView extends BaseView {
    */
   constructor(el, eventBus) {
     super(el, eventBus, template);
+  }
+
+  render(root, data = {}) {
+    this.el = root;
+    this.el.innerHTML = NavbarTemplate();
+    this.el.innerHTML += this.template(data);
+    this.rendered = true;
   }
 }

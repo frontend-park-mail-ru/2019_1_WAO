@@ -1,5 +1,7 @@
 import BaseView from '../view/BaseView';
 import template from './Menu.tmpl.xml';
+import NavbarTemplate from '../../components/Navbar/Navbar.tmpl.xml';
+
 // import {NavbarComponent} from '../components/Navbar/Navbar.js';
 
 /**
@@ -16,9 +18,10 @@ export default class MenuView extends BaseView {
     super(el, eventBus, template);
   }
 
-  /*
-  render(root, data = []) {
-    this.el.innerHTML = this.template(data);
+  render(root, data = {}) {
+    this.el = root;
+    this.el.innerHTML = NavbarTemplate();
+    this.el.innerHTML += this.template(data);
+    this.rendered = true;
   }
-  */
 }

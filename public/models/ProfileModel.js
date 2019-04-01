@@ -9,10 +9,10 @@ import { checkValidationNEP } from '../utils/validation';
  * Модель Профиля пользователя
  * Умеет проверять авторизацию, и обновлять данные о пользователе
  */
-export default class ProfileModel {  
+export default class ProfileModel {
   /**
    * Конструктор. Подписывает на проверку авторизации
-   * @param {EventBus} eventBus 
+   * @param {EventBus} eventBus
    */
   constructor(eventBus) {
     this.eventBus = eventBus;

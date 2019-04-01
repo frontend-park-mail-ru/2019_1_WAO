@@ -33,7 +33,7 @@ export default class EventBus {
      * Подписаться на событие
      * @param {string} event Имя события
      * @param {function} callback Колбэк на это событие
-     **/
+     * */
   on(event, callback) {
     if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);

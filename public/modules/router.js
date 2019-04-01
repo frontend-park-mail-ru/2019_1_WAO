@@ -16,7 +16,7 @@ class Router {
   /**
    * Изменить root
    * @param {string} root
-   **/
+   * */
   setRoot(root) {
     this.root = root;
   }
@@ -32,7 +32,7 @@ class Router {
 
   /**
    * Открытие страницы
-   * @param {string} path 
+   * @param {string} path
    * @param {string} page Страница
    * */
   route(path = '/', page = '') {
@@ -59,7 +59,7 @@ class Router {
 
   /**
    * Ловим переходы по страницам
-   **/
+   * */
   listen() {
     this.root.addEventListener('click', (event) => {
       if (!(event.target instanceof HTMLAnchorElement)) {
