@@ -1,60 +1,45 @@
-// import {eventBus} from '../modules/eventbus.js';
-
 /**
  * BaseView view
  *@class BaseView
  */
 export default class BaseView {
   constructor(el, eventBus, template) {
-    this._template  = template;
-    this._el = el || document.createElement('div');
-    this._eventBus = eventBus;
+    this.el = el || document.createElement('div');
+    this.eventBus = eventBus;
+    this.template = template;
+    this.rendered = false;
     this.hide();
   }
 
   /**
-   * Вернуть состояние вьюхи
+   * Рендер вьюхи
+   *@param {document.body} - элемент, в который вставить вьюху
+   *@param {Array} data - входной массив данных
    */
-  isActive() {
-    return this._isActive;
-  }
-
-  /**
-   * Была ли вьюха отрендерена ранее
-   */
-  rendered() {
-    return this._rendered;
-  }
-
-  /**
-   * Отрендерить вьюху
-   *@param {Array} d - входной массив данных
-   */
-  render(root, data = []) { // root == _el !! но зачем?
-    this._el.innerHTML = this._template(data);
-    // root.innerHTML = '';
-    // root.appendChild(this._el);
-    this._rendered = true;
+  render(root, data = []) {
+    this.el = root;
+    this.el.innerHTML = this.template(data);
+    this.rendered = true;
   }
 
   /**
    * Показать вьюху
    */
   show() {
-    this._isActive = true;
-    if (!this._rendered) {
-      this.render();
-    }
-    this._el.style.display = null;
-    this._eventBus.trigger('view_show');
+    this.render(this.el);
+    // if (!this.rendered) {
+    //  this.render(this.el);
+    // }
+    this.el.style.display = null;
+    this.eventBus.trigger('view_show');
   }
 
   /**
    * Убрать вьюху
    */
   hide() {
-    this._isActive = false;
-    this._el.style.setProperty('display', 'none', 'important');
-    this._eventBus.trigger('view_hide');
+    this.render(this.el);
+    this.el.style.setProperty('display', 'none', 'important');
+    this.eventBus.trigger('view_hide');
   }
 }

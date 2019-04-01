@@ -1,6 +1,6 @@
-import SignInView from '../views/signin/SignInView.js';
-import SignInModel from '../models/SignInModel.js';
-import EventBus from '../modules/eventbus.js';
+import SignInView from '../views/signin/SignInView';
+import SignInModel from '../models/SigninModel';
+import EventBus from '../modules/eventbus';
 
 /**
  * SignInView view
@@ -12,6 +12,10 @@ export default class SignInPresenter {
     const eventBus = new EventBus();
     this.view = new SignInView(application, eventBus);
     this.model = new SignInModel(eventBus);
+
+    globalEventBus.on('auth_bad', () => {
+      Router.route('/signin');
+    });
 
     eventBus.on('auth_ok', () => {
       Router.route('/');

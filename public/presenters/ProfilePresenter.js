@@ -1,6 +1,6 @@
-import ProfileView from '../views/profile/ProfileView.js';
-import ProfileModel from '../models/ProfileModel.js';
-import EventBus from '../modules/eventbus.js';
+import ProfileView from '../views/profile/ProfileView';
+import ProfileModel from '../models/ProfileModel';
+import EventBus from '../modules/eventbus';
 
 /**
  * ProfilePresenter view
@@ -12,6 +12,10 @@ export default class ProfilePresenter {
     const eventBus = new EventBus();
     this.view = new ProfileView(application, eventBus);
     this.model = new ProfileModel(eventBus);
+
+    globalEventBus.on('auth_bad', () => {
+      Router.route('/signin');
+    });
 
     eventBus.on('users_rx', (data) => {
       console.log(data);

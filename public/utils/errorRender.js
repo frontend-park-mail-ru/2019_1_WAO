@@ -1,3 +1,4 @@
+/*
 export function ShowErrMassage(errBlock, errList) {
   errBlock.innerHTML = '';
   errList.forEach((elm) => {
@@ -5,3 +6,4 @@ export function ShowErrMassage(errBlock, errList) {
     errBlock.innerHTML += `${elm}<br>`;
   });
 }
+*/

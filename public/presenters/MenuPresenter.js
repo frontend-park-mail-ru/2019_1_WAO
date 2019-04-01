@@ -1,6 +1,6 @@
-import MenuView from '../views/menu/MenuView.js';
-import MenuModel from '../models/MenuModel.js';
-import EventBus from '../modules/eventbus.js';
+import MenuView from '../views/menu/MenuView';
+import MenuModel from '../models/MenuModel';
+import EventBus from '../modules/eventbus';
 
 /**
  * MenuPresenter view
@@ -12,6 +12,10 @@ export default class MenuPresenter {
     const eventBus = new EventBus();
     this.view = new MenuView(application, eventBus);
     this.model = new MenuModel(eventBus);
+
+    globalEventBus.on('auth_bad', () => {
+      Router.route('/signin');
+    });
 
     eventBus.on('auth_bad', () => {
       Router.route('/signin');

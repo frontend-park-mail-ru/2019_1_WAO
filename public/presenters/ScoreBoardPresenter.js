@@ -1,6 +1,6 @@
-import ScoreBoardView from '../views/scoreboard/ScoreBoardView.js';
-import ScoreBoardModel from '../models/ScoreBoardModel.js';
-import EventBus from '../modules/eventbus.js';
+import ScoreBoardView from '../views/scoreboard/ScoreBoardView';
+import ScoreBoardModel from '../models/ScoreBoardModel';
+import EventBus from '../modules/eventbus';
 
 /**
  * ScoreBoardPresenter view
@@ -13,11 +13,10 @@ export default class ScoreBoardPresenter {
     this.view = new ScoreBoardView(application, eventBus);
     this.model = new ScoreBoardModel(eventBus);
 
-    /*
-		eventBus.on('auth_ok', () => {
-			eventBus.trigger('users_req');
-		});
-		*/
+    globalEventBus.on('auth_bad', () => {
+      Router.route('/signin');
+    });
+
 
     eventBus.on('auth_bad', () => {
       Router.route('/signin');
@@ -27,7 +26,5 @@ export default class ScoreBoardPresenter {
       console.log(data);
       this.view.render(application, data);
     });
-
-    // eventBus.trigger('auth_check');
   }
 }

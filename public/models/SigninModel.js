@@ -1,93 +1,65 @@
-import User from '../modules/user.js';
-import Api from '../modules/api.js';
-import {makeSafeList} from '../utils/safe.js';
-import {isCorrectNickname, isCorrectPassword} from '../utils/validation.js';
+import User from '../modules/user';
+import {
+  getAuth, postSignIn, checkStatus, parseJSON,
+} from '../modules/api';
+import checkXSS from '../utils/safe';
+import { checkValidationNP } from '../utils/validation';
 
 export default class SignInModel {
   constructor(eventBus) {
-    this._eventBus = eventBus;
-    this._eventBus.on('view_show', () => {
-      this._checkAuth();
+    this.eventBus = eventBus;
+    this.eventBus.on('view_show', () => {
+      this.checkAuth();
     });
   }
 
-  _checkAuth() {
-    Api.getAuth()
-      .then((res) => {
-        if (res.status == 200 || res.status == 304) {
-          console.log('authorized');
-          this._eventBus.trigger('auth_ok');
-        } else {
-          this._makeSignin();
-        }
+  checkAuth() {
+    getAuth()
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        console.log('signin auth ok');
+        console.log(data);
+        User.set(data);
       })
-      .catch((err) => {
-        console.log(err);
-        this._eventBus.trigger('auth_bad');
+      .catch(() => {
+        console.log('signin auth bad');
+        this.makeSignin();
       });
   }
 
-  _makeSignin() {
+  makeSignin() {
     const form = document.querySelector('form');
     form.addEventListener('submit', (event) => {
-		  event.preventDefault();
-		  const nickname = form.elements.nickname.value;
-		  const password = form.elements.password.value;
-		  const body = {
-		  	nickname,
-		  	password,
-		  };
-      
-      
-      if (!this.checkValidation(nickname, password)) {
-        return;
-      }    
+      event.preventDefault();
+      const nickname = form.elements.nickname.value;
+      const password = form.elements.password.value;
+      const body = {
+        nickname,
+        password,
+      };
 
-      if (!this.checkXSS(body)) {
+      if (!checkValidationNP(nickname, password)) {
         return;
       }
 
-		  Api.postSignIn(body)
-		  	.then((res) => {
-		  		if (res.status == 200 || res.status == 304) {
-		        	// User.update();
-		        	this._eventBus.trigger('signin_ok');
-		        	return Api.getAuth();
-		  		}
-		        	this._eventBus.trigger('signin_bad');
-		  	})
-		  	.then((res) => {
-		  		if (res.status == 200 || res.status == 304) {
-		  			res.json().then((user) => {
-		  				User.set(user);
-		  			});
-		  		}
-		  	})
-        .catch((err) => {
-          console.log(err);
-          this._eventBus.trigger('auth_bad');
+      if (!checkXSS(body)) {
+        return;
+      }
+
+      postSignIn(body)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then((data) => {
+          console.log('signin auth ok');
+          console.log(data);
+          User.set(data);
+          this.eventBus.trigger('signin_ok');
+        })
+        .catch(() => {
+          console.log('signin auth bad');
+          this.eventBus.trigger('signin_bad');
         });
     });
   }
-
-  checkValidation(nickname, password) {
-    let errList = [];
-    isCorrectNickname(nickname, errList);
-    isCorrectPassword(password, password, errList);
-
-    if (errList.length > 0) {
-      alert(errList);
-      return false;
-    }
-    return true;
-  }
-
-  checkXSS(body) {
-    if (!(makeSafeList(body))) {
-      alert('Попытка XSS атаки');
-      return false;
-    }
-    return true;
-  }
-
 }

@@ -1,17 +1,16 @@
-import EventBus from './eventbus.js';
+// import EventBus from './eventbus';
 
 /**
  * RouterModel presenter
  * @class RouterModel
  */
-class RouterModule {
+class Router {
   constructor({
     root = document.body,
   } = {}) {
-    this._root  = root;
-    this._presenters = {};
-    this._prevPath = null;
-    
+    this.root = root;
+    this.presenters = {};
+    this.prevPath = null;
   }
 
   /**
@@ -19,7 +18,7 @@ class RouterModule {
    * @param {string} root
    * */
   setRoot(root) {
-    this._root  = root;
+    this.root = root;
   }
 
   /**
@@ -28,40 +27,38 @@ class RouterModule {
    * @param {string} presenter
    * */
   add(path, presenter) {
-    this._presenters[path] = presenter;
+    this.presenters[path] = presenter;
   }
 
   /**
    * Открытие страницы
    * @param {string} path
    * */
-  route(path = '/') {
-    if (!this._presenters.hasOwnProperty(path)) {
+  route(path = '/', page = '') {
+    if (!Object.prototype.hasOwnProperty.call(this.presenters, path)) {
       // открыть свою 404 либо вызвать уведомление
       console.log('404');
       return;
     }
 
-    if (this._presenters.hasOwnProperty(this._prevPath)) {
-      this._presenters[this._prevPath].view.hide();
+    if (Object.prototype.hasOwnProperty.call(this.presenters, this.prevPath)) {
+      this.presenters[this.prevPath].view.hide();
     }
-    this._prevPath = path;
+    this.prevPath = path;
+    console.log(`route to ${path}`);
+    this.presenters[path].view.show();
 
-    if (!this._presenters[path].view.rendered()) {
-      this._presenters[path].view.render(this._root);
-    }
-    this._presenters[path].view.show();
-
-    this._history(path);
+    Router.history(path + page);
   }
 
-  _history(path) {
+  static history(path) {
     console.log('To history: ', path);
     window.history.pushState(null, null, path);
   }
 
+
   listen() {
-    this._root.addEventListener('click', (event) => {
+    this.root.addEventListener('click', (event) => {
       if (!(event.target instanceof HTMLAnchorElement)) {
         return;
       }
@@ -72,5 +69,4 @@ class RouterModule {
   }
 }
 
-const Router = new RouterModule();
-export default Router;
+export default new Router();

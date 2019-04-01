@@ -1,41 +1,30 @@
-import Api from '../modules/api.js';
+import {
+  getAuth, getScoreBoard, checkStatus, parseJSON,
+} from '../modules/api';
 
 export default class ScoreBoardModel {
   constructor(eventBus) {
-    this._eventBus = eventBus;
-    this._eventBus.on('view_show', () => {
-      this._checkAuth();
+    this.eventBus = eventBus;
+    this.eventBus.on('view_show', () => {
+      this.checkAuth();
     });
-    /*
-		this._eventBus.on("users_req", () => {
-			this._getUsers();
-		});
-		*/
   }
 
 
-  _checkAuth() {
-    Api.getAuth()
-      .then((res) => {
-        if (res.status == 200 || res.status == 304) {
-          console.log('authorized');
-          return Api.getScoreBoard(1);
-        }
-        this._eventBus.trigger('auth_bad');
+  checkAuth() {
+    getAuth()
+      .then(checkStatus)
+      .then(() => getScoreBoard(1))
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        console.log('score auth ok');
+        this.eventBus.trigger('users_rx', data);
+        console.log(data);
       })
-      .then((res) => {
-        if (res.status == 200 || res.status == 304) {
-          res.json().then((users) => {
-            this._eventBus.trigger('users_rx', users);
-          });
-        } else {
-          console.log('not get users');
-          this._eventBus.trigger('auth_bad');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this._eventBus.trigger('auth_bad');
+      .catch(() => {
+        console.log('score auth bad');
+        this.eventBus.trigger('auth_bad');
       });
   }
 }

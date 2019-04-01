@@ -19,5 +19,7 @@ module.exports = {
     "rules": {    
         "no-console":"off",
         "no-multi-spaces":"off",
+        "no-restricted-syntax": ["error", "WithStatement"],
+        "no-param-reassign": 0,
     }
 }

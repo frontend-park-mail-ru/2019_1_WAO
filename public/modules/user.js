@@ -8,16 +8,7 @@
  * UserModel user
  * @class UserModel
  */
-class UserModel {
-  constructor() {
-    this.nickname 	= null;
-    this.email	 	= null;
-    this.score 		= null;
-    this.wins 		= null;
-    this.games 		= null;
-    this.image		= null;
-  }
-
+class User {
   /**
      * Получаем данные пользователя
      * @return {Object} data
@@ -39,38 +30,12 @@ class UserModel {
      */
   set(data) {
     this.nickname = data.nickname;
-    this.email	 	= data.email;
-    this.score 		= data.score;
-    this.wins 		= data.wins;
-    this.games 		= data.games;
-    this.image 		= data.image || './images/default_image.png';
+    this.email = data.email;
+    this.score = data.score;
+    this.wins = data.wins;
+    this.games = data.games;
+    this.image = data.image || './images/default_image.png';
   }
-
-  /**
-     * Сброс полей пользователя
-     */
-  reset() {
-    this.nickname = null;
-    this.email    = null;
-    this.score    = null;
-    this.wins     = null;
-    this.games    = null;
-    this.image    = null;
-  }
-
-/*
-  update() {
-    Api.getAuth()
-      .then((res) => {
-        if (res.status == 200 || res.status == 304) {
-          res.json().then((user) => {
-            User.set(user);
-            console.log(User.get());
-          });
-        }
-      });
-  }
-*/
 }
-const User = new UserModel();
-export default User;
+
+export default new User();

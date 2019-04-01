@@ -20,9 +20,9 @@ export const EVENTS = [
  */
 export default class EventBus {
   constructor(eventsList = EVENTS) {
-    this._events = {};
+    this.events = {};
     eventsList.forEach((event) => {
-      this._events[event] = [];
+      this.events[event] = [];
     });
   }
 
@@ -32,11 +32,11 @@ export default class EventBus {
      * @param {function} callback
      * */
   on(event, callback) {
-    if (!this._events.hasOwnProperty(event)) {
+    if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);
     }
 
-    this._events[event].push(callback);
+    this.events[event].push(callback);
   }
 
   /**
@@ -45,11 +45,11 @@ export default class EventBus {
      * @param {function} callback
      * */
   off(event, callback) {
-    if (!this._events.hasOwnProperty(event)) {
+    if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);
     }
 
-    this._events[event] = this._events[event].filter(deleted => deleted !== callback); // hope it works
+    this.events[event] = this.events[event].filter(deleted => deleted !== callback);
   }
 
   /**
@@ -58,11 +58,11 @@ export default class EventBus {
      * @param {Array} params
      * */
   trigger(event, ...pagams) {
-    if (!this._events.hasOwnProperty(event)) {
+    if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);
     }
 
-    this._events[event].forEach((callback) => {
+    this.events[event].forEach((callback) => {
       callback(...pagams);
     });
   }

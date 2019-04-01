@@ -12,6 +12,6 @@ export const routerPaths = {
   profile: `${routerPrexix}/users`,
   scoreboard: `${routerPrexix}/users`,
   rules: `${routerPrexix}/rules`,
-  authors:	`${routerPrexix}/authors`,
+  authors: `${routerPrexix}/authors`,
   store: `${routerPrexix}/store`,
 };

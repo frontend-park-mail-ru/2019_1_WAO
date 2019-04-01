@@ -1,32 +1,22 @@
-import { RENDER_TYPES } from '../../utils/constants.js';
-import { makeSafe } from '../../utils/safe.js';
-
+import { RENDER_TYPES } from '../../utils/constants';
 import template from './Navbar.tmpl.xml';
 
-export class NavbarComponent {
+export default class NavbarComponent {
   constructor({
     el = document.body,
     type = RENDER_TYPES.TMPL,
   } = {}) {
-    this._el = el;
-    this._type = type;
-    this._fest = template;
+    this.el = el;
+    this.type = type;
+    this.fest = template;
   }
 
-  get data() {
-    return this._data;
-  }
-
-  set data(d = []) {
-    this._data = d;
-  }
-
-  __renderTmpl() {
-    this._el.innerHTML = this._fest();
+  renderTmpl() {
+    this.el.innerHTML = this.fest();
   }
 
   render() {
-    this.__renderTmpl();
+    this.renderTmpl();
   }
 
   create() {
@@ -34,8 +24,8 @@ export class NavbarComponent {
     const navbarSection = document.createElement('section');
     navbarSection.dataset.sectionName = 'navbar';
 
-    this._el = navbarSection;
-    this._type = RENDER_TYPES.TMPL;
+    this.el = navbarSection;
+    this.type = RENDER_TYPES.TMPL;
 
     this.render();
     application.appendChild(navbarSection);

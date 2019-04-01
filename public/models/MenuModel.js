@@ -1,25 +1,24 @@
-import Api from '../modules/api.js';
+import { getAuth, checkStatus, parseJSON } from '../modules/api';
 
 export default class MenuModel {
   constructor(eventBus) {
-    this._eventBus = eventBus;
-    this._eventBus.on('view_show', () => {
-      this._checkAuth();
+    this.eventBus = eventBus;
+    this.eventBus.on('view_show', () => {
+      this.checkAuth();
     });
   }
 
-  _checkAuth() {
-    Api.getAuth()
-      .then((res) => {
-        if (res.status == 200 || res.status == 304) {
-          console.log('authorized');
-        } else {
-          this._eventBus.trigger('auth_bad');
-        }
+  checkAuth() {
+    getAuth()
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        console.log('menu auth ok');
+        console.log(data);
       })
-      .catch((err) => {
-        console.log(err);
-        this._eventBus.trigger('auth_bad');
+      .catch(() => {
+        console.log('menu auth bad');
+        this.eventBus.trigger('auth_bad');
       });
   }
 }
