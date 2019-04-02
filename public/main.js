@@ -1,7 +1,7 @@
 
 
 import Router from './modules/router';
-import EventBus from './modules/eventbus';
+import { GlobalBus } from './modules/eventbus';
 
 import MenuPresenter from './presenters/MenuPresenter';
 import RulesPresenter from './presenters/RulesPresenter';
@@ -20,12 +20,6 @@ import './components/rules/Rules.css';
 import './components/scoreboard/ScoreBoard.css';
 
 /**
-TO DO
-session storage!!!
-local storage
-* */
-
-/**
  * Регистрация Service Worker
  */
 function registerSW() {
@@ -40,18 +34,21 @@ function registerSW() {
  * Точка входа
  */
 function start() {
-  registerSW();
+  // registerSW();
   console.log('Start');
-  const eventBus = new EventBus();
 
   const application = document.getElementById('application');
   Router.setRoot(application);
-  Router.add('/',         new MenuPresenter(Router, eventBus));
-  Router.add('/rules',    new RulesPresenter(Router, eventBus));
-  Router.add('/users',    new ScoreBoardPresenter(Router, eventBus));
-  Router.add('/profile',  new ProfilePresenter(Router, eventBus));
-  Router.add('/signin',   new SignInPresenter(Router, eventBus));
-  Router.add('/signup',   new SignUpPresenter(Router, eventBus));
+  Router.add('/',         new MenuPresenter());
+  Router.add('/rules',    new RulesPresenter());
+  Router.add('/users',    new ScoreBoardPresenter());
+  Router.add('/profile',  new ProfilePresenter());
+  Router.add('/signin',   new SignInPresenter());
+  Router.add('/signup',   new SignUpPresenter());
+
+  GlobalBus.on('auth_bad', () => {
+    Router.route('/signin');
+  });
 
   Router.route(window.location.pathname);
   Router.listen();
@@ -60,6 +57,4 @@ function start() {
 /**
  * На самом деле это точка входа
  */
-document.addEventListener('DOMContentLoaded', () => {
-  start();
-});
+document.addEventListener('DOMContentLoaded', start());

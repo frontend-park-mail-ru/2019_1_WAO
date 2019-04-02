@@ -1,6 +1,7 @@
 import SignInView from '../views/SignInView';
 import SignInModel from '../models/SigninModel';
-import EventBus from '../modules/eventbus';
+import Router from '../modules/router';
+import { EventBus } from '../modules/eventbus';
 
 /**
  * SignInView view
@@ -14,25 +15,24 @@ export default class SignInPresenter {
    * @param {Router} Router
    * @param {EventBus} globalEventBus Глобальная шина событий
    */
-  constructor(Router, globalEventBus) {
+  constructor() {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
     this.view = new SignInView(application, eventBus);
     this.model = new SignInModel(eventBus);
 
-    globalEventBus.on('auth_bad', () => {
-      Router.route('/signin');
-    });
-
     eventBus.on('auth_ok', () => {
+      console.log('auth_ok');
       Router.route('/');
     });
 
     eventBus.on('signin_ok', () => {
+      console.log('signup_ok');
       Router.route('/');
     });
 
     eventBus.on('signin_bad', () => {
+      console.log('signup_bad');
       Router.route('/signin');
     });
   }

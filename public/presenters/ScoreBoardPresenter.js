@@ -1,6 +1,6 @@
 import ScoreBoardView from '../views/ScoreBoardView';
 import ScoreBoardModel from '../models/ScoreBoardModel';
-import EventBus from '../modules/eventbus';
+import { EventBus } from '../modules/eventbus';
 
 /**
  * ScoreBoardPresenter view
@@ -11,25 +11,15 @@ export default class ScoreBoardPresenter {
    * Конструктор
    * Создает Модель и Представление элемента
    * Подписывается на события
-   * @param {Router} Router
-   * @param {EventBus} globalEventBus Глобальная шина событий
    */
-  constructor(Router, globalEventBus) {
+  constructor() {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
     this.view = new ScoreBoardView(application, eventBus);
     this.model = new ScoreBoardModel(eventBus);
 
-    globalEventBus.on('auth_bad', () => {
-      Router.route('/signin');
-    });
-
-
-    eventBus.on('auth_bad', () => {
-      Router.route('/signin');
-    });
-
     eventBus.on('users_rx', (data) => {
+      console.log('users_rx');
       console.log(data);
       this.view.render(application, data);
     });

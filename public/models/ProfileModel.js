@@ -4,6 +4,7 @@ import {
 import User from '../modules/user';
 import checkXSS from '../utils/safe';
 import { checkValidationNEP } from '../utils/validation';
+import { GlobalBus } from '../modules/eventbus';
 
 /**
  * Модель Профиля пользователя
@@ -37,7 +38,7 @@ export default class ProfileModel {
       })
       .catch(() => {
         console.log('profile auth bad');
-        this.eventBus.trigger('auth_bad');
+        GlobalBus.trigger('auth_bad');
       });
   }
 
@@ -66,6 +67,7 @@ export default class ProfileModel {
         return;
       }
 
+      // const formData = new FormData(form);
       const formData = new FormData();
       formData.append('nickname', nickname);
       formData.append('email', email);

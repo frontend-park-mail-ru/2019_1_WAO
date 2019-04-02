@@ -1,6 +1,7 @@
 import {
   getAuth, getScoreBoard, checkStatus, parseJSON,
 } from '../modules/api';
+import { GlobalBus } from '../modules/eventbus';
 
 /**
  * Таблица лидеров
@@ -30,7 +31,7 @@ export default class ScoreBoardModel {
       })
       .catch(() => {
         console.log('score auth bad');
-        this.eventBus.trigger('auth_bad');
+        GlobalBus.trigger('auth_bad');
       });
   }
 }

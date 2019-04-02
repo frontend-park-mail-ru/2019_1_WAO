@@ -21,7 +21,7 @@ export const EVENTS = [
  * Модуль шины событий
  * @class EventBus
  */
-export default class EventBus {
+class EventBus {
   constructor(eventsList = EVENTS) {
     this.events = {};
     eventsList.forEach((event) => {
@@ -70,3 +70,6 @@ export default class EventBus {
     });
   }
 }
+
+const GlobalBus = new EventBus(EVENTS);
+export { EventBus, GlobalBus };

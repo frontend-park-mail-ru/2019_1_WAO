@@ -211,6 +211,7 @@ app.put('/api/v1/users/Goshan', (req, res) => {
 	});
 
 	form.on('end', function() {
+		console.log(user);
 		users[user.nickname].nickname = user.nickname;
 		users[user.nickname].email = user.email;
 		users[user.nickname].password = user.password;

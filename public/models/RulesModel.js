@@ -1,4 +1,5 @@
 import { getAuth, checkStatus, parseJSON } from '../modules/api';
+import { GlobalBus } from '../modules/eventbus';
 
 /**
  * Модель Правил
@@ -7,7 +8,7 @@ export default class RulesModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.eventBus.on('view_show', () => {
-      this.checkAuth();
+      RulesModel.checkAuth();
     });
   }
 
@@ -15,7 +16,7 @@ export default class RulesModel {
    * Проверка авторизации
    * Неавторизованный пользоватеь ни в коем случае не должен узнать правила
    */
-  checkAuth() {
+  static checkAuth() {
     getAuth()
       .then(checkStatus)
       .then(parseJSON)
@@ -25,7 +26,7 @@ export default class RulesModel {
       })
       .catch(() => {
         console.log('menu auth bad');
-        this.eventBus.trigger('auth_bad');
+        GlobalBus.trigger('auth_bad');
       });
   }
 }
