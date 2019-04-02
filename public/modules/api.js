@@ -2,8 +2,6 @@ const baseUrl = 'http://127.0.0.1:3000';
 const apiUrl = '/api/v1';
 const reqUrl = baseUrl + apiUrl;
 
-// добавить DELETE запросы
-
 /**
  * Выполнить GET-запрос с помощью FetchAPI
  * @param {string} path
@@ -12,6 +10,20 @@ const reqUrl = baseUrl + apiUrl;
 function getFetch(path = '/') {
   return fetch(reqUrl + path, {
     method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+    body: null,
+  });
+}
+
+/**
+ * Выполнить DELETE-запрос с помощью FetchAPI
+ * @param {string} path
+ * return {Promise<Responce>}
+ */
+function delFetch(path = '/') {
+  return fetch(reqUrl + path, {
+    method: 'DELETE',
     mode: 'cors',
     credentials: 'include',
     body: null,
@@ -78,6 +90,14 @@ export function parseJSON(res) {
  */
 export function getAuth() {
   return getFetch('/sessions');
+}
+
+/**
+ * Обертка над DELETE-запросом для закрытия сессии
+ * return {Promise<Responce>}
+ */
+export function delAuth() {
+  return delFetch('/sessions');
 }
 
 /**

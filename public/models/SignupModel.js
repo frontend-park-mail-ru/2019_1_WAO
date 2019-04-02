@@ -23,16 +23,16 @@ export default class SignUpModel {
       event.preventDefault();
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
-      const password1 = form.elements.password.value;
-      const password2 = form.elements.password_repeat.value;
+      const password = form.elements.password.value;
+      const passwordRepeat = form.elements.password_repeat.value;
 
       const body = {
         nickname,
         email,
-        password: password1,
+        password,
       };
 
-      if (!checkValidationNEP(nickname, email, password1, password2)) {
+      if (!checkValidationNEP(nickname, email, password, passwordRepeat)) {
         return;
       }
 

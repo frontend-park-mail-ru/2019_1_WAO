@@ -53,23 +53,26 @@ export default class ProfileModel {
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
       // const password = form.elements['password'].value;
-      const password1 = 'kostyl'; // секретный ключ, не запоминать
-      const password2 = 'kostyl';
-      const image = document.getElementById('inputImg').files[0];
+      const password = 'kostyl'; // секретный ключ, не запоминать
+      const passwordRepeat = 'kostyl';
+      const [imageInput] = document.getElementsByClassName('profile_input-img');
+      const [image] = imageInput.files;
 
-      if (!checkValidationNEP(nickname, email, password1, password2)) {
+      if (!checkValidationNEP(nickname, email, password, passwordRepeat)) {
         return;
       }
 
-      if (!checkXSS({ nickname, email, password1 })) {
+      if (!checkXSS({ nickname, email, password })) {
         return;
       }
 
       const formData = new FormData();
       formData.append('nickname', nickname);
       formData.append('email', email);
-      formData.append('password', password1);
-      formData.append('image', image);
+      formData.append('password', password);
+      if (image) {
+        formData.append('image', image);
+      }
 
       putProfile(nickname, formData)
         .then(checkStatus)

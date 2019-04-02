@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <input id="inputImg" type="file" placeholder="Картинка" name="image"/>
+                <input id="inputImg" type="file" placeholder="Картинка" name="image" class="profile_input-img"/>
             </div>
         </div>
         <div class="profile_data_footer">

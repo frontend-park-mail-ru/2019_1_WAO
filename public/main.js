@@ -40,7 +40,7 @@ function registerSW() {
  * Точка входа
  */
 function start() {
-  // registerSW();
+  registerSW();
   console.log('Start');
   const eventBus = new EventBus();
 

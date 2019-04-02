@@ -214,7 +214,9 @@ app.put('/api/v1/users/Goshan', (req, res) => {
 		users[user.nickname].nickname = user.nickname;
 		users[user.nickname].email = user.email;
 		users[user.nickname].password = user.password;
-		users[user.nickname].image = user.image;
+		if (user.image) {
+			users[user.nickname].image = user.image;
+		}
 		console.log("Resp");
 		const data = {
 			nickname: user.nickname,
