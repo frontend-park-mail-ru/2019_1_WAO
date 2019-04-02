@@ -94,6 +94,7 @@ app.get('/api/v1/sessions', (req, res) => {
 			wins: users[nickname].wins,
 			image: users[nickname].image,
 		}
+		//res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
 		res.json(send);
 	} else {
 		return res.status(400).json({ error: 'Fff' });
@@ -215,7 +216,15 @@ app.put('/api/v1/users/Goshan', (req, res) => {
 		users[user.nickname].password = user.password;
 		users[user.nickname].image = user.image;
 		console.log("Resp");
-		res.status(201).json({ user });
+		const data = {
+			nickname: user.nickname,
+			email: users[user.nickname].email,
+			score: users[user.nickname].score,
+			wins: users[user.nickname].wins,
+			games: users[user.nickname].games,
+			image: users[user.nickname].image,
+		}
+		res.status(201).json(data);
 	});
 
 });

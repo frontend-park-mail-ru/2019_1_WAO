@@ -28,6 +28,7 @@ export default class SignInModel {
         console.log('signin auth ok');
         console.log(data);
         User.set(data);
+        console.log(User);
       })
       .catch(() => {
         console.log('signin auth bad');
@@ -61,13 +62,12 @@ export default class SignInModel {
         .then(checkStatus)
         .then(parseJSON)
         .then((data) => {
-          console.log('signin auth ok');
+          console.log('signin ok');
           console.log(data);
-          User.set(data);
           this.eventBus.trigger('signin_ok');
         })
         .catch(() => {
-          console.log('signin auth bad');
+          console.log('signin bad');
           this.eventBus.trigger('signin_bad');
         });
     });

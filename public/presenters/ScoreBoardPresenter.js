@@ -1,4 +1,4 @@
-import ScoreBoardView from '../views/scoreboard/ScoreBoardView';
+import ScoreBoardView from '../views/ScoreBoardView';
 import ScoreBoardModel from '../models/ScoreBoardModel';
 import EventBus from '../modules/eventbus';
 

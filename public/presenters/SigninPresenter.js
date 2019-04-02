@@ -1,4 +1,4 @@
-import SignInView from '../views/signin/SignInView';
+import SignInView from '../views/SignInView';
 import SignInModel from '../models/SigninModel';
 import EventBus from '../modules/eventbus';
 

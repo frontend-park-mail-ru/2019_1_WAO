@@ -1,39 +1,23 @@
-/**
- * @module models/user
- */
 
 /**
- * Модель пользователя.
- * @class UserModel
+ * Данные о пользоваетеле
  */
-class User {
-  /**
-     * Получаем данные пользователя
-     * @return {Object} data
-     */
-  get() {
-    return {
-      nickname: this.nickname,
-      email: this.email,
-      score: this.score,
-      wins: this.wins,
-      games: this.games,
-      image: this.image,
-    };
-  }
+const User = {
+  nickname: null,
+  email: null,
+  score: 0,
+  wins: 0,
+  games: 0,
+  image: './images/default_image.png',
+};
 
-  /**
-     * Заполняем поля пользователя
-     * @param {Object} data
-     */
-  set(data) {
-    this.nickname = data.nickname;
-    this.email = data.email;
-    this.score = data.score;
-    this.wins = data.wins;
-    this.games = data.games;
-    this.image = data.image || './images/default_image.png';
+User.set = function set(data) {
+  for (const param in data) {
+    if (param && Object.prototype.hasOwnProperty.call(User, param)
+    && Object.prototype.hasOwnProperty.call(data, param)) {
+      User[param] = data[param];
+    }
   }
-}
+};
 
-export default new User();
+export default User;

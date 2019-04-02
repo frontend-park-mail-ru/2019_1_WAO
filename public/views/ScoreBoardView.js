@@ -1,12 +1,12 @@
-import BaseView from '../view/BaseView';
-import template from './Rules.tmpl.xml';
-import NavbarTemplate from '../../components/Navbar/Navbar.tmpl.xml';
+import BaseView from './BaseView';
+import template from '../components/scoreboard/ScoreBoard.tmpl.xml';
+import NavbarTemplate from '../components/navbar/Navbar.tmpl.xml';
 
 /**
- * RulesView view
- * @class RulesView
+ * ScoreBoardView view
+ * @class ScoreBoardView
  */
-export default class RulesView extends BaseView {
+export default class ScoreBoardView extends BaseView {
   /**
    * Конструктор класса View
    * @param {document.body} el Куда отображать
@@ -16,7 +16,7 @@ export default class RulesView extends BaseView {
     super(el, eventBus, template);
   }
 
-  render(root, data = {}) {
+  render(root, data = []) {
     this.el = root;
     this.el.innerHTML = NavbarTemplate();
     this.el.innerHTML += this.template(data);

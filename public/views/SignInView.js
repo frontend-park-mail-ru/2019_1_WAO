@@ -1,5 +1,5 @@
-import BaseView from '../view/BaseView';
-import template from './signin.tmpl.xml';
+import BaseView from './BaseView';
+import template from '../components/signin/signin.tmpl.xml';
 
 /**
  * Signin view

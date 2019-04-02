@@ -18,8 +18,7 @@ export default class SignUpModel {
    */
   makeSignUp() {
     const form = document.querySelector('form');
-    // form.addEventListener('submit', event => {
-    const footer = document.getElementsByClassName('registration_input_footer_divblock_registration')[0];
+    const [footer] = document.getElementsByClassName('registration_input_footer_divblock_registration');
     footer.addEventListener('click', (event) => {
       event.preventDefault();
       const nickname = form.elements.nickname.value;

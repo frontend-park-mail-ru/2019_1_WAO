@@ -1,5 +1,5 @@
-import BaseView from '../view/BaseView';
-import template from './signup.tmpl.xml';
+import BaseView from './BaseView';
+import template from '../components/signup/signup.tmpl.xml';
 
 /**
  * Singup view

@@ -1,6 +1,6 @@
-import BaseView from '../view/BaseView';
-import template from './Menu.tmpl.xml';
-import NavbarTemplate from '../../components/Navbar/Navbar.tmpl.xml';
+import BaseView from './BaseView';
+import template from '../components/menu/Menu.tmpl.xml';
+import NavbarTemplate from '../components/navbar/Navbar.tmpl.xml';
 
 // import {NavbarComponent} from '../components/Navbar/Navbar.js';
 

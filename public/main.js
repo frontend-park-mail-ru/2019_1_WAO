@@ -11,13 +11,13 @@ import SignInPresenter from './presenters/SigninPresenter';
 import SignUpPresenter from './presenters/SignupPresenter';
 
 import './img/user.png';
-import './views/signin/login.css';
-import './views/menu/Menu.css';
-import './components/Navbar/Navbar.css';
-import './views/profile/profile.css';
-import './views/signup/signup.css';
-import './views/rules/Rules.css';
-import './views/scoreboard/ScoreBoard.css';
+import './components/signin/login.css';
+import './components/menu/Menu.css';
+import './components/navbar/Navbar.css';
+import './components/profile/profile.css';
+import './components/signup/signup.css';
+import './components/rules/Rules.css';
+import './components/scoreboard/ScoreBoard.css';
 
 /**
 TO DO

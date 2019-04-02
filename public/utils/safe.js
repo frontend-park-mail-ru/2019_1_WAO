@@ -19,11 +19,9 @@ const R_ATTRIBUTES = /(\w+\s*)=(\s*".*?")/g;
  * @param {number} schet
  */
 function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0) {
-  console.log(isSafe1, isSafe2);
   unsafeString = unsafeString
     .replace(R_TAG, (match, g1) => {
       schet += 1;
-      console.log(g1, isSafe1, isSafe2);
       if (BLACKLIST_TAGS.includes(g1)) {
         isSafe1 = false;
         return '';
@@ -33,7 +31,6 @@ function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0
     })
     .replace(R_ATTRIBUTES, (match, g1) => {
       schet += 1;
-      console.log(g1, isSafe1, isSafe2);
       if (WHITELIST_ATTRS.includes(g1)) {
         isSafe2 = true;
         return match;
@@ -42,7 +39,6 @@ function makeSafe(unsafeString = '', isSafe1 = false, isSafe2 = false, schet = 0
       return '';
     });
   if (schet === 0) {
-    console.log('return 2');
     return [
       unsafeString,
       true,

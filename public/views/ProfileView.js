@@ -1,6 +1,6 @@
-import BaseView from '../view/BaseView';
-import template from './profile.tmpl.xml';
-import NavbarTemplate from '../../components/Navbar/Navbar.tmpl.xml';
+import BaseView from './BaseView';
+import template from '../components/profile/profile.tmpl.xml';
+import NavbarTemplate from '../components/navbar/Navbar.tmpl.xml';
 
 /**
  * ProfileView view

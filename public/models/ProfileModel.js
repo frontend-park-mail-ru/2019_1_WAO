@@ -47,7 +47,7 @@ export default class ProfileModel {
    */
   updateUser() {
     const form = document.querySelector('form');
-    const button = document.getElementsByClassName('profile_change_button')[0];
+    const [button] = document.getElementsByClassName('profile_change_button');
     button.addEventListener('click', (event) => {
       event.preventDefault();
       const nickname = form.elements.nickname.value;
@@ -73,6 +73,13 @@ export default class ProfileModel {
 
       putProfile(nickname, formData)
         .then(checkStatus)
+        .then(parseJSON)
+        .then((data) => {
+          User.set(data);
+          console.log(data);
+          console.log('update ok');
+          this.eventBus.trigger('update_ok', data);
+        })
         .catch(() => {
           console.log('update bad');
           this.eventBus.trigger('update_bad');

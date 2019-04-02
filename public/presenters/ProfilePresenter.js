@@ -1,4 +1,4 @@
-import ProfileView from '../views/profile/ProfileView';
+import ProfileView from '../views/ProfileView';
 import ProfileModel from '../models/ProfileModel';
 import EventBus from '../modules/eventbus';
 
@@ -26,6 +26,10 @@ export default class ProfilePresenter {
 
     eventBus.on('users_rx', (data) => {
       console.log(data);
+      this.view.render(application, data);
+    });
+
+    eventBus.on('update_ok', (data) => {
       this.view.render(application, data);
     });
   }

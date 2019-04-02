@@ -1,4 +1,4 @@
-import MenuView from '../views/menu/MenuView';
+import MenuView from '../views/MenuView';
 import MenuModel from '../models/MenuModel';
 import EventBus from '../modules/eventbus';
 

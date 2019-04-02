@@ -1,4 +1,4 @@
-import RulesView from '../views/rules/RulesView';
+import RulesView from '../views/RulesView';
 import RulesModel from '../models/RulesModel';
 import EventBus from '../modules/eventbus';
 
