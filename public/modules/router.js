@@ -53,7 +53,6 @@ class Router {
   }
 
   static history(path) {
-    console.log('To history: ', path);
     window.history.pushState(null, null, path);
   }
 
@@ -66,7 +65,6 @@ class Router {
         return;
       }
       event.preventDefault();
-      console.log(event.target.dataset.href);
       this.route(event.target.dataset.href);
     });
   }

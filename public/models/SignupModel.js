@@ -32,12 +32,16 @@ export default class SignUpModel {
         password,
       };
 
-      if (!checkValidationNEP(nickname, email, password, passwordRepeat)) {
-        return;
+      if (!checkXSS(body)) {
+        alert('Попытка XSS атаки!');
+        this.makeSignUp();
       }
 
-      if (!checkXSS(body)) {
-        return;
+      const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
+      if (!checkValidation.status) {
+        console.log(checkValidation.err);
+        this.eventBus.trigger('valid_err', checkValidation.err);
+        this.makeSignUp();
       }
 
       postSignUp(body)

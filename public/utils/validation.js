@@ -54,10 +54,15 @@ export function checkValidationNP(nickname, password) {
   isCorrectPassword(password, password, errList);
 
   if (errList.length > 0) {
-    alert(errList);
-    return false;
+    return {
+      status: false,
+      err: errList,
+    };
   }
-  return true;
+  return  {
+    status: true,
+    err: [],
+  };
 }
 
 /**
@@ -73,8 +78,13 @@ export function checkValidationNEP(nickname, email, password1, password2) {
   isCorrectPassword(password1, password2, errList);
 
   if (errList.length > 0) {
-    alert(errList);
-    return false;
+    return {
+      status: false,
+      err: errList,
+    };
   }
-  return true;
+  return  {
+    status: true,
+    err: [],
+  };
 }

@@ -27,13 +27,8 @@ export default class SignInPresenter {
     });
 
     eventBus.on('signin_ok', () => {
-      console.log('signup_ok');
+      console.log('signip_ok');
       Router.route('/');
-    });
-
-    eventBus.on('signin_bad', () => {
-      console.log('signup_bad');
-      Router.route('/signin');
     });
   }
 }

@@ -23,6 +23,9 @@
                             </svg>
                         </div>
                     </div>
+                    <fest:for iterate="data" index="i">
+                        <a><fest:value>data[i]</fest:value></a>
+                    </fest:for>
                     <div class="forgot_pass">
                         <input class="checkbox" type="checkbox"/>
                         <span class="checkbox_icon"></span>

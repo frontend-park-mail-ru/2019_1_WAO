@@ -1,5 +1,3 @@
-
-
 import Router from './modules/router';
 import { GlobalBus } from './modules/eventbus';
 
@@ -34,7 +32,7 @@ function registerSW() {
  * Точка входа
  */
 function start() {
-  // registerSW();
+  // registerSW(); // SW мешает запросы отслеживать на этапе отладки
   console.log('Start');
 
   const application = document.getElementById('application');

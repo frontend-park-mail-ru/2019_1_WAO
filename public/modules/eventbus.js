@@ -15,6 +15,8 @@ export const EVENTS = [
   'users_req',
   'update_ok',
   'update_bad',
+  'valid_err',
+  'reset',
 ];
 
 /**

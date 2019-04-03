@@ -78,7 +78,6 @@ function makeSafeList(unsafeStringList = {}) {
  */
 export default function checkXSS(body) {
   if (!(makeSafeList(body))) {
-    alert('Попытка XSS атаки');
     return false;
   }
   return true;

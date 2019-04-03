@@ -42,6 +42,20 @@
                     </div>
                     <div class="profile_data_3">
                         <div class="profile_data_bottom_border_div">
+                            <div class="left_data">Email</div>
+                            <div class="right_data">
+                                <fest:element name="input">
+                                    <fest:attributes>
+                                        <fest:attribute name="type">password</fest:attribute>
+                                        <fest:attribute name="class">profile_data_input</fest:attribute>
+                                        <fest:attribute name="name">password</fest:attribute>
+                                    </fest:attributes>
+                                </fest:element>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile_data_4">
+                        <div class="profile_data_bottom_border_div">
                             <div class="left_data">Очки</div>
                             <div class="right_data">
                                 <fest:value output="text">data.score</fest:value>  
@@ -49,7 +63,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="profile_data_4">
+                <div class="profile_data_5">
                     <div class="profile_data_bottom_border_div">
                         <div class="left_data">Игр</div>
                         <div class="right_data">
@@ -57,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="profile_data_5">
+                <div class="profile_data_6">
                     <div class="profile_data_bottom_border_div">
                         <div class="left_data">Побед</div>
                         <div class="right_data">

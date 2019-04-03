@@ -50,12 +50,16 @@ export default class SignInModel {
         password,
       };
 
-      if (!checkValidationNP(nickname, password)) {
-        return;
+      if (!checkXSS(body)) {
+        alert('Попытка XSS атаки!');
+        this.checkAuth();
       }
 
-      if (!checkXSS(body)) {
-        return;
+      const checkValidation = checkValidationNP(nickname, password);
+      if (!checkValidation.status) {
+        console.log(checkValidation.err);
+        this.eventBus.trigger('valid_err', checkValidation.err);
+        this.checkAuth();
       }
 
       postSignIn(body)
@@ -66,7 +70,7 @@ export default class SignInModel {
           this.eventBus.trigger('signin_ok');
         })
         .catch(() => {
-          this.eventBus.trigger('signin_bad');
+          this.eventBus.trigger('signin_bad', ['Непралильный логин или пароль']);
         });
     });
   }

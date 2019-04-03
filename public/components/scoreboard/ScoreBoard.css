@@ -11,10 +11,9 @@ body {
 	text-align: center;
 
 	display: grid;
-	grid-template-rows: auto auto;
+	grid-template-rows: auto;
 	grid-row-gap: 30px;
 	grid-template-areas: 
-		"scoreboard_header"
 		"scoreboard_table";
 }
 

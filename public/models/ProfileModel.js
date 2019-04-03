@@ -53,25 +53,35 @@ export default class ProfileModel {
       event.preventDefault();
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
-      // const password = form.elements['password'].value;
-      const password = 'kostyl'; // секретный ключ, не запоминать
-      const passwordRepeat = 'kostyl';
+      const password = form.elements.password.value;
+      const passwordRepeat = password; // упростим жизнь пользователю
       const [imageInput] = document.getElementsByClassName('profile_input-img');
       const [image] = imageInput.files;
 
-      if (!checkValidationNEP(nickname, email, password, passwordRepeat)) {
-        return;
+      if (!checkXSS({
+        nickname,
+        email,
+        password,
+        passwordRepeat,
+      })) {
+        alert('Попытка XSS атаки!');
+        this.checkAuth();
       }
 
-      if (!checkXSS({ nickname, email, password })) {
-        return;
+      const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
+      if (!checkValidation.status) {
+        console.log(checkValidation.err);
+        this.eventBus.trigger('valid_err', checkValidation.err);
+        this.checkAuth();
       }
 
       // const formData = new FormData(form);
       const formData = new FormData();
       formData.append('nickname', nickname);
       formData.append('email', email);
-      formData.append('password', password);
+      if (password) {
+        formData.append('password', password);
+      }
       if (image) {
         formData.append('image', image);
       }

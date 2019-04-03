@@ -80,7 +80,7 @@ app.get('/api/v1/sessions', (req, res) => {
 	const id = req.cookies.sessionid;
 	console.log(id);
 	if (!id) {
-		return res.status(400).json({ error: 'Не валидный Ник' });
+		return res.status(400).json({ error: 'Запрос без кук что ли?' });
 	}
 
 	console.log(ids);
@@ -97,7 +97,7 @@ app.get('/api/v1/sessions', (req, res) => {
 		//res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
 		res.json(send);
 	} else {
-		return res.status(400).json({ error: 'Fff' });
+		return res.status(401).json({ error: 'Fff' });
 	}
 
 });
