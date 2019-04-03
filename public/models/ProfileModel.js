@@ -34,7 +34,7 @@ export default class ProfileModel {
         console.log(data);
         User.set(data);
         this.eventBus.trigger('users_rx', data);
-        this.updateUser();
+        this.processForm();
       })
       .catch(() => {
         console.log('profile auth bad');
@@ -44,9 +44,9 @@ export default class ProfileModel {
 
   /**
    * Обновление информации о пользователе
-   * Делает POST-запрос с параметрами: ник, почта, пароль, картинка
+   * Читает данные формы и валидирует их
    */
-  updateUser() {
+  processForm() {
     const form = document.querySelector('form');
     const [button] = document.getElementsByClassName('profile_change_button');
     button.addEventListener('click', (event) => {
@@ -65,40 +65,47 @@ export default class ProfileModel {
         passwordRepeat,
       })) {
         alert('Попытка XSS атаки!');
-        this.checkAuth();
+        this.processForm();
       }
 
       const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
       if (!checkValidation.status) {
         console.log(checkValidation.err);
-        this.eventBus.trigger('valid_err', checkValidation.err);
-        this.checkAuth();
+        this.eventBus.trigger('valid_err', User, checkValidation.err);
+        this.processForm();
+      } else {
+        // const formData = new FormData(form);
+        const formData = new FormData();
+        formData.append('nickname', nickname);
+        formData.append('email', email);
+        if (password) {
+          formData.append('password', password);
+        }
+        if (image) {
+          formData.append('image', image);
+        }
+        this.makeUpdate(nickname, formData);
       }
-
-      // const formData = new FormData(form);
-      const formData = new FormData();
-      formData.append('nickname', nickname);
-      formData.append('email', email);
-      if (password) {
-        formData.append('password', password);
-      }
-      if (image) {
-        formData.append('image', image);
-      }
-
-      putProfile(nickname, formData)
-        .then(checkStatus)
-        .then(parseJSON)
-        .then((data) => {
-          User.set(data);
-          console.log(data);
-          console.log('update ok');
-          this.eventBus.trigger('update_ok', data);
-        })
-        .catch(() => {
-          console.log('update bad');
-          this.eventBus.trigger('update_bad');
-        });
     });
+  }
+
+  /**
+   * Делает POST-запрос с параметрами: ник, почта, пароль, картинка
+   */
+  makeUpdate(nickname, formData) {
+    putProfile(nickname, formData)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        User.set(data);
+        console.log(data);
+        console.log('update ok');
+        this.eventBus.trigger('update_ok', data);
+      })
+      .catch(() => {
+        console.log('update bad');
+        this.eventBus.trigger('update_bad', User, ['Невалидные данные']);
+      });
+
   }
 }

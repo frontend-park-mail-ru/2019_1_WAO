@@ -9,14 +9,14 @@ export default class SignUpModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.eventBus.on('view_show', () => {
-      this.makeSignUp();
+      this.processForm();
     });
   }
 
   /**
-   * Делает POST-запрос с данными для регистрации
+   * Читает данные формы и валидирует их
    */
-  makeSignUp() {
+  processForm() {
     const form = document.querySelector('form');
     const [footer] = document.getElementsByClassName('registration_input_footer_divblock_registration');
     footer.addEventListener('click', (event) => {
@@ -34,26 +34,34 @@ export default class SignUpModel {
 
       if (!checkXSS(body)) {
         alert('Попытка XSS атаки!');
-        this.makeSignUp();
+        this.processForm();
       }
 
       const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
       if (!checkValidation.status) {
-        console.log(checkValidation.err);
         this.eventBus.trigger('valid_err', checkValidation.err);
-        this.makeSignUp();
+        console.log(checkValidation.err);
+        this.processForm();
+      } else {
+        this.makeSignUp(body);
       }
-
-      postSignUp(body)
-        .then(checkStatus)
-        .then(() => {
-          console.log('signup auth ok');
-          this.eventBus.trigger('signup_ok');
-        })
-        .catch(() => {
-          console.log('signup auth bad');
-          this.eventBus.trigger('signup_bad');
-        });
     });
+  }
+
+  /**
+   * Делает POST-запрос с данными для регистрации
+   */
+  makeSignUp(body = {}) {
+    postSignUp(body)
+      .then(checkStatus)
+      .then(() => {
+        console.log('signup ok');
+        this.eventBus.trigger('signup_ok');
+      })
+      .catch(() => {
+        console.log('signup bad');
+        this.eventBus.trigger('signup_bad', ['Невалидные данные']);
+        this.processForm();
+      });
   }
 }

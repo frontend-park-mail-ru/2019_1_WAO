@@ -2,15 +2,18 @@
 	<div class="registration_container">
         <div class="registration_title">Регистрация</div>
         <div class="registration_body">
-            <form id="signup_form" action="#" method="POST">
+            <form id="signup_form" action="/signup" method="POST">
                 <input type="text" placeholder="Ник" class="registration_input_lastname" name="nickname"/>
                 <input type="email" placeholder="Email" class="registration_input_email" name="email"/>
                 <input type="password" placeholder="Пароль" class="registration_input_password" name="password"/>
                 <input type="password" placeholder="Повторите пароль" class="registration_input_repassword" name="password_repeat"/>
+                <fest:for iterate="data" index="i">
+                    <a><fest:value>data[i]</fest:value></a>
+                </fest:for>
                 <div class="registration_err_list"></div>
                 <div class="registration_input_footer_divblock">
-                    <a class="registration_input_footer_divblock_registration" href="#">Зарегистрироваться</a>
-                    <a class="registration_input_footer_divblock_menu" href="#" data-href="/">К Меню</a>
+                    <a class="registration_input_footer_divblock_registration" href="#" data-href="#">Зарегистрироваться</a>
+                    <a class="registration_input_footer_divblock_menu" href="/" data-href="/">К Меню</a>
                 </div>
             </form>
         </div>

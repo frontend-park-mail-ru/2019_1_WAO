@@ -4,6 +4,8 @@ import {
 } from '../modules/api';
 import checkXSS from '../utils/safe';
 import { checkValidationNP } from '../utils/validation';
+import { resolve } from 'url';
+import { rejects } from 'assert';
 
 /**
  * Модель Входа в приложение
@@ -32,14 +34,14 @@ export default class SignInModel {
       })
       .catch(() => {
         console.log('check auth bad');
-        this.makeSignin();
+        this.processForm();
       });
   }
 
   /**
-   * Делает POST-запрос с логином и паролем
+   * Читает данные формы и валидирует их
    */
-  makeSignin() {
+  processForm() {
     const form = document.querySelector('form');
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -52,26 +54,34 @@ export default class SignInModel {
 
       if (!checkXSS(body)) {
         alert('Попытка XSS атаки!');
-        this.checkAuth();
+        this.processForm();
       }
 
       const checkValidation = checkValidationNP(nickname, password);
       if (!checkValidation.status) {
-        console.log(checkValidation.err);
         this.eventBus.trigger('valid_err', checkValidation.err);
-        this.checkAuth();
+        this.processForm();
+      } else {
+        this.makeSignin(body);
       }
-
-      postSignIn(body)
-        .then(checkStatus)
-        .then(parseJSON)
-        .then((data) => {
-          console.log(data);
-          this.eventBus.trigger('signin_ok');
-        })
-        .catch(() => {
-          this.eventBus.trigger('signin_bad', ['Непралильный логин или пароль']);
-        });
     });
   }
+
+  /**
+   * Делает POST-запрос на вход
+   */
+  makeSignin(body = {}) {
+    postSignIn(body)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        console.log(data);
+        this.eventBus.trigger('signin_ok');
+      })
+      .catch(() => {
+        this.eventBus.trigger('signin_bad', ['Неправильный логин или пароль']);
+        this.processForm();
+      });
+  }
 }
+

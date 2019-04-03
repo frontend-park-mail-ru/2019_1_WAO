@@ -23,10 +23,5 @@ export default class SignUpPresenter {
       console.log('signup_ok');
       Router.route('/');
     });
-
-    eventBus.on('signup_bad', () => {
-      console.log('signup_bad');
-      Router.route('/signup');
-    });
   }
 }

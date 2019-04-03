@@ -64,6 +64,9 @@ class Router {
       if (!(event.target instanceof HTMLAnchorElement)) {
         return;
       }
+      if (event.target.dataset.href === '#') {
+        return;
+      }
       event.preventDefault();
       this.route(event.target.dataset.href);
     });
