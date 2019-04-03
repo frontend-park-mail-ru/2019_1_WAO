@@ -9,10 +9,11 @@ export default class BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    * @param {String} template Шаблон страницы
    */
-  constructor(el, eventBus, template) {
+  constructor(el, eventBus, template, components = []) {
     this.el = el || document.createElement('div');
     this.eventBus = eventBus;
     this.template = template;
+    this.components = components;
     this.rendered = false;
     this.hide();
   }
@@ -24,7 +25,9 @@ export default class BaseView {
    */
   render(root, data = {}) {
     this.el = root;
-    this.el.innerHTML = this.template(data);
+    this.el.innerHTML = '';
+    this.components.forEach(component => this.el.innerHTML += component.getTemplate());
+    this.el.innerHTML += this.template(data);
     this.rendered = true;
   }
 
@@ -47,5 +50,9 @@ export default class BaseView {
     this.render(this.el);
     this.el.style.setProperty('display', 'none', 'important');
     this.eventBus.trigger('view_hide');
+  }
+  
+  getTemplate() {
+    return this.template({});
   }
 }

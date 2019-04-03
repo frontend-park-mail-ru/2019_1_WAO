@@ -5,6 +5,7 @@ export const EVENTS = [
   'auth_check',
   'auth_ok',
   'auth_bad',
+  'auth_out',
   'signin_ok',
   'signin_bad',
   'signup_ok',

@@ -1,5 +1,6 @@
 import Router from './modules/router';
 import { GlobalBus } from './modules/eventbus';
+import { delAuth, checkStatus } from './modules/api';
 
 import MenuPresenter from './presenters/MenuPresenter';
 import RulesPresenter from './presenters/RulesPresenter';
@@ -44,9 +45,7 @@ function start() {
   Router.add('/signin',   new SignInPresenter());
   Router.add('/signup',   new SignUpPresenter());
 
-  GlobalBus.on('auth_bad', () => {
-    Router.route('/signin');
-  });
+  subscribeGlobalBus();
 
   Router.route(window.location.pathname);
   Router.listen();
@@ -56,3 +55,23 @@ function start() {
  * На самом деле это точка входа
  */
 document.addEventListener('DOMContentLoaded', start());
+
+/**
+ * Пописака на события глобальной шины
+ */
+function subscribeGlobalBus() {
+  GlobalBus.on('auth_bad', () => {
+    Router.route('/signin');
+  });
+
+  GlobalBus.on('auth_out', () => {  
+    delAuth()
+      .then(checkStatus)
+      .then(() => {
+        Router.route('/signin');
+      })
+      .catch((err) => {
+        console.log(err);
+      }); 
+  });
+}

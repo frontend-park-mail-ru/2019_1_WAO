@@ -7,7 +7,7 @@
 			Меню
 		</a>
 		<a class="navbar_user" href="/profile" data-href="/profile">
-			Пользователь
+			Выйти
 		</a>
 	</div>
 </fest:template>
