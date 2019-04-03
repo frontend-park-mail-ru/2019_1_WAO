@@ -16,12 +16,4 @@ export default class MenuView extends BaseView {
     //super(el, eventBus, template, components);
     super(el, eventBus, template, [new NavbarView(el, eventBus)]);
   }
-
-  /*
-  render(root, data = {}) {
-    this.el = root;
-    this.el.innerHTML = NavbarView.getTemplate();
-    this.el.innerHTML += this.template(data);
-    this.rendered = true;
-  } */
 }
