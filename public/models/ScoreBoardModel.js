@@ -10,6 +10,7 @@ import { GlobalBus } from '../modules/eventbus';
 export default class ScoreBoardModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
+    this.page = 1;
     this.eventBus.on('view_show', () => {
       this.checkAuth();
     });
@@ -21,17 +22,47 @@ export default class ScoreBoardModel {
   checkAuth() {
     getAuth()
       .then(checkStatus)
-      .then(() => getScoreBoard(1))
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('score auth ok');
-        this.eventBus.trigger('users_rx', data);
-        console.log(data);
+      .then(() => {
+        this.makeTable();
       })
       .catch(() => {
         console.log('score auth bad');
         GlobalBus.trigger('auth_bad');
       });
   }
+
+  makeTable() {
+    getScoreBoard(this.page)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        console.log('score ok');
+        this.eventBus.trigger('users_rx', data);
+        console.log(data);
+        this.waitAction();
+      })
+      .catch(() => {
+        console.log('score bad');
+      });
+  }
+
+  waitAction() {
+    const [buttonForw] = document.getElementsByClassName('page_forw');
+    buttonForw.addEventListener('click', (event) => {
+      event.preventDefault(); 
+      console.log('PAGE FORW');
+      this.page += 1;
+      this.makeTable();
+    });
+
+    const [buttonBack] = document.getElementsByClassName('page_back');
+    buttonBack.addEventListener('click', (event) => {
+      event.preventDefault(); 
+      console.log('PAGE BACK');
+      if (this.page > 1) {
+        this.page -= 1;
+      }
+      this.makeTable();
+    });
+   }
 }

@@ -48,6 +48,96 @@ const users = {
 		wins: 1,
 		image: './images/background1.jpg',
 	},
+	Borisa: {
+		nickname: 'Borisa',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 13,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	Egorik: {
+		nickname: 'Egorik',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 13,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	p77777: {
+		nickname: 'p77777',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 13,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	Drugan: {
+		nickname: 'Drugan',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 13,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	Vragan: {
+		nickname: 'Vragan',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 13,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	Ugolovgin: {
+		nickname: 'Ugolovgin',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 13,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	Frontend: {
+		nickname: 'Frontend',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 130,
+		games: 1000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
+	graphql: {
+		nickname: 'graphql',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 223,
+		games: 10000,
+		wins: 122,
+		image: './images/background1.jpg',
+	},
+	Iiiiiiii: {
+		nickname: 'Iiiiiiii',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 3,
+		games: 10000,
+		wins: 100,
+		image: './images/background1.jpg',
+	},
+	IEEE8776: {
+		nickname: 'IEEE8776',
+		email: 'axmed@mail.ru',
+		password: '777777',
+		score: 131,
+		games: 10000,
+		wins: 1,
+		image: './images/background1.jpg',
+	},
 };
 const ids = {};
 
@@ -258,7 +348,7 @@ app.get('/api/v1/users', (req, res) => {
 	res.status(200).json(scorelist);
 });
 
-app.get('/api/v1/users/[0-9]+', (req, res) => {
+app.get('/api/v1/users/:page', (req, res) => {
 	res = setHeaders(res, setHeadearListOnPage);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
@@ -270,8 +360,18 @@ app.get('/api/v1/users/[0-9]+', (req, res) => {
 				wins: user.wins
 			}
 		});
-	console.log(scorelist);
-	res.status(200).json(scorelist);
+	// console.log(scorelist);	
+	const page = parseInt(req.params.page);
+	const limit = 10;	
+	const offset = (page - 1) * limit;
+	let end = scorelist.length;
+	if (scorelist.length > offset + limit) {
+		end = offset + limit;
+	}
+
+	const result = scorelist.slice(offset, end);
+
+	res.status(200).json(result);
 });
 
 

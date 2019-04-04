@@ -9,11 +9,7 @@ export default class NavbarModel {
    * @param {EventBus} eventBus
    */
   constructor(eventBus) {
-    this.eventBus = eventBus;
-    this.eventBus.on('view_rend', () => {
-      console.log('view_rend');
-      // this.waitAction();
-    });    
+    this.eventBus = eventBus;  
     this.eventBus.on('view_show', () => {
       console.log('view_show');
       this.waitAction();

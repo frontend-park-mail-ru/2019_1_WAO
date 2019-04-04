@@ -1,14 +1,13 @@
-
 /**
  * Данные о пользоваетеле
  */
 const User = {
-  nickname: null,
-  email: null,
+  nickname: 'New Player',
+  email: 'no mail',
   score: 0,
   wins: 0,
   games: 0,
-  image: './images/default_image.png',
+  image: './uploads/user.png',
 };
 
 User.set = function set(data) {

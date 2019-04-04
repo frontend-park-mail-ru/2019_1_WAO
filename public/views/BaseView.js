@@ -29,7 +29,6 @@ export default class BaseView {
     this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
     this.el.innerHTML += this.template(data);
     this.rendered = true;
-    this.eventBus.trigger('view_rend');
   }
 
   /**

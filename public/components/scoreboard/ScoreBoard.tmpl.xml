@@ -39,6 +39,10 @@
 					</div>
 				</div>
 			</fest:for>
+			<span>
+				<a href="#" data-href='#' class="page_back">Назад</a>
+				<a href="#" data-href='#' class="page_forw">Вперед</a>
+			</span>
 		</div>
 	</div>
 </fest:template>
