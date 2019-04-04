@@ -6,7 +6,7 @@
 		<a class="navbar_page_name">
 			Меню
 		</a>
-		<a class="navbar_user" href="#" data-href="#">
+		<a class="navbar_user" href="/" data-href="/">
 			Выйти
 		</a>
 	</div>

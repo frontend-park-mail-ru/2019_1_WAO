@@ -56,6 +56,10 @@ class Router {
     window.history.pushState(null, null, path);
   }
 
+  static changeUrl(path) {
+    window.history.replaceState(null, null, path);
+  }
+
   /**
    * Ловим переходы по страницам
    * */

@@ -19,6 +19,7 @@ export const EVENTS = [
   'update_bad',
   'valid_err',
   'reset',
+  'url_change',
 ];
 
 /**

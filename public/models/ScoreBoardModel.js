@@ -39,6 +39,8 @@ export default class ScoreBoardModel {
         console.log('score ok');
         this.eventBus.trigger('users_rx', data);
         console.log(data);
+        // this.eventBus.trigger('url_change', this.page);
+        window.history.replaceState(null, null, `/users/${this.page}`);
         this.waitAction();
       })
       .catch(() => {

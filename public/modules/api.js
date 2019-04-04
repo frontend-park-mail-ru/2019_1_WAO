@@ -106,7 +106,7 @@ export function delAuth() {
  * return {Promise<Responce>}
  */
 export function getUser(nickname) {
-  return getFetch(`/users/${nickname}`);
+  return getFetch(`/user/${nickname}`);
 }
 
 /**
@@ -143,5 +143,5 @@ export function postSignUp(body = {}) {
  * return {Promise<Responce>}
  */
 export function putProfile(nickname, body = {}) {
-  return putFetch(`/users/${nickname}`, body);
+  return putFetch(`/user/${nickname}`, body);
 }

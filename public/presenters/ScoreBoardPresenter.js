@@ -26,5 +26,10 @@ export default class ScoreBoardPresenter {
       console.log(data);
       this.view.render(application, data);
     });
+
+    eventBus.on('url_change', (data) => {
+      console.log(`/users/${data.toString()}`);
+      Router.changeUrl(`/users/${data.toString()}`);
+    });
   }
 }

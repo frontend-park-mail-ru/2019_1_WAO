@@ -20,6 +20,8 @@ app.use(body.json());
 // app.use(upload.array());
 app.use(cookie());
 
+const default_image = './uploads/user.png';
+
 const users = {
 	Goshan: {
 		nickname: 'Goshan',
@@ -28,7 +30,7 @@ const users = {
 		score: 700,
 		games: 101,
 		wins: 100,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Pashok: {
 		nickname: 'Pashok',
@@ -37,7 +39,7 @@ const users = {
 		score: 600,
 		games: 51,
 		wins: 20,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Axmed: {
 		nickname: 'Axmed',
@@ -46,7 +48,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Borisa: {
 		nickname: 'Borisa',
@@ -55,7 +57,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Egorik: {
 		nickname: 'Egorik',
@@ -64,7 +66,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	p77777: {
 		nickname: 'p77777',
@@ -73,7 +75,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Drugan: {
 		nickname: 'Drugan',
@@ -82,7 +84,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Vragan: {
 		nickname: 'Vragan',
@@ -91,7 +93,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Ugolovgin: {
 		nickname: 'Ugolovgin',
@@ -100,7 +102,7 @@ const users = {
 		score: 13,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Frontend: {
 		nickname: 'Frontend',
@@ -109,7 +111,7 @@ const users = {
 		score: 130,
 		games: 1000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	graphql: {
 		nickname: 'graphql',
@@ -118,7 +120,7 @@ const users = {
 		score: 223,
 		games: 10000,
 		wins: 122,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	Iiiiiiii: {
 		nickname: 'Iiiiiiii',
@@ -127,7 +129,7 @@ const users = {
 		score: 3,
 		games: 10000,
 		wins: 100,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 	IEEE8776: {
 		nickname: 'IEEE8776',
@@ -136,7 +138,7 @@ const users = {
 		score: 131,
 		games: 10000,
 		wins: 1,
-		image: './images/background1.jpg',
+		image: default_image,
 	},
 };
 const ids = {};
@@ -239,7 +241,7 @@ app.post('/api/v1/signup', (req, res) => {
 	if (!id) {
 		id = uuid();
 	}
-	const user = { nickname, password, image, score: 0, games: 0, wins: 0 };
+	const user = { nickname, email, password, image, score: 0, games: 0, wins: 0 };
 	console.log("User: ", user);
 	ids[id] = nickname;
 	users[nickname] = user;
@@ -267,17 +269,22 @@ app.post('/api/v1/signin', (req, res) => {
 	res.status(200).json({ id });
 });
 
-app.get('/api/v1/users/^[a-zA-Z1-9]+$', (req, res) => {
+app.get('/api/v1/user/:nickname', (req, res) => {
+	const nickname = req.params.nickname;
+	console.log('connect: ' + nickname);
+
 	res = setHeaders(res, setHeadearListOnPage);
 	const id = req.cookies['sessionid'];
 	console.log("Give Id ", id);
-	const nickname = ids[id];
+	if (nickname !== ids[id]) {
+		return res.status(422).json({error: 'Пользователь не найден'});
+	}
 	console.log("Give nickname ", nickname);
 	if (!nickname || !users[nickname]) {
 		return res.status(401).end();
 	}
 
-	users[nickname].score += 1;
+	// users[nickname].score += 1;
 	const send = {
 		nickname: users[nickname].nickname,
 		email: users[nickname].email,
@@ -289,7 +296,10 @@ app.get('/api/v1/users/^[a-zA-Z1-9]+$', (req, res) => {
 	res.status(200).json(send);
 });
 
-app.put('/api/v1/users/Goshan', (req, res) => {
+app.put('/api/v1/user/:nickname', (req, res) => {
+	const nickname = req.params.nickname;
+	console.log('connect: ' + nickname);
+
 	var form = new formidable.IncomingForm();
 	form.parse(req);
 
