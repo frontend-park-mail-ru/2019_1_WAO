@@ -33,7 +33,7 @@ class Router {
   /**
    * Открытие страницы
    * @param {string} path
-   * @param {string} page Страница
+   * @param {string} page Страница3
    * */
   route(path = '/', page = '') {
     if (!Object.prototype.hasOwnProperty.call(this.presenters, path)) {

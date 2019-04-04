@@ -20,15 +20,16 @@ export default class BaseView {
 
   /**
    * Рендер вьюхи
-   *@param {document.body} - элемент, в который вставить вьюху
-   *@param {Array} data - входной массив данных
+   * @param {document.body} - элемент, в который вставить вьюху
+   * @param {Array} data - входной массив данных
    */
   render(root, data = {}) {
     this.el = root;
     this.el.innerHTML = '';
-    this.components.forEach(component => this.el.innerHTML += component.getTemplate());
+    this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
     this.el.innerHTML += this.template(data);
     this.rendered = true;
+    this.eventBus.trigger('view_rend');
   }
 
   /**
@@ -41,18 +42,18 @@ export default class BaseView {
     // }
     this.el.style.display = null;
     this.eventBus.trigger('view_show');
+    console.log(this);
   }
 
   /**
    * Убрать вьюху
    */
   hide() {
-    this.render(this.el);
     this.el.style.setProperty('display', 'none', 'important');
     this.eventBus.trigger('view_hide');
   }
   
-  getTemplate() {
-    return this.template({});
+  getTemplate(data = {}) {
+    return this.template(data);
   }
 }

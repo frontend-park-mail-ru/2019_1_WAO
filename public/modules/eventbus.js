@@ -13,6 +13,7 @@ export const EVENTS = [
   'users_rx',
   'view_show',
   'view_hide',
+  'view_rend',
   'users_req',
   'update_ok',
   'update_bad',

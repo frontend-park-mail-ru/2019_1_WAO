@@ -97,12 +97,22 @@ app.get('/api/v1/sessions', (req, res) => {
 		//res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
 		res.json(send);
 	} else {
-		return res.status(401).json({ error: 'Fff' });
+		return res.status(401).json({ error: 'Не авторизован' });
 	}
-
 });
 
-// Добавляет заголовки в html pdu
+app.delete('/api/v1/sessions', (req, res) => {  
+	console.log("sessions");
+	console.log(req.cookies.sessionid);
+	const id = req.cookies.sessionid;
+	if (Object.prototype.hasOwnProperty.call(ids, id)) {
+		delete ids[id];
+		req.session = null; // неверное и без этой строчки работать будет
+		return res.status(200).json('Сессия закрыта');
+	}
+	return res.status(401);
+});
+
 function setHeaders(res, list) {
 	for (const key in list) {
 		if (list.hasOwnProperty(key)) {
@@ -129,15 +139,15 @@ app.post('/api/v1/signup', (req, res) => {
 		//!email.match(/@/) ||
 		//!nick.match(/^\S{4,}$/)
 	) {
-		return res.status(400).json({ error: 'Не валидные данные пользователя' });
+		return res.status(422).json({ error: 'Не валидные данные пользователя' });
 	}
 	if (users[nickname]) {
-		return res.status(400).json({ error: 'Пользователь уже существует' });
+		return res.status(409).json({ error: 'Пользователь уже существует' });
 	}
 
 	let id = req.cookies.sessionid;
 	if (!id) {
-		id = uuid();		
+		id = uuid();
 	}
 	const user = { nickname, password, image, score: 0, games: 0, wins: 0 };
 	console.log("User: ", user);
@@ -154,10 +164,10 @@ app.post('/api/v1/signin', (req, res) => {
 	const password = req.body.password;
 	const nickname = req.body.nickname;
 	if (!password || !nickname) {
-		return res.status(400).json({ error: 'Не указан E-Mail или пароль' });
+		return res.status(422).json({ error: 'Не указан E-Mail или пароль' });
 	}
 	if (!users[nickname] || users[nickname].password !== password) {
-		return res.status(400).json({ error: 'Не верный E-Mail и/или пароль' });
+		return res.status(422).json({ error: 'Не верный E-Mail и/или пароль' });
 	}
 
 	const id = uuid();
@@ -186,7 +196,7 @@ app.get('/api/v1/users/^[a-zA-Z1-9]+$', (req, res) => {
 		wins: users[nickname].wins,
 		image: users[nickname].image,
 	}
-	res.json(send);
+	res.status(200).json(send);
 });
 
 app.put('/api/v1/users/Goshan', (req, res) => {
@@ -227,7 +237,7 @@ app.put('/api/v1/users/Goshan', (req, res) => {
 			games: users[user.nickname].games,
 			image: users[user.nickname].image,
 		}
-		res.status(201).json(data);
+		res.status(200).json(data);
 	});
 
 });
@@ -245,7 +255,7 @@ app.get('/api/v1/users', (req, res) => {
 			}
 		});
 	console.log(scorelist);
-	res.json(scorelist);
+	res.status(200).json(scorelist);
 });
 
 app.get('/api/v1/users/[0-9]+', (req, res) => {
@@ -261,7 +271,7 @@ app.get('/api/v1/users/[0-9]+', (req, res) => {
 			}
 		});
 	console.log(scorelist);
-	res.json(scorelist);
+	res.status(200).json(scorelist);
 });
 
 

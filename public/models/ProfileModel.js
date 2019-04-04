@@ -33,7 +33,7 @@ export default class ProfileModel {
         console.log('profile auth ok');
         console.log(data);
         User.set(data);
-        this.eventBus.trigger('users_rx', data);
+        this.eventBus.trigger('users_rx', {data: data, err: {}});
         this.processForm();
       })
       .catch(() => {
@@ -71,7 +71,8 @@ export default class ProfileModel {
       const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
       if (!checkValidation.status) {
         console.log(checkValidation.err);
-        this.eventBus.trigger('valid_err', User, checkValidation.err);
+        // this.eventBus.trigger('valid_err', User, checkValidation.err);
+        this.eventBus.trigger('valid_err', {data: User, err: checkValidation.err});
         this.processForm();
       } else {
         // const formData = new FormData(form);
@@ -100,11 +101,12 @@ export default class ProfileModel {
         User.set(data);
         console.log(data);
         console.log('update ok');
-        this.eventBus.trigger('update_ok', data);
+        this.eventBus.trigger('update_ok', {data: data, err: {}});
       })
       .catch(() => {
         console.log('update bad');
-        this.eventBus.trigger('update_bad', User, ['Невалидные данные']);
+        // this.eventBus.trigger('update_bad', User, ['Невалидные данные']);
+        this.eventBus.trigger('update_bad', {data: User, err: ['Невалидные данные']});
       });
 
   }

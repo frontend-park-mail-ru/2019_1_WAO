@@ -1,5 +1,4 @@
 import BaseView from './BaseView';
-import NavbarView from './NavbarView';
 import template from '../components/menu/Menu.tmpl.xml';
 
 /**
@@ -13,7 +12,6 @@ export default class MenuView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    //super(el, eventBus, template, components);
-    super(el, eventBus, template, [new NavbarView(el, eventBus)]);
+    super(el, eventBus, template, components);
   }
 }

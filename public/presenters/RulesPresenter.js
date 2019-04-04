@@ -1,6 +1,7 @@
 import RulesView from '../views/RulesView';
 import RulesModel from '../models/RulesModel';
 import { EventBus } from '../modules/eventbus';
+import NavbarPresenter from '../presenters/NavbarPresenter';
 
 /**
  * RulesPresenterRulesPresenter view
@@ -15,7 +16,9 @@ export default class RulesPresenter {
   constructor() {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
-    this.view = new RulesView(application, eventBus);
+
+    const navbar = new NavbarPresenter(eventBus);
+    this.view = new RulesView(application, eventBus, [navbar.view]);
     this.model = new RulesModel(eventBus);
   }
 }

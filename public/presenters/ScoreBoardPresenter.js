@@ -1,6 +1,7 @@
 import ScoreBoardView from '../views/ScoreBoardView';
 import ScoreBoardModel from '../models/ScoreBoardModel';
 import { EventBus } from '../modules/eventbus';
+import NavbarPresenter from '../presenters/NavbarPresenter';
 
 /**
  * ScoreBoardPresenter view
@@ -15,7 +16,9 @@ export default class ScoreBoardPresenter {
   constructor() {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
-    this.view = new ScoreBoardView(application, eventBus);
+    
+    const navbar = new NavbarPresenter(eventBus);
+    this.view = new ScoreBoardView(application, eventBus, [navbar.view]);
     this.model = new ScoreBoardModel(eventBus);
 
     eventBus.on('users_rx', (data) => {

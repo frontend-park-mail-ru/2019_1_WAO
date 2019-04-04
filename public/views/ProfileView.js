@@ -1,6 +1,5 @@
 import BaseView from './BaseView';
 import template from '../components/profile/profile.tmpl.xml';
-import NavbarTemplate from '../components/navbar/Navbar.tmpl.xml';
 
 /**
  * ProfileView view
@@ -12,22 +11,15 @@ export default class ProfileView extends BaseView {
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
    */
-  constructor(el, eventBus) {
-    super(el, eventBus, template);
+  constructor(el, eventBus, components = []) {
+    super(el, eventBus, template, components);
 
-    this.eventBus.on('valid_err', (data, err) => {
-      this.render(this.el, data, err);
+    this.eventBus.on('valid_err', (data) => {
+      this.render(this.el, data);
     });
 
-    this.eventBus.on('signup_bad', (data, err) => {
-      this.render(this.el, data, err);
+    this.eventBus.on('signup_bad', (data) => {
+      this.render(this.el, data);
     });
-  }
-
-  render(root, data = {}, err = {}) {
-    this.el = root;
-    this.el.innerHTML = NavbarTemplate();
-    this.el.innerHTML += this.template({data, err});
-    this.rendered = true;
   }
 }

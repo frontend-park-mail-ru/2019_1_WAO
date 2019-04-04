@@ -10,16 +10,24 @@ export default class NavbarModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.waitAction();
+    this.eventBus.on('view_rend', () => {
+      console.log('view_rend');
+      // this.waitAction();
+    });    
+    this.eventBus.on('view_show', () => {
+      console.log('view_show');
+      this.waitAction();
+    });
   }
 
   /**
    * Отклик на клики позльзователя
    */
-   waitAction() {       
+   waitAction() {
     const [buttonOut] = document.getElementsByClassName('navbar_user');
     buttonOut.addEventListener('click', (event) => {
       event.preventDefault(); 
+      console.log('PRESS OUT');
       GlobalBus.trigger('auth_out');
     });
    }

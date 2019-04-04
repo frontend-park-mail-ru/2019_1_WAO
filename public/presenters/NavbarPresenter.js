@@ -12,9 +12,9 @@ export default class MenuPresenter {
    * Создает Модель и Представление элемента
    * Подписывается на события
    */
-  constructor() {
+  constructor(eventBus) {
     const application = document.getElementById('application');
-    const eventBus = new EventBus();
+    // const eventBus = new EventBus();
     this.view = new NavbarView(application, eventBus);
     this.model = new NavbarModel(eventBus);
   }
