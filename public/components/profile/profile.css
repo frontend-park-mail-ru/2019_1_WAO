@@ -1,0 +1,144 @@
+.profile_container {
+  font-family: Helvetica, Arial, san-serif;
+  margin: 8px 0px 0px 420px;
+  width: 404px;
+  height: 416px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 1px 1px #e0e0e0;
+          box-shadow: 0px 1px 1px #e0e0e0;
+  padding: 8px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.profile_container .profile_container_top {
+  padding: 8px;
+}
+
+.profile_container .profile_container_top .profile_title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.profile_container .profile_container_top .profile_photo {
+  height: 44px;
+  width: 44px;
+  border: 1px solid #f0f0f0;
+  border-radius: 44px;
+  background-color: #f0f0f0;
+  text-align: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  margin: 24px 0px 32px 172px;
+  padding: 4px 0px 0px 0px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.profile_container .profile_container_top .left_data {
+  font-weight: bold;
+  left: 0px;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: left-data;
+  margin-right: auto;
+}
+
+.profile_container .profile_container_top .right_data {
+  text-align: center;
+  font-weight: bolder;
+  margin: 0px auto 0px 40px;
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: right-data;
+}
+
+.profile_container .profile_container_top .profile_container_gridblock {
+  display: -ms-grid;
+  display: grid;
+  padding: 0px 92px 0px 88px;
+}
+
+.profile_container .profile_container_top .profile_data_1, .profile_container .profile_container_top .profile_data_2, .profile_container .profile_container_top .profile_data_3, .profile_container .profile_container_top .profile_data_4, .profile_container .profile_container_top .profile_data_5 {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.profile_container .profile_container_top .profile_data_1 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_2 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_3 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_4 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_5 .profile_data_bottom_border_div {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 12px;
+}
+
+.profile_container .profile_container_top .profile_data_1 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_2 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_3 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_4 .profile_data_bottom_border_div, .profile_container .profile_container_top .profile_data_5 .profile_data_bottom_border_div {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template: 1fr/1fr 1fr;
+      grid-template-areas: "left-data right-data";
+}
+
+.profile_container .profile_container_top .profile_data_5 .profile_data_bottom_border_div {
+  border-bottom: 0px solid #e0e0e0;
+}
+
+.profile_container .profile_data_footer {
+  margin-top: 4px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template: 1fr / 1fr 1fr;
+      grid-template-areas: "profile_change_button profile_delete_button";
+}
+
+.profile_container .profile_data_footer a {
+  border-radius: 4px;
+  text-decoration: none;
+  height: 20px;
+  padding: 12px 20px 8px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.profile_container .profile_data_footer .profile_change_button {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: profile_change_button;
+  border: 1px solid #008079;
+  background-color: #008079;
+  margin: 8px 4px 0px 60px;
+  color: white;
+}
+
+.profile_container .profile_data_footer .profile_change_button svg {
+  fill: white;
+  margin-right: 12px;
+}
+
+.profile_container .profile_data_footer .profile_delete_button {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: profile_delete_button;
+  border: 1px solid #ededed;
+  background-color: #f7f7f7;
+  margin: 8px 60px 0px 4px;
+  color: #9c9c9c;
+}
+
+.profile_container .profile_data_footer .profile_delete_button svg {
+  fill: #9c9c9c;
+  margin-right: 12px;
+}
+/*# sourceMappingURL=profile.css.map */
