@@ -8,7 +8,8 @@ import { checkValidationNEP } from '../utils/validation';
 export default class SignUpModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('render');
       this.processForm();
     });
   }

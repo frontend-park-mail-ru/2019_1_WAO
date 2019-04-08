@@ -7,7 +7,8 @@ import { GlobalBus } from '../modules/eventbus';
 export default class RulesModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('render');
       RulesModel.checkAuth();
     });
   }

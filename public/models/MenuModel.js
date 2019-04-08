@@ -11,23 +11,27 @@ export default class MenuModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
-      MenuModel.checkAuth();
+    this.eventBus.on('call', () => {
+      console.log('menu start render');
+      this.checkAuth();
     });
   }
 
   /**
    * Проверка авторизации
    */
-  static checkAuth() {
+  checkAuth() {
     getAuth()
       .then(checkStatus)
       .then(parseJSON)
       .then((data) => {
         console.log('menu auth ok');
         console.log(data);
+        // this.eventBus.trigger('users_rx', data);
+        this.eventBus.trigger('render', data);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         console.log('menu auth bad');
         GlobalBus.trigger('auth_bad');
       });

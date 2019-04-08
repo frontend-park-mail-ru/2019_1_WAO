@@ -1,0 +1,5 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+	<a class="menu-bar__button" data-href="/">
+        <fest:value>data.title</fest:value>
+    </a>
+</fest:template>

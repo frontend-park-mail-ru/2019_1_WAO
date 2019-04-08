@@ -18,6 +18,8 @@
     "express-history-api-fallback": "^2.2.1",
     "fest": "^0.12.1",
     "formidable": "^1.2.1",
+    "handlebars": "^4.1.1",
+    "handlebars-loader": "^1.7.1",
     "serviceworker-webpack-plugin": "^1.0.1",
     "style-loader": "^0.23.1",
     "uuid": "^3.3.2",

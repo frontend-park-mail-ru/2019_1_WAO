@@ -17,7 +17,8 @@ export default class ProfileModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('render');
       this.checkAuth();
     });
   }

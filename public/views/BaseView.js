@@ -16,6 +16,13 @@ export default class BaseView {
     this.components = components;
     this.rendered = false;
     this.hide();
+    
+    this.eventBus.on('render', (data) => {
+      // this.show();
+      this.render(this.el, data);
+      this.el.style.display = null;
+      this.eventBus.trigger('view_show');
+    });
   }
 
   /**
@@ -41,7 +48,6 @@ export default class BaseView {
     // }
     this.el.style.display = null;
     this.eventBus.trigger('view_show');
-    console.log(this);
   }
 
   /**

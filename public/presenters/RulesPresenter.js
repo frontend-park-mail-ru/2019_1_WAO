@@ -1,13 +1,14 @@
 import RulesView from '../views/RulesView';
 import RulesModel from '../models/RulesModel';
 import { EventBus } from '../modules/eventbus';
-import NavbarPresenter from '../presenters/NavbarPresenter';
+import BasePresenter from './BasePresenter';
+
 
 /**
  * RulesPresenterRulesPresenter view
  * @class RulesPresenter
  */
-export default class RulesPresenter {
+export default class RulesPresenter extends BasePresenter {
   /**
    * Конструктор
    * Создает Модель и Представление элемента
@@ -17,8 +18,9 @@ export default class RulesPresenter {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
 
-    const navbar = new NavbarPresenter(eventBus);
-    this.view = new RulesView(application, eventBus, [navbar.view]);
-    this.model = new RulesModel(eventBus);
+    const view = new RulesView(application, eventBus, []);
+    const model = new RulesModel(eventBus);
+
+    super(view, model, eventBus);
   }
 }

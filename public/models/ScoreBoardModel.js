@@ -11,7 +11,8 @@ export default class ScoreBoardModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.page = 1;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('render');
       this.checkAuth();
     });
   }

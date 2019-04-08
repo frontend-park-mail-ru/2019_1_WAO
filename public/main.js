@@ -10,9 +10,14 @@ import SignInPresenter from './presenters/SigninPresenter';
 import SignUpPresenter from './presenters/SignupPresenter';
 
 import './img/user.png';
+import './img/door.svg';
+import './img/menu.png';
+import './components/common/common.css';
+import './components/menu/menu.css';
+import './components/menu/__button/__button.css';
 import './components/signin/login.css';
-import './components/menu/Menu.css';
 import './components/navbar/Navbar.css';
+import './components/userbar/userbar.css';
 import './components/profile/profile.css';
 import './components/signup/signup.css';
 import './components/rules/Rules.css';

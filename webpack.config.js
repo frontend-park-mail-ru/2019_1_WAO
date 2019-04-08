@@ -50,7 +50,7 @@ module.exports = {
           use: [{
               loader: 'url-loader',
               options: { 
-                  limit: 1000, // Convert images < 8kb to base64 strings
+                  limit: 10, // Convert images < 8kb to base64 strings
                   name: 'images/[name].[ext]'
               } 
           }]
@@ -64,7 +64,11 @@ module.exports = {
           // eslint options (if necessary)
         }
       },
-      */
+      */     
+      {
+        test: /\.handlebars$/, 
+        loader: "handlebars-loader" 
+      },
       {
         test: /\.xml$/,
         use: [

@@ -3,7 +3,7 @@ import { GlobalBus } from '../modules/eventbus';
 /**
  * Модель Меню
  */
-export default class NavbarModel {
+export default class UserbarModel {
   /**
    * Конструктор. Подписывает на проверку авторизации
    * @param {EventBus} eventBus
@@ -12,7 +12,7 @@ export default class NavbarModel {
     this.eventBus = eventBus;  
     this.eventBus.on('call', () => {
       console.log('call');
-      this.waitAction();
+      // this.waitAction();
     });
   }
 
@@ -20,7 +20,7 @@ export default class NavbarModel {
    * Отклик на клики позльзователя
    */
    waitAction() {
-    const [buttonOut] = document.getElementsByClassName('navbar_user');
+    const [buttonOut] = document.getElementsByClassName('userbar__door');
     buttonOut.addEventListener('click', (event) => {
       event.preventDefault(); 
       console.log('PRESS OUT');

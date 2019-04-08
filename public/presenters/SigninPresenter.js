@@ -2,12 +2,13 @@ import SignInView from '../views/SignInView';
 import SignInModel from '../models/SigninModel';
 import Router from '../modules/router';
 import { EventBus } from '../modules/eventbus';
+import BasePresenter from './BasePresenter';
 
 /**
  * SignInView view
  * @class SignInView
  */
-export default class SignInPresenter {
+export default class SignInPresenter extends BasePresenter {
   /**
    * Конструктор
    * Создает Модель и Представление элемента
@@ -18,8 +19,10 @@ export default class SignInPresenter {
   constructor() {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
-    this.view = new SignInView(application, eventBus);
-    this.model = new SignInModel(eventBus);
+    const view = new SignInView(application, eventBus);
+    const model = new SignInModel(eventBus);
+
+    super(view, model, eventBus);
 
     eventBus.on('auth_ok', () => {
       console.log('auth_ok');

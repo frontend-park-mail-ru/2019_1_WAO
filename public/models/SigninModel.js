@@ -13,7 +13,8 @@ import { rejects } from 'assert';
 export default class SignInModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {      
+      this.eventBus.trigger('render');
       this.checkAuth();
     });
   }

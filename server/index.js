@@ -153,7 +153,7 @@ const setHeadearListOnPage = {
 const setHraderListAdditionInAppUse = {
 	'Access-Control-Allow-Origin': 'https://wao2019.herokuapp.com/',
 	'Access-Control-Allow-Origin': 'https://127.0.0.1:3000',
-	'Access-Control-Allow-Methods': 'GET,PUT,POST,OPTIONS',
+	'Access-Control-Allow-Methods': 'GET,PUT,POST,OPTIONS,DELETE',
 };
 
 app.use((req, res, next) => {

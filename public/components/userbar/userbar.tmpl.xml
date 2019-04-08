@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+	<div class="userbar">
+        <image class="userbar__image" src="../../img/background1.jpg"  data-href="/profile"></image>
+        <a class="userbar__nickname" data-href="/profile">
+            <fest:value>data.nickname</fest:value>
+        </a>
+        <a class="userbar__score"  data-href="/users">
+            <fest:value>data.score</fest:value>
+        </a>
+        <image class="userbar__door" src="../../img/door.svg" data-href="#"></image>
+	</div>
+</fest:template>

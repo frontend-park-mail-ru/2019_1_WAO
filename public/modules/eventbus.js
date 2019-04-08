@@ -2,6 +2,8 @@
  * Список событий
  */
 export const EVENTS = [
+  'call',
+  'render',
   'auth_check',
   'auth_ok',
   'auth_bad',

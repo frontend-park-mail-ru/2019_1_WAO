@@ -1,13 +1,14 @@
 import MenuView from '../views/MenuView';
 import MenuModel from '../models/MenuModel';
 import { EventBus } from '../modules/eventbus';
-import NavbarPresenter from '../presenters/NavbarPresenter';
+import BasePresenter from './BasePresenter';
+import UserbarPresenter from '../presenters/UserbarPresenter';
 
 /**
  * Представитель Меню
  * @class MenuPresenter
  */
-export default class MenuPresenter {
+export default class MenuPresenter extends BasePresenter {
   /**
    * Конструктор
    * Создает Модель и Представление элемента, а также презентереов включаемых компонентов
@@ -17,12 +18,13 @@ export default class MenuPresenter {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
 
-    // это навбар, он рендерится внутри Меню,
+    // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
-    const navbar = new NavbarPresenter(eventBus);
+    const userbar = new UserbarPresenter(eventBus);
 
-    this.view = new MenuView(application, eventBus, [navbar.view]);
-    this.model = new MenuModel(eventBus);
+    const view = new MenuView(application, eventBus, [userbar.view]);
+    const model = new MenuModel(eventBus);
+    super(view, model, eventBus);
   }
 }

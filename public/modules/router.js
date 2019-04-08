@@ -47,7 +47,7 @@ class Router {
     }
     this.prevPath = path;
     console.log(`route to ${path}`);
-    this.presenters[path].view.show();
+    this.presenters[path].call();
 
     Router.history(path + page);
   }
