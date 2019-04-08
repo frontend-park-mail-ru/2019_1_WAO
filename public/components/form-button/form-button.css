@@ -1,0 +1,25 @@
+.form-button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 360px;
+    height: 45px;
+    border-radius: 8px;
+    border: solid 1px #979797;
+    background-color: #d9dd63;
+    opacity: 1;
+}
+
+.form-button:hover {
+    background-color: #d5db25;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	transition: 0.3s;
+}
+
+.form-button:not(hover) {
+	transition: 0.6s;
+}
+
+.form-button:active {
+	color: #FFFFFF;
+	background-color: rgb(255, 255, 0);	
+}

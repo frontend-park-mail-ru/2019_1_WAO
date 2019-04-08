@@ -2,11 +2,8 @@
 
 const fallback = require('express-history-api-fallback');
 const express = require('express');
-// const formData = require("express-form-data");
 const body = require('body-parser');
 let formidable = require('formidable');
-// const multer = require('multer');
-// const upload = multer();
 const cookie = require('cookie-parser');
 const fs = require('fs');
 const uuid = require('uuid/v4');
@@ -17,7 +14,6 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 // app.use(fallback('index.html', { root: 'dist' }));
 app.use(body.json());
-// app.use(upload.array());
 app.use(cookie());
 
 const default_image = './uploads/user.png';

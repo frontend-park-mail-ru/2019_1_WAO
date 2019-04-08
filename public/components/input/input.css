@@ -1,0 +1,30 @@
+.input-area {    
+    display: grid;	
+    grid-template-rows: auto;
+	text-align: center;
+	vertical-align: middle;
+	justify-content: center;
+	user-select: none;
+}
+
+.input-area__label {
+	text-align: left;
+    color: #0f8bec;
+    font-size: 27px;
+}
+
+.input-area__input {
+    padding-left: 15px; 
+    width: 360px;
+    height: 45px;
+    opacity: 0.98;
+    border-radius: 8px;
+    border: solid 1px #267ea5;
+    background-color: #d8d8d8;
+    font-size: 60%;
+}
+
+.input-area__input:active {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	transition: 0.3s;
+}

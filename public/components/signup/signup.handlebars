@@ -1,0 +1,9 @@
+<form class="signup-form">
+    <a class="signup-form__title">Регистрация</a>
+    {{#each data}}
+        {{> ../input/input.handlebars this}}
+    {{/each}}
+    {{> ../form-button/form-button.handlebars button}}
+    <a class="signup-form__advance">Или войдите с помощью других сервисов</a>
+    <input class="signup-form__button-vk" type="button" value="VK">
+</form>

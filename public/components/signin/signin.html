@@ -9,15 +9,19 @@
 	<title>Menu</title>
 </head>
 <body>
-    <form class="signin-form" action="/signin">
+    <form class="signin-form">
         <a class="signin-form__title">Войти</a>
-        <a class="signin-form__label">Логин</a>
-        <input class="signin-form__input" type="text">
-        <a class="signin-form__label">Логин</a>
-        <input class="signin-form__input" type="password">
+        <div class="signin-form__input-area">
+            <a class="signin-form__label">Логин</a>
+            <input class="signin-form__input" type="text">
+        </div>
+        <div class="signin-form__input-area">
+            <a class="signin-form__label">Пароль</a>
+            <input class="signin-form__input" type="password">
+        </div>
         <input class="signin-form__button" type="submit" value="Войти">
         <a class="signin-form__advance">Или войдите с помощью других сервисов</a>
-        <input class="signin-form__button-vk" type="button">
+        <input class="signin-form__button-vk" type="button" value="VK">
     </form>
 </body>
 </html>

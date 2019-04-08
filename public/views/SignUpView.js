@@ -1,5 +1,38 @@
 import BaseView from './BaseView';
-import template from '../components/signup/signup.tmpl.xml';
+import template from '../components/signup/signup.handlebars';
+
+const signin_fields = {
+  data : 
+    [
+      {
+        label: 'Логин',
+        type: 'text',
+        name: 'nickname',
+        placeholder: 'Логин',
+      },
+      {
+        label: 'Email',
+        type: 'text',
+        name: 'email',
+        placeholder: 'Почта',
+      },
+      {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        placeholder: 'Пароль',
+      },
+      {
+        label: 'Пароль еще раз',
+        type: 'password',
+        name: 'password_repeat',
+        placeholder: 'Повторите пароль',
+      },
+    ],
+    button: {
+      value: 'Войти'
+    },
+};
 
 /**
  * Singup view
@@ -21,5 +54,14 @@ export default class SignUpView extends BaseView {
     this.eventBus.on('signup_bad', (data) => {
       this.render(this.el, data);
     });
+  }
+  
+  render(root, data = {}) {
+    data = signin_fields;
+    this.el = root;
+    this.el.innerHTML = '';
+    this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
+    this.el.innerHTML += this.template(data);
+    this.rendered = true;
   }
 }

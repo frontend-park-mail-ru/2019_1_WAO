@@ -1,5 +1,26 @@
 import BaseView from './BaseView';
-import template from '../components/signin/signin.tmpl.xml';
+import template from '../components/signin/signin.handlebars';
+
+const signin_fields = {
+  inputFields: 
+    [
+      {
+        label: 'Логин',
+        type: 'text',
+        name: 'nickname',
+        placeholder: 'Логин',
+      },
+      {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        placeholder: 'Пароль',
+      },
+    ],
+  button: {
+    value: 'Войти'
+  },
+};
 
 /**
  * Signin view
@@ -21,5 +42,14 @@ export default class SignInView extends BaseView {
     this.eventBus.on('signin_bad', (data) => {
       this.render(this.el, data);
     });
+  }
+
+  render(root, data = {}) {
+    data = signin_fields;
+    this.el = root;
+    this.el.innerHTML = '';
+    this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
+    this.el.innerHTML += this.template(data);
+    this.rendered = true;
   }
 }
