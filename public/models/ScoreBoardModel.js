@@ -38,7 +38,7 @@ export default class ScoreBoardModel {
       .then(parseJSON)
       .then((data) => {
         console.log('score ok');
-        this.eventBus.trigger('users_rx', data);
+        this.eventBus.trigger('users_rx', {users: data});
         console.log(data);
         // this.eventBus.trigger('url_change', this.page);
         window.history.replaceState(null, null, `/users/${this.page}`);
@@ -50,7 +50,7 @@ export default class ScoreBoardModel {
   }
 
   waitAction() {
-    const [buttonForw] = document.getElementsByClassName('page_forw');
+    const [buttonForw] = document.getElementsByClassName('scoreboard__paginator__next');
     buttonForw.addEventListener('click', (event) => {
       event.preventDefault(); 
       console.log('PAGE FORW');
@@ -58,7 +58,7 @@ export default class ScoreBoardModel {
       this.makeTable();
     });
 
-    const [buttonBack] = document.getElementsByClassName('page_back');
+    const [buttonBack] = document.getElementsByClassName('scoreboard__paginator__prev');
     buttonBack.addEventListener('click', (event) => {
       event.preventDefault(); 
       console.log('PAGE BACK');

@@ -1,11 +1,11 @@
-.signup-form{
+.signup-form {
   margin: 5% auto;
   width: 420px;
   opacity: 0.6;
   border-radius: 8px;
   border: solid 1px #979797;
   background-color: #d8d8d8;
-  display: grid;	
+  display: grid;
   grid-template-rows: auto;
   grid-gap: 10px;
   text-align: center;
@@ -14,15 +14,14 @@
   user-select: none;
 }
 
-.signup-form__title{
+.signup-form__title {
   color: #0f8bec;
   margin: 15px auto 0px auto;
   font-size: 40px;
 }
 
-.signup-form__input-area {    
-
-  display: grid;	
+.signup-form__input-area {
+  display: grid;
   grid-template-rows: auto;
   text-align: center;
   vertical-align: middle;
@@ -31,13 +30,13 @@
 }
 
 .signup-form__label {
-text-align: left;
+  text-align: left;
   color: #0f8bec;
   font-size: 27px;
 }
 
 .signup-form__input {
-  padding-left: 15px; 
+  padding-left: 15px;
   width: 360px;
   height: 45px;
   opacity: 0.98;
@@ -48,8 +47,8 @@ text-align: left;
 }
 
 .signup-form__button:active {
-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-transition: 0.3s;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
 }
 
 .signup-form__button {
@@ -65,17 +64,17 @@ transition: 0.3s;
 
 .signup-form__button:hover {
   background-color: #d5db25;
-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-transition: 0.3s;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
 }
 
 .signup-form__button:not(hover) {
-transition: 0.6s;
+  transition: 0.6s;
 }
 
 .signup-form__button:active {
-color: #FFFFFF;
-background-color: rgb(255, 255, 0);	
+  color: #FFFFFF;
+  background-color: rgb(255, 255, 0);
 }
 
 .signup-form__advance {

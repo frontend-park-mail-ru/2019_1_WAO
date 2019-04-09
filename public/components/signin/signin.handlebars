@@ -1,9 +1,9 @@
 <form class="signin-form">
-    <a class="signin-form__title">Войти</a>
-    {{#each inputFields}}
+    <a class="signin-form__title" data-href="#">Войти</a>
+    {{#each fields}}
         {{> ../input/input.handlebars this}}
     {{/each}}
     {{> ../form-button/form-button.handlebars button}}
-    <a class="signin-form__advance">Или войдите с помощью других сервисов</a>
+    <a class="signin-form__advance" data-href="#">Или войдите с помощью других сервисов</a>
     <input class="signin-form__button-vk" type="button" value="VK">
 </form>

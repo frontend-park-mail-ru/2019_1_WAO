@@ -1,9 +1,5 @@
-<div class="menu-bar">
-    <a class="menu-bar__button" data-href="/">Играть онлайн</a>
-    <a class="menu-bar__button" data-href="/">Играть одному</a>
-    <a class="menu-bar__button" data-href="/">Магазин</a>
-    <a class="menu-bar__button" data-href="/profile">Профиль</a>
-    <a class="menu-bar__button" data-href="/scoreboard">Таблица лидеров</a>
-    <a class="menu-bar__button" data-href="/">Настройки</a>
-    <a class="menu-bar__button" data-href="/">Об игре</a>
+<div class="menu-bar">    
+    {{#each menuButtons}}
+        {{> ./__button/__button.handlebars this}}
+    {{/each}}
 </div>

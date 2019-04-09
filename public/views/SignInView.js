@@ -1,8 +1,8 @@
 import BaseView from './BaseView';
 import template from '../components/signin/signin.handlebars';
 
-const signin_fields = {
-  inputFields: 
+const vievData = {
+  fields: 
     [
       {
         label: 'Логин',
@@ -32,8 +32,8 @@ export default class SignInView extends BaseView {
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
    */
-  constructor(el, eventBus) {
-    super(el, eventBus, template);
+  constructor(el, eventBus, components = []) {
+    super(el, eventBus, template, components, vievData);
 
     this.eventBus.on('valid_err', (data) => {
       this.render(this.el, data);
@@ -42,14 +42,5 @@ export default class SignInView extends BaseView {
     this.eventBus.on('signin_bad', (data) => {
       this.render(this.el, data);
     });
-  }
-
-  render(root, data = {}) {
-    data = signin_fields;
-    this.el = root;
-    this.el.innerHTML = '';
-    this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
-    this.el.innerHTML += this.template(data);
-    this.rendered = true;
   }
 }

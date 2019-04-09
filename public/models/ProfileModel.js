@@ -37,8 +37,9 @@ export default class ProfileModel {
         this.eventBus.trigger('users_rx', {data: data, err: {}});
         this.processForm();
       })
-      .catch(() => {
+      .catch((err) => {
         console.log('profile auth bad');
+        console.log(err);
         GlobalBus.trigger('auth_bad');
       });
   }
@@ -49,14 +50,13 @@ export default class ProfileModel {
    */
   processForm() {
     const form = document.querySelector('form');
-    const [button] = document.getElementsByClassName('profile_change_button');
-    button.addEventListener('click', (event) => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
       const password = form.elements.password.value;
       const passwordRepeat = password; // упростим жизнь пользователю
-      const [imageInput] = document.getElementsByClassName('profile_input-img');
+      const [imageInput] = document.getElementsByClassName('profile-form__image');
       const [image] = imageInput.files;
 
       if (!checkXSS({

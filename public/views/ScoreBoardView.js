@@ -1,5 +1,5 @@
 import BaseView from './BaseView';
-import template from '../components/scoreboard/ScoreBoard.tmpl.xml';
+import template from '../components/scoreboard/scoreboard.handlebars';
 
 /**
  * ScoreBoardView view

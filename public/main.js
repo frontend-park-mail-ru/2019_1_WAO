@@ -23,7 +23,7 @@ import './components/userbar/userbar.css';
 import './components/profile/profile.css';
 import './components/signup/signup.css';
 import './components/rules/Rules.css';
-import './components/scoreboard/ScoreBoard.css';
+import './components/scoreboard/scoreboard.css';
 
 /**
  * Регистрация Service Worker

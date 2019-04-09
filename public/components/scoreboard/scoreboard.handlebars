@@ -1,0 +1,23 @@
+<div class="scoreboard">
+    <a class="scoreboard__label">Таблица лидеров</a>
+    <div class="scoreboard__table">
+        <div class="scoreboard__row scoreboard__head">
+            <a class="scoreboard__row__col-1">№</a>
+            <a class="scoreboard__row__col-2">Игрок</a>
+            <a class="scoreboard__row__col-3">Счёт</a>
+            <a class="scoreboard__row__col-4">Победы</a>
+        </div>        
+        {{#each users}}
+            <div class="scoreboard__row">
+                <a class="scoreboard__row__col-1">N</a>
+                <a class="scoreboard__row__col-2">{{ this.nickname }}</a>
+                <a class="scoreboard__row__col-3">{{ this.score }}</a>
+                <a class="scoreboard__row__col-4">{{ this.wins }}/{{ this.games }}</a>
+            </div>
+        {{/each}}
+    </div>
+    <div class="scoreboard__paginator">
+        <a class="scoreboard__paginator__prev" data-href='#'><<</a>
+        <a class="scoreboard__paginator__next" data-href='#'>>></a>
+    </div>
+</div>

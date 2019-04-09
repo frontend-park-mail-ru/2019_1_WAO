@@ -1,34 +1,35 @@
 import BaseView from './BaseView';
-// import template from '../components/menu/menu.tmpl.xml';
-// import MenuComponent from '../components/menu/menu';
 import template from '../components/menu/menu.handlebars';
 
-const menuButtons = [
-  {
-      title: 'Играть онлайн',
-      href: '/',
-  },
-  {
-      title: 'Играть одному',
-      href: '/',
-  },
-  {
-      title: 'Магазин',
-      href: '/',
-  },
-  {
-      title: 'Профиль',
-      href: '/profile',
-  },
-  {
-      title: 'Таблица лидеров',
-      href: '/users',
-  },
-  {
-      title: 'Об игре',
-      href: '/',
-  },
-];
+const vievData = {
+  menuButtons: [
+    {
+        text: 'Играть онлайн',
+        href: '/',
+    },
+    {
+        text: 'Играть одному',
+        href: '/',
+    },
+    {
+        text: 'Магазин',
+        href: '/',
+    },
+    {
+        text: 'Профиль',
+        href: '/profile',
+    },
+    {
+        text: 'Таблица лидеров',
+        href: '/users',
+    },
+    {
+        text: 'Об игре',
+        href: '/',
+    },
+  ]
+};
+
 /**
  * MenuView view
  * @class MenuView
@@ -40,6 +41,6 @@ export default class MenuView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components);
+    super(el, eventBus, template, components, vievData);
   }
 }

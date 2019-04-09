@@ -1,6 +1,13 @@
 import BaseView from './BaseView';
-import template from '../components/profile/profile.tmpl.xml';
-import User from '../modules/user';
+import template from '../components/profile/profile.handlebars';
+// import User from '../modules/user';
+
+const vievData = {
+  button: {
+    value: 'Редактировать',
+  },
+  isAuth: false
+};
 
 /**
  * ProfileView view
@@ -13,7 +20,7 @@ export default class ProfileView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components);
+    super(el, eventBus, template, components, vievData);
 
     this.eventBus.on('valid_err', (data) => {
       this.render(this.el, data);
@@ -23,19 +30,5 @@ export default class ProfileView extends BaseView {
       this.render(this.el, data);
     });
   }
-
-  render(root, data = {}) {
-    // возможно стоит это вынести в BaseView
-    // но сначала потестим тут
-    // User нужен, чтобы выставить поля в шаблоне по умолчанию
-    data = {
-      data: User,
-      err: {},
-    };
-    this.el = root;
-    this.el.innerHTML = '';
-    this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
-    this.el.innerHTML += this.template(data);
-    this.rendered = true;
-  }
+  
 }
