@@ -2,6 +2,7 @@ import ProfileView from '../views/ProfileView';
 import ProfileModel from '../models/ProfileModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
+import UserbarPresenter from '../presenters/UserbarPresenter';
 
 /**
  * ProfilePresenter view
@@ -17,7 +18,9 @@ export default class ProfilePresenter extends BasePresenter {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
 
-    const view = new ProfileView(application, eventBus, []);
+    const userbar = new UserbarPresenter(eventBus);
+
+    const view = new ProfileView(application, eventBus, [userbar.view]);
     const model = new ProfileModel(eventBus);
 
     super(view, model, eventBus);

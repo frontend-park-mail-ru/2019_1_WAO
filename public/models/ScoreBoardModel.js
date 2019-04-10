@@ -12,24 +12,9 @@ export default class ScoreBoardModel {
     this.eventBus = eventBus;
     this.page = 1;
     this.eventBus.on('call', () => {
-      this.eventBus.trigger('render');
-      this.checkAuth();
+      this.eventBus.trigger('render');      
+      this.makeTable();
     });
-  }
-
-  /**
-   * Проверяет авторизацию и загружает инфу о пользователях
-   */
-  checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(() => {
-        this.makeTable();
-      })
-      .catch(() => {
-        console.log('score auth bad');
-        GlobalBus.trigger('auth_bad');
-      });
   }
 
   makeTable() {

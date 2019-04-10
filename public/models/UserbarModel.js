@@ -1,3 +1,4 @@
+import { getAuth, checkStatus, parseJSON } from '../modules/api';
 import { GlobalBus } from '../modules/eventbus';
 
 /**
@@ -12,12 +13,33 @@ export default class UserbarModel {
     this.eventBus = eventBus;  
     this.eventBus.on('call', () => {
       console.log('call');
-      // this.waitAction();
+      this.checkAuth();
     });
+  }
+  
+  /**
+   * Проверка авторизации
+   */
+  checkAuth() {
+    getAuth()
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        console.log('menu auth ok');
+        console.log(data);
+        // this.eventBus.trigger('users_rx', data);
+        this.eventBus.trigger('render', data);
+        // this.waitAction();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('menu auth bad');
+        GlobalBus.trigger('auth_bad');
+      });
   }
 
   /**
-   * Отклик на клики позльзователя
+   * Отклик на клики пользователя
    */
    waitAction() {
     const [buttonOut] = document.getElementsByClassName('userbar__door');

@@ -16,6 +16,7 @@ export default class BaseView {
     this.components = components;
     this.vievData = vievData;
     this.rendered = false;
+    this.savedTmpl = '';
     this.hide();
     
     this.eventBus.on('render', (data) => {
@@ -33,10 +34,14 @@ export default class BaseView {
    */
   render(root, data = {}) {
     this.el = root;
-    this.el.innerHTML = '';
-    this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
+    // this.el.innerHTML = '';
+    this.savedTmpl = '';
     const temp = Object.assign(this.vievData, data);
-    this.el.innerHTML += this.template(temp);
+    // this.el.innerHTML += this.template(temp);
+    // this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
+    this.savedTmpl += this.template(temp);
+    this.components.forEach(component => this.savedTmpl += component.getTemplate(data));
+    this.el.innerHTML = Object.assign(this.savedTmpl);
     this.rendered = true;
   }
 
@@ -61,6 +66,9 @@ export default class BaseView {
   }
   
   getTemplate(data = {}) {
+    if (this.rendered) {
+      return this.savedTmpl;
+    }
     return this.template(data);
   }
 }

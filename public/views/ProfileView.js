@@ -1,6 +1,5 @@
 import BaseView from './BaseView';
 import template from '../components/profile/profile.handlebars';
-// import User from '../modules/user';
 
 const vievData = {
   button: {

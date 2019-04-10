@@ -1,5 +1,4 @@
 import BaseView from './BaseView';
-// import template from '../components/userbar/userbar.tmpl.xml';
 import template from '../components/userbar/userbar.handlebars';
 
 /**

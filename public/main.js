@@ -3,7 +3,6 @@ import { GlobalBus } from './modules/eventbus';
 import { delAuth, checkStatus } from './modules/api';
 
 import MenuPresenter from './presenters/MenuPresenter';
-import RulesPresenter from './presenters/RulesPresenter';
 import ScoreBoardPresenter from './presenters/ScoreBoardPresenter';
 import ProfilePresenter from './presenters/ProfilePresenter';
 import SignInPresenter from './presenters/SigninPresenter';
@@ -18,11 +17,9 @@ import './components/form-button/form-button.css';
 import './components/menu/menu.css';
 import './components/menu/__button/__button.css';
 import './components/signin/signin.css';
-import './components/navbar/Navbar.css';
 import './components/userbar/userbar.css';
 import './components/profile/profile.css';
 import './components/signup/signup.css';
-import './components/rules/Rules.css';
 import './components/scoreboard/scoreboard.css';
 
 /**
@@ -46,7 +43,6 @@ function start() {
   const application = document.getElementById('application');
   Router.setRoot(application);
   Router.add('/',         new MenuPresenter());
-  Router.add('/rules',    new RulesPresenter());
   Router.add('/users',    new ScoreBoardPresenter());
   Router.add('/profile',  new ProfilePresenter());
   Router.add('/signin',   new SignInPresenter());
