@@ -1,9 +1,10 @@
 <form class="signup-form">
-    <a class="signup-form__title" data-href="#">Регистрация</a>
+    {{> ../title/title.handlebars title}}
     {{#each fields}}
         {{> ../input/input.handlebars this}}
     {{/each}}
     {{> ../form-button/form-button.handlebars button}}
     <a class="signup-form__advance" data-href="#">Или войдите с помощью других сервисов</a>
     <input class="signup-form__button-vk" type="button" value="VK">
+    <a class="signin-form__signin-btn" data-href="/signin">Обратно</a>
 </form>

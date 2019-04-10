@@ -25,7 +25,7 @@
 .userbar__image {
     grid-area: userbar__image;
     border: solid;
-    border-color: black;
+    border-color: #979797;
     border-radius: 50%;
     width: 60px;
     height: 60px;

@@ -7,12 +7,14 @@ import ScoreBoardPresenter from './presenters/ScoreBoardPresenter';
 import ProfilePresenter from './presenters/ProfilePresenter';
 import SignInPresenter from './presenters/SigninPresenter';
 import SignUpPresenter from './presenters/SignupPresenter';
+import AboutPresenter from './presenters/AboutPresenter';
 
 import './img/user.png';
 import './img/door.svg';
 import './img/menu.png';
 import './components/common/common.css';
 import './components/input/input.css';
+import './components/title/title.css';
 import './components/form-button/form-button.css';
 import './components/menu/menu.css';
 import './components/menu/__button/__button.css';
@@ -21,6 +23,7 @@ import './components/userbar/userbar.css';
 import './components/profile/profile.css';
 import './components/signup/signup.css';
 import './components/scoreboard/scoreboard.css';
+import './components/about/about.css';
 
 /**
  * Регистрация Service Worker
@@ -47,6 +50,7 @@ function start() {
   Router.add('/profile',  new ProfilePresenter());
   Router.add('/signin',   new SignInPresenter());
   Router.add('/signup',   new SignUpPresenter());
+  Router.add('/about',   new AboutPresenter());
 
   subscribeGlobalBus();
 

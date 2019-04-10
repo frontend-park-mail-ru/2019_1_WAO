@@ -14,12 +14,6 @@
 	user-select: none;
 }
 
-.signin-form__title{
-    color: #0f8bec;
-    margin: 15px auto 0px auto;
-    font-size: 40px;
-}
-
 .signin-form__advance {
     width: 380px;
     height: 21px;
@@ -38,4 +32,9 @@
     background-color: #5b88bd;
     color: #ffffff;
     opacity: 1;
+}
+
+.signin-form__signup-btn {
+    font-size: 32px;
+    margin: 10px;
 }

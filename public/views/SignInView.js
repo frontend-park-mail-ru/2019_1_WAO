@@ -20,6 +20,9 @@ const vievData = {
   button: {
     value: 'Войти'
   },
+  title: {
+    text: 'Войти',
+  },
 };
 
 /**

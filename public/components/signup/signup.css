@@ -14,12 +14,6 @@
   user-select: none;
 }
 
-.signup-form__title {
-  color: #0f8bec;
-  margin: 15px auto 0px auto;
-  font-size: 40px;
-}
-
 .signup-form__input-area {
   display: grid;
   grid-template-rows: auto;
@@ -95,4 +89,9 @@
   background-color: #5b88bd;
   color: #ffffff;
   opacity: 1;
+}
+
+.signin-form__signin-btn {
+  font-size: 32px;
+  margin: 10px;
 }

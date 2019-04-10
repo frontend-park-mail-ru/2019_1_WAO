@@ -1,6 +1,12 @@
 import BaseView from './BaseView';
 import template from '../components/scoreboard/scoreboard.handlebars';
 
+const dataView = {
+  title: {
+    text: 'Таблица лидеров',
+  },
+}
+
 /**
  * ScoreBoardView view
  * @class ScoreBoardView
@@ -12,6 +18,6 @@ export default class ScoreBoardView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components);
+    super(el, eventBus, template, components, dataView);
   }
 }

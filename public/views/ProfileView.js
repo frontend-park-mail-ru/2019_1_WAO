@@ -5,7 +5,10 @@ const vievData = {
   button: {
     value: 'Редактировать',
   },
-  isAuth: false
+  isAuth: false,
+  title: {
+    text: 'Профиль',
+  },
 };
 
 /**

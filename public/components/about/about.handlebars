@@ -1,0 +1,16 @@
+<div class="about">
+        {{> ../title/title.handlebars title1}}
+        <div class="about__description">
+            Это игра. В неё надо играть. Можно по сети, можно оффлайн. Можете отредактировать свой профиль, если хотите
+        </div>
+        {{> ../title/title.handlebars title2}}        
+        <div class="about__dev-team">            
+            {{#each developers}}
+                <div class="about__dev-team__member">
+                    <a data-href="#" class="about__dev-team__member__role">{{ this.role }}</a>
+                    <img class="about__dev-team__member__image" src={{ this.image }}>
+                    <a data-href="#" class="about__dev-team__member__name">{{ this.name }}</a>
+                </div>
+            {{/each}}
+        </div>
+    </div>

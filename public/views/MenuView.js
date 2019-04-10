@@ -25,7 +25,7 @@ const vievData = {
     },
     {
         text: 'Об игре',
-        href: '/',
+        href: '/about',
     },
   ]
 };
