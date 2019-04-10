@@ -15,11 +15,6 @@
   grid-template-rows: auto;
 }
 
-.profile-form__label {
-  font-size: 40px;
-  color: #0f8bec;
-}
-
 .profile-form__card {
   display: grid;
   grid-template-columns: 2fr 1fr;
