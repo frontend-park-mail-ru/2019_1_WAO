@@ -10,11 +10,21 @@ const vievData = {
       image: 'https://images-eu.ssl-images-amazon.com/images/I/51mrB6jG8pL.png',
       name: 'Classic',
       cost: '100',
-    },    
+    },
     {
       image: 'https://nature.agrogro.ru/sites/nature.agrogro.ru/files/field/image/1220760310.jpg',
       name: 'Пёс',
       cost: '300',
+    },
+    {
+      image: 'https://pp.userapi.com/c851036/v851036851/1945/OQl1Y7FAdtY.jpg',
+      name: 'Димас',
+      cost: '320',
+    },
+    {
+      image: 'https://st.depositphotos.com/1000459/2436/i/450/depositphotos_24366251-stock-photo-soccer-ball.jpg',
+      name: 'Мяч',
+      cost: '400',
     },
   ]
 };

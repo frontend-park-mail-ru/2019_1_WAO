@@ -11,7 +11,7 @@ const vievData = {
   developers: [
       {
           role: 'Frontend',
-          image: 'https://pp.userapi.com/c844722/v844722123/2ecec/Vxy-kLw9NXc.jpg',
+          image: 'https://pp.userapi.com/c851036/v851036851/1945/OQl1Y7FAdtY.jpg',
           name: 'Димас',
       },
       {

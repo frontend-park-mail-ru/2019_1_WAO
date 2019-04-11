@@ -24,17 +24,19 @@
 
 .store__list__row {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
 	text-align: center;
 	vertical-align: middle;
-	justify-content: center;
+    justify-content: center;
+    justify-items: center;
     align-items: center;
 }
 
 .store__list__row__image {
     width: 70px;
-    border-radius: 5%;
+    height: 70px;
+    border-radius: 10%;
 }
 
 .store__list__row__name {
@@ -43,7 +45,7 @@
 
 .store__list__row__cost {    
     font-size: 24px;
-    color: yellow;
+    color: #0f8bec;
 }
 
 .store__list__row__btn {

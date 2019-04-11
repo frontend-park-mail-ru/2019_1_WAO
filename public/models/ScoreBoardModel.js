@@ -39,8 +39,13 @@ export default class ScoreBoardModel {
     buttonForw.addEventListener('click', (event) => {
       event.preventDefault(); 
       console.log('PAGE FORW');
-      this.page += 1;
-      this.makeTable();
+      const maxPage = 2; // да, это костыль. ведь код без костылей - не живой код
+      if (this.page < maxPage) {
+        this.page += 1;
+        this.makeTable();
+      } else {
+        this.waitAction();
+      }
     });
 
     const [buttonBack] = document.getElementsByClassName('scoreboard__paginator__prev');
@@ -49,8 +54,10 @@ export default class ScoreBoardModel {
       console.log('PAGE BACK');
       if (this.page > 1) {
         this.page -= 1;
+        this.makeTable();
+      } else {
+        this.waitAction();
       }
-      this.makeTable();
     });
    }
 }

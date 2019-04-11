@@ -4,8 +4,8 @@
         {{#each products}}
             <div class="store__list__row">            
                 <image class="store__list__row__image" src={{ this.image }}></image>
-                <a class="store__list__row__name">{{ this.name }}</a>
-                <a class="store__list__row__cost">{{ this.cost }}</a>
+                <a class="store__list__row__name" data-href='#'>{{ this.name }}</a>
+                <a class="store__list__row__cost" data-href='#'>{{ this.cost }}</a>
                 <input class="store__list__row__btn" type="button" value="Купить">
             </div>
         {{/each}}
