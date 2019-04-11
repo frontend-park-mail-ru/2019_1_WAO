@@ -29,7 +29,7 @@ export default class UserbarModel {
         console.log(data);
         // this.eventBus.trigger('users_rx', data);
         this.eventBus.trigger('render', data);
-        // this.waitAction();
+        this.waitAction();
       })
       .catch((err) => {
         console.log(err);

@@ -30,10 +30,10 @@ const vievData = {
       },
     ],
     button: {
-      value: 'Войти'
+      value: 'Зарегистрироваться'
     },
     title: {
-      text: 'Войти',
+      text: 'Регистрация',
     },
 };
 

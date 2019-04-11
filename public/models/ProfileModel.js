@@ -3,7 +3,7 @@ import {
 } from '../modules/api';
 import User from '../modules/user';
 import checkXSS from '../utils/safe';
-import { checkValidationNEP } from '../utils/validation';
+import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
 import { GlobalBus } from '../modules/eventbus';
 
 /**
@@ -56,7 +56,7 @@ export default class ProfileModel {
       const email = form.elements.email.value;
       const password = form.elements.password.value;
       const passwordRepeat = password; // упростим жизнь пользователю
-      const [imageInput] = document.getElementsByClassName('profile-form__image');
+      const [imageInput] = document.getElementsByClassName('profile-form__image-input');
       const [image] = imageInput.files;
 
       if (!checkXSS({
@@ -69,14 +69,31 @@ export default class ProfileModel {
         this.processForm();
       }
 
-      const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
-      if (!checkValidation.status) {
-        console.log(checkValidation.err);
-        // this.eventBus.trigger('valid_err', User, checkValidation.err);
-        this.eventBus.trigger('valid_err', {data: User, err: checkValidation.err});
-        this.processForm();
-      } else {
-        // const formData = new FormData(form);
+      const checkNickname = isCorrectNickname(nickname);
+      if (!checkNickname.status) {
+        form.elements.nickname.classList.add('input-area__input_wrong');
+        form.elements.nickname.value = '';
+        form.elements.nickname.placeholder = checkNickname.err;
+      }
+
+      const checkEmail = isCorrectEmail(email);
+      if (!checkEmail.status) {
+        form.elements.email.classList.add('input-area__input_wrong');
+        form.elements.email.value = '';
+        form.elements.email.placeholder = checkEmail.err;
+      }
+      
+      const checkPassword = isCorrectPassword(password, passwordRepeat);
+      if (!checkPassword.status) {
+        form.elements.password.classList.add('input-area__input_wrong');
+        form.elements.password.value = '';
+        form.elements.password.placeholder = checkPassword.err;
+        form.elements.passwordRepeat.classList.add('input-area__input_wrong');
+        form.elements.passwordRepeat.value = '';
+        form.elements.passwordRepeat.placeholder = checkPassword.err;
+      }
+
+      if (checkNickname.status && checkEmail.status && checkPassword.status) {
         const formData = new FormData();
         formData.append('nickname', nickname);
         formData.append('email', email);
@@ -87,6 +104,8 @@ export default class ProfileModel {
           formData.append('image', image);
         }
         this.makeUpdate(nickname, formData);
+      } else {
+        this.processForm();
       }
     });
   }
@@ -107,7 +126,15 @@ export default class ProfileModel {
       .catch(() => {
         console.log('update bad');
         // this.eventBus.trigger('update_bad', User, ['Невалидные данные']);
-        this.eventBus.trigger('update_bad', {data: User, err: ['Невалидные данные']});
+        // this.eventBus.trigger('update_bad', {data: User, err: ['Невалидные данные']});
+        // выглядит как костыль, но возможно это норм решение
+        const form = document.querySelector('form');
+        form.elements.nickname.value = '';
+        form.elements.email.value = '';
+        form.elements.password.value = '';
+        form.elements.nickname.placeholder = 'НЕВЕРНО';
+        form.elements.email.placeholder = 'НЕВЕРНО';
+        form.elements.password.placeholder = 'НЕВЕРНО';
       });
 
   }

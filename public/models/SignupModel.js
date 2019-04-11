@@ -1,6 +1,6 @@
 import { postSignUp, checkStatus } from '../modules/api';
 import checkXSS from '../utils/safe';
-import { checkValidationNEP } from '../utils/validation';
+import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
 
 /**
  * Модель Регистрации
@@ -37,13 +37,34 @@ export default class SignUpModel {
         this.processForm();
       }
 
-      const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
-      if (!checkValidation.status) {
-        this.eventBus.trigger('valid_err', checkValidation.err);
-        console.log(checkValidation.err);
-        this.processForm();
-      } else {
+      const checkNickname = isCorrectNickname(nickname);
+      if (!checkNickname.status) {
+        form.elements.nickname.classList.add('input-area__input_wrong');
+        form.elements.nickname.value = '';
+        form.elements.nickname.placeholder = checkNickname.err;
+      }
+
+      const checkEmail = isCorrectEmail(email);
+      if (!checkEmail.status) {
+        form.elements.email.classList.add('input-area__input_wrong');
+        form.elements.email.value = '';
+        form.elements.email.placeholder = checkEmail.err;
+      }
+      
+      const checkPassword = isCorrectPassword(password, passwordRepeat);
+      if (!checkPassword.status) {
+        form.elements.password.classList.add('input-area__input_wrong');
+        form.elements.password.value = '';
+        form.elements.password.placeholder = checkPassword.err;
+        form.elements.passwordRepeat.classList.add('input-area__input_wrong');
+        form.elements.passwordRepeat.value = '';
+        form.elements.passwordRepeat.placeholder = checkPassword.err;
+      }
+
+      if (checkNickname.status && checkEmail.status && checkPassword.status) {
         this.makeSignUp(body);
+      } else {
+        this.processForm();
       }
     });
   }
@@ -60,7 +81,17 @@ export default class SignUpModel {
       })
       .catch(() => {
         console.log('signup bad');
-        this.eventBus.trigger('signup_bad', ['Невалидные данные']);
+        // this.eventBus.trigger('signup_bad', ['Невалидные данные']);
+        // выглядит как костыль, но возможно это норм решение
+        const form = document.querySelector('form');
+        form.elements.nickname.value = '';
+        form.elements.email.value = '';
+        form.elements.password.value = '';
+        form.elements.passwordRepeat.value = '';
+        form.elements.nickname.placeholder = 'НЕВЕРНО';
+        form.elements.email.placeholder = 'НЕВЕРНО';
+        form.elements.password.placeholder = 'НЕВЕРНО';
+        form.elements.passwordRepeat.placeholder = 'НЕВЕРНО';
         this.processForm();
       });
   }

@@ -3,7 +3,7 @@ import {
   getAuth, postSignIn, checkStatus, parseJSON,
 } from '../modules/api';
 import checkXSS from '../utils/safe';
-import { checkValidationNP } from '../utils/validation';
+import { isCorrectNickname, isCorrectPassword } from '../modules/validation';
 
 /**
  * Модель Входа в приложение
@@ -56,12 +56,24 @@ export default class SignInModel {
         this.processForm();
       }
 
-      const checkValidation = checkValidationNP(nickname, password);
-      if (!checkValidation.status) {
-        this.eventBus.trigger('valid_err', checkValidation.err);
-        this.processForm();
-      } else {
+      const checkNickname = isCorrectNickname(nickname);
+      if (!checkNickname.status) {
+        form.elements.nickname.classList.add('input-area__input_wrong');
+        form.elements.nickname.value = '';
+        form.elements.nickname.placeholder = checkNickname.err;
+      }
+      
+      const checkPassword = isCorrectPassword(password, password);
+      if (!checkPassword.status) {
+        form.elements.password.classList.add('input-area__input_wrong');
+        form.elements.password.value = '';
+        form.elements.password.placeholder = checkPassword.err;
+      }
+
+      if (checkNickname.status && checkPassword.status) {
         this.makeSignin(body);
+      } else {
+        this.processForm();
       }
     });
   }
@@ -78,7 +90,13 @@ export default class SignInModel {
         this.eventBus.trigger('signin_ok');
       })
       .catch(() => {
-        this.eventBus.trigger('signin_bad', ['Неправильный логин или пароль']);
+        // this.eventBus.trigger('signin_bad', ['Неправильный логин или пароль']);
+        // выглядит как костыль, но возможно это норм решение
+        const form = document.querySelector('form');
+        form.elements.nickname.value = '';
+        form.elements.password.value = '';
+        form.elements.nickname.placeholder = 'НЕВЕРНО';
+        form.elements.password.placeholder = 'НЕВЕРНО';
         this.processForm();
       });
   }

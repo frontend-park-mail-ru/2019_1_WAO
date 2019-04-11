@@ -1,0 +1,13 @@
+<div class="store">
+    {{> ../title/title.handlebars title}}
+    <div class="store__list">
+        {{#each products}}
+            <div class="store__list__row">            
+                <image class="store__list__row__image" src={{ this.image }}></image>
+                <a class="store__list__row__name">{{ this.name }}</a>
+                <a class="store__list__row__cost">{{ this.cost }}</a>
+                <input class="store__list__row__btn" type="button" value="Купить">
+            </div>
+        {{/each}}
+    </div>
+</div>

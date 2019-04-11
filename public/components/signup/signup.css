@@ -92,6 +92,17 @@
 }
 
 .signin-form__signin-btn {
-  font-size: 32px;
-  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  border: solid;
+  border-width: 1px;
+  border-radius: 8px;
+  color: #0f8bec;
+  font-size: 24px;
+  margin: 10px 10px 30px 10px;
+}
+
+.signin-form__signin-btn:hover {
+  box-shadow: 0 0 5px #0f8bec;
 }

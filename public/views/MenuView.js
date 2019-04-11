@@ -13,7 +13,7 @@ const vievData = {
     },
     {
         text: 'Магазин',
-        href: '/',
+        href: '/store',
     },
     {
         text: 'Профиль',

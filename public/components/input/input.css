@@ -28,3 +28,7 @@
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 	transition: 0.3s;
 }
+
+.input-area__input_wrong {
+    border: solid 1px #ff0000;
+}

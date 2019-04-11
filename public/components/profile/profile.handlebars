@@ -2,13 +2,14 @@
     {{> ../title/title.handlebars title}}
     <div class="profile-form__card">
         <div class="profile-form__fields-left">
-            <input class="profile-form__input" type="text" value={{ data.nickname }}>
-            <input class="profile-form__input" type="text" value={{ data.email }}>
-            <input class="profile-form__input" type="text" value="">
+            <input class="profile-form__input" type="text" value={{ data.nickname }} name="nickname">
+            <input class="profile-form__input" type="text" value={{ data.email }} name="email">
+            <input class="profile-form__input" type="password" value="" name="password" placeholder="Введите новый">
             {{> ../form-button/form-button.handlebars button}}
         </div>
         <div class="profile-form__fields-right">
             <img class="profile-form__image" src={{ data.image }}>
+            <input class="profile-form__image-input" type="file">
             <a class="profile-form__label" data-href="#">Счет: {{ data.score }}</a>
             <a class="profile-form__label" data-href="#">Побед: {{ data.wins }}/{{ data.games }}</a>
         </div>

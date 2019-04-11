@@ -5,18 +5,18 @@ const vievData = {
   title1: {
       text: 'Об игре',
   },
-  title1: {
+  title2: {
       text: 'Команда',
   },
   developers: [
       {
           role: 'Frontend',
-          image: 'https://www.hawksearch.com/wp-content/uploads/Developer.png',
+          image: 'https://pp.userapi.com/c844722/v844722123/2ecec/Vxy-kLw9NXc.jpg',
           name: 'Димас',
       },
       {
           role: 'Frontend',
-          image: 'https://www.hawksearch.com/wp-content/uploads/Developer.png',
+          image: 'https://pp.userapi.com/c846122/v846122120/137202/wK6kCZLP2Pc.jpg',
           name: 'Влад',
       },
       {
@@ -26,12 +26,12 @@ const vievData = {
       },
       {
           role: 'Backend',
-          image: 'https://www.hawksearch.com/wp-content/uploads/Developer.png',
+          image: 'https://pp.userapi.com/c847124/v847124016/136919/eOtmAzTnUbM.jpg',
           name: 'Дима Сервер',
       },
       {
           role: 'Backend',
-          image: 'https://www.hawksearch.com/wp-content/uploads/Developer.png',
+          image: 'https://pp.userapi.com/c830508/v830508756/1c721d/5Hf4JbRU2e4.jpg',
           name: 'Игорь',
       },
   ],
