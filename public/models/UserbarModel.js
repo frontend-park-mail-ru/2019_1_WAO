@@ -21,6 +21,7 @@ export default class UserbarModel {
   /**
    * Проверка авторизации
    */
+  /*
   checkAuth() {
     getAuth()
       .then(checkStatus)
@@ -37,6 +38,26 @@ export default class UserbarModel {
         console.log('menu auth bad');
         GlobalBus.trigger('auth_bad');
       });
+  }
+  */
+
+  /**
+   * Проверка авторизации
+   */
+  async checkAuth() {
+    try {
+      const res = await getAuth();
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      console.log('menu auth ok');
+      console.log(data);
+      this.eventBus.trigger('render', data);
+      this.waitAction();
+    } catch (err) {
+      console.log(err);
+      console.log('menu auth bad');
+      GlobalBus.trigger('auth_bad');
+    }
   }
 
   /*
