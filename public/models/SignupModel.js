@@ -1,5 +1,8 @@
-import { postSignUp, checkStatus } from '../modules/api';
+import {
+  getAuth, postSignUp, checkStatus, parseJSON,
+} from '../modules/api';
 import checkXSS from '../utils/safe';
+import User from '../modules/user';
 import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
 
 /**
@@ -75,7 +78,11 @@ export default class SignUpModel {
   makeSignUp(body = {}) {
     postSignUp(body)
       .then(checkStatus)
-      .then(() => {
+      .then(parseJSON)
+      .then((data) => {
+        User.set(data);
+        User.isAuth = true;
+        console.log(User);
         console.log('signup ok');
         this.eventBus.trigger('signup_ok');
       })

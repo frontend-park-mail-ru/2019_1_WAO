@@ -11,7 +11,7 @@ import { isCorrectNickname, isCorrectPassword } from '../modules/validation';
 export default class SignInModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('call', () => {      
+    this.eventBus.on('call', () => {
       this.eventBus.trigger('render');
       this.checkAuth();
     });
@@ -22,19 +22,13 @@ export default class SignInModel {
    * Если пользователь не авторизован, то просит ввести логин и пароль
    */
   checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('check auth ok');
-        console.log(data);
-        User.set(data);
-        console.log(User);
-      })
-      .catch(() => {
-        console.log('check auth bad');
-        this.processForm();
-      });
+    console.log("SignInModel User.AUTH: ", User.isAuth);
+    if (User.isAuth) {
+      this.eventBus.trigger('auth ok');
+    } else {
+      console.log('check auth bad');
+      this.processForm();
+    }
   }
 
   /**
@@ -86,7 +80,9 @@ export default class SignInModel {
       .then(checkStatus)
       .then(parseJSON)
       .then((data) => {
-        console.log(data);
+        User.set(data);
+        User.isAuth = true;
+        console.log(User);
         this.eventBus.trigger('signin_ok');
       })
       .catch(() => {

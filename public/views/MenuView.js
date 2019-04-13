@@ -4,11 +4,11 @@ import template from '../components/menu/menu.handlebars';
 const vievData = {
   menuButtons: [
     {
-        text: 'Играть онлайн',
+        text: 'Мультиплеер',
         href: '/',
     },
     {
-        text: 'Играть одному',
+        text: 'Синглплеер',
         href: '/',
     },
     {

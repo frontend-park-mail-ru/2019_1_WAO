@@ -163,8 +163,8 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.get('/api/v1/sessions', (req, res) => {
-	console.log("sessions");
+const isAuth = ((req, res) => {
+	console.log("session");
 	const id = req.cookies.sessionid;
 	console.log(id);
 	if (!id) {
@@ -189,8 +189,12 @@ app.get('/api/v1/sessions', (req, res) => {
 	}
 });
 
-app.delete('/api/v1/sessions', (req, res) => {  
-	console.log("sessions");
+app.get('/api/session', (req, res) => {
+	return isAuth(req, res);
+});
+
+app.delete('/api/session', (req, res) => {  
+	console.log("session");
 	console.log(req.cookies.sessionid);
 	const id = req.cookies.sessionid;
 	if (Object.prototype.hasOwnProperty.call(ids, id)) {
@@ -211,7 +215,7 @@ function setHeaders(res, list) {
 	return res;
 }
 
-app.post('/api/v1/signup', (req, res) => {
+app.post('/api/signup', (req, res) => {
 	res = setHeaders(res, setHeadearListOnPage);
 	const nickname = req.body.nickname;
 	const email = req.body.email;
@@ -244,10 +248,10 @@ app.post('/api/v1/signup', (req, res) => {
 	console.log("ids[id]: ", ids, "users[nickname]: ", users);
 
 	res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
-	res.status(201).json({ id });
+	res.status(201).json(users[nickname]);
 });
 
-app.post('/api/v1/signin', (req, res) => {
+app.post('/api/signin', (req, res) => {
 	console.log(req.body);
 	const password = req.body.password;
 	const nickname = req.body.nickname;
@@ -262,10 +266,10 @@ app.post('/api/v1/signin', (req, res) => {
 	ids[id] = nickname;
 
 	res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
-	res.status(200).json({ id });
+	res.status(200).json(users[nickname]);
 });
 
-app.get('/api/v1/user/:nickname', (req, res) => {
+app.get('/api/user/:nickname', (req, res) => {
 	const nickname = req.params.nickname;
 	console.log('connect: ' + nickname);
 
@@ -292,7 +296,7 @@ app.get('/api/v1/user/:nickname', (req, res) => {
 	res.status(200).json(send);
 });
 
-app.put('/api/v1/user/:nickname', (req, res) => {
+app.put('/api/user/:nickname', (req, res) => {
 	const nickname = req.params.nickname;
 	console.log('connect: ' + nickname);
 
@@ -338,7 +342,7 @@ app.put('/api/v1/user/:nickname', (req, res) => {
 
 });
 
-app.get('/api/v1/users', (req, res) => {
+app.get('/api/users', (req, res) => {
 	res = setHeaders(res, setHeadearListOnPage);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)
@@ -354,7 +358,7 @@ app.get('/api/v1/users', (req, res) => {
 	res.status(200).json(scorelist);
 });
 
-app.get('/api/v1/users/:page', (req, res) => {
+app.get('/api/users/:page', (req, res) => {
 	res = setHeaders(res, setHeadearListOnPage);
 	const scorelist = Object.values(users)
 		.sort((l, r) => r.score - l.score)

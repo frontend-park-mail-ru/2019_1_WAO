@@ -67,13 +67,14 @@ class EventBus {
      * @param {string} event Имя события
      * @param {Array} params Параметры, передаваемые в колбэк
      * */
-  trigger(event, ...pagams) {
+  trigger(event, ...params) {
     if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);
     }
 
     this.events[event].forEach((callback) => {
-      callback(...pagams);
+      console.log('Event', event, 'with params', ...params);
+      callback(...params);
     });
   }
 }

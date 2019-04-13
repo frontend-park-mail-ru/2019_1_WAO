@@ -8,6 +8,7 @@ const User = {
   wins: 0,
   games: 0,
   image: './uploads/user.png',
+  isAuth: false,
 };
 
 User.set = function set(data) {

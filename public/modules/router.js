@@ -74,6 +74,11 @@ class Router {
       event.preventDefault();
       this.route(event.target.dataset.href);
     });
+
+    window.addEventListener('popstate', function () {
+			const currentPath = window.location.pathname;
+			this.route(currentPath);
+		}.bind(this));
   }
 }
 

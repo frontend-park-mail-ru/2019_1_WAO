@@ -39,7 +39,7 @@ export default class ScoreBoardModel {
     buttonForw.addEventListener('click', (event) => {
       event.preventDefault(); 
       console.log('PAGE FORW');
-      const maxPage = 2; // да, это костыль. ведь код без костылей - не живой код
+      const maxPage = 3; // да, это костыль. ведь код без костылей - не живой код
       if (this.page < maxPage) {
         this.page += 1;
         this.makeTable();

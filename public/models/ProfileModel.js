@@ -34,7 +34,8 @@ export default class ProfileModel {
         console.log('profile auth ok');
         console.log(data);
         User.set(data);
-        this.eventBus.trigger('users_rx', {data: data, err: {}});
+        User.isAuth = true;
+        this.eventBus.trigger('users_rx', {data: User, err: {}});
         this.processForm();
       })
       .catch((err) => {
@@ -83,14 +84,18 @@ export default class ProfileModel {
         form.elements.email.placeholder = checkEmail.err;
       }
       
-      const checkPassword = isCorrectPassword(password, passwordRepeat);
-      if (!checkPassword.status) {
-        form.elements.password.classList.add('input-area__input_wrong');
-        form.elements.password.value = '';
-        form.elements.password.placeholder = checkPassword.err;
-        form.elements.passwordRepeat.classList.add('input-area__input_wrong');
-        form.elements.passwordRepeat.value = '';
-        form.elements.passwordRepeat.placeholder = checkPassword.err;
+      
+      const checkPassword = true;
+      if (password.length > 0) {
+        checkPassword = isCorrectPassword(password, passwordRepeat);
+        if (!checkPassword.status) {
+          form.elements.password.classList.add('input-area__input_wrong');
+          form.elements.password.value = '';
+          form.elements.password.placeholder = checkPassword.err;
+          form.elements.passwordRepeat.classList.add('input-area__input_wrong');
+          form.elements.passwordRepeat.value = '';
+          form.elements.passwordRepeat.placeholder = checkPassword.err;
+        }
       }
 
       if (checkNickname.status && checkEmail.status && checkPassword.status) {
@@ -103,7 +108,7 @@ export default class ProfileModel {
         if (image) {
           formData.append('image', image);
         }
-        this.makeUpdate(nickname, formData);
+        this.makeUpdate(User.nickname, formData);
       } else {
         this.processForm();
       }
@@ -119,9 +124,10 @@ export default class ProfileModel {
       .then(parseJSON)
       .then((data) => {
         User.set(data);
-        console.log(data);
+        User.isAuth = true;
+        console.log(User);
         console.log('update ok');
-        this.eventBus.trigger('update_ok', {data: data, err: {}});
+        this.eventBus.trigger('update_ok', {User: data, err: {}});
       })
       .catch(() => {
         console.log('update bad');

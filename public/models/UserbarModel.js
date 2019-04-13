@@ -1,5 +1,6 @@
 import { getAuth, checkStatus, parseJSON } from '../modules/api';
 import { GlobalBus } from '../modules/eventbus';
+import User from '../modules/user';
 
 /**
  * Модель Меню
@@ -37,6 +38,20 @@ export default class UserbarModel {
         GlobalBus.trigger('auth_bad');
       });
   }
+  
+  /*
+  checkAuth() {
+    console.log("UserbarModel User.auth: ", User.isAuth);
+    if (User.isAuth) {
+      console.log("UserbarModel User: ", User);
+      this.eventBus.trigger('render', User);
+      this.waitAction();
+    } else {
+      console.log('menu auth bad');
+      GlobalBus.trigger('auth_bad');
+    }
+  }
+  */
 
   /**
    * Отклик на клики пользователя
@@ -46,6 +61,7 @@ export default class UserbarModel {
     buttonOut.addEventListener('click', (event) => {
       event.preventDefault(); 
       console.log('PRESS OUT');
+      User.isAuth = false;
       GlobalBus.trigger('auth_out');
     });
    }
