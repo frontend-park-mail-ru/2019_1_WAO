@@ -35,7 +35,7 @@ export default class ProfileModel {
         console.log(data);
         User.set(data);
         User.isAuth = true;
-        this.eventBus.trigger('users_rx', {data: User, err: {}});
+        this.eventBus.trigger('users_rx', { data: User, err: {} });
         this.processForm();
       })
       .catch((err) => {
@@ -83,8 +83,8 @@ export default class ProfileModel {
         form.elements.email.value = '';
         form.elements.email.placeholder = checkEmail.err;
       }
-      
-      
+
+
       const checkPassword = true;
       if (password.length > 0) {
         checkPassword = isCorrectPassword(password, passwordRepeat);
@@ -127,7 +127,7 @@ export default class ProfileModel {
         User.isAuth = true;
         console.log(User);
         console.log('update ok');
-        this.eventBus.trigger('update_ok', {User: data, err: {}});
+        this.eventBus.trigger('update_ok', { User: data, err: {} });
       })
       .catch(() => {
         console.log('update bad');
@@ -142,6 +142,5 @@ export default class ProfileModel {
         form.elements.email.placeholder = 'НЕВЕРНО';
         form.elements.password.placeholder = 'НЕВЕРНО';
       });
-
   }
 }

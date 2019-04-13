@@ -53,7 +53,7 @@ export default class SignUpModel {
         form.elements.email.value = '';
         form.elements.email.placeholder = checkEmail.err;
       }
-      
+
       const checkPassword = isCorrectPassword(password, passwordRepeat);
       if (!checkPassword.status) {
         form.elements.password.classList.add('input-area__input_wrong');

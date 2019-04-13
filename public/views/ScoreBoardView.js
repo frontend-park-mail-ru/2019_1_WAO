@@ -5,7 +5,7 @@ const dataView = {
   title: {
     text: 'Таблица лидеров',
   },
-}
+};
 
 /**
  * ScoreBoardView view

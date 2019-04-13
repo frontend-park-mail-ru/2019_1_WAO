@@ -42,7 +42,7 @@ function registerSW() {
  * Точка входа
  */
 function start() {
-  // registerSW(); // SW мешает запросы отслеживать на этапе отладки
+  registerSW();
   console.log('Start');
 
   const application = document.getElementById('application');
@@ -74,7 +74,7 @@ function subscribeGlobalBus() {
     Router.route('/signin');
   });
 
-  GlobalBus.on('auth_out', () => {  
+  GlobalBus.on('auth_out', () => {
     delAuth()
       .then(checkStatus)
       .then(() => {
@@ -82,6 +82,6 @@ function subscribeGlobalBus() {
       })
       .catch((err) => {
         console.log(err);
-      }); 
+      });
   });
 }

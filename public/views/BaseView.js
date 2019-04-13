@@ -18,7 +18,7 @@ export default class BaseView {
     this.rendered = false;
     this.savedTmpl = '';
     this.hide();
-    
+
     this.eventBus.on('render', (data) => {
       // this.show();
       this.render(this.el, data);
@@ -64,7 +64,7 @@ export default class BaseView {
     this.el.style.setProperty('display', 'none', 'important');
     this.eventBus.trigger('view_hide');
   }
-  
+
   getTemplate(data = {}) {
     if (this.rendered) {
       return this.savedTmpl;

@@ -2,7 +2,7 @@ import BaseView from './BaseView';
 import template from '../components/signup/signup.handlebars';
 
 const vievData = {
-  fields : 
+  fields:
     [
       {
         label: 'Логин',
@@ -29,12 +29,12 @@ const vievData = {
         placeholder: 'Повторите пароль',
       },
     ],
-    button: {
-      value: 'Зарегистрироваться'
-    },
-    title: {
-      text: 'Регистрация',
-    },
+  button: {
+    value: 'Зарегистрироваться',
+  },
+  title: {
+    text: 'Регистрация',
+  },
 };
 
 /**

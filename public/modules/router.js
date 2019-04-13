@@ -47,17 +47,16 @@ class Router {
     }
     this.prevPath = path;
     console.log(`route to ${path}`);
-    this.presenters[path].call();
 
-    Router.history(path + page);
+    if (window.location.pathname !== path) {
+      Router.history(path + page);
+    }
+
+    this.presenters[path].call();
   }
 
   static history(path) {
-    window.history.pushState(null, null, path);
-  }
-
-  static changeUrl(path) {
-    window.history.replaceState(null, null, path);
+    window.history.pushState(null, '', path);
   }
 
   /**
@@ -75,10 +74,10 @@ class Router {
       this.route(event.target.dataset.href);
     });
 
-    window.addEventListener('popstate', function () {
-			const currentPath = window.location.pathname;
-			this.route(currentPath);
-		}.bind(this));
+    window.addEventListener('popstate', () => {
+      const currentPath = window.location.pathname;
+      this.route(currentPath);
+    });
   }
 }
 

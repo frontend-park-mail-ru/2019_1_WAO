@@ -2,7 +2,7 @@ import BaseView from './BaseView';
 import template from '../components/signin/signin.handlebars';
 
 const vievData = {
-  fields: 
+  fields:
     [
       {
         label: 'Логин',
@@ -18,7 +18,7 @@ const vievData = {
       },
     ],
   button: {
-    value: 'Войти'
+    value: 'Войти',
   },
   title: {
     text: 'Войти',

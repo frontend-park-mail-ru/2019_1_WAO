@@ -2,7 +2,7 @@ import MenuView from '../views/MenuView';
 import MenuModel from '../models/MenuModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
-import UserbarPresenter from '../presenters/UserbarPresenter';
+import UserbarPresenter from './UserbarPresenter';
 
 /**
  * Представитель Меню

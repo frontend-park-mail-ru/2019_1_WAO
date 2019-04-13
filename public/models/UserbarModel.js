@@ -11,13 +11,13 @@ export default class UserbarModel {
    * @param {EventBus} eventBus
    */
   constructor(eventBus) {
-    this.eventBus = eventBus;  
+    this.eventBus = eventBus;
     this.eventBus.on('call', () => {
       console.log('call');
       this.checkAuth();
     });
   }
-  
+
   /**
    * Проверка авторизации
    */
@@ -38,7 +38,7 @@ export default class UserbarModel {
         GlobalBus.trigger('auth_bad');
       });
   }
-  
+
   /*
   checkAuth() {
     console.log("UserbarModel User.auth: ", User.isAuth);
@@ -56,13 +56,13 @@ export default class UserbarModel {
   /**
    * Отклик на клики пользователя
    */
-   waitAction() {
+  waitAction() {
     const [buttonOut] = document.getElementsByClassName('userbar__door');
     buttonOut.addEventListener('click', (event) => {
-      event.preventDefault(); 
+      event.preventDefault();
       console.log('PRESS OUT');
       User.isAuth = false;
       GlobalBus.trigger('auth_out');
     });
-   }
+  }
 }

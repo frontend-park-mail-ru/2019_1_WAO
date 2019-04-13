@@ -2,7 +2,7 @@ import ScoreBoardView from '../views/ScoreBoardView';
 import ScoreBoardModel from '../models/ScoreBoardModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
-import UserbarPresenter from '../presenters/UserbarPresenter';
+import UserbarPresenter from './UserbarPresenter';
 
 /**
  * ScoreBoardPresenter view
@@ -17,9 +17,9 @@ export default class ScoreBoardPresenter extends BasePresenter {
   constructor() {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
-    
+
     const userbar = new UserbarPresenter(eventBus);
-    
+
     const view = new ScoreBoardView(application, eventBus, [userbar.view]);
     const model = new ScoreBoardModel(eventBus);
 
@@ -34,6 +34,6 @@ export default class ScoreBoardPresenter extends BasePresenter {
     eventBus.on('url_change', (data) => {
       console.log(`/users/${data.toString()}`);
       Router.changeUrl(`/users/${data.toString()}`);
-    }); 
+    });
   }
 }

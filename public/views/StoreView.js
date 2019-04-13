@@ -26,7 +26,7 @@ const vievData = {
       name: 'Мяч',
       cost: '400',
     },
-  ]
+  ],
 };
 
 /**

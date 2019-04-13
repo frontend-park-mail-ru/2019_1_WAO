@@ -12,7 +12,7 @@ export default class ScoreBoardModel {
     this.eventBus = eventBus;
     this.page = 1;
     this.eventBus.on('call', () => {
-      this.eventBus.trigger('render');      
+      this.eventBus.trigger('render');
       this.makeTable();
     });
   }
@@ -23,10 +23,11 @@ export default class ScoreBoardModel {
       .then(parseJSON)
       .then((data) => {
         console.log('score ok');
-        this.eventBus.trigger('users_rx', {users: data});
+        this.eventBus.trigger('users_rx', { users: data });
         console.log(data);
         // this.eventBus.trigger('url_change', this.page);
-        window.history.replaceState(null, null, `/users/${this.page}`);
+        // window.history.replaceState(null, null, `/users/${this.page}`);
+        window.history.pushStat(null, '', `/users/${this.page}`);
         this.waitAction();
       })
       .catch(() => {
@@ -37,7 +38,7 @@ export default class ScoreBoardModel {
   waitAction() {
     const [buttonForw] = document.getElementsByClassName('scoreboard__paginator__next');
     buttonForw.addEventListener('click', (event) => {
-      event.preventDefault(); 
+      event.preventDefault();
       console.log('PAGE FORW');
       const maxPage = 3; // да, это костыль. ведь код без костылей - не живой код
       if (this.page < maxPage) {
@@ -50,7 +51,7 @@ export default class ScoreBoardModel {
 
     const [buttonBack] = document.getElementsByClassName('scoreboard__paginator__prev');
     buttonBack.addEventListener('click', (event) => {
-      event.preventDefault(); 
+      event.preventDefault();
       console.log('PAGE BACK');
       if (this.page > 1) {
         this.page -= 1;
@@ -59,5 +60,5 @@ export default class ScoreBoardModel {
         this.waitAction();
       }
     });
-   }
+  }
 }

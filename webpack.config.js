@@ -1,18 +1,14 @@
-'use strict'
-
 const HtmlWebPackPlugin  = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-//const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-//const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
   entry: {
-    main: './public/main.js'
+    main: './public/main.js',
   },
   output: {
-    path: __dirname + '/dist',
-    filename: '[name].bundle.js'
-  },  
+    path: `${__dirname}/dist`,
+    filename: '[name].bundle.js',
+  },
   devtool: 'source-map',
   module: {
     rules: [
@@ -22,38 +18,31 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ['@babel/preset-env'],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-        /*
-        use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader'
-        ]
-        */
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
-            //options: { minimize: true }
-          }
-        ]
+            loader: 'html-loader',
+          },
+        ],
       },
       {
-          test: /\.(png|jp(e*)g|svg)$/,  
-          use: [{
-              loader: 'url-loader',
-              options: { 
-                  limit: 10, // Convert images < 8kb to base64 strings
-                  name: 'images/[name].[ext]'
-              } 
-          }]
+        test: /\.(png|jp(e*)g|svg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10, // Convert images < 8kb to base64 strings
+            name: 'images/[name].[ext]',
+          },
+        }],
       },
       /* Пока вручную, а то и без него проблем не мало
       {
@@ -64,35 +53,20 @@ module.exports = {
           // eslint options (if necessary)
         }
       },
-      */     
+      */
       {
-        test: /\.handlebars$/, 
-        loader: "handlebars-loader" 
+        test: /\.handlebars$/,
+        loader: 'handlebars-loader',
       },
-      {
-        test: /\.xml$/,
-        use: [
-          {
-            loader: 'fest-webpack-loader'
-          }
-        ]
-      }
-       
-    ]
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html"
+      template: './public/index.html',
+      filename: './index.html',
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: __dirname + '/public/sw.js',
+      entry: `${__dirname}/public/sw.js`,
     }),
-    /*
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    })
-    */
-  ]
+  ],
 };

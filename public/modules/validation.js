@@ -3,14 +3,14 @@
  * @param {String} nickname
  * @param {Array<String>} errList
  */
-export function isCorrectNickname(nickname = "") {
+export function isCorrectNickname(nickname = '') {
   if (nickname.length < 4) {
-    return {status: false, err: 'Не короче 4 символов'}
+    return { status: false, err: 'Не короче 4 символов' };
   }
   if (!nickname.match(/^\w+$/)) {
-    return {status: false, err: 'Латиницей'}
+    return { status: false, err: 'Латиницей' };
   }
-  return {status: true, err: ''}
+  return { status: true, err: '' };
 }
 
 /**
@@ -18,15 +18,15 @@ export function isCorrectNickname(nickname = "") {
  * @param {String} email
  * @param {Array<String>} errList
  */
-export function isCorrectEmail(email = "", errList = [""]) {
+export function isCorrectEmail(email = '', errList = ['']) {
   if (
     !email.match(
-      /^([a-z0-9_\\-]+\.)*[a-z0-9_\\-]+@([a-z0-9][a-z0-9\\-]*[a-z0-9]\.)+[a-z]{2,4}$/i
+      /^([a-z0-9_\\-]+\.)*[a-z0-9_\\-]+@([a-z0-9][a-z0-9\\-]*[a-z0-9]\.)+[a-z]{2,4}$/i,
     )
   ) {
-    return {status: false, err: 'Некорректная почта'}
+    return { status: false, err: 'Некорректная почта' };
   }
-  return {status: true, err: ''}
+  return { status: true, err: '' };
 }
 
 /**
@@ -35,13 +35,13 @@ export function isCorrectEmail(email = "", errList = [""]) {
  * @param {String} password2 И его повторение
  * @param {Array<String>} errList
  */
-export function isCorrectPassword(password1 = "", password2 = "", errList = [""]) {
+export function isCorrectPassword(password1 = '', password2 = '', errList = ['']) {
   if (password1 !== password2) {
-    return {status: false, err: 'Пароли не совпадают'}
+    return { status: false, err: 'Пароли не совпадают' };
   }
 
   if (password1.length < 6) {
-    return {status: false, err: 'Не короче 6 символов'}
+    return { status: false, err: 'Не короче 6 символов' };
   }
-  return {status: true, err: ''};
+  return { status: true, err: '' };
 }

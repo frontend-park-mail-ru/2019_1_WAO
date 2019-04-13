@@ -2,7 +2,7 @@ import ProfileView from '../views/ProfileView';
 import ProfileModel from '../models/ProfileModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
-import UserbarPresenter from '../presenters/UserbarPresenter';
+import UserbarPresenter from './UserbarPresenter';
 
 /**
  * ProfilePresenter view

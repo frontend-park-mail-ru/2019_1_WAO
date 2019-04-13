@@ -4,30 +4,30 @@ import template from '../components/menu/menu.handlebars';
 const vievData = {
   menuButtons: [
     {
-        text: 'Мультиплеер',
-        href: '/',
+      text: 'Мультиплеер',
+      href: '/',
     },
     {
-        text: 'Синглплеер',
-        href: '/',
+      text: 'Синглплеер',
+      href: '/',
     },
     {
-        text: 'Магазин',
-        href: '/store',
+      text: 'Магазин',
+      href: '/store',
     },
     {
-        text: 'Профиль',
-        href: '/profile',
+      text: 'Профиль',
+      href: '/profile',
     },
     {
-        text: 'Таблица лидеров',
-        href: '/users',
+      text: 'Таблица лидеров',
+      href: '/users',
     },
     {
-        text: 'Об игре',
-        href: '/about',
+      text: 'Об игре',
+      href: '/about',
     },
-  ]
+  ],
 };
 
 /**

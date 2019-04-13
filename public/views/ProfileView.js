@@ -2,7 +2,7 @@ import BaseView from './BaseView';
 import template from '../components/profile/profile.handlebars';
 import User from '../modules/user';
 
-const vievData = {  
+const vievData = {
   button: {
     value: 'Редактировать',
   },
@@ -33,5 +33,4 @@ export default class ProfileView extends BaseView {
       this.render(this.el, data);
     });
   }
-  
 }

@@ -22,7 +22,7 @@ export default class SignInModel {
    * Если пользователь не авторизован, то просит ввести логин и пароль
    */
   checkAuth() {
-    console.log("SignInModel User.AUTH: ", User.isAuth);
+    console.log('SignInModel User.AUTH: ', User.isAuth);
     if (User.isAuth) {
       this.eventBus.trigger('auth ok');
     } else {
@@ -56,7 +56,7 @@ export default class SignInModel {
         form.elements.nickname.value = '';
         form.elements.nickname.placeholder = checkNickname.err;
       }
-      
+
       const checkPassword = isCorrectPassword(password, password);
       if (!checkPassword.status) {
         form.elements.password.classList.add('input-area__input_wrong');
@@ -97,4 +97,3 @@ export default class SignInModel {
       });
   }
 }
-
