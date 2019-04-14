@@ -1,8 +1,10 @@
 const HtmlWebPackPlugin  = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+require('babel-polyfill');
 
 module.exports = {
   entry: {
+    polyfill: 'babel-polyfill',
     main: './public/main.js',
   },
   output: {
@@ -19,6 +21,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
+            plugins: ['transform-regenerator'],
           },
         },
       },

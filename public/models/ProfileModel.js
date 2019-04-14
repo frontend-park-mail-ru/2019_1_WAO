@@ -26,23 +26,22 @@ export default class ProfileModel {
   /**
    * Проверка авторизации
    */
-  checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('profile auth ok');
-        console.log(data);
-        User.set(data);
-        User.isAuth = true;
-        this.eventBus.trigger('users_rx', { data: User, err: {} });
-        this.processForm();
-      })
-      .catch((err) => {
-        console.log('profile auth bad');
-        console.log(err);
-        GlobalBus.trigger('auth_bad');
-      });
+  async checkAuth() {
+    try {
+      const res = await getAuth();
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      console.log('profile auth ok');
+      console.log(data);
+      User.set(data);
+      User.isAuth = true;
+      this.eventBus.trigger('users_rx', { data: User, err: {} });
+      this.processForm();
+    } catch (err) {
+      console.log('profile auth bad');
+      console.log(err);
+      GlobalBus.trigger('auth_bad');
+    }
   }
 
   /**
@@ -85,7 +84,7 @@ export default class ProfileModel {
       }
 
 
-      const checkPassword = true;
+      let checkPassword = true;
       if (password.length > 0) {
         checkPassword = isCorrectPassword(password, passwordRepeat);
         if (!checkPassword.status) {
@@ -118,29 +117,25 @@ export default class ProfileModel {
   /**
    * Делает POST-запрос с параметрами: ник, почта, пароль, картинка
    */
-  makeUpdate(nickname, formData) {
-    putProfile(nickname, formData)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        User.set(data);
-        User.isAuth = true;
-        console.log(User);
-        console.log('update ok');
-        this.eventBus.trigger('update_ok', { User: data, err: {} });
-      })
-      .catch(() => {
-        console.log('update bad');
-        // this.eventBus.trigger('update_bad', User, ['Невалидные данные']);
-        // this.eventBus.trigger('update_bad', {data: User, err: ['Невалидные данные']});
-        // выглядит как костыль, но возможно это норм решение
-        const form = document.querySelector('form');
-        form.elements.nickname.value = '';
-        form.elements.email.value = '';
-        form.elements.password.value = '';
-        form.elements.nickname.placeholder = 'НЕВЕРНО';
-        form.elements.email.placeholder = 'НЕВЕРНО';
-        form.elements.password.placeholder = 'НЕВЕРНО';
-      });
+  async makeUpdate(nickname, formData) {
+    try {
+      const res = await putProfile(nickname, formData);
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      User.set(data);
+      User.isAuth = true;
+      console.log(User);
+      console.log('update ok');
+      this.eventBus.trigger('update_ok', { User: data, err: {} });
+    } catch (err) {
+      const form = document.querySelector('form');
+      form.elements.nickname.value = '';
+      form.elements.email.value = '';
+      form.elements.password.value = '';
+      form.elements.nickname.placeholder = 'НЕВЕРНО';
+      form.elements.email.placeholder = 'НЕВЕРНО';
+      form.elements.password.placeholder = 'НЕВЕРНО';
+      this.processForm();
+    }
   }
 }

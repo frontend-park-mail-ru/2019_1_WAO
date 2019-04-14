@@ -25,7 +25,7 @@ const vievData = {
       {
         label: 'Пароль еще раз',
         type: 'password',
-        name: 'password_repeat',
+        name: 'passwordRepeat',
         placeholder: 'Повторите пароль',
       },
     ],

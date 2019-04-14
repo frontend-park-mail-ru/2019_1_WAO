@@ -1,5 +1,5 @@
 import {
-  getAuth, postSignUp, checkStatus, parseJSON,
+  postSignUp, checkStatus, parseJSON,
 } from '../modules/api';
 import checkXSS from '../utils/safe';
 import User from '../modules/user';
@@ -27,7 +27,7 @@ export default class SignUpModel {
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
       const password = form.elements.password.value;
-      const passwordRepeat = form.elements.password_repeat.value;
+      const passwordRepeat = form.elements.passwordRepeat.value;
 
       const body = {
         nickname,
@@ -75,31 +75,27 @@ export default class SignUpModel {
   /**
    * Делает POST-запрос с данными для регистрации
    */
-  makeSignUp(body = {}) {
-    postSignUp(body)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        User.set(data);
-        User.isAuth = true;
-        console.log(User);
-        console.log('signup ok');
-        this.eventBus.trigger('signup_ok');
-      })
-      .catch(() => {
-        console.log('signup bad');
-        // this.eventBus.trigger('signup_bad', ['Невалидные данные']);
-        // выглядит как костыль, но возможно это норм решение
-        const form = document.querySelector('form');
-        form.elements.nickname.value = '';
-        form.elements.email.value = '';
-        form.elements.password.value = '';
-        form.elements.passwordRepeat.value = '';
-        form.elements.nickname.placeholder = 'НЕВЕРНО';
-        form.elements.email.placeholder = 'НЕВЕРНО';
-        form.elements.password.placeholder = 'НЕВЕРНО';
-        form.elements.passwordRepeat.placeholder = 'НЕВЕРНО';
-        this.processForm();
-      });
+  async makeSignUp(body = {}) {
+    try {
+      const res = await postSignUp(body);
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      User.set(data);
+      User.isAuth = true;
+      console.log(User);
+      console.log('signup ok');
+      this.eventBus.trigger('signup_ok');
+    } catch (err) {
+      const form = document.querySelector('form');
+      form.elements.nickname.value = '';
+      form.elements.email.value = '';
+      form.elements.password.value = '';
+      form.elements.passwordRepeat.value = '';
+      form.elements.nickname.placeholder = 'НЕВЕРНО';
+      form.elements.email.placeholder = 'НЕВЕРНО';
+      form.elements.password.placeholder = 'НЕВЕРНО';
+      form.elements.passwordRepeat.placeholder = 'НЕВЕРНО';
+      this.processForm();
+    }
   }
 }

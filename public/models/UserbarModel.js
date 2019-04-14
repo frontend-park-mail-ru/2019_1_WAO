@@ -21,29 +21,6 @@ export default class UserbarModel {
   /**
    * Проверка авторизации
    */
-  /*
-  checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('menu auth ok');
-        console.log(data);
-        // this.eventBus.trigger('users_rx', data);
-        this.eventBus.trigger('render', data);
-        this.waitAction();
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('menu auth bad');
-        GlobalBus.trigger('auth_bad');
-      });
-  }
-  */
-
-  /**
-   * Проверка авторизации
-   */
   async checkAuth() {
     try {
       const res = await getAuth();
@@ -52,7 +29,7 @@ export default class UserbarModel {
       console.log('menu auth ok');
       console.log(data);
       this.eventBus.trigger('render', data);
-      this.waitAction();
+      UserbarModel.waitAction();
     } catch (err) {
       console.log(err);
       console.log('menu auth bad');
@@ -77,7 +54,7 @@ export default class UserbarModel {
   /**
    * Отклик на клики пользователя
    */
-  waitAction() {
+  static waitAction() {
     const [buttonOut] = document.getElementsByClassName('userbar__door');
     buttonOut.addEventListener('click', (event) => {
       event.preventDefault();

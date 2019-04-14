@@ -1,6 +1,6 @@
 import User from '../modules/user';
 import {
-  getAuth, postSignIn, checkStatus, parseJSON,
+  postSignIn, checkStatus, parseJSON,
 } from '../modules/api';
 import checkXSS from '../utils/safe';
 import { isCorrectNickname, isCorrectPassword } from '../modules/validation';
@@ -75,25 +75,22 @@ export default class SignInModel {
   /**
    * Делает POST-запрос на вход
    */
-  makeSignin(body = {}) {
-    postSignIn(body)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        User.set(data);
-        User.isAuth = true;
-        console.log(User);
-        this.eventBus.trigger('signin_ok');
-      })
-      .catch(() => {
-        // this.eventBus.trigger('signin_bad', ['Неправильный логин или пароль']);
-        // выглядит как костыль, но возможно это норм решение
-        const form = document.querySelector('form');
-        form.elements.nickname.value = '';
-        form.elements.password.value = '';
-        form.elements.nickname.placeholder = 'НЕВЕРНО';
-        form.elements.password.placeholder = 'НЕВЕРНО';
-        this.processForm();
-      });
+  async makeSignin(body = {}) {
+    try {
+      const res = await postSignIn(body);
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      User.set(data);
+      User.isAuth = true;
+      console.log(User);
+      this.eventBus.trigger('signin_ok');
+    } catch (err) {
+      const form = document.querySelector('form');
+      form.elements.nickname.value = '';
+      form.elements.password.value = '';
+      form.elements.nickname.placeholder = 'НЕВЕРНО';
+      form.elements.password.placeholder = 'НЕВЕРНО';
+      this.processForm();
+    }
   }
 }

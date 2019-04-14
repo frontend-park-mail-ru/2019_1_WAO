@@ -1,7 +1,6 @@
 import {
-  getAuth, getScoreBoard, checkStatus, parseJSON,
+  getScoreBoard, checkStatus, parseJSON,
 } from '../modules/api';
-import { GlobalBus } from '../modules/eventbus';
 
 /**
  * Таблица лидеров
@@ -17,22 +16,20 @@ export default class ScoreBoardModel {
     });
   }
 
-  makeTable() {
-    getScoreBoard(this.page)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('score ok');
-        this.eventBus.trigger('users_rx', { users: data });
-        console.log(data);
-        // this.eventBus.trigger('url_change', this.page);
-        // window.history.replaceState(null, null, `/users/${this.page}`);
-        window.history.pushStat(null, '', `/users/${this.page}`);
-        this.waitAction();
-      })
-      .catch(() => {
-        console.log('score bad');
-      });
+  async makeTable() {
+    try {
+      const res = await getScoreBoard(this.page);
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      console.log('score ok');
+      console.log(data);
+      this.eventBus.trigger('users_rx', { users: data });
+      console.log(data);
+      window.history.replaceState(null, '', `/users/${this.page}`);
+      this.waitAction();
+    } catch (err) {
+      console.log('score bad');
+    }
   }
 
   waitAction() {
