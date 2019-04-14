@@ -1,7 +1,7 @@
 import {
   postSignUp, checkStatus, parseJSON,
 } from '../modules/api';
-import checkXSS from '../utils/safe';
+import checkXSS from '../modules/safe';
 import User from '../modules/user';
 import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
 

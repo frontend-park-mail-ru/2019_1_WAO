@@ -2,7 +2,7 @@ import User from '../modules/user';
 import {
   postSignIn, checkStatus, parseJSON,
 } from '../modules/api';
-import checkXSS from '../utils/safe';
+import checkXSS from '../modules/safe';
 import { isCorrectNickname, isCorrectPassword } from '../modules/validation';
 
 /**

@@ -10,6 +10,7 @@ export default class ScoreBoardModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.page = 1;
+    this.pages = 1;
     this.eventBus.on('call', () => {
       this.eventBus.trigger('render');
       this.makeTable();
@@ -23,7 +24,9 @@ export default class ScoreBoardModel {
       const data = await parseJSON(status);
       console.log('score ok');
       console.log(data);
-      this.eventBus.trigger('users_rx', { users: data });
+      this.page = data.page;
+      this.pages = data.pages;
+      this.eventBus.trigger('users_rx', data);
       console.log(data);
       window.history.replaceState(null, '', `/users/${this.page}`);
       this.waitAction();
@@ -37,8 +40,7 @@ export default class ScoreBoardModel {
     buttonForw.addEventListener('click', (event) => {
       event.preventDefault();
       console.log('PAGE FORW');
-      const maxPage = 3; // да, это костыль. ведь код без костылей - не живой код
-      if (this.page < maxPage) {
+      if (this.page < this.pages) {
         this.page += 1;
         this.makeTable();
       } else {

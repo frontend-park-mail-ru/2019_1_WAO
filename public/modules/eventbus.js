@@ -1,6 +1,7 @@
 /**
  * Список событий
  */
+
 export const EVENTS = [
   'call',
   'render',
@@ -73,7 +74,6 @@ class EventBus {
     }
 
     this.events[event].forEach((callback) => {
-      console.log('Event', event, 'with params', ...params);
       callback(...params);
     });
   }

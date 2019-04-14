@@ -2,7 +2,7 @@ import {
   getAuth, putProfile, checkStatus, parseJSON,
 } from '../modules/api';
 import User from '../modules/user';
-import checkXSS from '../utils/safe';
+import checkXSS from '../modules/safe';
 import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
 import { GlobalBus } from '../modules/eventbus';
 
@@ -81,7 +81,7 @@ export default class ProfileModel {
       }
 
 
-      let checkPassword = true;
+      let checkPassword = {};
       if (password) {
         checkPassword = isCorrectPassword(password, password);
         if (!checkPassword.status) {
@@ -91,7 +91,7 @@ export default class ProfileModel {
         }
       }
 
-      if (checkNickname.status && checkEmail.status && checkPassword.status) {
+      if (checkNickname.status && checkEmail.status && (!password || checkPassword.status)) {
         const formData = new FormData();
         formData.append('nickname', nickname);
         formData.append('email', email);

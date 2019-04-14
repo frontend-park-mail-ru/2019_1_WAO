@@ -378,6 +378,7 @@ app.get("/api/users/:page", (req, res) => {
   // console.log(scorelist);
   const page = parseInt(req.params.page);
   const limit = 10;
+  const pages = Math.ceil(scorelist.length / limit);
   const offset = (page - 1) * limit;
   let end = scorelist.length;
   if (scorelist.length > offset + limit) {
@@ -386,7 +387,7 @@ app.get("/api/users/:page", (req, res) => {
 
   const result = scorelist.slice(offset, end);
 
-  res.status(200).json(result);
+  res.status(200).json({page: page, pages: pages, users: result});
 });
 
 const port = process.env.PORT || 3000;
