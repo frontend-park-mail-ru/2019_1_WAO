@@ -1,7 +1,7 @@
 import BaseView from './BaseView';
 import template from '../components/store/store.handlebars';
 
-const vievData = {
+const viewData = {
   title: {
     text: 'Магазин',
   },
@@ -40,6 +40,12 @@ export default class StoreView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components, vievData);
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
   }
 }

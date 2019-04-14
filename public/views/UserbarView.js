@@ -12,6 +12,12 @@ export default class UserbarView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components, {});
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData: {},
+    });
   }
 }

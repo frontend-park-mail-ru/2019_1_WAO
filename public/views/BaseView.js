@@ -9,8 +9,14 @@ export default class BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    * @param {String} template Шаблон страницы
    */
-  constructor(el, eventBus, template, components = [], viewData = {}) {
-    this.el = el || document.createElement('div');
+  constructor({
+    el = document.createElement('div'),
+    eventBus,
+    template,
+    components = [],
+    viewData = {},
+  } = {}) {
+    this.el = el;
     this.eventBus = eventBus;
     this.template = template;
     this.components = components;
@@ -35,9 +41,6 @@ export default class BaseView {
   render(root, data = {}) {
     this.el = root;
     const temp = Object.assign(this.viewData, data);
-    // this.el.innerHTML = '';
-    // this.el.innerHTML += this.template(temp);
-    // this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
     this.savedTmpl = '';
     this.savedTmpl += this.template(temp);
     this.components.forEach((component) => {

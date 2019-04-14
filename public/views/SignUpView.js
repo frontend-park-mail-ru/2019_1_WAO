@@ -1,7 +1,7 @@
 import BaseView from './BaseView';
 import template from '../components/signup/signup.handlebars';
 
-const vievData = {
+const viewData = {
   fields:
     [
       {
@@ -48,7 +48,13 @@ export default class SignUpView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components, vievData);
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
 
     this.eventBus.on('valid_err', (data) => {
       this.render(this.el, data);

@@ -1,7 +1,7 @@
 import BaseView from './BaseView';
 import template from '../components/profile/profile.handlebars';
 
-const vievData = {
+const viewData = {
   button: {
     value: 'Редактировать',
   },
@@ -22,7 +22,13 @@ export default class ProfileView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components, vievData);
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
 
     this.eventBus.on('valid_err', (data) => {
       this.render(this.el, data);

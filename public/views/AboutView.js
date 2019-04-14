@@ -1,7 +1,7 @@
 import BaseView from './BaseView';
 import template from '../components/about/about.handlebars';
 
-const vievData = {
+const viewData = {
   title1: {
     text: 'Об игре',
   },
@@ -48,6 +48,12 @@ export default class AboutView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components, vievData);
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
   }
 }
