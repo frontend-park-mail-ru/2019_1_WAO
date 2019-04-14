@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 const KEY = 'wao2019';
 
 const { assets } = global.serviceWorkerOption;
@@ -31,8 +32,6 @@ self.addEventListener('fetch', (event) => {
             .then((cache) => {
               if (event.request.method === 'GET') {
                 cache.put(event.request, res.clone());
-              } else {
-                alert('НЕ В СЕТИ');
               }
               return res;
             }));

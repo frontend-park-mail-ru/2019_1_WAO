@@ -11,7 +11,6 @@ export default class AboutModel {
     this.eventBus = eventBus;
     this.eventBus.on('call', () => {
       console.log('menu start render');
-      // this.checkAuth();
       this.eventBus.trigger('render', User);
     });
   }

@@ -1,5 +1,3 @@
-import { getAuth, checkStatus, parseJSON } from '../modules/api';
-import { GlobalBus } from '../modules/eventbus';
 import User from '../modules/user';
 
 /**
@@ -14,7 +12,6 @@ export default class MenuModel {
     this.eventBus = eventBus;
     this.eventBus.on('call', () => {
       console.log('menu start render');
-      // this.checkAuth();
       this.eventBus.trigger('render', User);
     });
   }

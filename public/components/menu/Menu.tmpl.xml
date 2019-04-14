@@ -1,7 +1,0 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-	<div class="menu-bar">
-		<fest:for iterate="data" index="i" value="buttonName">			
-			<fest:include context="buttonName" src="./__button/__button.tmpl.xml"/>
-		</fest:for>
-	</div>
-</fest:template>

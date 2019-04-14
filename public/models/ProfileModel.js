@@ -32,7 +32,6 @@ export default class ProfileModel {
       const status = await checkStatus(res);
       const data = await parseJSON(status);
       console.log('profile auth ok');
-      console.log(data);
       User.set(data);
       User.isAuth = true;
       this.eventBus.trigger('users_rx', { data: User, err: {} });
@@ -55,7 +54,6 @@ export default class ProfileModel {
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
       const password = form.elements.password.value;
-      const passwordRepeat = password; // упростим жизнь пользователю
       const [imageInput] = document.getElementsByClassName('profile-form__image-input');
       const [image] = imageInput.files;
 
@@ -63,7 +61,6 @@ export default class ProfileModel {
         nickname,
         email,
         password,
-        passwordRepeat,
       })) {
         alert('Попытка XSS атаки!');
         this.processForm();
@@ -85,15 +82,12 @@ export default class ProfileModel {
 
 
       let checkPassword = true;
-      if (password.length > 0) {
-        checkPassword = isCorrectPassword(password, passwordRepeat);
+      if (password) {
+        checkPassword = isCorrectPassword(password, password);
         if (!checkPassword.status) {
           form.elements.password.classList.add('input-area__input_wrong');
           form.elements.password.value = '';
           form.elements.password.placeholder = checkPassword.err;
-          form.elements.passwordRepeat.classList.add('input-area__input_wrong');
-          form.elements.passwordRepeat.value = '';
-          form.elements.passwordRepeat.placeholder = checkPassword.err;
         }
       }
 

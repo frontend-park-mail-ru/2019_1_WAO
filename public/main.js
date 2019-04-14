@@ -39,10 +39,30 @@ function registerSW() {
 }
 
 /**
+ * Пописака на события глобальной шины
+ */
+function subscribeGlobalBus() {
+  GlobalBus.on('auth_bad', () => {
+    Router.route('/signin');
+  });
+
+  GlobalBus.on('auth_out', () => {
+    delAuth()
+      .then(checkStatus)
+      .then(() => {
+        Router.route('/signin');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+}
+
+/**
  * Точка входа
  */
 function start() {
-  // registerSW();
+  registerSW();
   console.log('Start');
 
   const application = document.getElementById('application');
@@ -65,23 +85,3 @@ function start() {
  * На самом деле это точка входа
  */
 document.addEventListener('DOMContentLoaded', start());
-
-/**
- * Пописака на события глобальной шины
- */
-function subscribeGlobalBus() {
-  GlobalBus.on('auth_bad', () => {
-    Router.route('/signin');
-  });
-
-  GlobalBus.on('auth_out', () => {
-    delAuth()
-      .then(checkStatus)
-      .then(() => {
-        Router.route('/signin');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-}

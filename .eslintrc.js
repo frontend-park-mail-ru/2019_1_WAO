@@ -19,5 +19,6 @@ module.exports = {
         "no-restricted-syntax": ["error", "WithStatement"],
         "no-param-reassign": 0,
         "linebreak-style": 0,
+        "no-alert": 0,
     }
 }

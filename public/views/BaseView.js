@@ -9,12 +9,12 @@ export default class BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    * @param {String} template Шаблон страницы
    */
-  constructor(el, eventBus, template, components = [], vievData = {}) {
+  constructor(el, eventBus, template, components = [], viewData = {}) {
     this.el = el || document.createElement('div');
     this.eventBus = eventBus;
     this.template = template;
     this.components = components;
-    this.vievData = vievData;
+    this.viewData = viewData;
     this.rendered = false;
     this.savedTmpl = '';
     this.hide();
@@ -34,13 +34,15 @@ export default class BaseView {
    */
   render(root, data = {}) {
     this.el = root;
+    const temp = Object.assign(this.viewData, data);
     // this.el.innerHTML = '';
-    this.savedTmpl = '';
-    const temp = Object.assign(this.vievData, data);
     // this.el.innerHTML += this.template(temp);
     // this.components.forEach(component => this.el.innerHTML += component.getTemplate(data));
+    this.savedTmpl = '';
     this.savedTmpl += this.template(temp);
-    this.components.forEach(component => this.savedTmpl += component.getTemplate(data));
+    this.components.forEach((component) => {
+      this.savedTmpl += component.getTemplate(data);
+    });
     this.el.innerHTML = Object.assign(this.savedTmpl);
     this.rendered = true;
   }
@@ -49,11 +51,12 @@ export default class BaseView {
    * Показать вьюху
    */
   show() {
-    this.render(this.el);
-    // if (!this.rendered) {
-    //  this.render(this.el);
-    // }
-    this.el.style.display = null;
+    if (!this.rendered) {
+      this.render(this.el);
+    } else {
+      this.el.innerHTML = Object.assign(this.savedTmpl);
+    }
+    // this.el.style.display = null;
     this.eventBus.trigger('view_show');
   }
 
@@ -61,7 +64,8 @@ export default class BaseView {
    * Убрать вьюху
    */
   hide() {
-    this.el.style.setProperty('display', 'none', 'important');
+    // this.el.style.setProperty('display', 'none', 'important');
+    this.el.innerHTML = '';
     this.eventBus.trigger('view_hide');
   }
 

@@ -3,6 +3,7 @@ import ScoreBoardModel from '../models/ScoreBoardModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
+import Router from '../modules/router';
 
 /**
  * ScoreBoardPresenter view

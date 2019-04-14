@@ -18,7 +18,7 @@ export function isCorrectNickname(nickname = '') {
  * @param {String} email
  * @param {Array<String>} errList
  */
-export function isCorrectEmail(email = '', errList = ['']) {
+export function isCorrectEmail(email = '') {
   if (
     !email.match(
       /^([a-z0-9_\\-]+\.)*[a-z0-9_\\-]+@([a-z0-9][a-z0-9\\-]*[a-z0-9]\.)+[a-z]{2,4}$/i,
@@ -35,7 +35,7 @@ export function isCorrectEmail(email = '', errList = ['']) {
  * @param {String} password2 И его повторение
  * @param {Array<String>} errList
  */
-export function isCorrectPassword(password1 = '', password2 = '', errList = ['']) {
+export function isCorrectPassword(password1 = '', password2 = '') {
   if (password1 !== password2) {
     return { status: false, err: 'Пароли не совпадают' };
   }
