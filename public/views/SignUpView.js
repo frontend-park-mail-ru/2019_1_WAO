@@ -1,5 +1,5 @@
 import BaseView from './BaseView';
-import template from '../components/signup/signup.handlebars';
+import template from '../components/signup/signup.hbs';
 
 const viewData = {
   fields:

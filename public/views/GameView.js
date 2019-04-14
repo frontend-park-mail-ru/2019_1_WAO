@@ -1,4 +1,4 @@
-import template from '../components/game/game.handlebars';
+import template from '../components/game/game.hbs';
 
 /**
  * GameView view

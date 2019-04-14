@@ -1,5 +1,5 @@
 import BaseView from './BaseView';
-import template from '../components/menu/menu.handlebars';
+import template from '../components/menu/menu.hbs';
 
 const viewData = {
   menuButtons: [

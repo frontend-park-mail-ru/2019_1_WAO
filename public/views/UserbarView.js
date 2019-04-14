@@ -1,5 +1,5 @@
 import BaseView from './BaseView';
-import template from '../components/userbar/userbar.handlebars';
+import template from '../components/userbar/userbar.hbs';
 
 /**
  * UserbarView view

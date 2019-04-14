@@ -1,5 +1,5 @@
 import BaseView from './BaseView';
-import template from '../components/profile/profile.handlebars';
+import template from '../components/profile/profile.hbs';
 
 const viewData = {
   button: {

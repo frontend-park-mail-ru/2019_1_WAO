@@ -1,9 +1,9 @@
 <form class="signup-form">
-    {{> ../title/title.handlebars title}}
+    {{> ../title/title.hbs title}}
     {{#each fields}}
-        {{> ../input/input.handlebars this}}
+        {{> ../input/input.hbs this}}
     {{/each}}
-    {{> ../form-button/form-button.handlebars button}}
+    {{> ../form-button/form-button.hbs button}}
     <a class="signup-form__advance" data-href="#">Или войдите с помощью других сервисов</a>
     <input class="signup-form__button-vk" type="button" value="VK">
     <a class="signin-form__signin-btn" data-href="/signin">Обратно</a>
