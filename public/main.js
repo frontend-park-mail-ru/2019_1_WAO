@@ -9,6 +9,7 @@ import SignInPresenter from './presenters/SigninPresenter';
 import SignUpPresenter from './presenters/SignupPresenter';
 import AboutPresenter from './presenters/AboutPresenter';
 import StorePresenter from './presenters/StorePresenter';
+import GamePresenter from './presenters/GamePresenter';
 
 import './img/user.png';
 import './img/door.svg';
@@ -26,6 +27,7 @@ import './components/signup/signup.css';
 import './components/scoreboard/scoreboard.css';
 import './components/about/about.css';
 import './components/store/store.css';
+import './components/game/game.css';
 
 /**
  * Регистрация Service Worker
@@ -74,6 +76,7 @@ function start() {
   Router.add('/signup',   new SignUpPresenter());
   Router.add('/about',    new AboutPresenter());
   Router.add('/store',    new StorePresenter());
+  Router.add('/gameoffline', new GamePresenter());
 
   subscribeGlobalBus();
 

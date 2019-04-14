@@ -9,7 +9,7 @@ const vievData = {
     },
     {
       text: 'Синглплеер',
-      href: '/',
+      href: '/gameoffline',
     },
     {
       text: 'Магазин',

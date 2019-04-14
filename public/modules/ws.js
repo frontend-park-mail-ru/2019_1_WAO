@@ -1,3 +1,4 @@
+/*
 define('Ws', function (require) {
 	const bus = require('bus');
 
@@ -43,3 +44,4 @@ define('Ws', function (require) {
 
 	return Ws;
 });
+*/

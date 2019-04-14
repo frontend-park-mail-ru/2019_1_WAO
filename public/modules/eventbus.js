@@ -25,6 +25,15 @@ export const EVENTS = [
   'url_change',
 ];
 
+const GAME_EVENTS = [
+  'game_start',
+  'game_finish',
+  'controls_pressed',
+  'state_changed',
+  'left_pressed',
+  'right_pressed',
+];
+
 /**
  * Модуль шины событий
  * @class EventBus
@@ -80,4 +89,5 @@ class EventBus {
 }
 
 const GlobalBus = new EventBus(EVENTS);
-export { EventBus, GlobalBus };
+const gameBus = new EventBus(GAME_EVENTS);
+export { EventBus, GlobalBus, gameBus };
