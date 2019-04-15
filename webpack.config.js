@@ -14,7 +14,6 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
-      /*
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
@@ -26,7 +25,6 @@ module.exports = {
           },
         },
       },
-      */
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
@@ -60,7 +58,7 @@ module.exports = {
       },
       */
       {
-        test: /\.handlebars$/,
+        test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
     ],

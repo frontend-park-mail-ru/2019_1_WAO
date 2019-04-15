@@ -1,58 +1,58 @@
 .userbar {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    
-    background-color: rgba(216, 216, 216, 0.5);
-    border-color: rgba(216, 216, 216, 0);
-    border-radius: 20px;
-    text-align: center;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: 
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+
+  background-color: rgba(216, 216, 216, 0.5);
+  border-color: rgba(216, 216, 216, 0);
+  border-radius: 20px;
+  text-align: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
     "userbar__image userbar__nickname userbar__menu"
     "userbar__image userbar__score userbar__door";
-    grid-gap: 3px;
-    justify-items: center;
-    align-items: center;
-    user-select: none;
-    width: 400px;
-    height: 120px;
+  grid-gap: 3px;
+  justify-items: center;
+  align-items: center;
+  user-select: none;
+  width: 400px;
+  height: 120px;
 }
 
 .userbar__image {
-    grid-area: userbar__image;
-    border: solid;
-    border-color: #979797;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
+  grid-area: userbar__image;
+  border: solid;
+  border-color: #979797;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
 }
 
 .userbar__nickname {
-    grid-area: userbar__nickname;
-    color: white;
-    font-size: 24px;
+  grid-area: userbar__nickname;
+  color: white;
+  font-size: 24px;
 }
 
 .userbar__score {
-    grid-area: userbar__score;
-    color: white;
-    font-size: 20px;
+  grid-area: userbar__score;
+  color: white;
+  font-size: 20px;
 }
 
 .userbar__door {
-    grid-area: userbar__door;
-    color: white;
-    font-size: 20px;
-    height: 60%;
+  grid-area: userbar__door;
+  color: white;
+  font-size: 20px;
+  height: 60%;
 }
 
 .userbar__menu {
-    grid-area: userbar__menu;
-    color: white;
-    font-size: 20px;
-    height: 60%;
+  grid-area: userbar__menu;
+  color: white;
+  font-size: 20px;
+  height: 60%;
 }

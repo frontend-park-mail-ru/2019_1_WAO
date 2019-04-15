@@ -1,16 +1,16 @@
 <div class="about">
-        {{> ../title/title.hbs title1}}
-        <div class="about__description">
-            Это игра. В неё надо играть. Можно по сети, можно оффлайн. Можете отредактировать свой профиль, если хотите
-        </div>
-        {{> ../title/title.hbs title2}}        
-        <div class="about__dev-team">            
-            {{#each developers}}
-                <div class="about__dev-team__member">
-                    <a data-href="#" class="about__dev-team__member__role">{{ this.role }}</a>
-                    <img class="about__dev-team__member__image" src={{ this.image }}>
-                    <a data-href="#" class="about__dev-team__member__name">{{ this.name }}</a>
-                </div>
-            {{/each}}
-        </div>
+  {{> ../title/title.hbs title1}}
+  <div class="about__description">
+    Это игра. В неё надо играть. Можно по сети, можно оффлайн. Можете отредактировать свой профиль, если хотите
+  </div>
+  {{> ../title/title.hbs title2}}
+  <div class="dev-team">
+    {{#each developers}}
+    <div class="developer">
+      <a data-href="#" class="developer__role">{{ this.role }}</a>
+      <img class="developer__image" src={{ this.image }}>
+      <a data-href="#" class="developer__name">{{ this.name }}</a>
     </div>
+    {{/each}}
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import template from '../components/game/game.hbs';
+import '../components/game/game.css';
 
 /**
  * GameView view

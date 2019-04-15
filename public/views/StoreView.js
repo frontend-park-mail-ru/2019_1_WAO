@@ -1,5 +1,6 @@
 import BaseView from './BaseView';
 import template from '../components/store/store.hbs';
+import '../components/store/store.css';
 
 const viewData = {
   title: {

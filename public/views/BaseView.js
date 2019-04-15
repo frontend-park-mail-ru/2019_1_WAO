@@ -1,3 +1,9 @@
+import '../components/common/common.css';
+import '../components/form-button/form-button.css';
+import '../components/input/input.css';
+import '../components/paginator/paginator.css';
+import '../components/title/title.css';
+
 /**
  * Базовый клас View
  * @class BaseView

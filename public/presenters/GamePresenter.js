@@ -24,10 +24,9 @@ export default class GamePresenter {
   call() {
     // this.eventBus.trigger('call');
     this.view.render();
-    let [canvas] = document.getElementsByClassName('game-view__canvas');
+    const [canvas] = document.getElementsByClassName('game-view__canvas');
     this.view.canvas = canvas;
-    // this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas);
-    this.game = new Game('OFFLINE', this.view.canvas);
+    this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas);
     this.game.start();
   }
 }

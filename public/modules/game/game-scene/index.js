@@ -152,7 +152,8 @@ export default class GameScene {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  vector_mult(ax, ay, bx, by) { // camelCase, Димас !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  vector_mult(ax, ay, bx, by) {
+    // camelCase, Димас !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return ax * by - bx * ay;
   }
 
@@ -160,34 +161,35 @@ export default class GameScene {
     for (const plateIndex in this.field) {
       if (Object.prototype.hasOwnProperty.call(this.field, plateIndex)) {
         const nextPlayerPosition = {};
-        for (const key in this.me) { // остальные for in так же делай
+        for (const key in this.me) {
+          // остальные for in так же делай
           if (Object.prototype.hasOwnProperty.call(this.me, key)) {
             nextPlayerPosition[key] = this.me[key];
           }
         }
         nextPlayerPosition.y += this.me.dy + this.field[plateIndex].height;
-  
+
         const Player = {};
         for (const key in this.me) {
           Player[key] = this.me[key];
         }
         Player.y += this.field[plateIndex].height;
-  
+
         const plate1 = {};
         for (const key in this.field[plateIndex]) {
           plate1[key] = this.field[plateIndex][key];
         }
         plate1.x -= this.me.body.width;
-  
+
         const plate2 = {};
         for (const key in this.field[plateIndex]) {
           plate2[key] = this.field[plateIndex][key];
         }
         plate2.x += this.field[plateIndex].width;
-  
+
         if (this.collis(Player, nextPlayerPosition, plate1, plate2)) {
           this.me.collision = true;
-        }        
+        }
       }
     }
   }
@@ -218,22 +220,25 @@ export default class GameScene {
     const delay = now - this.lastFrameTime;
     // отрисовка движений влево -вправо
     // if (this.me.moveLeft) {
-    // 	this.me.x -= 3;
+    //  this.me.x -= 3;
     // }
     // Логика прыжка
     /*
-		if(this.me.jumpPressed){
-			this.me.jumpCount++;
-			this.me.jumpHeight = -4*this.me.jumpLength*Math.sin(Math.PI*this.me.jumpCount/this.me.jumpLength);
-		}
-		if(this.me.jumpCount > this.me.jumpLength){
-			this.me.jumpCount = 0;
-			this.me.jumpPressed = false;
-			this.me.jumpHeight = 0;
-		}
-		if (this.me.jumpPressed === false) this.me.jumpPressed = true;
-		this.me.y = this.me.jumpHeight + 600;
-		*/
+    if (this.me.jumpPressed) {
+      this.me.jumpCount++;
+      this.me.jumpHeight =
+        -4 *
+        this.me.jumpLength *
+        Math.sin((Math.PI * this.me.jumpCount) / this.me.jumpLength);
+    }
+    if (this.me.jumpCount > this.me.jumpLength) {
+      this.me.jumpCount = 0;
+      this.me.jumpPressed = false;
+      this.me.jumpHeight = 0;
+    }
+    if (this.me.jumpPressed === false) this.me.jumpPressed = true;
+    this.me.y = this.me.jumpHeight + 600;
+    */
     // ------- //
     this.engine(delay);
     this.lastFrameTime = now;

@@ -1,15 +1,15 @@
 body {
-	font-family: Helvetica, Arial, san-serif;
-	font-size: 28px;
-	background-image: url("../../img/background1.jpg");
-	background-size: 100% 100%;
-	outline: none;
+  font-family: Helvetica, Arial, san-serif;
+  font-size: 28px;
+  background-image: url("../../img/background1.jpg");
+  background-size: 100% 100%;
+  outline: none;
 }
 
 input {
-	outline: none;
+  outline: none;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }

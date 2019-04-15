@@ -1,5 +1,6 @@
 import BaseView from './BaseView';
 import template from '../components/signin/signin.hbs';
+import '../components/signin/signin.css';
 
 const viewData = {
   fields:

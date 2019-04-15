@@ -1,5 +1,6 @@
 import BaseView from './BaseView';
 import template from '../components/signup/signup.hbs';
+import '../components/signup/signup.css';
 
 const viewData = {
   fields:

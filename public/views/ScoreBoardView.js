@@ -1,5 +1,6 @@
 import BaseView from './BaseView';
 import template from '../components/scoreboard/scoreboard.hbs';
+import '../components/scoreboard/scoreboard.css';
 
 const viewData = {
   title: {

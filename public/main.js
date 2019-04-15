@@ -14,20 +14,6 @@ import GamePresenter from './presenters/GamePresenter';
 import './img/user.png';
 import './img/door.svg';
 import './img/menu.png';
-import './components/common/common.css';
-import './components/input/input.css';
-import './components/title/title.css';
-import './components/form-button/form-button.css';
-import './components/menu/menu.css';
-import './components/menu/__button/__button.css';
-import './components/signin/signin.css';
-import './components/userbar/userbar.css';
-import './components/profile/profile.css';
-import './components/signup/signup.css';
-import './components/scoreboard/scoreboard.css';
-import './components/about/about.css';
-import './components/store/store.css';
-import './components/game/game.css';
 
 /**
  * Регистрация Service Worker

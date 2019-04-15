@@ -36,7 +36,7 @@ export default class ScoreBoardModel {
   }
 
   waitAction() {
-    const [buttonForw] = document.getElementsByClassName('scoreboard__paginator__next');
+    const [buttonForw] = document.getElementsByClassName('paginator__next');
     buttonForw.addEventListener('click', (event) => {
       event.preventDefault();
       console.log('PAGE FORW');
@@ -48,7 +48,7 @@ export default class ScoreBoardModel {
       }
     });
 
-    const [buttonBack] = document.getElementsByClassName('scoreboard__paginator__prev');
+    const [buttonBack] = document.getElementsByClassName('paginator__prev');
     buttonBack.addEventListener('click', (event) => {
       event.preventDefault();
       console.log('PAGE BACK');
