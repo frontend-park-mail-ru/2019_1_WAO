@@ -1,0 +1,13 @@
+<div class="store">
+  {{> ../title/title.hbs title}}
+  <div class="store-list">
+    {{#each products}}
+    <div class="product-row">
+      <image class="product-row_image" src={{ this.image }}></image>
+      <a class="product-row_name" data-href='#'>{{ this.name }}</a>
+      <a class="product-row_cost" data-href='#'>{{ this.cost }}</a>
+      <input class="product-row_btn" type="button" value="Купить">
+    </div>
+    {{/each}}
+  </div>
+</div>

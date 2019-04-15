@@ -1,0 +1,49 @@
+.about {
+  width: 800px;
+  margin-top: 5%;
+  padding: 20px 10px 20px 10px;
+
+  opacity: 0.6;
+  border-radius: 8px;
+  border: solid 1px #979797;
+  background-color: #d8d8d8;
+
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 20px;
+}
+
+.about__description {
+  font-size: 24px;
+}
+
+.dev-team {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.developer {
+  display: grid;
+  grid-template-rows: auto;
+  justify-content: center;
+  grid-gap: 20px;
+}
+
+.developer__role {
+  font-size: 20px;
+}
+
+.developer__image {
+  width: 100px;
+  height: 100px;
+  border: solid;
+  border-color: #979797;
+  border-radius: 50%;
+}
+
+.developer__name {
+  font-size: 20px;
+}

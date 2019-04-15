@@ -1,11 +1,9 @@
 import User from '../modules/user';
 import {
-  getAuth, postSignIn, checkStatus, parseJSON,
+  postSignIn, checkStatus, parseJSON,
 } from '../modules/api';
-import checkXSS from '../utils/safe';
-import { checkValidationNP } from '../utils/validation';
-import { resolve } from 'url';
-import { rejects } from 'assert';
+import checkXSS from '../modules/safe';
+import { isCorrectNickname, isCorrectPassword } from '../modules/validation';
 
 /**
  * Модель Входа в приложение
@@ -13,7 +11,8 @@ import { rejects } from 'assert';
 export default class SignInModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('render');
       this.checkAuth();
     });
   }
@@ -23,19 +22,13 @@ export default class SignInModel {
    * Если пользователь не авторизован, то просит ввести логин и пароль
    */
   checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('check auth ok');
-        console.log(data);
-        User.set(data);
-        console.log(User);
-      })
-      .catch(() => {
-        console.log('check auth bad');
-        this.processForm();
-      });
+    console.log('SignInModel User.AUTH: ', User.isAuth);
+    if (User.isAuth) {
+      this.eventBus.trigger('auth ok');
+    } else {
+      console.log('check auth bad');
+      this.processForm();
+    }
   }
 
   /**
@@ -57,12 +50,24 @@ export default class SignInModel {
         this.processForm();
       }
 
-      const checkValidation = checkValidationNP(nickname, password);
-      if (!checkValidation.status) {
-        this.eventBus.trigger('valid_err', checkValidation.err);
-        this.processForm();
-      } else {
+      const checkNickname = isCorrectNickname(nickname);
+      if (!checkNickname.status) {
+        form.elements.nickname.classList.add('input-area__input_wrong');
+        form.elements.nickname.value = '';
+        form.elements.nickname.placeholder = checkNickname.err;
+      }
+
+      const checkPassword = isCorrectPassword(password, password);
+      if (!checkPassword.status) {
+        form.elements.password.classList.add('input-area__input_wrong');
+        form.elements.password.value = '';
+        form.elements.password.placeholder = checkPassword.err;
+      }
+
+      if (checkNickname.status && checkPassword.status) {
         this.makeSignin(body);
+      } else {
+        this.processForm();
       }
     });
   }
@@ -70,18 +75,22 @@ export default class SignInModel {
   /**
    * Делает POST-запрос на вход
    */
-  makeSignin(body = {}) {
-    postSignIn(body)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log(data);
-        this.eventBus.trigger('signin_ok');
-      })
-      .catch(() => {
-        this.eventBus.trigger('signin_bad', ['Неправильный логин или пароль']);
-        this.processForm();
-      });
+  async makeSignin(body = {}) {
+    try {
+      const res = await postSignIn(body);
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      User.set(data);
+      User.isAuth = true;
+      console.log(User);
+      this.eventBus.trigger('signin_ok');
+    } catch (err) {
+      const form = document.querySelector('form');
+      form.elements.nickname.value = '';
+      form.elements.password.value = '';
+      form.elements.nickname.placeholder = 'НЕВЕРНО';
+      form.elements.password.placeholder = 'НЕВЕРНО';
+      this.processForm();
+    }
   }
 }
-

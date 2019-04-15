@@ -1,5 +1,12 @@
 import BaseView from './BaseView';
-import template from '../components/scoreboard/ScoreBoard.tmpl.xml';
+import template from '../components/scoreboard/scoreboard.hbs';
+import '../components/scoreboard/scoreboard.css';
+
+const viewData = {
+  title: {
+    text: 'Таблица лидеров',
+  },
+};
 
 /**
  * ScoreBoardView view
@@ -12,6 +19,12 @@ export default class ScoreBoardView extends BaseView {
    * @param {EventBus} eventBus Локальная шина событий
    */
   constructor(el, eventBus, components = []) {
-    super(el, eventBus, template, components);
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
   }
 }

@@ -1,5 +1,4 @@
-import { getAuth, checkStatus, parseJSON } from '../modules/api';
-import { GlobalBus } from '../modules/eventbus';
+import User from '../modules/user';
 
 /**
  * Модель Меню
@@ -11,25 +10,9 @@ export default class MenuModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
-      MenuModel.checkAuth();
+    this.eventBus.on('call', () => {
+      console.log('menu start render');
+      this.eventBus.trigger('render', User);
     });
-  }
-
-  /**
-   * Проверка авторизации
-   */
-  static checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('menu auth ok');
-        console.log(data);
-      })
-      .catch(() => {
-        console.log('menu auth bad');
-        GlobalBus.trigger('auth_bad');
-      });
   }
 }

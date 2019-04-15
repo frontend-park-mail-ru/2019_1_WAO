@@ -1,7 +1,10 @@
 /**
  * Список событий
  */
+
 export const EVENTS = [
+  'call',
+  'render',
   'auth_check',
   'auth_ok',
   'auth_bad',
@@ -20,6 +23,15 @@ export const EVENTS = [
   'valid_err',
   'reset',
   'url_change',
+];
+
+const GAME_EVENTS = [
+  'game_start',
+  'game_finish',
+  'controls_pressed',
+  'state_changed',
+  'left_pressed',
+  'right_pressed',
 ];
 
 /**
@@ -65,16 +77,17 @@ class EventBus {
      * @param {string} event Имя события
      * @param {Array} params Параметры, передаваемые в колбэк
      * */
-  trigger(event, ...pagams) {
+  trigger(event, ...params) {
     if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
       throw new Error(event);
     }
 
     this.events[event].forEach((callback) => {
-      callback(...pagams);
+      callback(...params);
     });
   }
 }
 
 const GlobalBus = new EventBus(EVENTS);
-export { EventBus, GlobalBus };
+const gameBus = new EventBus(GAME_EVENTS);
+export { EventBus, GlobalBus, gameBus };

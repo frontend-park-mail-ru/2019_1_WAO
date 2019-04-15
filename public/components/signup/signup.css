@@ -1,91 +1,110 @@
-.registration_container {
-  font-family: Helvetica, Arial, san-serif;
-  margin: 8px 0px 0px 420px;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
+.signup-form {
+  margin: 5% auto;
   width: 420px;
-  height: auto;
+  opacity: 0.6;
+  border-radius: 8px;
+  border: solid 1px #979797;
+  background-color: #d8d8d8;
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  user-select: none;
 }
 
-.registration_container .registration_title {
-  font-weight: bold;
-  font-size: 32px;
-  padding: 16px 0px 12px 20px;
-  border-bottom: 1px solid #e5e5e5;
+.signup-form__input-area {
+  display: grid;
+  grid-template-rows: auto;
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  user-select: none;
 }
 
-.registration_container .registration_body {
-  padding: 16px 16px 24px 16px;
+.signup-form__label {
+  text-align: left;
+  color: #0f8bec;
+  font-size: 27px;
 }
 
-.registration_container .registration_body form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+.signup-form__input {
+  padding-left: 15px;
+  width: 360px;
+  height: 45px;
+  opacity: 0.98;
+  border-radius: 8px;
+  border: solid 1px #267ea5;
+  background-color: #d8d8d8;
+  font-size: 60%;
 }
 
-.registration_container .registration_body form .registration_inscription_name {
-  font-size: 15px;
-  color: #9d9d9d;
+.signup-form__button:active {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
 }
 
-.registration_container .registration_body form .registration_input_name, .registration_container .registration_body form .registration_input_lastname, .registration_container .registration_body form .registration_input_email, .registration_container .registration_body form .registration_input_password, .registration_container .registration_body form .registration_input_repassword {
-  margin: 8px 0px 4px 0px;
-  padding: 4px 0px 0px 12px;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
+.signup-form__button {
+  margin-left: auto;
+  margin-right: auto;
+  width: 360px;
+  height: 45px;
+  border-radius: 8px;
+  border: solid 1px #979797;
+  background-color: #d9dd63;
+  opacity: 1;
+}
+
+.signup-form__button:hover {
+  background-color: #d5db25;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+}
+
+.signup-form__button:not(hover) {
+  transition: 0.6s;
+}
+
+.signup-form__button:active {
+  color: #FFFFFF;
+  background-color: rgb(255, 255, 0);
+}
+
+.signup-form__advance {
+  display: none !important;
+  width: 380px;
+  height: 21px;
+  font-size: 18px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.signup-form__button-vk {
+  display: none !important;
+  margin-left: auto;
+  margin-right: auto;
+  width: 36px;
   height: 36px;
-  font-weight: 500;
-  font-size: 16px;
+  border-radius: 2px;
+  border: solid 1px #979797;
+  background-color: #5b88bd;
+  color: #ffffff;
+  opacity: 1;
 }
 
-.registration_container .registration_body form .registration_input_footer_divblock {
-  margin: 32px 0px 8px 0px;
+.signin-form__signin-btn {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  border: solid;
+  border-width: 1px;
+  border-radius: 8px;
+  color: #0f8bec;
+  font-size: 24px;
+  margin: 10px 0px 30px 0px;
 }
 
-.registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_registration, .registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_menu {
-  margin-right: 8px;
-  font-weight: 700;
-  color: white;
-  text-decoration: none;
-  padding: 0.8em 1em calc(.8em + 3px);
-  border-radius: 3px;
-  background: #40c781;
-  -webkit-box-shadow: 0 -3px #35a76e inset;
-          box-shadow: 0 -3px #35a76e inset;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+.signin-form__signin-btn:hover {
+  box-shadow: 0 0 5px #0f8bec;
 }
-
-.registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_registration:hover, .registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_menu:hover {
-  background: #35a76e;
-}
-
-.registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_registration:active, .registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_menu:active {
-  background: #21935a;
-  -webkit-box-shadow: 0 3px #21935a inset;
-          box-shadow: 0 3px #21935a inset;
-}
-
-.registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_menu {
-  margin-right: 0px;
-  padding-right: 100px;
-  background: #1d65c2;
-  -webkit-box-shadow: 0 -3px #1b17d8 inset;
-          box-shadow: 0 -3px #1b17d8 inset;
-}
-
-.registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_menu:hover {
-  background: #1b17d8;
-}
-
-.registration_container .registration_body form .registration_input_footer_divblock .registration_input_footer_divblock_menu:active {
-  background: #5d5bdd;
-  -webkit-box-shadow: 0 3px #5d5bdd inset;
-          box-shadow: 0 3px #5d5bdd inset;
-}
-/*# sourceMappingURL=registration.css.map */

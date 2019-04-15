@@ -1,5 +1,30 @@
 import BaseView from './BaseView';
-import template from '../components/signin/signin.tmpl.xml';
+import template from '../components/signin/signin.hbs';
+import '../components/signin/signin.css';
+
+const viewData = {
+  fields:
+    [
+      {
+        label: 'Логин',
+        type: 'text',
+        name: 'nickname',
+        placeholder: 'Логин',
+      },
+      {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        placeholder: 'Пароль',
+      },
+    ],
+  button: {
+    value: 'Войти',
+  },
+  title: {
+    text: 'Войти',
+  },
+};
 
 /**
  * Signin view
@@ -11,8 +36,14 @@ export default class SignInView extends BaseView {
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
    */
-  constructor(el, eventBus) {
-    super(el, eventBus, template);
+  constructor(el, eventBus, components = []) {
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
 
     this.eventBus.on('valid_err', (data) => {
       this.render(this.el, data);

@@ -1,0 +1,20 @@
+<div class="scoreboard">
+  {{> ../title/title.hbs title}}
+  <div class="scoreboard__table">
+    <div class="scoreboard__row scoreboard__head">
+      <a data-href='#'>№</a>
+      <a data-href='#'>Игрок</a>
+      <a data-href='#'>Счёт</a>
+      <a data-href='#'>Победы</a>
+    </div>
+    {{#each users}}
+    <div class="scoreboard__row">
+      <a data-href='#'>N</a>
+      <a data-href='/profile'>{{ this.nickname }}</a>
+      <a data-href='#'>{{ this.score }}</a>
+      <a data-href='#'>{{ this.wins }}/{{ this.games }}</a>
+    </div>
+    {{/each}}
+  </div>
+  {{> ../paginator/paginator.hbs}}
+</div>

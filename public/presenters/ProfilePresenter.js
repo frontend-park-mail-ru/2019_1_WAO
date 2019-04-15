@@ -1,13 +1,14 @@
 import ProfileView from '../views/ProfileView';
 import ProfileModel from '../models/ProfileModel';
 import { EventBus } from '../modules/eventbus';
-import NavbarPresenter from '../presenters/NavbarPresenter';
+import BasePresenter from './BasePresenter';
+import UserbarPresenter from './UserbarPresenter';
 
 /**
  * ProfilePresenter view
  * @class ProfilePresenter
  */
-export default class ProfilePresenter {
+export default class ProfilePresenter extends BasePresenter {
   /**
    * Конструктор
    * Создает Модель и Представление элемента
@@ -17,9 +18,12 @@ export default class ProfilePresenter {
     const application = document.getElementById('application');
     const eventBus = new EventBus();
 
-    const navbar = new NavbarPresenter(eventBus);
-    this.view = new ProfileView(application, eventBus, [navbar.view]);
-    this.model = new ProfileModel(eventBus);
+    const userbar = new UserbarPresenter(eventBus);
+
+    const view = new ProfileView(application, eventBus, [userbar.view]);
+    const model = new ProfileModel(eventBus);
+
+    super(view, model, eventBus);
 
     eventBus.on('users_rx', (data) => {
       console.log('users_rx');

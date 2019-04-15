@@ -1,0 +1,11 @@
+.paginator {
+  font-size: 30px;
+}
+
+.paginator__prev {
+  margin-right: 10px;
+}
+
+.paginator__next {
+  margin-left: 10px;
+}

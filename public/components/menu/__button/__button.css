@@ -1,0 +1,27 @@
+.menu-bar__button {
+  border-style: solid;
+  border-color: #90a5a5;
+  border-width: 2px;
+  border-radius: 30px;
+  background-color: rgba(216, 216, 216, 0.5);
+  width: 300px;
+  padding: 15px;
+  color: #0f8bec;
+  font-size: 24px;
+}
+
+.menu-bar__button:hover {
+  background-color: rgba(216, 216, 216, 0.9);
+  border-color: rgb(47, 155, 238);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+}
+
+.menu-bar__button:not(hover) {
+  transition: 0.6s;
+}
+
+.menu-bar__button:active {
+  color: #ffffff;
+  background-color: #0f8bec;
+}

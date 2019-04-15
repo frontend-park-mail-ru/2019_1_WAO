@@ -2,8 +2,8 @@ import {
   getAuth, putProfile, checkStatus, parseJSON,
 } from '../modules/api';
 import User from '../modules/user';
-import checkXSS from '../utils/safe';
-import { checkValidationNEP } from '../utils/validation';
+import checkXSS from '../modules/safe';
+import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
 import { GlobalBus } from '../modules/eventbus';
 
 /**
@@ -17,7 +17,8 @@ export default class ProfileModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('view_show', () => {
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('render');
       this.checkAuth();
     });
   }
@@ -25,21 +26,21 @@ export default class ProfileModel {
   /**
    * Проверка авторизации
    */
-  checkAuth() {
-    getAuth()
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        console.log('profile auth ok');
-        console.log(data);
-        User.set(data);
-        this.eventBus.trigger('users_rx', {data: data, err: {}});
-        this.processForm();
-      })
-      .catch(() => {
-        console.log('profile auth bad');
-        GlobalBus.trigger('auth_bad');
-      });
+  async checkAuth() {
+    try {
+      const res = await getAuth();
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      console.log('profile auth ok');
+      User.set(data);
+      User.isAuth = true;
+      this.eventBus.trigger('users_rx', { data: User, err: {} });
+      this.processForm();
+    } catch (err) {
+      console.log('profile auth bad');
+      console.log(err);
+      GlobalBus.trigger('auth_bad');
+    }
   }
 
   /**
@@ -48,34 +49,49 @@ export default class ProfileModel {
    */
   processForm() {
     const form = document.querySelector('form');
-    const [button] = document.getElementsByClassName('profile_change_button');
-    button.addEventListener('click', (event) => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       const nickname = form.elements.nickname.value;
       const email = form.elements.email.value;
       const password = form.elements.password.value;
-      const passwordRepeat = password; // упростим жизнь пользователю
-      const [imageInput] = document.getElementsByClassName('profile_input-img');
+      const [imageInput] = document.getElementsByClassName('profile-form__image-input');
       const [image] = imageInput.files;
 
       if (!checkXSS({
         nickname,
         email,
         password,
-        passwordRepeat,
       })) {
         alert('Попытка XSS атаки!');
         this.processForm();
       }
 
-      const checkValidation = checkValidationNEP(nickname, email, password, passwordRepeat);
-      if (!checkValidation.status) {
-        console.log(checkValidation.err);
-        // this.eventBus.trigger('valid_err', User, checkValidation.err);
-        this.eventBus.trigger('valid_err', {data: User, err: checkValidation.err});
-        this.processForm();
-      } else {
-        // const formData = new FormData(form);
+      const checkNickname = isCorrectNickname(nickname);
+      if (!checkNickname.status) {
+        form.elements.nickname.classList.add('input-area__input_wrong');
+        form.elements.nickname.value = '';
+        form.elements.nickname.placeholder = checkNickname.err;
+      }
+
+      const checkEmail = isCorrectEmail(email);
+      if (!checkEmail.status) {
+        form.elements.email.classList.add('input-area__input_wrong');
+        form.elements.email.value = '';
+        form.elements.email.placeholder = checkEmail.err;
+      }
+
+
+      let checkPassword = {};
+      if (password) {
+        checkPassword = isCorrectPassword(password, password);
+        if (!checkPassword.status) {
+          form.elements.password.classList.add('input-area__input_wrong');
+          form.elements.password.value = '';
+          form.elements.password.placeholder = checkPassword.err;
+        }
+      }
+
+      if (checkNickname.status && checkEmail.status && (!password || checkPassword.status)) {
         const formData = new FormData();
         formData.append('nickname', nickname);
         formData.append('email', email);
@@ -85,7 +101,9 @@ export default class ProfileModel {
         if (image) {
           formData.append('image', image);
         }
-        this.makeUpdate(nickname, formData);
+        this.makeUpdate(User.nickname, formData);
+      } else {
+        this.processForm();
       }
     });
   }
@@ -93,21 +111,25 @@ export default class ProfileModel {
   /**
    * Делает POST-запрос с параметрами: ник, почта, пароль, картинка
    */
-  makeUpdate(nickname, formData) {
-    putProfile(nickname, formData)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then((data) => {
-        User.set(data);
-        console.log(data);
-        console.log('update ok');
-        this.eventBus.trigger('update_ok', {data: data, err: {}});
-      })
-      .catch(() => {
-        console.log('update bad');
-        // this.eventBus.trigger('update_bad', User, ['Невалидные данные']);
-        this.eventBus.trigger('update_bad', {data: User, err: ['Невалидные данные']});
-      });
-
+  async makeUpdate(nickname, formData) {
+    try {
+      const res = await putProfile(nickname, formData);
+      const status = await checkStatus(res);
+      const data = await parseJSON(status);
+      User.set(data);
+      User.isAuth = true;
+      console.log(User);
+      console.log('update ok');
+      this.eventBus.trigger('update_ok', { User: data, err: {} });
+    } catch (err) {
+      const form = document.querySelector('form');
+      form.elements.nickname.value = '';
+      form.elements.email.value = '';
+      form.elements.password.value = '';
+      form.elements.nickname.placeholder = 'НЕВЕРНО';
+      form.elements.email.placeholder = 'НЕВЕРНО';
+      form.elements.password.placeholder = 'НЕВЕРНО';
+      this.processForm();
+    }
   }
 }

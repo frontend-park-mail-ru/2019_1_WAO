@@ -1,134 +1,43 @@
-body {
-	font-family: Helvetica, Arial, san-serif;
-	font-size: 16px;
+.scoreboard {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+  opacity: 0.6;
+  border-radius: 8px;
+  border: solid 1px #979797;
+  background-color: #d8d8d8;
+  text-align: center;
+  padding: 20px 40px 20px 40px;
 }
 
-.scoreboard_container {
-	background-color: none;
-	border-radius: 10px;
-	padding: 10px;
-	margin: 20px 15% auto 15%;
-	text-align: center;
-
-	display: grid;
-	grid-template-rows: auto;
-	grid-row-gap: 30px;
-	grid-template-areas: 
-		"scoreboard_table";
+.scoreboard__label {
+  font-size: 40px;
+  color: #0f8bec;
 }
 
-.scoreboard_header {
-	grid-area: scoreboard_header;
-	background-color: #E1E1E1;
-	border-radius: 10px;
-	padding: 10px;
-
-	display: grid;
-	grid-template-columns: 1fr 2fr;
-	grid-template-rows: auto;
-	grid-template-areas: 
-		"user_data score_data";
-
+.scoreboard__table {
+  font-size: 24px;
+  margin: 20px 0px 0px 0px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto;
+  grid-row-gap: 20px;
 }
 
-.scoreboard_user_data {
-	grid-area: user_data;
-
-	display: grid;
-	grid-template-rows: 80% 20%;
-	grid-template-areas: 
-		"user_img"
-		"user_name";
-	justify-content: center;
+.scoreboard__head {
+  font-size: 30px;
+  height: 50px;
+  border-radius: 8px;
+  border: solid 1px #979797;
+  background-color: #d9dd63;
 }
 
-.scoreboard_img {
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-}
-
-.scoreboard_user_img {
-	grid-area: user_img;
-}
-
-.scoreboard_user_name {
-	grid-area: user_name;
-}
-
-.scoreboard_score_data {
-	grid-area: score_data;
-	padding-right: 50px;
-	text-align: right;
-	display: grid;
-	grid-template-rows: 1fr 1fr 1fr;
-	grid-template-areas: 
-		"scoreboard_score_data_1"
-		"scoreboard_score_data_2"
-		"scoreboard_score_data_3";
-
-}
-
-.scoreboard_score_data_1 {
-	grid-area: scoreboard_score_data_1;
-}
-
-.scoreboard_score_data_2 {
-	grid-area: scoreboard_score_data_2;
-}
-
-.scoreboard_score_data_3 {
-	grid-area: scoreboard_score_data_3;
-}
-
-.scoreboard_table {
-	grid-area: scoreboard_table;
-	background-color: #E1E1E1;
-	border-radius: 10px;
-	padding: 10px;
-
-	display: grid;
-	grid-gap: 10px;
-	grid-template-rows: repeat(10, 1fr);
-}
-
-.scoreboard_table-row {
-	display: grid;
-	grid-template-columns: 1fr 4fr 2fr 2fr;
-	grid-gap: 10px;
-	grid-template-areas: 
-		"scoreboard_column_1 scoreboard_column_2 scoreboard_column_3 scoreboard_column_4"
-}
-
-.scoreboard_table-row:hover {	
-	background-color: #EFEFEF;
-}
-
-.scoreboard_col {
-	padding: 20px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #A1A1A1;
-	background-color: none;
-	border-radius: 10px;
-}
-
-.scoreboard_col_head {
-	background-color: #71A1A1;
-}
-
-.scoreboard_column_1 {
-	grid-area: scoreboard_column_1;
-}
-
-.scoreboard_column_2 {
-	grid-area: scoreboard_column_2;
-}
-
-.scoreboard_column_3 {
-	grid-area: scoreboard_column_3;
-}
-
-.scoreboard_column_4 {
-	grid-area: scoreboard_column_4;
+.scoreboard__row {
+  display: grid;
+  grid-row-gap: 5px;
+  grid-template-columns: 1fr 5fr 3fr 3fr;
+  align-items: center;
 }

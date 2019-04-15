@@ -1,5 +1,5 @@
 const baseUrl = 'http://127.0.0.1:3000';
-const apiUrl = '/api/v1';
+const apiUrl = '/api';
 const reqUrl = baseUrl + apiUrl;
 
 /**
@@ -89,7 +89,7 @@ export function parseJSON(res) {
  * return {Promise<Responce>}
  */
 export function getAuth() {
-  return getFetch('/sessions');
+  return getFetch('/session');
 }
 
 /**
@@ -97,7 +97,7 @@ export function getAuth() {
  * return {Promise<Responce>}
  */
 export function delAuth() {
-  return delFetch('/sessions');
+  return delFetch('/session');
 }
 
 /**

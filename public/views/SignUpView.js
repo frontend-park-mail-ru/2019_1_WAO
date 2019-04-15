@@ -1,5 +1,42 @@
 import BaseView from './BaseView';
-import template from '../components/signup/signup.tmpl.xml';
+import template from '../components/signup/signup.hbs';
+import '../components/signup/signup.css';
+
+const viewData = {
+  fields:
+    [
+      {
+        label: 'Логин',
+        type: 'text',
+        name: 'nickname',
+        placeholder: 'Логин',
+      },
+      {
+        label: 'Email',
+        type: 'text',
+        name: 'email',
+        placeholder: 'Почта',
+      },
+      {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        placeholder: 'Пароль',
+      },
+      {
+        label: 'Пароль еще раз',
+        type: 'password',
+        name: 'passwordRepeat',
+        placeholder: 'Повторите пароль',
+      },
+    ],
+  button: {
+    value: 'Зарегистрироваться',
+  },
+  title: {
+    text: 'Регистрация',
+  },
+};
 
 /**
  * Singup view
@@ -11,8 +48,14 @@ export default class SignUpView extends BaseView {
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
    */
-  constructor(el, eventBus) {
-    super(el, eventBus, template);
+  constructor(el, eventBus, components = []) {
+    super({
+      el,
+      eventBus,
+      template,
+      components,
+      viewData,
+    });
 
     this.eventBus.on('valid_err', (data) => {
       this.render(this.el, data);
