@@ -6,8 +6,15 @@ const cookie = require('cookie-parser');
 const fs = require('fs');
 const uuid = require('uuid/v4');
 const path = require('path');
+const ws = require('express-ws');
 
 const app = express();
+ws(app);
+app.ws('/ws', (ws) => {
+  setInterval(() => {
+    ws.send('Hello there');
+  }, 15000);
+});
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 // app.use(fallback('index.html', { root: 'dist' }));
@@ -15,9 +22,9 @@ app.use(body.json());
 app.use(cookie());
 
 const front_adress = 'http://127.0.0.1:3000';
-// const front_adress = "https://wao2019.herokuapp.com";
+// const front_adress = 'https://wao2019.herokuapp.com';
 const back_adress = 'http://127.0.0.1:3000';
-// const back_adress = "https://waogame.herokuapp.com";
+// const back_adress = 'https://waogame.herokuapp.com';
 const default_image = `${back_adress}/uploads/user.png`;
 
 const users = {
@@ -170,6 +177,7 @@ app.use((req, res, next) => {
 });
 
 const isAuth = (req, res) => {
+  res = setHeaders(res, setHeadearListOnPage);
   console.log('session');
   const id = req.cookies.sessionid;
   console.log(id);
@@ -214,7 +222,7 @@ app.post('/api/signup', (req, res) => {
   const { nickname } = req.body;
   const { email } = req.body;
   const { password } = req.body;
-  const image = './images/background1.jpg';
+  const image = default_image;
 
   console.log('This data was send: pass: ', password, 'nickname: ', nickname);
   if (
@@ -256,6 +264,7 @@ app.post('/api/signup', (req, res) => {
 });
 
 app.post('/api/signin', (req, res) => {
+  res = setHeaders(res, setHeadearListOnPage);
   console.log(req.body);
   const { password } = req.body;
   const { nickname } = req.body;
@@ -303,6 +312,7 @@ app.get('/api/user/:nickname', (req, res) => {
 });
 
 app.put('/api/user/:nickname', (req, res) => {
+  res = setHeaders(res, setHeadearListOnPage);
   const { nickname } = req.params;
   console.log(`connect: ${nickname}`);
 

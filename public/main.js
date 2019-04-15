@@ -27,7 +27,7 @@ function registerSW() {
 }
 
 /**
- * Пописака на события глобальной шины
+ * Подписка на события глобальной шины
  */
 function subscribeGlobalBus() {
   GlobalBus.on('auth_bad', () => {

@@ -1,4 +1,5 @@
 import User from '../modules/user';
+import { wsConnect, wsClose } from '../modules/ws'; // просто чтоб потестить
 /**
  * AboutModel
  */
@@ -13,5 +14,6 @@ export default class AboutModel {
       console.log('menu start render');
       this.eventBus.trigger('render', User);
     });
+    wsConnect(); // просто чтоб потестить. почему в AboutModel? - первая под руку попалась
   }
 }
