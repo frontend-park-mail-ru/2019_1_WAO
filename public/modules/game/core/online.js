@@ -1,6 +1,6 @@
 import GameCore from './index';
-import bus from '../../bus';
-// import Ws from '../../ws';
+import { gameBus } from '../../eventbus';
+// import Ws from '../../ws'; // ws переписан. смотри /modules/ws.js
 
 // const ws = new Ws();
 
@@ -29,7 +29,7 @@ export default class OnlineGame extends GameCore {
 
   // eslint-disable-next-line class-methods-use-this
   onGameFinished() {
-    bus.emit('CLOSE_GAME');
+    gameBus.trigger('game_close');
   }
 
   onGameStateChanged(evt) {

@@ -4,7 +4,7 @@ import FadingBlock from './fading-block';
 import GamePlayerFigure from './player';
 import Circle from '../../graphics/circle';
 import BlockPlate from './block';
-// import bus from '../../bus';
+import { gameBus } from '../../eventbus';
 
 const grav = 10;
 
@@ -16,7 +16,7 @@ const KEYS = {
 
 export default class GameScene {
   constructor(canvas) {
-    // this.bus = bus;
+    this.gameBus = gameBus;
     this.canvas = canvas;
     const ctx = canvas.getContext('2d');
     this.ctx = ctx;

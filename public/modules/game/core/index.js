@@ -1,5 +1,4 @@
-import { events } from './events';
-import bus from '../../bus';
+import { gameBus } from '../../eventbus';
 
 const KEYS = {
   FIRE: [' ', 'Enter'],
@@ -25,36 +24,37 @@ export default class GameCore {
   }
 
   start() {
-    bus.on(events.START_GAME, this.onGameStarted);
-    bus.on(events.FINISH_GAME, this.onGameFinished);
-    bus.on(events.CONTROLS_PRESSED, this.onControllsPressed);
-    bus.on(events.GAME_STATE_CHANGED, this.onGameStateChanged);
+    gameBus.on('game_start', this.onGameStarted);
+    gameBus.on('game_finish', this.onGameFinished);
+    gameBus.on('controls_pressed', this.onControllsPressed);
+    gameBus.on('state_changed', this.onGameStateChanged);
 
-    bus.on(events.PRESSED_LEFT_CONTROL, this.onPressedLeftControl);
-    bus.on(events.PRESSED_RIGHT_CONTROL, this.onPressedRightControl);
+    gameBus.on('left_pressed', this.onPressedLeftControl);
+    gameBus.on('right_pressed', this.onPressedRightControl);
 
     const { controller } = this;
     this.controllersLoopIntervalId = setInterval(() => {
       // const actions = controller.diff(); // Получаем предыдущую нажатую кнопку
       // console.log("Action: ", actions);
       /* if (Object.keys(actions).some(k => actions[k]))
-           bus.emit(events.CONTROLS_PRESSED, actions);
+           gameBus.emit(events.CONTROLS_PRESSED, actions);
       } */
       const actions = controller.costumeControl();
-      if (actions.arrowleft === 'true') {
-        bus.emit(events.PRESSED_LEFT_CONTROL, actions);
+      if (actions.arrowleft === true) {
+        console.log('Action:', actions.arrowleft);
+        gameBus.trigger('left_pressed', actions);
       } else {
-        bus.emit(events.PRESSED_RIGHT_CONTROL, actions);
+        gameBus.trigger('right_pressed', actions);
       }
     }, 10);
   }
 
   destroy() {
     clearInterval(this.controllersLoopIntervalId);
-    bus.off(events.START_GAME, this.onGameStarted);
-    bus.off(events.FINISH_GAME, this.onGameFinished);
-    bus.off(events.CONTROLS_PRESSED, this.onControllsPressed);
-    bus.off(events.GAME_STATE_CHANGED, this.onGameStateChanged);
+    gameBus.off('game_start', this.onGameStarted);
+    gameBus.off('game_finish', this.onGameFinished);
+    gameBus.off('controls_pressed', this.onControllsPressed);
+    gameBus.off('state_changed', this.onGameStateChanged);
 
     this.controller.destroy();
     this.scene.stop();

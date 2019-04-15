@@ -1,6 +1,5 @@
 import GameCore from './index';
-import { events } from './events';
-import bus from '../../bus';
+import { gameBus } from '../../eventbus';
 
 export default class OfflineGame extends GameCore {
   constructor(controller, scene) {
@@ -31,7 +30,7 @@ export default class OfflineGame extends GameCore {
 
     setTimeout(
       () => {
-        bus.emit(events.START_GAME, this.state);
+        gameBus.trigger('game_start', this.state);
       },
     );
   }
@@ -40,7 +39,7 @@ export default class OfflineGame extends GameCore {
     // const delay = now - this.lastFrame;
     this.lastFrame = now;
 
-    bus.emit(events.GAME_STATE_CHANGED, this.state);
+    gameBus.trigger('state_changed', this.state);
 
     this.gameloopRequestId = requestAnimationFrame(this.gameloop);
   }
@@ -88,7 +87,7 @@ export default class OfflineGame extends GameCore {
 
   onGameFinished() {
     cancelAnimationFrame(this.gameloopRequestId);
-    bus.emit('CLOSE_GAME');
+    gameBus.trigger('game_close');
   }
 
   onGameStateChanged(evt) {

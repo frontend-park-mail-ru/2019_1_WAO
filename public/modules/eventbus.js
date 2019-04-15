@@ -28,10 +28,12 @@ export const EVENTS = [
 const GAME_EVENTS = [
   'game_start',
   'game_finish',
+  'game_close',
   'controls_pressed',
   'state_changed',
   'left_pressed',
   'right_pressed',
+  'fire_pressed',
 ];
 
 /**
