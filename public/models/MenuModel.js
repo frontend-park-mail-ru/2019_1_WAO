@@ -11,8 +11,8 @@ export default class MenuModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.eventBus.on('call', () => {
-      console.log('menu start render');
-      this.eventBus.trigger('render', User);
+      console.log('menu called');
+      // this.eventBus.trigger('render', User);
     });
   }
 }

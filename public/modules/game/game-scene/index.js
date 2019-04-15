@@ -4,7 +4,6 @@ import FadingBlock from './fading-block';
 import GamePlayerFigure from './player';
 import Circle from '../../graphics/circle';
 import BlockPlate from './block';
-import { gameBus } from '../../eventbus';
 
 const grav = 10;
 
@@ -16,7 +15,6 @@ const KEYS = {
 
 export default class GameScene {
   constructor(canvas) {
-    this.gameBus = gameBus;
     this.canvas = canvas;
     const ctx = canvas.getContext('2d');
     this.ctx = ctx;
@@ -65,7 +63,8 @@ export default class GameScene {
     // this.me.y = 660 + state.me.y;
     // this.me.x = 50 + state.me.x;
     this.me.x = 250;
-    this.me.y = 390;
+    this.me.y = 500;
+    this.me.score = this.canvas.height - this.me.y;
 
     this.me.id = scene.push(this.me);
     this.me.jumpCount = 0;
@@ -79,6 +78,8 @@ export default class GameScene {
     this.me.dx = 0;
     this.me.collision = false;
     this.gravity = 0.1;
+
+    this.outScore = document.getElementsByClassName('game-score')[0];
   }
 
   setState(state) {
@@ -100,6 +101,24 @@ export default class GameScene {
     this.me.x += 3;
     // scene.remove(this.s)
     // this.requestFrameId = requestAnimationFrame(this.renderScene);
+  }
+
+  circleDraw() {
+    if (this.me.x > this.canvas.width) {
+      this.me.x = 0;
+    } else if (this.me.x < 0) {
+        this.me.x = this.canvas.width;
+      }
+  }
+
+  scoreCounter() {
+    if (this.canvas.height - this.me.y > this.me.score) {
+      this.me.score = this.canvas.height - this.me.y;
+    }
+  }
+
+  scoreShow() {
+    this.outScore.innerHTML = ~~this.me.score;
   }
 
   collision() {
@@ -152,9 +171,8 @@ export default class GameScene {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  vector_mult(ax, ay, bx, by) {
-    // camelCase, Димас !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    return ax * by - bx * ay;
+  vector_mult(aX, aY, bX, bY) {
+    return aX * aY - bX * bY;
   }
 
   upgrCollision() {
@@ -209,6 +227,9 @@ export default class GameScene {
   }
 
   engine(delay) {
+    this.scoreCounter();
+    this.scoreShow();
+    this.circleDraw();
     this.upgrCollision();
     this.jump(delay);
     this.gravitation(delay);
@@ -220,7 +241,7 @@ export default class GameScene {
     const delay = now - this.lastFrameTime;
     // отрисовка движений влево -вправо
     // if (this.me.moveLeft) {
-    //  this.me.x -= 3;
+    // 	this.me.x -= 3;
     // }
     // Логика прыжка
     /*
@@ -239,6 +260,7 @@ export default class GameScene {
     if (this.me.jumpPressed === false) this.me.jumpPressed = true;
     this.me.y = this.me.jumpHeight + 600;
     */
+
     // ------- //
     this.engine(delay);
     this.lastFrameTime = now;

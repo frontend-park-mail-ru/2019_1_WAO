@@ -1,3 +1,4 @@
+// export const baseUrl = 'https://waogame.herokuapp.com';
 export const baseUrl = 'http://127.0.0.1:3000';
 const apiUrl = '/api';
 const reqUrl = baseUrl + apiUrl;

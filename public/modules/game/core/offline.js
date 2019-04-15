@@ -19,10 +19,12 @@ export default class OfflineGame extends GameCore {
         { x: 250, y: 445 },
         { x: 100, y: 305 },
         { x: 350, y: 205 },
+        { x: 35, y: 565 },
+        { x: 230, y: 685 },
       ],
       me: {
         x: 150,
-        y: 0,
+        y: 600,
         dx: 0,
         dy: 0,
       },
@@ -45,7 +47,7 @@ export default class OfflineGame extends GameCore {
   }
 
   onControllsPressed(evt) {
-    console.log(this.pressed('LEFT', evt));
+    // console.log(this.pressed('LEFT', evt));
     if (this.pressed('LEFT', evt)) {
       this.scene.moveLeft(evt);
       // this.state.me.x += -10;

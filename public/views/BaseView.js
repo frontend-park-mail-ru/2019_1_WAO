@@ -32,9 +32,13 @@ export default class BaseView {
     this.hide();
 
     this.eventBus.on('render', (data) => {
-      // this.show();
       this.render(this.el, data);
-      this.el.style.display = null;
+      this.show(data);
+      this.eventBus.trigger('view_show');
+    });
+
+    this.eventBus.on('show', (data) => {
+      this.show(data);
       this.eventBus.trigger('view_show');
     });
   }
@@ -52,20 +56,19 @@ export default class BaseView {
     this.components.forEach((component) => {
       this.savedTmpl += component.getTemplate(data);
     });
-    this.el.innerHTML = Object.assign(this.savedTmpl);
+    // this.el.innerHTML = Object.assign(this.savedTmpl);
     this.rendered = true;
   }
 
   /**
    * Показать вьюху
    */
-  show() {
+  show(data = {}) {
     if (!this.rendered) {
-      this.render(this.el);
-    } else {
-      this.el.innerHTML = Object.assign(this.savedTmpl);
+      this.render(this.el, data);
     }
-    // this.el.style.display = null;
+    this.el.innerHTML = Object.assign(this.savedTmpl);
+    this.el.style.display = null;
     this.eventBus.trigger('view_show');
   }
 
@@ -73,7 +76,7 @@ export default class BaseView {
    * Убрать вьюху
    */
   hide() {
-    // this.el.style.setProperty('display', 'none', 'important');
+    this.el.style.setProperty('display', 'none', 'important');
     this.el.innerHTML = '';
     this.eventBus.trigger('view_hide');
   }

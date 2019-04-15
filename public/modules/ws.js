@@ -1,6 +1,6 @@
 // import { baseUrl } from './api';
 const { host } = window.location;
-const ws = new WebSocket(`ws://${host}/ws`);
+// const ws = new WebSocket(`ws://${host}/ws`);
 // const ws = new WebSocket('ws://127.0.0.1:3000/ws'); // не хардкод, а детерминированность
 
 // eslint-disable-next-line no-unused-vars

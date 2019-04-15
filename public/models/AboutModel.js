@@ -14,6 +14,6 @@ export default class AboutModel {
       console.log('menu start render');
       this.eventBus.trigger('render', User);
     });
-    wsConnect(); // просто чтоб потестить. почему в AboutModel? - первая под руку попалась
+    // wsConnect(); // просто чтоб потестить. почему в AboutModel? - первая под руку попалась
   }
 }

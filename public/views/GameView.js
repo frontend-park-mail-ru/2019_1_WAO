@@ -20,4 +20,8 @@ export default class GameView {
   render() {
     this.el.innerHTML = this.template({});
   }
+
+  hide() {
+    this.el.innerHTML = '';
+  }
 }
