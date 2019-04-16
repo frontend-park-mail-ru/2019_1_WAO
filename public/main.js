@@ -10,6 +10,7 @@ import SignUpPresenter from './presenters/SignupPresenter';
 import AboutPresenter from './presenters/AboutPresenter';
 import StorePresenter from './presenters/StorePresenter';
 import GamePresenter from './presenters/GamePresenter';
+import OnlineGamePresenter from './presenters/OnlineGamePresenter';
 
 import './img/user.png';
 import './img/door.svg';
@@ -64,6 +65,7 @@ function start() {
   Router.add('/about',    new AboutPresenter());
   Router.add('/store',    new StorePresenter());
   Router.add('/gameoffline', new GamePresenter());
+  Router.add('/gameonline',  new OnlineGamePresenter());
 
   subscribeGlobalBus();
 

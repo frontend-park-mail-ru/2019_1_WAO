@@ -23,7 +23,7 @@ export default class ProfileModel {
     });
 
     this.eventBus.on('view_show', () => {
-
+      this.processForm();
     });
   }
 
