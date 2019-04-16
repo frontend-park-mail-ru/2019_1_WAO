@@ -20,6 +20,9 @@ export default class ProfileModel {
       console.log(data);
       this.eventBus.trigger('render', data);
       this.eventBus.trigger('show', data);
+    });
+
+    this.eventBus.on('view_show', () => {
       this.processForm();
     });
   }

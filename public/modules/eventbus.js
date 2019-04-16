@@ -5,7 +5,7 @@
 export const EVENTS = [
   'call',
   'data_req',
-  'ready',  
+  'ready',
   'render',
   'show',
   'auth_check',
@@ -19,6 +19,7 @@ export const EVENTS = [
   'users_rx',
   'view_show',
   'view_hide',
+  'user_show',
   'view_rend',
   'users_req',
   'update_ok',

@@ -20,10 +20,5 @@ export default class UserbarPresenter extends BasePresenter {
     const model = new UserbarModel(eventBus);
 
     super(view, model, eventBus);
-
-    eventBus.on('users_rx', (data) => {
-      console.log('userbar - users_rx');
-      this.view.render(application, data);
-    });
   }
 }

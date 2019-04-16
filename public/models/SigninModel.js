@@ -23,7 +23,7 @@ export default class SignInModel {
   checkAuth() {
     console.log('SignInModel User.AUTH: ', User.isAuth);
     if (User.isAuth) {
-      this.eventBus.trigger('auth ok');
+      this.eventBus.trigger('auth_ok');
     } else {
       console.log('check auth bad');
       this.eventBus.trigger('show');

@@ -16,6 +16,10 @@ export default class UserbarModel {
       console.log('data_req via Userbar Model');
       this.checkAuth();
     });
+
+    this.eventBus.on('view_show', () => {
+      UserbarModel.waitAction();
+    });
   }
 
   /**
@@ -30,7 +34,7 @@ export default class UserbarModel {
       User.set(data);
       User.isAuth = true;
       this.eventBus.trigger('ready', data);
-      UserbarModel.waitAction();
+      // UserbarModel.waitAction();
     } catch (err) {
       console.log(err);
       console.log('menu auth bad');

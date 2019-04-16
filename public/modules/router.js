@@ -42,9 +42,10 @@ class Router {
       return;
     }
 
+    /*
     if (Object.prototype.hasOwnProperty.call(this.presenters, this.prevPath)) {
       this.presenters[this.prevPath].view.hide();
-    }
+    } */
     this.prevPath = path;
     console.log(`route to ${path}`);
 

@@ -7,7 +7,7 @@ const viewData = {
   menuButtons: [
     {
       text: 'Мультиплеер',
-      href: '/',
+      href: '/gameonline',
     },
     {
       text: 'Синглплеер',

@@ -16,6 +16,10 @@ export default class ScoreBoardModel {
       console.log(data); // data понадобится для отображения пользователя
       this.makeTable();
     });
+
+    this.eventBus.on('view_show', () => {
+      this.waitAction();
+    });
   }
 
   async makeTable() {
@@ -29,11 +33,12 @@ export default class ScoreBoardModel {
       this.pages = data.pages;
       window.history.replaceState(null, '', `/users/${this.page}`);
       const totalData = Object.assign(data, User);
+      console.log(totalData);
       this.eventBus.trigger('render', totalData);
       this.eventBus.trigger('show', totalData);
-      this.waitAction();
     } catch (err) {
       console.log('score bad');
+      console.log(err);
     }
   }
 
