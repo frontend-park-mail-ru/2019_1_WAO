@@ -21,6 +21,7 @@ export default class BaseView {
     template,
     components = [],
     viewData = {},
+    viewEvent = 'view_show',
   } = {}) {
     this.el = el;
     this.eventBus = eventBus;
@@ -33,14 +34,14 @@ export default class BaseView {
 
     this.eventBus.on('render', (data) => {
       this.render(this.el, data);
-      // this.show(data); // думаю, показывать надо не сразу
-      this.eventBus.trigger('view_show');
+      // this.show(data); // показывать надо не сразу
+      this.eventBus.trigger('view_rend');
     });
 
     this.eventBus.on('show', (data) => {
       this.render(this.el, data);
       this.show(data);
-      this.eventBus.trigger('view_show');
+      this.eventBus.trigger(viewEvent);
     });
   }
 
@@ -70,7 +71,6 @@ export default class BaseView {
     }
     this.el.innerHTML = Object.assign(this.savedTmpl);
     this.el.style.display = null;
-    this.eventBus.trigger('view_show');
   }
 
   /**

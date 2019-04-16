@@ -19,6 +19,7 @@ export default class UserbarView extends BaseView {
       template,
       components,
       viewData: {},
+      viewEvent: 'user_show',
     });
   }
 }

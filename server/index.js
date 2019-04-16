@@ -208,6 +208,7 @@ const isAuth = (req, res) => {
 app.get('/api/session', (req, res) => isAuth(req, res));
 
 app.delete('/api/session', (req, res) => {
+  res = setHeaders(res, setHeadearListOnPage);
   console.log('session');
   console.log(req.cookies.sessionid);
   const id = req.cookies.sessionid;
@@ -342,7 +343,9 @@ app.put('/api/user/:nickname', (req, res) => {
     console.log(user);
     users[user.nickname].nickname = user.nickname;
     users[user.nickname].email = user.email;
-    users[user.nickname].password = user.password;
+    if (user.password) {
+      users[user.nickname].password = user.password;
+    }
     if (user.image) {
       users[user.nickname].image = user.image;
     }

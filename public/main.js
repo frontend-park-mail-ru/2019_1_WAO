@@ -35,6 +35,7 @@ function subscribeGlobalBus() {
   });
 
   GlobalBus.on('auth_out', () => {
+    console.log('Try to out');
     delAuth()
       .then(checkStatus)
       .then(() => {
