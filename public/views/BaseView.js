@@ -33,11 +33,12 @@ export default class BaseView {
 
     this.eventBus.on('render', (data) => {
       this.render(this.el, data);
-      this.show(data);
+      // this.show(data); // думаю, показывать надо не сразу
       this.eventBus.trigger('view_show');
     });
 
     this.eventBus.on('show', (data) => {
+      this.render(this.el, data);
       this.show(data);
       this.eventBus.trigger('view_show');
     });

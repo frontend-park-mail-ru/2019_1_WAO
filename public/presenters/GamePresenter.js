@@ -22,7 +22,6 @@ export default class GamePresenter {
   }
 
   call() {
-    // this.eventBus.trigger('call');
     this.view.render();
     const [canvas] = document.getElementsByClassName('game-view__canvas');
     this.view.canvas = canvas;

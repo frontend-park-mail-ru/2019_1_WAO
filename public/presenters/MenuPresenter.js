@@ -26,5 +26,13 @@ export default class MenuPresenter extends BasePresenter {
     const view = new MenuView(application, eventBus, [userbar.view]);
     const model = new MenuModel(eventBus);
     super(view, model, eventBus);
+
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('data_req');
+    });
+
+    this.eventBus.on('ready', (data) => {
+      this.eventBus.trigger('show', data);
+    });
   }
 }

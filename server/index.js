@@ -274,7 +274,7 @@ app.post('/api/signin', (req, res) => {
     return res.status(422).json({ error: 'Не указан E-Mail или пароль' });
   }
   if (!users[nickname] || users[nickname].password !== password) {
-    return res.status(422).json({ error: 'Не верный E-Mail и/или пароль' });
+    return res.status(422).json({ error: 'Не верный E-Mail и/или пароль или нет кук' });
   }
 
   const id = uuid();

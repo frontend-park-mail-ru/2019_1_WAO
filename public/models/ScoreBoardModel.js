@@ -1,6 +1,7 @@
 import {
   getScoreBoard, checkStatus, parseJSON,
 } from '../modules/api';
+import User from '../modules/user';
 
 /**
  * Таблица лидеров
@@ -11,8 +12,8 @@ export default class ScoreBoardModel {
     this.eventBus = eventBus;
     this.page = 1;
     this.pages = 1;
-    this.eventBus.on('call', () => {
-      this.eventBus.trigger('render');
+    this.eventBus.on('ready', (data) => {
+      console.log(data); // data понадобится для отображения пользователя
       this.makeTable();
     });
   }
@@ -26,9 +27,10 @@ export default class ScoreBoardModel {
       console.log(data);
       this.page = data.page;
       this.pages = data.pages;
-      this.eventBus.trigger('users_rx', data);
-      console.log(data);
       window.history.replaceState(null, '', `/users/${this.page}`);
+      const totalData = Object.assign(data, User);
+      this.eventBus.trigger('render', totalData);
+      this.eventBus.trigger('show', totalData);
       this.waitAction();
     } catch (err) {
       console.log('score bad');

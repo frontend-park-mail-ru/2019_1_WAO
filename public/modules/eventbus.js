@@ -4,6 +4,8 @@
 
 export const EVENTS = [
   'call',
+  'data_req',
+  'ready',  
   'render',
   'show',
   'auth_check',

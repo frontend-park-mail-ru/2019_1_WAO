@@ -1,18 +1,13 @@
-import User from '../modules/user';
-
 /**
  * Модель Меню
  */
 export default class MenuModel {
   /**
-   * Конструктор. Подписывает на проверку авторизации
+   * Конструктор
    * @param {EventBus} eventBus
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('call', () => {
-      console.log('menu called');
-      // this.eventBus.trigger('render', User);
-    });
+    // что я сотворил с меню
   }
 }

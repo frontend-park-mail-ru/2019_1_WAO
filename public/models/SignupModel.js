@@ -12,7 +12,7 @@ export default class SignUpModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.eventBus.on('call', () => {
-      this.eventBus.trigger('render');
+      this.eventBus.trigger('show');
       this.processForm();
     });
   }

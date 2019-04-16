@@ -25,15 +25,8 @@ export default class ProfilePresenter extends BasePresenter {
 
     super(view, model, eventBus);
 
-    eventBus.on('users_rx', (data) => {
-      console.log('users_rx');
-      console.log(data);
-      this.view.render(application, data);
-    });
-
-    eventBus.on('update_ok', (data) => {
-      console.log('update_ok');
-      this.view.render(application, data);
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('data_req');
     });
   }
 }

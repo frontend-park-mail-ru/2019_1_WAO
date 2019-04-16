@@ -12,8 +12,8 @@ export default class UserbarModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('call', () => {
-      console.log('call');
+    this.eventBus.on('data_req', () => {
+      console.log('data_req via Userbar Model');
       this.checkAuth();
     });
   }
@@ -26,13 +26,15 @@ export default class UserbarModel {
       const res = await getAuth();
       const status = await checkStatus(res);
       const data = await parseJSON(status);
-      console.log('menu auth ok');
       console.log(data);
-      this.eventBus.trigger('render', data);
+      User.set(data);
+      User.isAuth = true;
+      this.eventBus.trigger('ready', data);
       UserbarModel.waitAction();
     } catch (err) {
       console.log(err);
       console.log('menu auth bad');
+      User.isAuth = false;
       GlobalBus.trigger('auth_bad');
     }
   }

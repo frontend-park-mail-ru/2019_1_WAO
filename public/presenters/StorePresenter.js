@@ -26,5 +26,13 @@ export default class StorePresenter extends BasePresenter {
     const view = new StoreView(application, eventBus, [userbar.view]);
     const model = new StoreModel(eventBus);
     super(view, model, eventBus);
+
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('data_req');
+    });
+
+    this.eventBus.on('ready', (data) => {
+      this.eventBus.trigger('show', data);
+    });
   }
 }

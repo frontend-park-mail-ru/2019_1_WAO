@@ -1,5 +1,3 @@
-import User from '../modules/user';
-
 /**
  * Модель Меню
  */
@@ -10,10 +8,5 @@ export default class StoreModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('call', () => {
-      console.log('menu store render');
-      // this.checkAuth();
-      this.eventBus.trigger('render', User);
-    });
   }
 }

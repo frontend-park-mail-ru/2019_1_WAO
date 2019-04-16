@@ -22,7 +22,6 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request)
       .then((cachedResponse) => {
         if (!navigator.onLine && cachedResponse) {
-          console.log('from offline', cachedResponse);
           return cachedResponse;
         }
 

@@ -12,7 +12,6 @@ export default class SignInModel {
   constructor(eventBus) {
     this.eventBus = eventBus;
     this.eventBus.on('call', () => {
-      this.eventBus.trigger('render');
       this.checkAuth();
     });
   }
@@ -27,6 +26,7 @@ export default class SignInModel {
       this.eventBus.trigger('auth ok');
     } else {
       console.log('check auth bad');
+      this.eventBus.trigger('show');
       this.processForm();
     }
   }
