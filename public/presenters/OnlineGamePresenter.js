@@ -28,4 +28,9 @@ export default class GamePresenter {
     this.game = new Game(GAME_MODES.ONLINE, this.view.canvas);
     this.game.start();
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  stop() {
+    console.log('game close');
+  }
 }

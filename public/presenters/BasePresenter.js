@@ -17,4 +17,9 @@ export default class BasePresenter {
   call() {
     this.eventBus.trigger('call');
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  stop() {
+    console.log('game close');
+  }
 }
