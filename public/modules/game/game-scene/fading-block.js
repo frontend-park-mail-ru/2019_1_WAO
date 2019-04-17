@@ -8,6 +8,7 @@ export default class FadingBlock extends Rect {
 
     this.x = 0;
     this.y = 0;
+    this.mass = 1;
   }
 
   setColor(color) {

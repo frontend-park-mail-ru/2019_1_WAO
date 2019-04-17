@@ -12,6 +12,7 @@ export default class GamePlayerFigure extends Figure {
     this.body.width = 50;
     this.body.height = 40;
     this.gun.radius = 5;
+    this.mass = 1;
   }
 
   /**
