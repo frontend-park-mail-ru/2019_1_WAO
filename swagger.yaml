@@ -1,0 +1,160 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger WAO Team"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "wao2019.herokuapp.com"
+basePath: "/api"
+tags:
+- name: "user"
+  description: "Operations about user"
+schemes:
+- "https"
+paths:
+  /session:
+    get:
+      tags:
+      - "user"
+      summary: "api request"
+      description: "api request"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "api request"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+    delete:
+      tags:
+      - "user"
+      summary: "api request"
+      description: "api request"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "403":
+          description: Forbidden
+  /signin:
+    post:
+      tags:
+      - "user"
+      summary: "api request"
+      description: "api request"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "api request"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "403":
+          description: Forbidden
+  /signup:
+    post:
+      tags:
+      - "user"
+      summary: "api request"
+      description: "api request"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "api request"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: OK
+        "422":
+          description: Invalid
+  /user/{nickname}:
+    put:
+      tags:
+      - "user"
+      summary: "api request"
+      description: "api request"
+      produces:
+      - "multipart/form-data"
+      parameters:
+      - name: "nickname"
+        in: "path" 
+        description: "api request"
+        required: true
+        type: "string"
+      responses:
+        "201":
+          description: OK
+        "422":
+          description: Invalid
+  /users/{page}:
+    get:
+      tags:
+      - "user"
+      summary: "api request"
+      description: "api request"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "page"
+        in: "path" 
+        description: "api request"
+        required: true
+        type: "string"
+      responses:
+        "201":
+          description: OK
+        "422":
+          description: Invalid
+  
+definitions:
+  User:
+    type: "object"
+    properties:
+      nickname:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      score:
+        type: "string"
+      wins:
+        type: "string"
+      games:
+        type: "string"
+      image:
+        type: "string"
+    xml:
+      name: "User"
+  
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

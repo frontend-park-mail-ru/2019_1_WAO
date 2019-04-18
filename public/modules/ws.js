@@ -1,26 +1,26 @@
-// import { baseUrl } from './api';
-const { host } = window.location;
-// const ws = new WebSocket(`ws://${host}/ws`);
-// const ws = new WebSocket('ws://127.0.0.1:3000/ws'); // не хардкод, а детерминированность
+import { host } from './api';
 
-// eslint-disable-next-line no-unused-vars
-export function wsConnect(callback, ...params) {
-  ws.onopen = () => {
-    console.log('ws success connect');
-  };
+export default class WS {
+  constructor() {
+    this.host = host;
+  }
 
-  ws.onmessage = (event) => {
-    console.log(event);
-    // callback(...params);
-  };
-}
+  // eslint-disable-next-line no-unused-vars
+  connect(callback, ...params) {
+    this.ws = new WebSocket(`ws://${this.host}/ws`);
+    this.ws.onmessage = (event) => {
+      console.log(event);
+      // callback(...params);
+    };
+  }
 
-export function wsSend(message = '') {
-  ws.send(message);
-}
+  sent(message = '') {
+    this.ws.send(message);
+  }
 
-export function wsClose() {
-  ws.close();
+  close() {
+    this.ws.close();
+  }
 }
 
 /*

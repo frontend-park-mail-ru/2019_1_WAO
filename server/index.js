@@ -1,4 +1,4 @@
-const fallback = require('express-history-api-fallback');
+﻿const fallback = require('express-history-api-fallback');
 const express = require('express');
 const body = require('body-parser');
 const formidable = require('formidable');
@@ -19,6 +19,7 @@ app.ws('/ws', (ws) => {
 */
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+// app.use(express.static(path.resolve(__dirname, '..', 'dist', 'docs')));
 // app.use(fallback('index.html', { root: 'dist' }));
 app.use(body.json());
 app.use(cookie());
