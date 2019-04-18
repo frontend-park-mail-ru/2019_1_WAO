@@ -1,8 +1,9 @@
 import ProfileView from '../views/ProfileView';
 import ProfileModel from '../models/ProfileModel';
-import { EventBus } from '../modules/eventbus';
+import { EventBus, GlobalBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
+import User from '../modules/user';
 
 /**
  * ProfilePresenter view
@@ -26,7 +27,11 @@ export default class ProfilePresenter extends BasePresenter {
     super(view, model, eventBus);
 
     this.eventBus.on('call', () => {
-      this.eventBus.trigger('data_req');
+      if (User.isAuth) {
+        this.eventBus.trigger('data_req');
+      } else {
+        GlobalBus.trigger('auth_bad');
+      }
     });
   }
 }

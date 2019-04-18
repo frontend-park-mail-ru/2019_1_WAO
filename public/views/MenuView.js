@@ -8,26 +8,32 @@ const viewData = {
     {
       text: 'Мультиплеер',
       href: '/gameonline',
+      public: false,
     },
     {
       text: 'Синглплеер',
       href: '/gameoffline',
+      public: true,
     },
     {
       text: 'Магазин',
       href: '/store',
+      public: true,
     },
     {
       text: 'Профиль',
       href: '/profile',
+      public: false,
     },
     {
       text: 'Таблица лидеров',
       href: '/users',
+      public: true,
     },
     {
       text: 'Об игре',
       href: '/about',
+      public: true,
     },
   ],
 };

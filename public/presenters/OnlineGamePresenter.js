@@ -1,7 +1,8 @@
-import { EventBus } from '../modules/eventbus';
+import { EventBus, GlobalBus } from '../modules/eventbus';
 import Game from '../modules/game/game';
 import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
+import User from '../modules/user';
 
 /**
  * Представитель Игры
@@ -22,11 +23,15 @@ export default class GamePresenter {
   }
 
   call() {
-    this.view.render();
-    const [canvas] = document.getElementsByClassName('game-view__canvas');
-    this.view.canvas = canvas;
-    this.game = new Game(GAME_MODES.ONLINE, this.view.canvas);
-    this.game.start();
+    if (User.isAuth) {
+      this.view.render();
+      const [canvas] = document.getElementsByClassName('game-view__canvas');
+      this.view.canvas = canvas;
+      this.game = new Game(GAME_MODES.ONLINE, this.view.canvas);
+      this.game.start();
+    } else {
+      GlobalBus.trigger('auth_bad');
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this

@@ -1,5 +1,7 @@
 <div class="menu-bar">
-    {{#each menuButtons}}
-    {{> ./__button/__button.hbs this}}
-    {{/each}}
+  {{#each menuButtons}}
+    {{#if this.public}}
+      {{> ./__button/__button.hbs this}}
+    {{/if}}
+  {{/each}}
 </div>

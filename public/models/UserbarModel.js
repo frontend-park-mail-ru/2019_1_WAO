@@ -1,4 +1,4 @@
-import { getAuth, checkStatus, parseJSON } from '../modules/api';
+// import { getAuth, checkStatus, parseJSON } from '../modules/api';
 import { GlobalBus } from '../modules/eventbus';
 import User from '../modules/user';
 
@@ -25,6 +25,7 @@ export default class UserbarModel {
   /**
    * Проверка авторизации
    */
+  /*
   async checkAuth() {
     try {
       const res = await getAuth();
@@ -42,20 +43,12 @@ export default class UserbarModel {
       GlobalBus.trigger('auth_bad');
     }
   }
-
-  /*
-  checkAuth() {
-    console.log("UserbarModel User.auth: ", User.isAuth);
-    if (User.isAuth) {
-      console.log("UserbarModel User: ", User);
-      this.eventBus.trigger('render', User);
-      this.waitAction();
-    } else {
-      console.log('menu auth bad');
-      GlobalBus.trigger('auth_bad');
-    }
-  }
   */
+
+  checkAuth() {
+    console.log('UserbarModel User: ', User);
+    this.eventBus.trigger('ready', User);
+  }
 
   /**
    * Отклик на клики пользователя

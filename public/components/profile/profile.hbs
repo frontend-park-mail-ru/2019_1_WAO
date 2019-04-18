@@ -2,7 +2,7 @@
   {{> ../title/title.hbs title}}
   <div class="profile-form__card">
     <div class="profile-form__fields-left">
-      <input class="profile-form__input" type="text" value={{ nickname }} name="nickname">
+      <input class="profile-form__input" type="text" value={{ nickname }} name="nickname" readonly>
       <input class="profile-form__input" type="text" value={{ email }} name="email">
       <input class="profile-form__input" type="password" value="" name="password" placeholder="Введите новый пароль">
       {{> ../form-button/form-button.hbs button}}
