@@ -82,6 +82,10 @@ export default class GameScene {
     this.outScore = document.getElementsByClassName('game-score')[0];
   }
 
+  giveCanvas() {
+    return this.canvas;
+  }
+
   setState(state) {
     const { scene } = this;
     this.state = state;

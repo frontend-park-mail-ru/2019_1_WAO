@@ -1,5 +1,6 @@
 import GameCore from './index';
 import { gameBus } from '../../eventbus';
+import Physics from './physics';
 
 export default class OfflineGame extends GameCore {
   constructor(controller, scene) {
@@ -9,6 +10,8 @@ export default class OfflineGame extends GameCore {
     this.gameloop = this.gameloop.bind(this);
     this.gameloopRequestId = null;
     this.lastFrame = 0;
+
+    this.player = new Physics(this.state, scene.giveCanvas());
   }
 
   start() {
@@ -30,6 +33,22 @@ export default class OfflineGame extends GameCore {
       },
     };
 
+    this.player.setPlates([
+      { x: 50, y: 100 },
+      { x: 250, y: 445 },
+      { x: 100, y: 305 },
+      { x: 350, y: 205 },
+      { x: 35, y: 565 },
+      { x: 230, y: 685 },
+    ]);
+
+    this.player.setPlayer({
+      x: 150,
+      y: 600,
+      dx: 0,
+      dy: 0,
+    });
+
     setTimeout(
       () => {
         gameBus.trigger('game_start', this.state);
@@ -38,31 +57,12 @@ export default class OfflineGame extends GameCore {
   }
 
   gameloop(now) {
-    // const delay = now - this.lastFrame;
+    const delay = now - this.lastFrame;
     this.lastFrame = now;
 
     gameBus.trigger('state_changed', this.state);
 
     this.gameloopRequestId = requestAnimationFrame(this.gameloop);
-  }
-
-  onControllsPressed(evt) {
-    // console.log(this.pressed('LEFT', evt));
-    if (this.pressed('LEFT', evt)) {
-      this.scene.moveLeft(evt);
-      // this.state.me.x += -10;
-      // this.state.me.y += -10;
-    } else if (this.pressed('RIGHT', evt)) {
-      this.state.me.x += -10;
-      this.state.me.y += -10;
-    } else if (this.pressed('FIRE', evt)) {
-      // const coll = this.state.me.coll;
-      // const arr = [
-      // this.state.items[10 + coll],
-      // this.state.items[5 + coll],
-      // this.state.items[coll]
-      // ];
-    }
   }
 
   onPressedLeftControl(evt) {
