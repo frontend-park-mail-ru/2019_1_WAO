@@ -14,16 +14,16 @@ export default class AboutPresenter extends BasePresenter {
    * Создает Модель и Представление элемента, а также презентереов включаемых компонентов
    * Подписывается на события
    */
-  constructor() {
-    const application = document.getElementById('application');
+  constructor(elements) {
+    const [appEl, userEl] = elements;
     const eventBus = new EventBus();
 
     // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
-    const userbar = new UserbarPresenter(eventBus);
+    const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new AboutView(application, eventBus, [userbar.view]);
+    const view = new AboutView(appEl, eventBus, [userbar.view]);
     const model = new AboutModel(eventBus);
     super(view, model, eventBus);
 

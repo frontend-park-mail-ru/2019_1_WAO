@@ -15,13 +15,13 @@ export default class ScoreBoardPresenter extends BasePresenter {
    * Создает Модель и Представление элемента
    * Подписывается на события
    */
-  constructor() {
-    const application = document.getElementById('application');
+  constructor(elements) {
+    const [appEl, userEl] = elements;
     const eventBus = new EventBus();
 
-    const userbar = new UserbarPresenter(eventBus);
+    const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new ScoreBoardView(application, eventBus, [userbar.view]);
+    const view = new ScoreBoardView(appEl, eventBus, [userbar.view]);
     const model = new ScoreBoardModel(eventBus);
 
     super(view, model, eventBus);

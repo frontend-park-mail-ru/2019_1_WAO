@@ -14,10 +14,10 @@ export default class SignUpPresenter extends BasePresenter {
    * Создает Модель и Представление элемента
    * Подписывается на события
    */
-  constructor() {
-    const application = document.getElementById('application');
+  constructor(elements) {
+    const [appEl] = elements;
     const eventBus = new EventBus();
-    const view = new SignUpView(application, eventBus);
+    const view = new SignUpView(appEl, eventBus);
     const model = new SignUpModel(eventBus);
 
     super(view, model, eventBus);

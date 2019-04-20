@@ -10,8 +10,9 @@ export default class UserbarModel {
    * Конструктор. Подписывает на проверку авторизации
    * @param {EventBus} eventBus
    */
-  constructor(eventBus) {
+  constructor(eventBus, localBus) {
     this.eventBus = eventBus;
+    this.localBus = localBus;
     this.eventBus.on('data_req', () => {
       console.log('data_req via Userbar Model');
       this.detectUser();
@@ -34,6 +35,7 @@ export default class UserbarModel {
       console.log(err);
     }
     console.log('ready');
+    this.localBus.trigger('show', User);
     this.eventBus.trigger('ready', User);
   }
 

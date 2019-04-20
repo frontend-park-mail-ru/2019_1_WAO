@@ -43,6 +43,10 @@ export default class BaseView {
       this.show(data);
       this.eventBus.trigger(viewEvent);
     });
+
+    this.eventBus.on('hide', () => {
+      this.hide();
+    });
   }
 
   /**
@@ -55,10 +59,9 @@ export default class BaseView {
     const temp = Object.assign(this.viewData, data);
     this.savedTmpl = '';
     this.savedTmpl += this.template(temp);
-    this.components.forEach((component) => {
-      this.savedTmpl += component.getTemplate(data);
-    });
-    // this.el.innerHTML = Object.assign(this.savedTmpl);
+    // this.components.forEach((component) => {
+    //   this.savedTmpl += component.getTemplate(data);
+    // });
     this.rendered = true;
   }
 

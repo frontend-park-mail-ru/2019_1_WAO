@@ -1,7 +1,7 @@
 import UserbarView from '../views/UserbarView';
 import UserbarModel from '../models/UserbarModel';
 import BasePresenter from './BasePresenter';
-// import { EventBus } from '../modules/eventbus';
+import { EventBus } from '../modules/eventbus';
 
 /**
  * Представитель Меню
@@ -13,12 +13,15 @@ export default class UserbarPresenter extends BasePresenter {
    * Создает Модель и Представление элемента
    * Подписывается на события
    */
-  constructor(eventBus) {
-    const application = document.getElementById('application');
-    // const eventBus = new EventBus();
-    const view = new UserbarView(application, eventBus);
-    const model = new UserbarModel(eventBus);
+  constructor(eventBus, element) {
+    const localBus = new EventBus();
+    const view = new UserbarView(element, localBus);
+    const model = new UserbarModel(eventBus, localBus);
 
     super(view, model, eventBus);
+
+    eventBus.on('hide', () => {
+      localBus.trigger('hide');
+    });
   }
 }

@@ -16,10 +16,10 @@ export default class SignInPresenter extends BasePresenter {
    * @param {Router} Router
    * @param {EventBus} globalEventBus Глобальная шина событий
    */
-  constructor() {
-    const application = document.getElementById('application');
+  constructor(elements) {
+    const [appEl] = elements;
     const eventBus = new EventBus();
-    const view = new SignInView(application, eventBus);
+    const view = new SignInView(appEl, eventBus);
     const model = new SignInModel(eventBus);
 
     super(view, model, eventBus);

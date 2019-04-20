@@ -10,10 +10,8 @@ export default class GamePresenter {
    * Создает Модель и Представление элемента, а также презентереов включаемых компонентов
    * Подписывается на события
    */
-  constructor() {
-    const application = document.getElementById('application');
-
-    this.view = new PresentationView(application);
+  constructor(element) {
+    this.view = new PresentationView(element);
   }
 
   call() {

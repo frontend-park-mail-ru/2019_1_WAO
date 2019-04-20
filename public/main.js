@@ -57,17 +57,25 @@ function start() {
   console.log('Start');
 
   const application = document.getElementById('application');
+  const common = document.createElement('div');
+  common.classList.add('common');
+  application.appendChild(common);
+  const appEl = document.createElement('div');
+  const userEl = document.createElement('div');
+  application.appendChild(appEl);
+  application.appendChild(userEl);
+
   Router.setRoot(application);
-  Router.add('/',         new MenuPresenter());
-  Router.add('/users',    new ScoreBoardPresenter());
-  Router.add('/profile',  new ProfilePresenter());
-  Router.add('/signin',   new SignInPresenter());
-  Router.add('/signup',   new SignUpPresenter());
-  Router.add('/about',    new AboutPresenter());
-  Router.add('/store',    new StorePresenter());
-  Router.add('/gameoffline', new GamePresenter());
-  Router.add('/gameonline',  new OnlineGamePresenter());
-  Router.add('/show',  new PresentationPresenter());
+  Router.add('/',         new MenuPresenter([appEl, userEl]));
+  Router.add('/users',    new ScoreBoardPresenter([appEl, userEl]));
+  Router.add('/profile',  new ProfilePresenter([appEl, userEl]));
+  Router.add('/signin',   new SignInPresenter([appEl]));
+  Router.add('/signup',   new SignUpPresenter([appEl]));
+  Router.add('/about',    new AboutPresenter([appEl, userEl]));
+  Router.add('/store',    new StorePresenter([appEl, userEl]));
+  Router.add('/gameoffline', new GamePresenter([appEl]));
+  Router.add('/gameonline',  new OnlineGamePresenter([appEl]));
+  Router.add('/show',  new PresentationPresenter([appEl]));
 
   subscribeGlobalBus();
 

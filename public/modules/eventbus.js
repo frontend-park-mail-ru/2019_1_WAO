@@ -8,6 +8,7 @@ export const EVENTS = [
   'ready',
   'render',
   'show',
+  'hide',
   'auth_check',
   'auth_ok',
   'auth_bad',

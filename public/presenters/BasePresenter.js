@@ -20,6 +20,7 @@ export default class BasePresenter {
 
   // eslint-disable-next-line class-methods-use-this
   stop() {
-    console.log('game close');
+    // this.view.hide();
+    this.eventBus.trigger('hide');
   }
 }
