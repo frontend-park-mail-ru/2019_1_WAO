@@ -1,13 +1,15 @@
+import { baseUrl } from './api';
+
 /**
  * Данные о пользоваетеле
  */
 const User = {
   nickname: 'New Player',
-  email: 'no mail',
+  email: 'Empty',
   score: 0,
   wins: 0,
   games: 0,
-  image: './uploads/user.png',
+  image: `${baseUrl}/uploads/user.png`,
   isAuth: false,
 };
 
@@ -18,6 +20,15 @@ User.set = function set(data) {
       User[param] = data[param];
     }
   }
+};
+
+User.reset = function reset() {
+  User.nickname = 'New Player';
+  User.email = 'Empty';
+  User.score = 0;
+  User.wins = 0;
+  User.image = `${baseUrl}/uploads/user.png`;
+  User.isAuth = false;
 };
 
 export default User;

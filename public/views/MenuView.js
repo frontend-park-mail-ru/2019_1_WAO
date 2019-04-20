@@ -35,6 +35,11 @@ const viewData = {
       href: '/about',
       public: true,
     },
+    {
+      text: 'Презентация',
+      href: '/show',
+      public: true,
+    },
   ],
 };
 

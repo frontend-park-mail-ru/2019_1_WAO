@@ -1,4 +1,4 @@
-// import { getAuth, checkStatus, parseJSON } from '../modules/api';
+import { getAuth, checkStatus, parseJSON } from '../modules/api';
 import { GlobalBus } from '../modules/eventbus';
 import User from '../modules/user';
 
@@ -14,7 +14,7 @@ export default class UserbarModel {
     this.eventBus = eventBus;
     this.eventBus.on('data_req', () => {
       console.log('data_req via Userbar Model');
-      this.checkAuth();
+      this.detectUser();
     });
 
     this.eventBus.on('view_show', () => {
@@ -23,38 +23,47 @@ export default class UserbarModel {
   }
 
   /**
+   * Установка данных пользователя
+   */
+  async detectUser() {
+    try {
+      if (!User.isAuth) {
+        await UserbarModel.checkAuth();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    console.log('ready');
+    this.eventBus.trigger('ready', User);
+  }
+
+  /**
    * Проверка авторизации
    */
-  /*
-  async checkAuth() {
+  static async checkAuth() {
     try {
       const res = await getAuth();
       const status = await checkStatus(res);
       const data = await parseJSON(status);
-      console.log(data);
       User.set(data);
       User.isAuth = true;
-      this.eventBus.trigger('ready', data);
-      // UserbarModel.waitAction();
+      console.log(User);
     } catch (err) {
       console.log(err);
-      console.log('menu auth bad');
-      User.isAuth = false;
-      GlobalBus.trigger('auth_bad');
+      User.reset();
+      console.log('reset');
     }
-  }
-  */
-
-  checkAuth() {
-    console.log('UserbarModel User: ', User);
-    this.eventBus.trigger('ready', User);
   }
 
   /**
    * Отклик на клики пользователя
    */
   static waitAction() {
-    const [buttonOut] = document.getElementsByClassName('userbar__door');
+    const buttons = document.getElementsByClassName('app-actions__out');
+    if (buttons.length === 0) {
+      return;
+    }
+    const [buttonOut] = buttons;
     buttonOut.addEventListener('click', (event) => {
       event.preventDefault();
       console.log('PRESS OUT');

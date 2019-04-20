@@ -1,7 +1,13 @@
 <div class="menu-bar">
-  {{#each menuButtons}}
-    {{#if this.public}}
+  {{#if isAuth}}
+    {{#each menuButtons}}
       {{> ./__button/__button.hbs this}}
-    {{/if}}
-  {{/each}}
+    {{/each}}
+  {{else}}
+    {{#each menuButtons}}
+      {{#if this.public}}
+        {{> ./__button/__button.hbs this}}
+      {{/if}}
+    {{/each}}
+  {{/if}}
 </div>
