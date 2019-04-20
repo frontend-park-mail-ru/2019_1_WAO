@@ -373,50 +373,11 @@ app.get('/api/users', (req, res) => {
       games: user.games,
       wins: user.wins,
     }));
-  console.log(scorelist);
-  res.status(200).json(scorelist);
-});
-
-app.get('/api/users/:page', (req, res) => {
-  res = setHeaders(res, setHeadearListOnPage);
-  const scorelist = Object.values(users)
-    .sort((l, r) => r.score - l.score)
-    .map(user => ({
-      nickname: user.nickname,
-      score: user.score,
-      games: user.games,
-      wins: user.wins,
-    }));
-  // console.log(scorelist);
-  const page = parseInt(req.params.page);
-  const limit = 10;
-  const pages = Math.ceil(scorelist.length / limit);
-  const offset = (page - 1) * limit;
-  let end = scorelist.length;
-  if (scorelist.length > offset + limit) {
-    end = offset + limit;
-  }
-
-  const result = scorelist.slice(offset, end);
-
-  res.status(200).json({ page, pages, users: result });
-});
-
-app.get('/api/users', (req, res) => {
-  res = setHeaders(res, setHeadearListOnPage);
-  const scorelist = Object.values(users)
-    .sort((l, r) => r.score - l.score)
-    .map(user => ({
-      nickname: user.nickname,
-      score: user.score,
-      games: user.games,
-      wins: user.wins,
-    }));
   // console.log(scorelist);
   // const page = parseInt(req.params.page);
   // const limit = 10;
   const page = req.query.offset;
-  const limit = req.query.page;
+  const limit = req.query.limit;
   const pages = Math.ceil(scorelist.length / limit);
   const offset = (page - 1) * limit;
   let end = scorelist.length;

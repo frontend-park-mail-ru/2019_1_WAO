@@ -1,5 +1,5 @@
 import {
-  getScoreBoard, checkStatus, parseJSON,
+  checkStatus, parseJSON, getUsers,
 } from '../modules/api';
 import User from '../modules/user';
 
@@ -26,7 +26,7 @@ export default class ScoreBoardModel {
 
   async makeTable() {
     try {
-      const res = await getScoreBoard(this.page, this.limit);
+      const res = await getUsers(this.limit, this.page);
       const status = await checkStatus(res);
       const data = await parseJSON(status);
       console.log('score ok');
