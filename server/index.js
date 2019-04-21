@@ -288,7 +288,7 @@ app.post('/api/signin', (req, res) => {
   res.status(200).json(users[nickname]);
 });
 
-app.get('/api/user/:nickname', (req, res) => {
+app.get('/api/users/:nickname', (req, res) => {
   const { nickname } = req.params;
   console.log(`connect: ${nickname}`);
 
@@ -315,7 +315,7 @@ app.get('/api/user/:nickname', (req, res) => {
   res.status(200).json(send);
 });
 
-app.put('/api/user/:nickname', (req, res) => {
+app.put('/api/users/:nickname', (req, res) => {
   res = setHeaders(res, setHeadearListOnPage);
   const { nickname } = req.params;
   console.log(`connect: ${nickname}`);
