@@ -200,7 +200,7 @@ const isAuth = (req, res) => {
       image: users[nickname].image,
     };
     // res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
-    res.json(send);
+    res.json(nickname);
   } else {
     return res.status(401).json({ error: 'Не авторизован' });
   }
@@ -208,7 +208,7 @@ const isAuth = (req, res) => {
 
 app.get('/api/session', (req, res) => isAuth(req, res));
 
-app.delete('/api/signout', (req, res) => {
+app.delete('/api/session', (req, res) => {
   res = setHeaders(res, setHeadearListOnPage);
   console.log('session');
   console.log(req.cookies.sessionid);
@@ -221,7 +221,7 @@ app.delete('/api/signout', (req, res) => {
   return res.status(401);
 });
 
-app.post('/api/signup', (req, res) => {
+app.post('/api/users', (req, res) => {
   res = setHeaders(res, setHeadearListOnPage);
   const { nickname } = req.body;
   const { email } = req.body;

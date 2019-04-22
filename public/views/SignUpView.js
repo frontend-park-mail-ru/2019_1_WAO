@@ -36,6 +36,10 @@ const viewData = {
   title: {
     text: 'Регистрация',
   },
+  sign: {
+    text: 'Обратно',
+    href: '/signin',
+  },
 };
 
 /**

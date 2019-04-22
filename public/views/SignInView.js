@@ -24,6 +24,10 @@ const viewData = {
   title: {
     text: 'Войти',
   },
+  sign: {
+    text: 'Регистрация',
+    href: '/signup',
+  },
 };
 
 /**

@@ -4,13 +4,15 @@
   width: 360px;
   height: 45px;
   border-radius: 8px;
-  border: solid 1px #979797;
-  background-color: #d9dd63;
+  border: solid 1px #287191;
+  background-color: #3c8ab0;
   opacity: 1;
+  font-size: 24px;
+  color: #ffffff;
 }
 
 .form-button:hover {
-  background-color: #d5db25;
+  background-color: #3c8ab0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   transition: 0.3s;
 }
@@ -21,5 +23,5 @@
 
 .form-button:active {
   color: #ffffff;
-  background-color: rgb(255, 255, 0);
+  background-color: #3c8ab0;
 }

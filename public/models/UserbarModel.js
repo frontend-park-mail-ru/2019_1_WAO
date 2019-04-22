@@ -1,4 +1,6 @@
-import { getAuth, checkStatus, parseJSON } from '../modules/api';
+import {
+  getAuth, checkStatus, parseJSON, getUser,
+} from '../modules/api';
 import { GlobalBus } from '../modules/eventbus';
 import User from '../modules/user';
 
@@ -42,11 +44,37 @@ export default class UserbarModel {
   /**
    * Проверка авторизации
    */
-  static async checkAuth() {
+  static async checkAuthOld() {
     try {
       const res = await getAuth();
       const status = await checkStatus(res);
       const data = await parseJSON(status);
+      User.set(data);
+      User.isAuth = true;
+      console.log(User);
+    } catch (err) {
+      console.log(err);
+      User.reset();
+      console.log('reset');
+    }
+  }
+
+  /**
+   * Проверка авторизации
+   */
+  static async checkAuth() {
+    try {
+      const res = await getAuth();
+      const status = await checkStatus(res);
+      const nickname = await parseJSON(status);
+      // const { nickname } = nickname0;
+      console.log(`session ok for ${nickname}`);
+
+      const res2 = await getUser(nickname);
+      const status2 = await checkStatus(res2);
+      const data = await parseJSON(status2);
+      console.log('get user ok');
+
       User.set(data);
       User.isAuth = true;
       console.log(User);

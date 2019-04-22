@@ -35,7 +35,7 @@
   height: 45px;
   opacity: 0.98;
   border-radius: 8px;
-  border: solid 1px #267ea5;
+  border: solid 1px #3c8ab0;
   background-color: #d8d8d8;
   font-size: 60%;
 }
@@ -91,20 +91,4 @@
   background-color: #5b88bd;
   color: #ffffff;
   opacity: 1;
-}
-
-.signin-form__signin-btn {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px;
-  border: solid;
-  border-width: 1px;
-  border-radius: 8px;
-  color: #0f8bec;
-  font-size: 24px;
-  margin: 10px 0px 30px 0px;
-}
-
-.signin-form__signin-btn:hover {
-  box-shadow: 0 0 5px #0f8bec;
 }

@@ -104,7 +104,7 @@ export function getAuth() {
  * return {Promise<Responce>}
  */
 export function delAuth() {
-  return delFetch('/signout');
+  return delFetch('/session');
 }
 
 /**
@@ -150,7 +150,8 @@ export function postSignIn(body = {}) {
  * return {Promise<Responce>}
  */
 export function postSignUp(body = {}) {
-  return postFetch('/signup', body);
+  // return postFetch('/signup', body);
+  return postFetch('/users', body);
 }
 
 /**
