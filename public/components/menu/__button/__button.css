@@ -1,17 +1,40 @@
-.menu-bar__button {
-  border-style: solid;
-  border-color: #90a5a5;
-  border-width: 2px;
-  border-radius: 30px;
-  background-color: rgba(216, 216, 216, 0.5);
-  width: 300px;
-  padding: 15px;
-  color: #0f8bec;
-  font-size: 24px;
+
+@media (max-width: 600px) {
+  .menu-bar__button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;  
+  
+    border-style: solid;
+    border-color: #90a5a5;
+    border-width: 2px;
+    border-radius: 30px;
+    padding: 15px;
+    color: #0f8bec;
+    font-size: 24px;
+    background: linear-gradient(90deg, #d8d8d840, #d8d8d8DD);
+  }
+}
+
+@media (min-width: 600px) {
+  .menu-bar__button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;  
+  
+    border-style: solid;
+    border-color: #90a5a5;
+    border-width: 2px;
+    border-radius: 30px;
+    padding: 15px;
+    color: #0f8bec;
+    font-size: 24px;
+    background: linear-gradient(90deg, #d8d8d840, #d8d8d8DD);
+  }
 }
 
 .menu-bar__button:hover {
-  background-color: rgba(216, 216, 216, 0.9);
+  background-color: #d8d8d8DD;
   border-color: rgb(47, 155, 238);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   transition: 0.3s;
