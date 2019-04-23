@@ -1,7 +1,6 @@
 import {
   checkStatus, parseJSON, getUsers,
 } from '../modules/api';
-import User from '../modules/user';
 
 /**
  * Таблица лидеров
@@ -33,11 +32,10 @@ export default class ScoreBoardModel {
       console.log(data);
       // this.page = data.page;
       this.pages = data.pages;
-      const totalData = Object.assign(data, User);
-      console.log(totalData);
+      console.log(data);
 
-      this.eventBus.trigger('render', totalData);
-      this.eventBus.trigger('show', totalData);
+      this.eventBus.trigger('render', data);
+      this.eventBus.trigger('show', data);
     } catch (err) {
       console.log('score bad');
       console.log(err);

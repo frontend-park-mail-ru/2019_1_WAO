@@ -9,7 +9,7 @@ import SignInPresenter from './presenters/SigninPresenter';
 import SignUpPresenter from './presenters/SignupPresenter';
 import AboutPresenter from './presenters/AboutPresenter';
 import StorePresenter from './presenters/StorePresenter';
-import GamePresenter from './presenters/GamePresenter';
+import OfflineGamePresenter from './presenters/OfflineGamePresenter';
 import OnlineGamePresenter from './presenters/OnlineGamePresenter';
 import PresentationPresenter from './presenters/PresentationPresenter';
 
@@ -74,7 +74,7 @@ function start() {
   Router.add('/signup',   new SignUpPresenter([appEl]));
   Router.add('/about',    new AboutPresenter([appEl, userEl]));
   Router.add('/store',    new StorePresenter([appEl, userEl]));
-  Router.add('/gameoffline', new GamePresenter([appEl]));
+  Router.add('/gameoffline', new OfflineGamePresenter([appEl]));
   Router.add('/gameonline',  new OnlineGamePresenter([appEl]));
   Router.add('/show',  new PresentationPresenter([appEl]));
 

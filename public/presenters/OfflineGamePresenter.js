@@ -2,12 +2,13 @@ import { EventBus } from '../modules/eventbus';
 import Game from '../modules/game/game';
 import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
+import BasePresenter from './BasePresenter';
 
 /**
  * Представитель Игры
  * @class GamePresenter
  */
-export default class GamePresenter {
+export default class OfflineGamePresenter extends BasePresenter {
   /**
    * Конструктор
    * Создает Модель и Представление элемента, а также презентереов включаемых компонентов
@@ -16,9 +17,8 @@ export default class GamePresenter {
   constructor(elements) {
     const [appEl] = elements;
     const eventBus = new EventBus();
-    this.eventBus = eventBus;
-
-    this.view = new GameView(appEl, this.eventBus);
+    const view = new GameView(appEl, eventBus);
+    super(view, {}, eventBus);
   }
 
   call() {

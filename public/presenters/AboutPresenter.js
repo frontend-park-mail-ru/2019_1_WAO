@@ -1,5 +1,4 @@
 import AboutView from '../views/AboutView';
-import AboutModel from '../models/AboutModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
@@ -24,8 +23,7 @@ export default class AboutPresenter extends BasePresenter {
     const userbar = new UserbarPresenter(eventBus, userEl);
 
     const view = new AboutView(appEl, eventBus, [userbar.view]);
-    const model = new AboutModel(eventBus);
-    super(view, model, eventBus);
+    super(view, {}, eventBus);
 
     this.eventBus.on('call', () => {
       this.eventBus.trigger('data_req');

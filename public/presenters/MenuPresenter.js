@@ -1,5 +1,4 @@
 import MenuView from '../views/MenuView';
-import MenuModel from '../models/MenuModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
@@ -24,8 +23,7 @@ export default class MenuPresenter extends BasePresenter {
     const userbar = new UserbarPresenter(eventBus, userEl);
 
     const view = new MenuView(appEl, eventBus, [userbar.view]);
-    const model = new MenuModel(eventBus);
-    super(view, model, eventBus);
+    super(view, {}, eventBus);
 
     this.eventBus.on('call', () => {
       this.eventBus.trigger('data_req');
