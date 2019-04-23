@@ -14,11 +14,12 @@ export default class GamePresenter {
    * Создает Модель и Представление элемента, а также презентереов включаемых компонентов
    * Подписывается на события
    */
-  constructor(element) {
+  constructor(elements) {
+    const [appEl] = elements;
     const eventBus = new EventBus();
     this.eventBus = eventBus;
 
-    this.view = new GameView(element, this.eventBus);
+    this.view = new GameView(appEl, this.eventBus);
   }
 
   call() {

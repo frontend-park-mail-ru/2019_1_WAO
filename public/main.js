@@ -41,7 +41,8 @@ function subscribeGlobalBus() {
     delAuth()
       .then(checkStatus)
       .then(() => {
-        Router.route('/signin');
+        Router.route('/');
+        // Router.route('/signin');
       })
       .catch((err) => {
         console.log(err);
