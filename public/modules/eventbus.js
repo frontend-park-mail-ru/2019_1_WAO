@@ -47,9 +47,9 @@ const GAME_EVENTS = [
  */
 class EventBus {
   constructor(eventsList = EVENTS) {
-    this.events = {};
+    this.events = new Map();
     eventsList.forEach((event) => {
-      this.events[event] = [];
+      this.events.set(event, []);
     });
   }
 
@@ -59,11 +59,12 @@ class EventBus {
      * @param {function} callback Колбэк на это событие
      * */
   on(event, callback) {
-    if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
-      throw new Error(event);
+    if (!this.events.has(event)) {
+      console.log(`add ${event}`);
+      this.events.set(event);
     }
 
-    this.events[event].push(callback);
+    this.events.get(event).push(callback);
   }
 
   /**
@@ -72,11 +73,13 @@ class EventBus {
      * @param {function} callback Колбэк на это событие
      * */
   off(event, callback) {
-    if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
-      throw new Error(event);
+    if (!this.events.has(event)) {
+      console.log(`${event} is not exist`);
+      return;
     }
 
-    this.events[event] = this.events[event].filter(deleted => deleted !== callback);
+    // Удаляем конкретный колбэк из списка колбэков для данного события
+    this.events.set(event, this.events.get(event).filter(deleted => deleted !== callback));
   }
 
   /**
@@ -85,11 +88,11 @@ class EventBus {
      * @param {Array} params Параметры, передаваемые в колбэк
      * */
   trigger(event, ...params) {
-    if (!Object.prototype.hasOwnProperty.call(this.events, event)) {
+    if (!this.events.has(event)) {
       throw new Error(event);
     }
 
-    this.events[event].forEach((callback) => {
+    this.events.get(event).forEach((callback) => {
       callback(...params);
     });
   }
