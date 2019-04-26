@@ -63,11 +63,13 @@ function start() {
   application.appendChild(common);
   const appEl = document.createElement('div');
   const userEl = document.createElement('div');
+  const chatEl = document.createElement('div');
   application.appendChild(appEl);
   application.appendChild(userEl);
+  application.appendChild(chatEl);
 
   Router.setRoot(application);
-  Router.add('/',         new MenuPresenter([appEl, userEl]));
+  Router.add('/',         new MenuPresenter([appEl, userEl, chatEl]));
   Router.add('/users',    new ScoreBoardPresenter([appEl, userEl]));
   Router.add('/profile',  new ProfilePresenter([appEl, userEl]));
   Router.add('/signin',   new SignInPresenter([appEl]));

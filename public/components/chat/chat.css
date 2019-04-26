@@ -1,0 +1,18 @@
+.chat {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+
+  background-color: rgba(216, 216, 216, 0.5);
+  border-color: rgba(216, 216, 216, 0);
+  border-radius: 20px;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 0px;
+  justify-items: center;
+  align-items: center;
+  width: 400px;
+  height: 120px;
+}

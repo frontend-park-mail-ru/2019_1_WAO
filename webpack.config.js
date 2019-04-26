@@ -27,7 +27,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        // use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader',
+        ],
       },
       {
         test: /\.html$/,
@@ -47,16 +52,6 @@ module.exports = {
           },
         }],
       },
-      /* Пока вручную, а то и без него проблем не мало
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {
-          // eslint options (if necessary)
-        }
-      },
-      */
       {
         test: /\.hbs$/,
         loader: 'handlebars-loader',

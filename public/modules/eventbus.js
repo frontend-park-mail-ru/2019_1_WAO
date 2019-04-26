@@ -20,6 +20,7 @@ export const EVENTS = [
   'users_rx',
   'view_show',
   'view_hide',
+  'chat_show',
   'user_show',
   'view_rend',
   'users_req',

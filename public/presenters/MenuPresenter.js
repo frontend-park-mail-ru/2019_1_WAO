@@ -2,6 +2,7 @@ import MenuView from '../views/MenuView';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
+import ChatPresenter from './ChatPresenter'; // временно
 
 /**
  * Представитель Меню
@@ -14,15 +15,16 @@ export default class MenuPresenter extends BasePresenter {
    * Подписывается на события
    */
   constructor(elements) {
-    const [appEl, userEl] = elements;
+    const [appEl, userEl, chatEl] = elements;
     const eventBus = new EventBus();
 
     // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
     const userbar = new UserbarPresenter(eventBus, userEl);
+    const chat = new ChatPresenter(eventBus, chatEl);
 
-    const view = new MenuView(appEl, eventBus, [userbar.view]);
+    const view = new MenuView(appEl, eventBus, [userbar.view, chat.view]);
     super(view, {}, eventBus);
 
     this.eventBus.on('call', () => {

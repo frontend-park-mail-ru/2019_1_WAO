@@ -14,7 +14,23 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (max-width: 1800px) {
+  .scoreboard {
+    margin-top: calc(450px - 20vw);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+    width: 100%;
+    opacity: 0.7;
+    border-radius: 8px;
+    border: solid 1px #979797;
+    background-color: #d8d8d8;
+    text-align: center;
+    padding: 20px 40px 20px 40px;
+  }
+}
+
+@media (min-width: 1800px) {
   .scoreboard {
     margin-top: 5%;
     margin-left: auto;
@@ -51,7 +67,8 @@
   height: 50px;
   border-radius: 8px;
   border: solid 1px #979797;
-  background-color: #d9dd63;
+  background-color: #287191;
+  color: #FFFFFF;
 }
 
 .scoreboard__row {
