@@ -1,3 +1,6 @@
+:root {
+  --border-rad-form: 20px;
+}
 .chat {
   position: absolute;
   top: 20px;
@@ -6,31 +9,63 @@
 
   background-color: #d8d8d880;
   border-color: #d8d8d800;
-  border-radius: 20px;
+  border-radius: var(--border-rad-form);
   height: 500px;
   width: auto;
 }
 
+.chat-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 1fr 40px; 
+  grid-template-areas: "header" "message" "form";
+}
+
 .chat__head {
+  grid-area: header;
+  /* border: 1px solid #d8d8d800; */
+  /* border-top: 1px solid black;
+  border-top: 1px solid black; */
+  border-top-left-radius: var(--border-rad-form);
+  border-top-right-radius: var(--border-rad-form);
+  align-content: center;
+  padding-top: 16px;
+
+  text-align: center;
+  background-color: lightblue;
+  color: white;
 }
 
 .messages-area {
+  grid-area: message;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 4fr;
+  grid-template-areas: "photo" "message";
+
   background-color: #FFFFFF;
-  width: 95%;
+  /* width: 95%; */
   height: 400px;;
 }
 
-.messages-area__message {
-  margin: 10px;
-  text-align: left;
-  font-size: 16px;
-  border: solid;
-  border-color: #d8d8d800;
+.message-input__photo {
+  grid-area: photo;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+
+.messages-area__message-area {
+  grid-area: message;
+  /* margin: 10px; */
+  /* text-align: left; */
+  font-size: 24px;
   background-color: #d8d8d800;
 }
 
 .message-input {
-  width: 95%;
+  grid-area: form;
+
+  /* width: 95%; */
   height: 50px;
   display: grid;
   grid-template-columns: 8fr 2fr;
