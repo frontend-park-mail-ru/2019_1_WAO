@@ -26,9 +26,9 @@ export default class ChatModel {
     const form = document.querySelector('form');
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-      const [el] = document.getElementsByClassName('message-input__input');
-      const message = el.value;
-      // const message = form.elements.message.value;
+      // const [el] = document.getElementsByClassName('message-input__input');
+      // const message = el.value;
+      const message = form.elements.message.value;
       Chat.send(message);
     });
   }

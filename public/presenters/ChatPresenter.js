@@ -33,14 +33,9 @@ export default class ChatPresenter extends BasePresenter {
       localBus.trigger('hide');
     });
 
-    eventBus.on('call', () => {
-      console.log('Chat call ws');
-      Chat.start();
-      localBus.trigger('show');
-    });
-
-    GlobalBus.on('chat_rx', (data) => {
-      localBus.trigger('show', data);
-    });
+    // GlobalBus.on('chat_rx', (data) => {
+    //   localBus.trigger('hide');
+    //   localBus.trigger('show', data);
+    // });
   }
 }

@@ -4,18 +4,20 @@
             Чат
         </div>
         <div class="messages-area">
+            {{#each msg}}
             <div class="messages-area__photo">
                 <img src="./uploads/fon.jpg" alt="user" srcset="" width="40" height="40">
             </div>
             <div class="messages-area__message-area">
-                <a class="message-area__nickname">Гошан</a>
-                <div class="massage-area__time">16:30</div>
-                <div class="massage-area__massage">Сообщение</div>
+                <a class="message-area__nickname">{{ this.author_name }}</a>
+                <div class="massage-area__time">{{ this.data }}</div>
+                <div class="massage-area__massage">{{ this.text }}</div>
             </div>
+            {{/each}}
         </div>
         <form class="message-input">
-            <input class="message-input__input" type="text" name="message">
-            <input class="message-input__button" type="submit" data-href="#">
+            <input class="message-input__input" type="text" name="message" placeholder="message">
+            <input class="message-input__button" type="submit" href="#" data-href="#">
         </form>
     </div>
 </div>

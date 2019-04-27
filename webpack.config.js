@@ -67,8 +67,4 @@ module.exports = {
       entry: `${__dirname}/public/sw.js`,
     }),
   ],
-  watch: true,
-  watchOptions: {
-    aggregateTimaout: 100
-  },
 };

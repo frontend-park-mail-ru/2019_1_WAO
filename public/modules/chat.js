@@ -4,6 +4,8 @@ import User from "./user";
 import { host } from "./api";
 import { GlobalBus } from './eventbus';
 
+const chatAdr = '192.168.43.245:8080';
+
 class Chat {
   constructor() {
     this.host = host;
@@ -15,7 +17,7 @@ class Chat {
       return;
     }
     // this.ws = new WebSocket(`ws://${this.host}/socket`);
-    this.ws = new WebSocket(`ws://127.0.0.1:8080/socket`);
+    this.ws = new WebSocket(`ws://${chatAdr}/socket`);
     console.log('WS START');
     this.connected = true;
 
@@ -24,7 +26,9 @@ class Chat {
       alert(`Ошибка ${error.message}`);
     };
     this.ws.onmessage = (event) => {
-      GlobalBus.trigger('chat_rx', Object.assign(User, event.data));
+      GlobalBus.trigger('chat_rx', event.data);
+      console.log(event.data);
+      // GlobalBus.trigger('chat_rx', { msg: event.data });
     };
   }
 
@@ -38,7 +42,7 @@ class Chat {
     console.log(`WS SEND${text}`);
     this.ws.send(
       JSON.stringify({
-        author: User.nickname,
+        author_name: User.nickname,
         text,
       }),
     );

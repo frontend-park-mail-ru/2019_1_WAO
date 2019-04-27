@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "node server",
-    "build": "webpack -w",
+    "build": "webpack",
     "lint_show": "eslint --ext .js public/",
     "lint_fix": "eslint --fix public/"
   },
