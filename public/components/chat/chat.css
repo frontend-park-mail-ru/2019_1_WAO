@@ -7,15 +7,8 @@
   background-color: #d8d8d880;
   border-color: #d8d8d800;
   border-radius: 20px;
-  text-align: center;
-  display: grid;
-  grid-template-rows: 30px 300px 30px;
-  grid-gap: 10px;
-  justify-items: center;
-  align-items: center;
-  width: 400px;
   height: 500px;
-  padding: 10px;
+  width: auto;
 }
 
 .chat__head {
@@ -23,23 +16,32 @@
 
 .messages-area {
   background-color: #FFFFFF;
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 400px;;
 }
 
 .messages-area__message {
   margin: 10px;
   text-align: left;
   font-size: 16px;
+  border: solid;
+  border-color: #d8d8d800;
   background-color: #d8d8d800;
 }
 
-.input-area {
-  width: 100%;
-  height: 100%;
+.message-input {
+  width: 95%;
+  height: 50px;
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  grid-gap: 10px;
 }
 
-.message-input {
-  border-radius: 5px;
+.message-input__input {
+  border-radius: 20px;
   font-size: 12px;
+}
+
+.message-input__button {
+  border-radius: 20px;
 }
