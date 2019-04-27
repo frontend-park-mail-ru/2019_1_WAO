@@ -1,6 +1,6 @@
 import User from '../modules/user';
 import {
-  postSignIn, checkStatus, parseJSON,
+  postSignIn, checkStatus, parseJSON, getUser,
 } from '../modules/api';
 import checkXSS from '../modules/safe';
 import { isCorrectNickname, isCorrectPassword } from '../modules/validation';
@@ -79,7 +79,9 @@ export default class SignInModel {
     try {
       const res = await postSignIn(body);
       const status = await checkStatus(res);
-      const data = await parseJSON(status);
+      const res1 = await getUser(body.nickname);
+      const status1 = await checkStatus(res1);
+      const data = await parseJSON(status1);
       User.set(data);
       User.isAuth = true;
       console.log(User);

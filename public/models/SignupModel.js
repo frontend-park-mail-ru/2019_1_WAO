@@ -1,5 +1,5 @@
 import {
-  postSignUp, checkStatus, parseJSON,
+  getUser, postSignUp, checkStatus, parseJSON,
 } from '../modules/api';
 import checkXSS from '../modules/safe';
 import User from '../modules/user';
@@ -79,7 +79,10 @@ export default class SignUpModel {
     try {
       const res = await postSignUp(body);
       const status = await checkStatus(res);
-      const data = await parseJSON(status);
+      // const data = await parseJSON(status);
+      const res1 = await getUser(body.nickname);
+      const status1 = await checkStatus(res1);
+      const data = await parseJSON(status1);
       User.set(data);
       User.isAuth = true;
       console.log(User);
