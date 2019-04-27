@@ -1,8 +1,10 @@
 /* eslint-disable quotes */
 import User from './user';
+import { host } from './api';
 
 class Chat {
   constructor() {
+    this.host = host;
     this.ws.onopen = function () {
       alert('Соединение установлено.');
     };
@@ -38,7 +40,7 @@ class Chat {
   }
 
   start() {
-    this.ws = new WebSocket("ws://127.0.0.1:8080/socket");
+    this.ws = new WebSocket(`ws://${this.host}/socket`);
   }
 
   stop() {
@@ -47,9 +49,9 @@ class Chat {
     );
   }
 
-  send(user, text) {
+  send(text) {
     this.ws.send(JSON.stringify({
-      author: user.nickname,
+      author: User.nickname,
       text,
     }));
   }
