@@ -1,15 +1,21 @@
 <div class="chat">
-    <div class="chat__head">
-        Чат
-    </div>
-    <div class="messages-area">
-        <div class="messages-area__message">
-            <a>Гошан</a>
-            <a>Сообщение</a>
+    <div class="chat-body">
+        <div class="chat__head">
+            Чат
         </div>
+        <div class="messages-area">
+            <div class="messages-area__photo">
+                <img src="./uploads/fon.jpg" alt="user" srcset="" width="40" height="40">
+            </div>
+            <div class="messages-area__message-area">
+                <a class="message-area__nickname">Гошан</a>
+                <div class="massage-area__time">16:30</div>
+                <div class="massage-area__massage">Сообщение</div>
+            </div>
+        </div>
+        <form class="message-input">
+            <input class="message-input__input" type="text" name="message">
+            <input class="message-input__button" type="submit" data-href="#">
+        </form>
     </div>
-    <form class="message-input">
-        <input class="message-input__input">
-        <input class="message-input__button" type="submit" data-href="#">
-    </form>
 </div>
