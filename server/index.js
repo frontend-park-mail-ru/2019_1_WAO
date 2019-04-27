@@ -267,7 +267,7 @@ app.post('/api/users', (req, res) => {
   res.status(201).json(users[nickname]);
 });
 
-app.post('/api/signin', (req, res) => {
+app.post('/signin', (req, res) => {
   res = setHeaders(res, setHeadearListOnPage);
   console.log(req.body);
   const { password } = req.body;

@@ -26,5 +26,9 @@ export default class ChatPresenter extends BasePresenter {
     eventBus.on('hide', () => {
       localBus.trigger('hide');
     });
+
+    eventBus.on('call', () => {
+      localBus.trigger('show');
+    });
   }
 }

@@ -31,7 +31,8 @@ export default class ScoreBoardModel {
       console.log('score ok');
       console.log(data);
       // this.page = data.page;
-      this.pages = data.pages;
+      // this.pages = data.pages;
+      this.pages = 1;
       console.log(data);
 
       this.eventBus.trigger('render', data);

@@ -6,7 +6,8 @@ export const baseUrl = `http://${host}`;
 // export const host = 'waogame.herokuapp.com';
 // export const baseUrl = `https://${host}`;
 
-const apiUrl = '/api';
+const apiUrl = '';
+// const apiUrl = '/api';
 const reqUrl = baseUrl + apiUrl;
 
 /**
@@ -96,7 +97,7 @@ export function parseJSON(res) {
  * return {Promise<Responce>}
  */
 export function getAuth() {
-  return getFetch('/session');
+  return getFetch('/api/session');
 }
 
 /**
@@ -104,7 +105,7 @@ export function getAuth() {
  * return {Promise<Responce>}
  */
 export function delAuth() {
-  return delFetch('/session');
+  return delFetch('/api/session');
 }
 
 /**
@@ -113,7 +114,7 @@ export function delAuth() {
  * return {Promise<Responce>}
  */
 export function getUser(nickname) {
-  return getFetch(`/users/${nickname}`);
+  return getFetch(`/api/users/${nickname}`);
 }
 
 /** НЕ ИСПОЛЬЗУЕТСЯ БУДЕТ УДАЛЕН
@@ -122,7 +123,7 @@ export function getUser(nickname) {
  * return {Promise<Responce>}
  */
 export function getScoreBoard(page = 1) {
-  return getFetch(`/users/${page.toString()}`);
+  return getFetch(`/api/users/${page.toString()}`);
 }
 
 /**
@@ -132,7 +133,7 @@ export function getScoreBoard(page = 1) {
  * return {Promise<Responce>}
  */
 export function getUsers(limit = 10, offset = 0) {
-  return getFetch(`/users/?limit=${limit}&offset=${offset}`);
+  return getFetch(`/api/users/?limit=${limit}&offset=${offset}`);
 }
 
 /**
@@ -151,7 +152,7 @@ export function postSignIn(body = {}) {
  */
 export function postSignUp(body = {}) {
   // return postFetch('/signup', body);
-  return postFetch('/users', body);
+  return postFetch('/api/users', body);
 }
 
 /**
@@ -161,5 +162,5 @@ export function postSignUp(body = {}) {
  * return {Promise<Responce>}
  */
 export function putProfile(nickname, body = {}) {
-  return putFetch(`/users/${nickname}`, body);
+  return putFetch(`/api/users/${nickname}`, body);
 }

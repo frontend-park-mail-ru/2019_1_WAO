@@ -12,6 +12,7 @@ import StorePresenter from './presenters/StorePresenter';
 import OfflineGamePresenter from './presenters/OfflineGamePresenter';
 import OnlineGamePresenter from './presenters/OnlineGamePresenter';
 import PresentationPresenter from './presenters/PresentationPresenter';
+import ChatPresenter from './presenters/ChatPresenter';
 
 import './img/user.png';
 import './img/door.svg';
@@ -79,6 +80,7 @@ function start() {
   Router.add('/gameoffline', new OfflineGamePresenter([appEl]));
   Router.add('/gameonline',  new OnlineGamePresenter([appEl]));
   Router.add('/show',  new PresentationPresenter([appEl]));
+  Router.add('/chat',  new ChatPresenter(GlobalBus, appEl));
 
   subscribeGlobalBus();
 
