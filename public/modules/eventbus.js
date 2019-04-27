@@ -29,6 +29,7 @@ export const EVENTS = [
   'valid_err',
   'reset',
   'url_change',
+  'chat_rx',
 ];
 
 const GAME_EVENTS = [

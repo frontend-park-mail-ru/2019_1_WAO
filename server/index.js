@@ -9,14 +9,14 @@ const path = require('path');
 const ws = require('express-ws');
 
 const app = express();
-/*
+
 ws(app);
-app.ws('/ws', (ws) => {
+app.ws('/socket', (ws) => {
   setInterval(() => {
     ws.send('Hello there');
   }, 15000);
 });
-*/
+
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 // app.use(express.static(path.resolve(__dirname, '..', 'dist', 'docs')));
