@@ -17,7 +17,7 @@
 .chat-body {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 1fr 40px; 
+  grid-template-rows: 60px 440px 40px; 
   grid-template-areas: "header" "message" "form";
 }
 
@@ -36,30 +36,52 @@
   color: white;
 }
 
+.messages-list {
+  height: 500px;
+  background-color: #FFFFFF;
+  overflow: auto;
+}
+
 .messages-area {
   grid-area: message;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 4fr;
-  grid-template-areas: "photo" "message";
+  display: flex;
+  flex-direction: row;
 
-  background-color: #FFFFFF;
+  marging: 12px;
+  left: 12px;
+  
   /* width: 95%; */
-  height: 400px;;
 }
 
 .message-input__photo {
-  grid-area: photo;
-  border: 1px solid black;
-  border-radius: 6px;
+  padding: auto 0px auto 36px;
+  width: 90px;
+  align-content: center;
+  /* grid-area: photo; */
+  /* border: 1px solid black;
+  border-radius: 16px; */
 }
-
+.messages-area__top {
+  display: flex;
+  flex-direction: row;
+  /* padding-left: 30px; */
+}
+.messages-area__photo img {
+  border-radius: 16px;
+}
 .messages-area__message-area {
-  grid-area: message;
+  padding: 0px 0px 0px 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   /* margin: 10px; */
   /* text-align: left; */
   font-size: 24px;
   background-color: #d8d8d800;
+}
+
+.message-area__nickname {
+  margin: 0px 25px 4px 0px; 
 }
 
 .message-input {
