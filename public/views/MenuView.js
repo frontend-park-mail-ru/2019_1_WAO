@@ -35,11 +35,6 @@ const viewData = {
       href: '/about',
       public: true,
     },
-    {
-      text: 'Чат',
-      href: '/chat',
-      public: true,
-    },
   ],
 };
 
