@@ -15,16 +15,16 @@ export default class MenuPresenter extends BasePresenter {
    * Подписывается на события
    */
   constructor(elements) {
-    const [appEl, userEl, chatEl] = elements;
+    const [appEl, userEl] = elements;
     const eventBus = new EventBus();
 
     // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
     const userbar = new UserbarPresenter(eventBus, userEl);
-    const chat = new ChatPresenter(eventBus, chatEl);
+    // const chat = new ChatPresenter(eventBus, chatEl);
 
-    const view = new MenuView(appEl, eventBus, [userbar.view, chat.view]);
+    const view = new MenuView(appEl, eventBus, [userbar.view]);
     super(view, {}, eventBus);
 
     this.eventBus.on('call', () => {
