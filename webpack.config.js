@@ -1,6 +1,7 @@
-const HtmlWebPackPlugin  = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 require('babel-polyfill');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
@@ -31,7 +32,17 @@ module.exports = {
         use: [
           'style-loader',
           { loader: 'css-loader', options: { importLoaders: 1 } },
-          'postcss-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                autoprefixer({
+                  browsers: ['ie >= 8', 'last 4 version'],
+                }),
+              ],
+              sourceMap: true,
+            },
+          },
         ],
       },
       {
@@ -44,13 +55,15 @@ module.exports = {
       },
       {
         test: /\.(png|jp(e*)g|svg)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 10, // Convert images < 8kb to base64 strings
-            name: 'images/[name].[ext]',
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10, // Convert images < 8kb to base64 strings
+              name: 'images/[name].[ext]',
+            },
           },
-        }],
+        ],
       },
       {
         test: /\.hbs$/,
