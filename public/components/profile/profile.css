@@ -1,10 +1,11 @@
 @import '../common/vars.css';
 
+
 @media (max-width: 1200px) {
   .profile-form {
+    margin-top: 130px;
     width: 90%;
     max-width: 500px;
-    margin-top: 120px;
     padding: 20px 10px 20px 10px;
 
     opacity: 0.7;
@@ -20,11 +21,31 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (max-width: 1800px) {
   .profile-form {
+    margin-top: calc(450px - 20vw);
     width: 90%;
     max-width: 800px;
+    padding: 20px 10px 20px 10px;
+
+    opacity: 0.7;
+    border-radius: 8px;
+    border: solid 1px var(--formColor);
+    background-color: #d8d8d8;
+
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto;
+  }
+}
+
+@media (min-width: 1800px) {
+  .profile-form {
     margin-top: 5%;
+    width: 90%;
+    max-width: 800px;
     padding: 20px 10px 20px 10px;
 
     opacity: 0.7;
@@ -43,7 +64,9 @@
 @media (max-width: 1200px) {
   .profile-form__card {
     display: grid;
+    grid-template-columns: auto;
     grid-template-rows: auto;
+    grid-template-areas: "right" "left";
     grid-row-gap: 10px;
     margin-top: 20px;
   }
@@ -53,6 +76,7 @@
   .profile-form__card {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    grid-template-areas: "left right";
     grid-row-gap: 10px;
     margin-top: 20px;
   }
@@ -75,6 +99,7 @@
 }
 
 .profile-form__fields-left {
+  grid-area: "left";
   justify-content: center;
   display: grid;
   grid-template-rows: auto;
@@ -82,6 +107,7 @@
 }
 
 .profile-form__fields-right {
+  grid-area: "right";
   justify-content: center;
   display: grid;
   grid-template-rows: auto;
