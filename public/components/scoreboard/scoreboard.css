@@ -1,3 +1,5 @@
+@import '../common/vars.css';
+
 @media (max-width: 1200px) {
   .scoreboard {
     margin-top: 130px;
@@ -7,7 +9,7 @@
     width: 95%;
     opacity: 0.7;
     border-radius: 8px;
-    border: solid 1px #979797;
+    border: solid 1px var(--formColor);
     background-color: #d8d8d8;
     text-align: center;
     padding: 1%;
@@ -23,7 +25,7 @@
     width: 100%;
     opacity: 0.7;
     border-radius: 8px;
-    border: solid 1px #979797;
+    border: solid 1px var(--formColor);
     background-color: #d8d8d8;
     text-align: center;
     padding: 20px 40px 20px 40px;
@@ -39,7 +41,7 @@
     width: 100%;
     opacity: 0.7;
     border-radius: 8px;
-    border: solid 1px #979797;
+    border: solid 1px var(--formColor);
     background-color: #d8d8d8;
     text-align: center;
     padding: 20px 40px 20px 40px;
@@ -66,7 +68,7 @@
   font-size: 30px;
   height: 50px;
   border-radius: 8px;
-  border: solid 1px #979797;
+  border: solid 1px var(--formColor);
   background-color: #287191;
   color: #FFFFFF;
 }

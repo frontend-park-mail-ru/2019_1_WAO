@@ -1,3 +1,5 @@
+@import '../common/vars.css';
+
 @media (max-width: 1200px) {
   .profile-form {
     width: 90%;
@@ -7,7 +9,7 @@
 
     opacity: 0.7;
     border-radius: 8px;
-    border: solid 1px #979797;
+    border: solid 1px var(--formColor);
     background-color: #d8d8d8;
 
     margin-left: auto;
@@ -27,7 +29,7 @@
 
     opacity: 0.7;
     border-radius: 8px;
-    border: solid 1px #979797;
+    border: solid 1px var(--formColor);
     background-color: #d8d8d8;
 
     margin-left: auto;

@@ -1,3 +1,7 @@
+:root {
+  --userbarColor: #d8d8d87f;
+}
+
 @media (max-width: 1200px) {
   .userbar {
     position: absolute;
@@ -8,8 +12,8 @@
     right: 0;
     z-index: 1000;
 
-    background-color: rgba(216, 216, 216, 0.5);
-    border-color: rgba(216, 216, 216, 0);
+    background-color: var(--userbarColor);
+    border-color: var(--userbarColor);
     text-align: center;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -28,8 +32,8 @@
     right: 20px;
     z-index: 1000;
 
-    background-color: rgba(216, 216, 216, 0.5);
-    border-color: rgba(216, 216, 216, 0);
+    background-color: var(--userbarColor);
+    border-color: var(--userbarColor);
     border-radius: 20px;
     text-align: center;
     display: grid;
@@ -68,7 +72,7 @@
 }
 
 .app-actions__label {
-  color: white;
+  color: #ffffff;
   font-size: 24px;
   height: 60%;
 }
