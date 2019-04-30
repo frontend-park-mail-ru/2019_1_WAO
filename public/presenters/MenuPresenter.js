@@ -2,7 +2,7 @@ import MenuView from '../views/MenuView';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
-import ChatPresenter from './ChatPresenter'; // временно
+// import ChatPresenter from './ChatPresenter'; // временно
 
 /**
  * Представитель Меню
@@ -21,6 +21,7 @@ export default class MenuPresenter extends BasePresenter {
     // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
+    // eslint-disable-next-line no-unused-vars
     const userbar = new UserbarPresenter(eventBus, userEl);
     // const chat = new ChatPresenter(eventBus, chatEl);
 

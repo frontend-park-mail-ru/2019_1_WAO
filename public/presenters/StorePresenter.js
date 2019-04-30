@@ -21,9 +21,10 @@ export default class StorePresenter extends BasePresenter {
     // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
+    // eslint-disable-next-line no-unused-vars
     const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new StoreView(appEl, eventBus, [userbar.view]);
+    const view = new StoreView(appEl, eventBus);
     const model = new StoreModel(eventBus);
     super(view, model, eventBus);
 

@@ -12,12 +12,11 @@ export default class ChatView extends BaseView {
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
    */
-  constructor(el, eventBus, components = []) {
+  constructor(el, eventBus) {
     super({
       el,
       eventBus,
       template,
-      components,
       viewData: {},
       // viewEvent: 'chat_show',
     });

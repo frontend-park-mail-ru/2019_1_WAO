@@ -19,9 +19,10 @@ export default class ProfilePresenter extends BasePresenter {
     const [appEl, userEl] = elements;
     const eventBus = new EventBus();
 
+    // eslint-disable-next-line no-unused-vars
     const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new ProfileView(appEl, eventBus, [userbar.view]);
+    const view = new ProfileView(appEl, eventBus);
     const model = new ProfileModel(eventBus);
 
     super(view, model, eventBus);

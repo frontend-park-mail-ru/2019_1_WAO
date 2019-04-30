@@ -20,14 +20,12 @@ export default class BaseView {
     el = document.createElement('div'),
     eventBus,
     template,
-    components = [],
     viewData = {},
     viewEvent = 'view_show',
   } = {}) {
     this.el = el;
     this.eventBus = eventBus;
     this.template = template;
-    this.components = components;
     this.viewData = viewData;
     this.rendered = false;
     this.savedTmpl = '';
@@ -60,9 +58,6 @@ export default class BaseView {
     const temp = Object.assign(this.viewData, data);
     this.savedTmpl = '';
     this.savedTmpl += this.template(temp);
-    // this.components.forEach((component) => {
-    //   this.savedTmpl += component.getTemplate(data);
-    // });
     this.rendered = true;
   }
 

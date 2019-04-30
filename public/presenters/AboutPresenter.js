@@ -20,9 +20,10 @@ export default class AboutPresenter extends BasePresenter {
     // это карточка пользователя, он рендерится внутри Меню,
     // а что бы он мог реагировать на события,
     // в него пробрасывается шина событий Меню
+    // eslint-disable-next-line no-unused-vars
     const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new AboutView(appEl, eventBus, [userbar.view]);
+    const view = new AboutView(appEl, eventBus);
     super(view, {}, eventBus);
 
     this.eventBus.on('call', () => {

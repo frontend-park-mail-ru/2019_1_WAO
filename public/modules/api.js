@@ -133,7 +133,7 @@ export function getScoreBoard(page = 1) {
  * return {Promise<Responce>}
  */
 export function getUsers(limit = 10, offset = 0) {
-  return getFetch(`/api/users/?limit=${limit}&offset=${offset}`);
+  return getFetch(`/api/users?limit=${limit}&offset=${offset}`);
 }
 
 /**
