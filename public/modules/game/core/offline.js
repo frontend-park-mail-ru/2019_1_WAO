@@ -32,22 +32,23 @@ export default class OfflineGame extends GameCore {
         dy: 0,
       },
     };
+    this.player.setState(this.state);
 
-    this.player.setPlates([
-      { x: 50, y: 100 },
-      { x: 250, y: 445 },
-      { x: 100, y: 305 },
-      { x: 350, y: 205 },
-      { x: 35, y: 565 },
-      { x: 230, y: 685 },
-    ]);
+    // this.player.setPlates([
+    // { x: 50, y: 100 },
+    // { x: 250, y: 445 },
+    // { x: 100, y: 305 },
+    // { x: 350, y: 205 },
+    // { x: 35, y: 565 },
+    // { x: 230, y: 685 },
+    // ]);
 
-    this.player.setPlayer({
-      x: 150,
-      y: 600,
-      dx: 0,
-      dy: 0,
-    });
+    // this.player.setPlayer({
+    // x: 150,
+    // y: 600,
+    // dx: 0,
+    // dy: 0,
+    // });
 
     setTimeout(
       () => {

@@ -1,6 +1,6 @@
 export default class Fizic {
   constructor(state, canvas) {
-    // передаваемые данные
+  // передаваемые данные
     this.canvas = canvas;
     this.state = state;
     // Объявляемые переменные
@@ -11,7 +11,7 @@ export default class Fizic {
     this.state.me.dx = 0;
     this.state.me.dy = 0;
 
-    //  Постоянные для прыжка
+    // Постоянные для прыжка
     this.gravite = 9.8;
     this.moveSides = 1;
   }
@@ -24,6 +24,12 @@ export default class Fizic {
 
 
   // Установка объектов
+
+  setState(state) {
+    if (!this.state) {
+      this.state = state;
+    }
+  }
 
   setPlates(plates) {
     if (!this.state.plates) {
@@ -81,26 +87,26 @@ export default class Fizic {
   }
 
   jump(delay) {
-    if (this.state.statePlateUnderMe === true) {  // пропустить 1 кадр после соударения с пластиной
+    if (this.state.statePlateUnderMe === true) { // пропустить 1 кадр после соударения с пластиной
       this.state.stateLastPlateUnderMe = true;
       this.state.statePlateUnderMe = false;
 
       // Все еще будет работать физика
-    } else if (this.state.stateLastPlateUnderMe === true) {  // Если я ударился о пластину, то вверх
+    } else if (this.state.stateLastPlateUnderMe === true) { // Если я ударился о пластину, то вверх
       this.state.me.dy = 5;
-    } else {  // Если сейчас я не на пластине, то рассчитывай как обычно
+    } else { // Если сейчас я не на пластине, то рассчитывай как обычно
       this.state.me.dy += this.gravite * delay;
     }
   }
 
   // moveLeft(delay) {
-  //   this.state.me.dx += this.moveSides * delay;
+  // this.state.me.dx += this.moveSides * delay;
   // }
 
 
   engine(delay) {
-    // this.scoreCounter();
-    // this.scoreShow();
+  // this.scoreCounter();
+  // this.scoreShow();
     this.circleDraw();
     this.collision();
     this.jump(delay);

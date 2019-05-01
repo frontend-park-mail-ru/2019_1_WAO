@@ -34,11 +34,11 @@ export default class GameScene {
     this.renderScene = this.renderScene.bind(this);
 
     /*
-    this.me.x , y, // Значения на момент рендеринге
-    xConst, yConst, // Значения при init()
-    jumpHeight, jumpLength, jumpPressed, //переменные для смещения по У - организовывают прыжок
-    dltX, dltY // Значение смещения для сдвига
-    */
+this.me.x , y, // Значения на момент рендеринге
+xConst, yConst, // Значения при init()
+jumpHeight, jumpLength, jumpPressed, //переменные для смещения по У - организовывают прыжок
+dltX, dltY // Значение смещения для сдвига
+*/
   }
 
   init(state) {
@@ -79,7 +79,7 @@ export default class GameScene {
     this.me.collision = false;
     this.gravity = 0.1;
 
-    this.outScore = document.getElementsByClassName('game-score')[0];
+    // this.outScore = document.getElementsByClassName('game-score')[0];
   }
 
   giveCanvas() {
@@ -107,136 +107,13 @@ export default class GameScene {
     // this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
 
-  circleDraw() {
-    if (this.me.x > this.canvas.width) {
-      this.me.x = 0;
-    } else if (this.me.x < 0) {
-        this.me.x = this.canvas.width;
-      }
-  }
-
-  scoreCounter() {
-    if (this.canvas.height - this.me.y > this.me.score) {
-      this.me.score = this.canvas.height - this.me.y;
-    }
-  }
-
-  scoreShow() {
-    this.outScore.innerHTML = ~~this.me.score;
-  }
-
-  collision() {
-    // Пролетает через платформы
-    if (this.me.dy >= 6) {
-      this.me.dy = 6;
-    }
-    for (const plateIndex in this.field) {
-      if (Object.prototype.hasOwnProperty.call(this.field, plateIndex)) {
-        const plate = this.field[plateIndex];
-        if (this.me.dy >= 0) {
-          if (this.me.x >= plate.x && this.me.x <= plate.x + plate.width) {
-            if (Math.abs(this.me.y - plate.y + plate.height) <= 3) {
-              this.me.collision = true;
-              break;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  collis(p1, p2, p3, p4) {
-    const v1 = this.vector_mult(
-      p4.x - p3.x,
-      p4.y - p3.y,
-      p1.x - p3.x,
-      p1.y - p3.y,
-    );
-    const v2 = this.vector_mult(
-      p4.x - p3.x,
-      p4.y - p3.y,
-      p2.x - p3.x,
-      p2.y - p3.y,
-    );
-    const v3 = this.vector_mult(
-      p2.x - p1.x,
-      p2.y - p1.y,
-      p3.x - p1.x,
-      p3.y - p1.y,
-    );
-    const v4 = this.vector_mult(
-      p2.x - p1.x,
-      p2.y - p1.y,
-      p4.x - p1.x,
-      p4.y - p1.y,
-    );
-    if (v1 * v2 <= 0 && v3 * v4 <= 0) return true;
-    return false;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  vector_mult(aX, aY, bX, bY) {
-    return aX * aY - bX * bY;
-  }
-
-  upgrCollision() {
-    for (const plateIndex in this.field) {
-      if (Object.prototype.hasOwnProperty.call(this.field, plateIndex)) {
-        const nextPlayerPosition = {};
-        for (const key in this.me) {
-          // остальные for in так же делай
-          if (Object.prototype.hasOwnProperty.call(this.me, key)) {
-            nextPlayerPosition[key] = this.me[key];
-          }
-        }
-        nextPlayerPosition.y += this.me.dy + this.field[plateIndex].height;
-
-        const Player = {};
-        for (const key in this.me) {
-          Player[key] = this.me[key];
-        }
-        Player.y += this.field[plateIndex].height;
-
-        const plate1 = {};
-        for (const key in this.field[plateIndex]) {
-          plate1[key] = this.field[plateIndex][key];
-        }
-        plate1.x -= this.me.body.width;
-
-        const plate2 = {};
-        for (const key in this.field[plateIndex]) {
-          plate2[key] = this.field[plateIndex][key];
-        }
-        plate2.x += this.field[plateIndex].width;
-
-        if (this.collis(Player, nextPlayerPosition, plate1, plate2)) {
-          this.me.collision = true;
-        }
-      }
-    }
-  }
-
-  jump(delay) {
-    if (this.me.collision === true) {
-      this.me.dy = -6;
-    }
-    this.me.collision = false;
-  }
-
-  gravitation(delay) {
-    this.me.y += this.me.dy;
-    this.me.dy += this.gravity;
-    // if (this.me.dy <= -3) this.me.dy = -this.me.dy;
-    // if (this.me.dy >= 3) this.me.dy = -this.me.dy;
-  }
-
   engine(delay) {
-    this.scoreCounter();
-    this.scoreShow();
-    this.circleDraw();
-    this.upgrCollision();
-    this.jump(delay);
-    this.gravitation(delay);
+    // this.scoreCounter();
+    // this.scoreShow();
+    // this.circleDraw();
+    // this.upgrCollision();
+    // this.jump(delay);
+    // this.gravitation(delay);
   }
 
   renderScene(now) {
@@ -245,25 +122,25 @@ export default class GameScene {
     const delay = now - this.lastFrameTime;
     // отрисовка движений влево -вправо
     // if (this.me.moveLeft) {
-    // 	this.me.x -= 3;
+    //  this.me.x -= 3;
     // }
     // Логика прыжка
     /*
-    if (this.me.jumpPressed) {
-      this.me.jumpCount++;
-      this.me.jumpHeight =
-        -4 *
-        this.me.jumpLength *
-        Math.sin((Math.PI * this.me.jumpCount) / this.me.jumpLength);
-    }
-    if (this.me.jumpCount > this.me.jumpLength) {
-      this.me.jumpCount = 0;
-      this.me.jumpPressed = false;
-      this.me.jumpHeight = 0;
-    }
-    if (this.me.jumpPressed === false) this.me.jumpPressed = true;
-    this.me.y = this.me.jumpHeight + 600;
-    */
+if (this.me.jumpPressed) {
+this.me.jumpCount++;
+this.me.jumpHeight =
+-4 *
+this.me.jumpLength *
+Math.sin((Math.PI * this.me.jumpCount) / this.me.jumpLength);
+}
+if (this.me.jumpCount > this.me.jumpLength) {
+this.me.jumpCount = 0;
+this.me.jumpPressed = false;
+this.me.jumpHeight = 0;
+}
+if (this.me.jumpPressed === false) this.me.jumpPressed = true;
+this.me.y = this.me.jumpHeight + 600;
+*/
 
     // ------- //
     this.engine(delay);
