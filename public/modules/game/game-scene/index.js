@@ -4,6 +4,7 @@ import FadingBlock from './fading-block';
 import GamePlayerFigure from './player';
 import Circle from '../../graphics/circle';
 import BlockPlate from './block';
+import { gameBus } from '../../eventbus';
 
 const grav = 10;
 
@@ -27,14 +28,16 @@ export default class GameScene {
     this.requestFrameId = null;
 
     this.lastFrameTime = 0;
-
-    this.field = [];
-    this.me = null;
+    this.local = {};
+    this.local.field = [];
+    this.local.me = null;
 
     this.renderScene = this.renderScene.bind(this);
 
+    this.duration = 1000 / 60;
+    gameBus.on('game_close', this.stop);
     /*
-this.me.x , y, // Значения на момент рендеринге
+this.local.me.x , y, // Значения на момент рендеринге
 xConst, yConst, // Значения при init()
 jumpHeight, jumpLength, jumpPressed, //переменные для смещения по У - организовывают прыжок
 dltX, dltY // Значение смещения для сдвига
@@ -46,8 +49,8 @@ dltX, dltY // Значение смещения для сдвига
     const { scene } = this;
 
     this.state = state;
-
-    this.field = this.state.plates.map((item) => {
+    // инициализация пластин для рендеринга
+    this.local.field = this.state.plates.map((item) => {  // this.local.field = [{},{}]
       const b = new FadingBlock(ctx);
       b.id = scene.push(b);
 
@@ -58,26 +61,25 @@ dltX, dltY // Значение смещения для сдвига
 
       return b;
     });
-    this.me = new GamePlayerFigure(ctx);
+    // инициализация игроков для рендеринга
+    this.local.me = new GamePlayerFigure(ctx);
 
-    // this.me.y = 660 + state.me.y;
-    // this.me.x = 50 + state.me.x;
-    this.me.x = 250;
-    this.me.y = 500;
-    this.me.score = this.canvas.height - this.me.y;
+    this.local.me.x = this.state.me.x;
+    this.local.me.y = this.state.me.y;
+    // this.local.me.score = this.canvas.height - this.local.me.y;
 
-    this.me.id = scene.push(this.me);
-    this.me.jumpCount = 0;
+    this.local.me.id = scene.push(this.local.me);
+    // this.local.me.jumpCount = 0;
 
     // Для игры
-    // this.me.jumpHeight = 0;
-    // this.me.jumpLength = 100;
-    // this.me.jumpPressed = true;
+    // this.local.me.jumpHeight = 0;
+    // this.local.me.jumpLength = 100;
+    // this.local.me.jumpPressed = true;
 
-    this.me.dy = 0; // Вверх
-    this.me.dx = 0;
-    this.me.collision = false;
-    this.gravity = 0.1;
+    this.local.me.dy = this.state.me.dy; // Вверх
+    this.local.me.dx = this.state.me.dx;
+    // this.local.me.collision = false;
+    // this.gravity = 0.1;
 
     // this.outScore = document.getElementsByClassName('game-score')[0];
   }
@@ -89,20 +91,24 @@ dltX, dltY // Значение смещения для сдвига
   setState(state) {
     const { scene } = this;
     this.state = state;
+    this.local.me.x = this.state.me.x;
+    this.local.me.y = this.state.me.y;
+    console.log(this.local.me.x, this.local.me.y);
+    
 
-    // this.me.y = state.me.y - 10;
+    // this.local.me.y = state.me.y - 10;
   }
 
   moveLeft(evt) {
-    // this.me.moveLeft = true;
-    this.me.x -= 3;
+    // this.local.me.moveLeft = true;
+    this.local.me.x -= 3;
     // scene.remove(this.s)
     // this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
 
   moveRight(evt) {
-    // this.me.moveLeft = true;
-    this.me.x += 3;
+    // this.local.me.moveLeft = true;
+    this.local.me.x += 3;
     // scene.remove(this.s)
     // this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
@@ -117,37 +123,40 @@ dltX, dltY // Значение смещения для сдвига
   }
 
   renderScene(now) {
+    
     const { ctx } = this;
     const { scene } = this;
-    const delay = now - this.lastFrameTime;
+    let delay = now - this.lastFrameTime;
+
+    this.lastFrameTime = now;
+    scene.render();
+    this.requestFrameId = requestAnimationFrame(this.renderScene);
+
+
     // отрисовка движений влево -вправо
-    // if (this.me.moveLeft) {
-    //  this.me.x -= 3;
+    // if (this.local.me.moveLeft) {
+    //  this.local.me.x -= 3;
     // }
     // Логика прыжка
     /*
-if (this.me.jumpPressed) {
-this.me.jumpCount++;
-this.me.jumpHeight =
+if (this.local.me.jumpPressed) {
+this.local.me.jumpCount++;
+this.local.me.jumpHeight =
 -4 *
-this.me.jumpLength *
-Math.sin((Math.PI * this.me.jumpCount) / this.me.jumpLength);
+this.local.me.jumpLength *
+Math.sin((Math.PI * this.local.me.jumpCount) / this.local.me.jumpLength);
 }
-if (this.me.jumpCount > this.me.jumpLength) {
-this.me.jumpCount = 0;
-this.me.jumpPressed = false;
-this.me.jumpHeight = 0;
+if (this.local.me.jumpCount > this.local.me.jumpLength) {
+this.local.me.jumpCount = 0;
+this.local.me.jumpPressed = false;
+this.local.me.jumpHeight = 0;
 }
-if (this.me.jumpPressed === false) this.me.jumpPressed = true;
-this.me.y = this.me.jumpHeight + 600;
+if (this.local.me.jumpPressed === false) this.local.me.jumpPressed = true;
+this.local.me.y = this.local.me.jumpHeight + 600;
 */
 
     // ------- //
-    this.engine(delay);
-    this.lastFrameTime = now;
-    scene.render();
-
-    this.requestFrameId = requestAnimationFrame(this.renderScene);
+    // this.engine(delay);
   }
 
   start() {

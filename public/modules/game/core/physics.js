@@ -1,3 +1,5 @@
+import { blockParams } from 'handlebars';
+
 export default class Fizic {
   constructor(state, canvas) {
   // передаваемые данные
@@ -5,14 +7,17 @@ export default class Fizic {
     this.state = state;
     // Объявляемые переменные
     this.state.plates = [];
-    this.state.me.statePlateUnderMe = false; // Игрок на пластине
-    this.state.me.stateLastPlateUnderMe = false; // Игрок на прошлом кадре был на пластине
-
-    this.state.me.dx = 0;
-    this.state.me.dy = 0;
+    this.state.me = {
+      statePlateUnderMe: false, // Игрок на пластине
+      stateLastPlateUnderMe: false, // Игрок на прошлом кадре был на пластине
+      dx: 0.2,
+      dy: 0.002,
+      x: 0,
+      y: 0,
+    };
 
     // Постоянные для прыжка
-    this.gravite = 9.8;
+    this.gravity = 0.0004;
     this.moveSides = 1;
   }
 
@@ -26,9 +31,8 @@ export default class Fizic {
   // Установка объектов
 
   setState(state) {
-    if (!this.state) {
-      this.state = state;
-    }
+    this.state = state;
+    this.state.plates.sort(this.sortFuncPlates);
   }
 
   setPlates(plates) {
@@ -58,21 +62,32 @@ export default class Fizic {
 
   // Обработка коллизий
 
-  collision() {
-    for (const plateIndex in this.plates) {
-      if (Object.prototype.hasOwnProperty.call(this.field, plateIndex)) {
-        const plate = this.field[plateIndex];
-        if (this.state.me.dy >= 0) {
-          if (this.state.me.x >= plate.x && this.state.me.x <= plate.x + plate.width) {
-            if (this.state.me.y + this.state.me.dy < plate.y) {
-              break;
-            } else if (this.state.me.y + this.state.me.dy > plate.y && this.state.me.y + this.state.me.dy <= plate.y + plate.height && this.state.me.y <= plate.y) {
-              this.state.me.statePlateUnderMe = true;
-              this.state.me.y = plate.y;
-            }
-          }
-        }
-      }
+  collision(delay) {
+    const plate = this.selectNearestBlock();
+  
+    if (this.state.me.dy >= 0) {
+      if (this.state.me.y + this.state.me.dy * delay < plate.y - 15) {
+        // if (this.breakY !== plate.y) {
+        //   this.breakY = plate.y;
+        // alert("Break " + plate.y);
+        // }
+
+        return;
+      } // else if (
+      // (this.state.me.y + this.state.me.dy * delay > plate.y - 15  // Если следующее положение игрока ниже платформы
+      // && this.state.me.y <= plate.y)
+      // || (this.state.me.y <= plate.y     // this.state.me.y + this.state.me.dy * delay <= plate.y // Или если выше чем низ платформы
+      // && this.state.me.y + this.state.me.dy * delay >= plate.y)
+      // && this.state.me.y  <= plate.y
+      // )
+      // {
+      // alert("First: " + (this.state.me.y + this.state.me.dy * delay > plate.y && this.state.me.y <= plate.y) + " Second: " + (this.state.me.y <= plate.y && this.state.me.y + this.state.me.dy * delay >= plate.y + 15));
+      alert(plate);
+      this.state.me.statePlateUnderMe = true;
+      this.setPlayerOnPlate(plate);
+      this.jump(delay);
+      // console.log(this.state.me.dy);
+      // }
     }
   }
 
@@ -81,35 +96,72 @@ export default class Fizic {
   circleDraw() {
     if (this.state.me.x > this.canvas.width) {
       this.state.me.x = 0;
-    } else if (this.me.x < 0) {
+    } else if (this.state.me.x < 0) {
       this.state.me.x = this.canvas.width;
     }
   }
 
-  jump(delay) {
-    if (this.state.statePlateUnderMe === true) { // пропустить 1 кадр после соударения с пластиной
-      this.state.stateLastPlateUnderMe = true;
-      this.state.statePlateUnderMe = false;
-
-      // Все еще будет работать физика
-    } else if (this.state.stateLastPlateUnderMe === true) { // Если я ударился о пластину, то вверх
-      this.state.me.dy = 5;
-    } else { // Если сейчас я не на пластине, то рассчитывай как обычно
-      this.state.me.dy += this.gravite * delay;
+  selectNearestBlock() {
+    let nearestBlock;
+    let minY;
+    for (const plateIndex in this.state.plates) {
+      if (Object.prototype.hasOwnProperty.call(this.state.plates, plateIndex)) {
+        const plate = this.state.plates[plateIndex];
+        if (this.state.me.x + this.state.me.width >= plate.x && this.state.me.x <= plate.x + 90) {
+          if (plate.y - this.state.me.y < minY && this.state.me.y <= plate.y) {
+            minY = plate.y - this.state.me.y;
+            nearestBlock = plate;
+          }
+        }
+      }
     }
+    return nearestBlock;
   }
 
-  // moveLeft(delay) {
-  // this.state.me.dx += this.moveSides * delay;
-  // }
+  setPlayerOnPlate(plate) {
+    this.state.me.y = plate.y - 15;
+  }
+
+  jump(delay) {
+    this.state.me.dy = -0.35;
+  }
+
+  processSpeed(delay) {
+    this.state.me.dy += (this.gravity * delay);
+  }
+
+
+  move(delay) {
+    this.state.me.y += (this.state.me.dy * delay);
+  }
+
+  moveLeft(delay) {
+    this.circleDraw();
+
+    this.state.me.x -= this.state.me.dx * delay;
+    this.processSpeed(delay);
+    this.collision(delay);
+    this.move(delay);
+    // this.gravitation(delay);
+    return this.state;
+  }
+
+  moveRight(delay) {
+    this.circleDraw();
+    this.state.me.x += this.state.me.dx * delay;
+    this.processSpeed(delay);
+    this.collision(delay);
+    this.move(delay);
+    // this.gravitation(delay);
+    return this.state;
+  }
 
 
   engine(delay) {
-  // this.scoreCounter();
-  // this.scoreShow();
     this.circleDraw();
-    this.collision();
-    this.jump(delay);
+    this.processSpeed(delay);
+    this.collision(delay);
+    this.move(delay);
     // this.gravitation(delay);
     return this.state;
   }
