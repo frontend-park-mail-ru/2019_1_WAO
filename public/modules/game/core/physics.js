@@ -1,4 +1,3 @@
-import { blockParams } from 'handlebars';
 
 export default class Fizic {
   constructor(state, canvas) {
@@ -64,7 +63,9 @@ export default class Fizic {
 
   collision(delay) {
     const plate = this.selectNearestBlock();
-  
+    if (!plate) {
+      return;
+    }
     if (this.state.me.dy >= 0) {
       if (this.state.me.y + this.state.me.dy * delay < plate.y - 15) {
         // if (this.breakY !== plate.y) {
@@ -82,7 +83,7 @@ export default class Fizic {
       // )
       // {
       // alert("First: " + (this.state.me.y + this.state.me.dy * delay > plate.y && this.state.me.y <= plate.y) + " Second: " + (this.state.me.y <= plate.y && this.state.me.y + this.state.me.dy * delay >= plate.y + 15));
-      alert(plate);
+      // alert(plate);
       this.state.me.statePlateUnderMe = true;
       this.setPlayerOnPlate(plate);
       this.jump(delay);
@@ -103,17 +104,14 @@ export default class Fizic {
 
   selectNearestBlock() {
     let nearestBlock;
-    let minY;
-    for (const plateIndex in this.state.plates) {
-      if (Object.prototype.hasOwnProperty.call(this.state.plates, plateIndex)) {
-        const plate = this.state.plates[plateIndex];
-        if (this.state.me.x + this.state.me.width >= plate.x && this.state.me.x <= plate.x + 90) {
-          if (plate.y - this.state.me.y < minY && this.state.me.y <= plate.y) {
+    let minY = this.canvas.height;
+    for (const plate of this.state.plates) {
+        if (Boolean(this.state.me.x + this.state.me.width >= plate.x && this.state.me.x <= plate.x + 90)) {
+          if (Boolean(plate.y - this.state.me.y < minY && this.state.me.y <= plate.y)) {
             minY = plate.y - this.state.me.y;
             nearestBlock = plate;
           }
         }
-      }
     }
     return nearestBlock;
   }
