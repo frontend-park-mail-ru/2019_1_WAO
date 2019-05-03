@@ -1,19 +1,18 @@
 @import '../common/vars.css';
 
 .sign-button {
-  margin-left: auto;
-  margin-right: auto;
   max-width: 360px;
-  width: 100vw;
+  width: 100%;
   border-width: 1px;
   border-radius: 8px;
   border: solid 1px #287191;
-  font-size: 24px;  
+  font-size: 24px;
   color: var(--mainBlueColor);
   padding-top: 10px;
   padding-bottom: 10px;
-
   margin-bottom: 30px;
+  align-self: center;
+  justify-self: center;
 }
 
 .sign-button:hover {

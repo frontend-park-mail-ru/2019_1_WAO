@@ -6,7 +6,9 @@
   vertical-align: middle;
   user-select: none;  
   max-width: 360px;
-  width: 100vw;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
 }
 
 .input-area__label {
@@ -17,7 +19,7 @@
 
 .input-area__input {
   max-width: 360px;
-  width: 100vw;
+  width: 100%;
   padding-left: 15px;
   height: 45px;
   opacity: 0.98;
