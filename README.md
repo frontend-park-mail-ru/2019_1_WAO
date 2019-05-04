@@ -1,6 +1,6 @@
 # WAO JUMP
 Любишь простые геометрические фигуры и прыгать? Эта игра для тебя!
-![](game.jpg)
+![](game.jpg | width=200)
 
 [Играть сюда](https://wao2019.herokuapp.com/)
 
@@ -9,5 +9,8 @@
 * [Можаев Дима](https://github.com/Howle-Great)
 * [Прищеп Дмитрий](https://github.com/DmitriyPrischep)
 * [Устинов Игорь](https://github.com/Flyewzz)
+
+## Мэнтор
+* [Дмитрий Палий](https://github.com/stanf0rd)
 
 [Не фронтенд](https://github.com/go-park-mail-ru/2019_1_WAO)
