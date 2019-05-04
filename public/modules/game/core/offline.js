@@ -24,6 +24,8 @@ export default class OfflineGame extends GameCore {
     this.state = true;
     this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
     this.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
+    // Настройки генерации карты
+    this.koefGeneratePlates = 0.02;
   }
   // Генератор карты
 
@@ -50,8 +52,16 @@ export default class OfflineGame extends GameCore {
     if (this.state.me.y <= this.maxScrollHeight && this.stateScrollMap === false) {
       this.stateScrollMap = true; // Начался скроллинг
 
-      this.state.newPlates = this.genMap((this.state.plates[this.idPhysicBlockCounter - 1].y - 20), (this.scene.giveCanvas().height - 20), 10);
+      this.state.newPlates = this.genMap((this.state.plates[this.state.plates.length - 1].y - 20), (2000 + this.state.plates[this.state.plates.length - 1].y), (0.02 * (2000 + this.state.plates[this.state.plates.length - 1].y)).toFixed());  //  ~~(0.02 * Math.abs(-1000 - this.state.plates[this.state.plates.length - 1].y))
       Array.prototype.push.apply(this.state.plates, this.state.newPlates);
+      // Очистить this.state от старых элементов
+      for (let i = 0; i < this.state.plates.length; i++) {
+        if (this.state.plates[i].y > this.scene.giveCanvas().height) {
+          this.state.plates.splice(i, 1);
+          i--;
+        }
+      }
+
       this.state.added = false;
       // this.state.plates.push(this.state.newPlates);
       this.stateGenerateNewMap = true;
@@ -86,7 +96,8 @@ export default class OfflineGame extends GameCore {
         height: 40,
       },
     };
-    this.state.plates = this.genMap((this.scene.giveCanvas().height - 20), (this.scene.giveCanvas().height * 2 - 20), 20);
+    this.state.plates = this.genMap((this.scene.giveCanvas().height - 20), 2000, 0.02 * 2000);
+    // this.state.plates = this.genMap((this.state.plates[this.state.plates.length - 1].y - 20), (2000 + this.state.plates[this.state.plates.length - 1].y), (0.02 * (2000 + this.state.plates[this.state.plates.length - 1].y)).toFixed());
     this.setPlayerOnPlate(this.state.plates[0]);
     this.player.setState(this.state);
 
