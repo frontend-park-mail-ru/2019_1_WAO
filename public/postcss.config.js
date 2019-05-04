@@ -1,5 +1,5 @@
 module.exports = {
-  // parser: 'sugarss',
+  parser: 'sugarss',
   plugins: {
     'postcss-preset-env': {},
     // cssnano: {},
