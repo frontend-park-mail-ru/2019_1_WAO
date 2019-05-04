@@ -40,6 +40,10 @@ const viewData = {
     text: 'Обратно',
     href: '/signin',
   },
+  menu: {
+    text: 'В меню',
+    href: '/',
+  },
 };
 
 /**

@@ -28,6 +28,10 @@ const viewData = {
     text: 'Регистрация',
     href: '/signup',
   },
+  menu: {
+    text: 'В меню',
+    href: '/',
+  },
 };
 
 /**

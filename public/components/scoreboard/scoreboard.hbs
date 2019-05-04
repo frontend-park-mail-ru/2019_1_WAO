@@ -9,7 +9,7 @@
     </div>
     {{#each users}}
     <div class="scoreboard__row">
-      <a data-href='#'>N</a>
+      <a data-href='#'>{{ this.number }}</a>
       <a data-href='/profile'>{{ this.nickname }}</a>
       <a data-href='#'>{{ this.score }}</a>
       <a data-href='#'>{{ this.wins }}/{{ this.games }}</a>
