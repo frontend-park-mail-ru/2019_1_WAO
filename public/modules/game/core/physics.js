@@ -17,7 +17,6 @@ export default class Fizic {
 
     // Постоянные для прыжка
     this.gravity = 0.0004;
-    this.moveSides = 1;
   }
 
   // Доп сервисы
@@ -26,6 +25,7 @@ export default class Fizic {
     return b.y - a.y;
   }
 
+  // Генераторы карты
 
   // Установка объектов
 
@@ -68,28 +68,28 @@ export default class Fizic {
     }
     if (this.state.me.dy >= 0) {
       if (this.state.me.y + this.state.me.dy * delay < plate.y - 15) {
-        // if (this.breakY !== plate.y) {
-        //   this.breakY = plate.y;
-        // alert("Break " + plate.y);
-        // }
-
         return;
-      } // else if (
-      // (this.state.me.y + this.state.me.dy * delay > plate.y - 15  // Если следующее положение игрока ниже платформы
-      // && this.state.me.y <= plate.y)
-      // || (this.state.me.y <= plate.y     // this.state.me.y + this.state.me.dy * delay <= plate.y // Или если выше чем низ платформы
-      // && this.state.me.y + this.state.me.dy * delay >= plate.y)
-      // && this.state.me.y  <= plate.y
-      // )
-      // {
-      // alert("First: " + (this.state.me.y + this.state.me.dy * delay > plate.y && this.state.me.y <= plate.y) + " Second: " + (this.state.me.y <= plate.y && this.state.me.y + this.state.me.dy * delay >= plate.y + 15));
-      // alert(plate);
+      }
       this.state.me.statePlateUnderMe = true;
       this.setPlayerOnPlate(plate);
       this.jump(delay);
-      // console.log(this.state.me.dy);
-      // }
     }
+  }
+
+  // Вспомогательная функция для функции коллизии
+
+  selectNearestBlock() {
+    let nearestBlock;
+    let minY = this.canvas.height;
+    for (const plate of this.state.plates) {
+      if ((this.state.me.x + this.state.me.width >= plate.x && this.state.me.x <= plate.x + 90)) {
+        if ((plate.y - this.state.me.y < minY && this.state.me.y <= plate.y)) {
+          minY = plate.y - this.state.me.y;
+          nearestBlock = plate;
+        }
+      }
+    }
+    return nearestBlock;
   }
 
   // Отрисовка по кругу
@@ -102,43 +102,48 @@ export default class Fizic {
     }
   }
 
-  selectNearestBlock() {
-    let nearestBlock;
-    let minY = this.canvas.height;
-    for (const plate of this.state.plates) {
-        if (Boolean(this.state.me.x + this.state.me.width >= plate.x && this.state.me.x <= plate.x + 90)) {
-          if (Boolean(plate.y - this.state.me.y < minY && this.state.me.y <= plate.y)) {
-            minY = plate.y - this.state.me.y;
-            nearestBlock = plate;
-          }
-        }
-    }
-    return nearestBlock;
-  }
+  // функции для прыжка
 
   setPlayerOnPlate(plate) {
     this.state.me.y = plate.y - 15;
   }
 
-  jump(delay) {
+  jump() {
     this.state.me.dy = -0.35;
   }
+
+  // функции изменения скорости
 
   processSpeed(delay) {
     this.state.me.dy += (this.gravity * delay);
   }
 
-
   move(delay) {
     this.state.me.y += (this.state.me.dy * delay);
   }
+
+  // Контролирования скроллинга карты
+
+
+  scrollMap(delay) {
+    for (const plate of this.state.plates) {
+      plate.y += plate.dy * delay;
+    }
+  }
+
+  // Контролеры карты
 
   moveLeft(delay) {
     this.circleDraw();
 
     this.state.me.x -= this.state.me.dx * delay;
     this.processSpeed(delay);
-    this.collision(delay);
+    // this.mapController();
+    if (this.state.plates[0].dy !== 0) {
+      this.scrollMap(delay);
+    } else {
+      this.collision(delay);
+    }
     this.move(delay);
     // this.gravitation(delay);
     return this.state;
@@ -148,7 +153,12 @@ export default class Fizic {
     this.circleDraw();
     this.state.me.x += this.state.me.dx * delay;
     this.processSpeed(delay);
-    this.collision(delay);
+    // this.mapController();
+    if (this.state.plates[0].dy !== 0) {
+      this.scrollMap(delay);
+    } else {
+      this.collision(delay);
+    }
     this.move(delay);
     // this.gravitation(delay);
     return this.state;
@@ -158,7 +168,11 @@ export default class Fizic {
   engine(delay) {
     this.circleDraw();
     this.processSpeed(delay);
-    this.collision(delay);
+    if (this.state.plates[0].dy !== 0) {
+      this.scrollMap(delay);
+    } else {
+      this.collision(delay);
+    }
     this.move(delay);
     // this.gravitation(delay);
     return this.state;

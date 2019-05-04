@@ -11,51 +11,84 @@ export default class OfflineGame extends GameCore {
     this.gameloopRequestId = null;
 
     this.player = new Physics(this.state, scene.giveCanvas());
-
+    // this.player.init();
     this.duration = 1000 / 60;
     this.maxDuration = 1000 / 16;
     this.delay = 0;
     this.lastFrame = 0;
     this.now = performance.now();
+    // Скроллинг карты
+    this.maxScrollHeight = 0.25 * this.scene.giveCanvas().height;
+    this.minScrollHeight = 0.75 * this.scene.giveCanvas().height;
+    this.idPhysicBlockCounter = 0;
+    this.state = true;
+    this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
+    this.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
+  }
+  // Генератор карты
+
+  genMap(beginY, b = (this.scene.giveCanvas().height - 20) - 20, k = 10) {
+    const newBlocks = [];
+    const p = b / k; // Плотность
+    let currentX;
+    let currentY = beginY;
+    for (let i = 0; i < k; i++) {
+      currentX = Math.random() * (this.scene.giveCanvas().width - 91 - 91) + 91;
+      newBlocks.push({
+        x: currentX,
+        y: currentY,
+        dy: 0,
+        idPhys: this.idPhysicBlockCounter++,
+      });
+      currentY -= p;
+    }
+    return newBlocks;
+  }
+
+  // Скроллинг карты
+  mapController() {
+    if (this.state.me.y <= this.maxScrollHeight && this.stateScrollMap === false) {
+      this.stateScrollMap = true; // Начался скроллинг
+
+      this.state.newPlates = this.genMap((this.state.plates[this.idPhysicBlockCounter - 1].y - 20), (this.scene.giveCanvas().height - 20), 10);
+      Array.prototype.push.apply(this.state.plates, this.state.newPlates);
+      this.state.added = false;
+      // this.state.plates.push(this.state.newPlates);
+      this.stateGenerateNewMap = true;
+      for (const plate of this.state.plates) {
+        plate.dy = 0.5;
+      }
+      this.state.me.dy += 0.5;
+    } else if (this.state.me.y > this.minScrollHeight && this.stateScrollMap === true) {
+      this.stateScrollMap = false; // Закончился скроллинг
+      this.stateGenerateNewMap = false;
+      for (const plate of this.state.plates) {
+        plate.dy = 0;
+      }
+      this.state.me.dy -= 0.5;
+    }
+  }
+
+  setPlayerOnPlate(plate) {
+    this.state.me.y = plate.y - 15;
+    this.state.me.x = plate.x + 90 / 2;
   }
 
   start() {
     super.start();
     this.state = {
-      plates: [
-        { x: 50, y: 100 },
-        { x: 250, y: 445 },
-        { x: 100, y: 305 },
-        { x: 350, y: 205 },
-        { x: 35, y: 565 },
-        { x: 330, y: 685 },
-      ],
       me: {
-        x: 150,
-        y: 100,
+        x: 0,
+        y: 0,
         dx: 0.2,
         dy: 0.002,
         width: 50,
         height: 40,
       },
     };
+    this.state.plates = this.genMap((this.scene.giveCanvas().height - 20), (this.scene.giveCanvas().height * 2 - 20), 20);
+    this.setPlayerOnPlate(this.state.plates[0]);
     this.player.setState(this.state);
-
-    // this.player.setPlates([
-    // { x: 50, y: 100 },
-    // { x: 250, y: 445 },
-    // { x: 100, y: 305 },
-    // { x: 350, y: 205 },
-    // { x: 35, y: 565 },
-    // { x: 230, y: 685 },
-    // ]);
-
-    // this.player.setPlayer({
-    // x: 150,
-    // y: 600,
-    // dx: 0,
-    // dy: 0,
-    // });
 
     setTimeout(
       () => {
@@ -73,10 +106,14 @@ export default class OfflineGame extends GameCore {
         this.delay = this.maxDuration;
       }
       this.lastFrame = this.now;
-
+      this.mapController();
       this.state = this.player.engine(this.delay);
-      console.log(this.state.me);
+      console.log(this.state.plates);
       gameBus.trigger('state_changed', this.state);
+      if (this.stateGenerateNewMap === true) {
+        this.state.added = true;
+        delete this.state.newPlates;
+      }
     }
     if (this.state.me.y - this.state.me.height > this.scene.giveCanvas().height) {
       setTimeout(() => {
