@@ -32,5 +32,6 @@ export default class OfflineGamePresenter extends BasePresenter {
   // eslint-disable-next-line class-methods-use-this
   stop() {
     console.log('game close');
+    this.game.destroy();
   }
 }
