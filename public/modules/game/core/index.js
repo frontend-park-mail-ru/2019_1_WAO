@@ -13,7 +13,7 @@ export default class GameCore {
 
     this.onGameStarted = this.onGameStarted.bind(this);
     this.onGameFinished = this.onGameFinished.bind(this);
-    this.onControllsPressed = this.onControllsPressed.bind(this);
+    // this.onControllsPressed = this.onControllsPressed.bind(this);
     this.onGameStateChanged = this.onGameStateChanged.bind(this);
     // my
     this.onPressedLeftControl = this.onPressedLeftControl.bind(this);

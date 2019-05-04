@@ -1,6 +1,7 @@
 export default class Scene {
   constructor(ctx) {
     this.ctx = ctx;
+    // ctx.scale(0.5, 0.5);
     this.frontView = [];
     this.backView = [];
     this.figures = {};

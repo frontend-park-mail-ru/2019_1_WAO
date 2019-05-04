@@ -4,5 +4,10 @@ package-lock.json
 *.tmp
 dist/
 !dist/uploads
+<<<<<<< HEAD
 !dist/docs
 .vs
+=======
+.vs
+.vscode/
+>>>>>>> develop-game5
