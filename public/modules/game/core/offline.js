@@ -118,6 +118,7 @@ export default class OfflineGame extends GameCore {
     if (this.state.me.y - this.state.me.height > this.scene.giveCanvas().height) {
       setTimeout(() => {
         gameBus.trigger('game_finish');
+        gameBus.trigger('game close');
       });
     }
   }
@@ -127,9 +128,14 @@ export default class OfflineGame extends GameCore {
       this.now = performance.now();
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
+      this.mapController();
       this.state = this.player.moveLeft(this.delay);
       console.log('LEFT!!!!', this.state.me);
       this.scene.setState(this.state);
+      if (this.stateGenerateNewMap === true) {
+        this.state.added = true;
+        delete this.state.newPlates;
+      }
       // this.scene.moveLeft(evt);
     }
   }
@@ -139,9 +145,14 @@ export default class OfflineGame extends GameCore {
       this.now = performance.now();
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
+      this.mapController();
       this.state = this.player.moveRight(this.delay);
       console.log('RIGHT!!!!', this.state.me);
       this.scene.setState(this.state);
+      if (this.stateGenerateNewMap === true) {
+        this.state.added = true;
+        delete this.state.newPlates;
+      }
     }
   }
 

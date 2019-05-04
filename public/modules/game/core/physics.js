@@ -110,6 +110,9 @@ export default class Fizic {
 
   jump() {
     this.state.me.dy = -0.35;
+    if (this.state.plates[0].dy !== 0) {
+      this.state.me.dy = -0.35 + this.state.plates[0].dy;
+    } 
   }
 
   // функции изменения скорости
@@ -138,12 +141,13 @@ export default class Fizic {
 
     this.state.me.x -= this.state.me.dx * delay;
     this.processSpeed(delay);
+    this.collision(delay);
     // this.mapController();
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(delay);
-    } else {
-      this.collision(delay);
-    }
+    } //else {
+      
+    // }
     this.move(delay);
     // this.gravitation(delay);
     return this.state;
@@ -153,12 +157,13 @@ export default class Fizic {
     this.circleDraw();
     this.state.me.x += this.state.me.dx * delay;
     this.processSpeed(delay);
+    this.collision(delay);
     // this.mapController();
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(delay);
-    } else {
-      this.collision(delay);
-    }
+    } //else {
+      
+    // }
     this.move(delay);
     // this.gravitation(delay);
     return this.state;
@@ -168,11 +173,12 @@ export default class Fizic {
   engine(delay) {
     this.circleDraw();
     this.processSpeed(delay);
+    this.collision(delay);
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(delay);
-    } else {
-      this.collision(delay);
-    }
+    } //else {
+      
+    // }
     this.move(delay);
     // this.gravitation(delay);
     return this.state;
