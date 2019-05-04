@@ -53,7 +53,7 @@ export default class GameScene {
       b.width = 90;
       b.x = item.x;
       b.y = item.y;
-      b.dy = item.dy;
+      // b.dy = item.dy;
       b.idPhys = item.idPhys;
 
       return b;
@@ -63,7 +63,7 @@ export default class GameScene {
 
     this.local.me.x = this.state.me.x;
     this.local.me.y = this.state.me.y;
-    this.local.me.dy = this.state.me.dy; // Вверх
+    // this.local.me.dy = this.state.me.dy; // Вверх
     this.local.me.dx = this.state.me.dx;
 
     this.local.me.id = scene.push(this.local.me);
@@ -80,26 +80,23 @@ export default class GameScene {
     this.local.me.y = this.state.me.y;
     if (this.state.plates[0].dy !== 0) {
       for (const plate of this.state.plates) {
-        // let tmp;
-        // for (let i = 0; i < this.local.field.length; i++) {
-        //   if (this.local.field[i].idPhys === plate.idPhys) {
-        //     this.local.field[i].y = plate.y;
-        //     break;
-        //   }
-        // }
-        // this.local.field.filter((val) => {
-        //   return val.idPhys === plate.idPhys;
-        // }).y = plate.y;
-        this.local.field.find(localPlate => localPlate.idPhys === plate.idPhys).y = plate.y;
+        for (let i = 0; i < this.local.field.length; i++) {
+          if (this.local.field[i].idPhys === plate.idPhys) {
+            this.local.field[i].y = plate.y;
+            break;
+          }
+        }
       }
       if (this.state.added === false) {
         for (const lPlate of this.state.newPlates) {
           const b = new FadingBlock(this.ctx);
+          b.id = scene.push(b);
+
           b.height = 15;
           b.width = 90;
           b.x = lPlate.x;
           b.y = lPlate.y;
-          b.dy = lPlate.dy;
+          // b.dy = lPlate.dy;
           b.idPhys = lPlate.idPhys;
           this.local.field.push(b);
         }
