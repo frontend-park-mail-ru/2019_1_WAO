@@ -100,6 +100,21 @@ export default class GameScene {
           b.idPhys = lPlate.idPhys;
           this.local.field.push(b);
         }
+        for (let i = 0; i < this.local.field.length; i++) {
+          if (this.local.field[i].y > this.canvas.height) {
+            this.scene.remove(this.local.field[i].id);
+            this.local.field.splice(i, 1);
+            i--;
+          }
+        }
+        // this.local.field = this.local.field.filter((item) => {
+        //   return item.y <= this.canvas.height;
+        // });
+        // for (const lPlate of this.local.field) {
+        //   if (lPlate.y > this.canvas.height) {
+        //     delete lPlate;
+        //   }
+        // }
         // Array.prototype.push.apply(this.local.field, this.state.newPlates);
       }
     }
