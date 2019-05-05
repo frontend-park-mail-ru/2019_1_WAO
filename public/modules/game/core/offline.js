@@ -107,9 +107,9 @@ export default class OfflineGame extends GameCore {
       this.state.added = false; // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
       this.stateGenerateNewMap = true;
       // Задаем всем объектам скорость вниз
-      for (const plate of this.state.plates) {
+      this.state.plates.forEach((plate) => {
         plate.dy = this.koefScrollSpeed;
-      }
+      });
       this.state.players.forEach((element) => {
         element.dy += this.koefScrollSpeed;
       });

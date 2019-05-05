@@ -158,7 +158,7 @@ export default class Fizic {
       this.collision(command);
     });
     if (this.state.plates[0].dy !== 0) {
-      this.scrollMap(this.state.players[0]);
+      this.scrollMap(this.state.commands[0].delay);
     }
     this.state.commands.forEach((command) => {
       this.move(command);
