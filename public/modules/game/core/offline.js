@@ -5,83 +5,43 @@ import Physics from './physics';
 export default class OfflineGame extends GameCore {
   constructor(controller, scene) {
     super(controller, scene);
-
+    // Основная шина для общения с другими классами
+    // physics.js & index.js
     this.state = {};
+    // Переменные для начала анимации
     this.gameloop = this.gameloop.bind(this);
     this.gameloopRequestId = null;
 
+    // Константы
+    // - Задаю канвас
+    this.canvasHeight = this.scene.giveCanvas().height;
+    this.canvasWidth = this.scene.giveCanvas().width;
+    // - Задаю параметры одной пластины
+    this.plate = {};
+    this.plate.width = 90;
+    this.plate.height = 15;
+    
+    // Физический контроллер игры
     this.player = new Physics(this.state, scene.giveCanvas());
-    // this.player.init();
+    // Переменные для корректной отрисовки и анимации
     this.duration = 1000 / 60;
     this.maxDuration = 1000 / 16;
     this.delay = 0;
     this.lastFrame = 0;
     this.now = performance.now();
     // Скроллинг карты
-    this.maxScrollHeight = 0.25 * this.scene.giveCanvas().height;
-    this.minScrollHeight = 0.75 * this.scene.giveCanvas().height;
-    this.idPhysicBlockCounter = 0;
-    this.state = true;
+    this.maxScrollHeight = 0.25 * this.canvasHeight;
+    this.minScrollHeight = 0.75 * this.canvasHeight;
+    this.koefScrollSpeed = 0.5; // Скорость с которой все объекты будут падать вниз
+    // this.state = true;
     this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
     this.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
     // Настройки генерации карты
-    this.koefGeneratePlates = 0.02;
-  }
-  // Генератор карты
-
-  genMap(beginY, b = (this.scene.giveCanvas().height - 20) - 20, k = 10) {
-    const newBlocks = [];
-    const p = b / k; // Плотность
-    let currentX;
-    let currentY = beginY;
-    for (let i = 0; i < k; i++) {
-      currentX = Math.random() * (this.scene.giveCanvas().width - 91 - 91) + 91;
-      newBlocks.push({
-        x: currentX,
-        y: currentY,
-        dy: 0,
-        idPhys: this.idPhysicBlockCounter++,
-      });
-      currentY -= p;
-    }
-    return newBlocks;
-  }
-
-  // Скроллинг карты
-  mapController() {
-    if (this.state.me.y <= this.maxScrollHeight && this.stateScrollMap === false) {
-      this.stateScrollMap = true; // Начался скроллинг
-
-      this.state.newPlates = this.genMap((this.state.plates[this.state.plates.length - 1].y - 20), (2000 + this.state.plates[this.state.plates.length - 1].y), (0.02 * (2000 + this.state.plates[this.state.plates.length - 1].y)).toFixed());  //  ~~(0.02 * Math.abs(-1000 - this.state.plates[this.state.plates.length - 1].y))
-      Array.prototype.push.apply(this.state.plates, this.state.newPlates);
-      // Очистить this.state от старых элементов
-      for (let i = 0; i < this.state.plates.length; i++) {
-        if (this.state.plates[i].y > this.scene.giveCanvas().height) {
-          this.state.plates.splice(i, 1);
-          i--;
-        }
-      }
-
-      this.state.added = false;
-      // this.state.plates.push(this.state.newPlates);
-      this.stateGenerateNewMap = true;
-      for (const plate of this.state.plates) {
-        plate.dy = 0.5;
-      }
-      this.state.me.dy += 0.5;
-    } else if (this.state.me.y > this.minScrollHeight && this.stateScrollMap === true) {
-      this.stateScrollMap = false; // Закончился скроллинг
-      this.stateGenerateNewMap = false;
-      for (const plate of this.state.plates) {
-        plate.dy = 0;
-      }
-      this.state.me.dy -= 0.5;
-    }
-  }
-
-  setPlayerOnPlate(plate) {
-    this.state.me.y = plate.y - 15;
-    this.state.me.x = plate.x + 90 / 2;
+    this.koefGeneratePlates = 0.01;
+    this.koefHeightOfMaxGenerateSlice = 2000;
+    this.leftIndent = 91;
+    this.rightIndent = 91;
+    this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
   }
 
   start() {
@@ -96,8 +56,7 @@ export default class OfflineGame extends GameCore {
         height: 40,
       },
     };
-    this.state.plates = this.genMap((this.scene.giveCanvas().height - 20), 2000, 0.02 * 2000);
-    // this.state.plates = this.genMap((this.state.plates[this.state.plates.length - 1].y - 20), (2000 + this.state.plates[this.state.plates.length - 1].y), (0.02 * (2000 + this.state.plates[this.state.plates.length - 1].y)).toFixed());
+    this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
     this.setPlayerOnPlate(this.state.plates[0]);
     this.player.setState(this.state);
 
@@ -106,6 +65,63 @@ export default class OfflineGame extends GameCore {
         gameBus.trigger('game_start', this.state);
       },
     );
+  }
+
+  // Генератор карты
+
+  genMap(beginY = (this.state.plates[this.state.plates.length - 1].y - 20), b = (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y), k = (this.koefGeneratePlates * (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y)).toFixed()) {
+    const newBlocks = [];
+    const p = b / k; // Плотность распределения пластин
+    let currentX;
+    let currentY = beginY;
+    for (let i = 0; i < k; i++) {
+      currentX = Math.random() * ((this.canvasWidth - this.rightIndent) - this.leftIndent + 1) + this.leftIndent;
+      newBlocks.push({
+        x: currentX,
+        y: currentY,
+        dy: 0,
+        idPhys: this.idPhysicBlockCounter++,  // Уникальный идентификатор нужен для отрисовки новых объектов 
+      });
+      currentY -= p;
+    }
+    return newBlocks;
+  }
+
+  // Скроллинг карты
+  mapController() {
+    // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
+    if (this.state.me.y <= this.maxScrollHeight && this.stateScrollMap === false) {
+      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else 
+
+      this.state.newPlates = this.genMap();
+      Array.prototype.push.apply(this.state.plates, this.state.newPlates);
+      // Очистить this.state от старых элементов
+      for (let i = 0; i < this.state.plates.length; i++) {
+        if (this.state.plates[i].y > this.canvasHeight) {
+          this.state.plates.splice(i, 1);
+          i--;
+        }
+      }
+      this.state.added = false; // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
+      this.stateGenerateNewMap = true;
+      // Задаем всем объектам скорость вниз
+      for (const plate of this.state.plates) {
+        plate.dy = this.koefScrollSpeed;
+      }
+      this.state.me.dy += this.koefScrollSpeed;
+    } else if (this.state.me.y > this.minScrollHeight && this.stateScrollMap === true) {
+      this.stateScrollMap = false; // Закончился скроллинг
+      this.stateGenerateNewMap = false;
+      for (const plate of this.state.plates) {
+        plate.dy = 0;
+      }
+      this.state.me.dy -= this.koefScrollSpeed;
+    }
+  }
+
+  setPlayerOnPlate(plate) {
+    this.state.me.y = plate.y - this.plate.height;
+    this.state.me.x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
   }
 
   gameloop() {
@@ -126,7 +142,7 @@ export default class OfflineGame extends GameCore {
         delete this.state.newPlates;
       }
     }
-    if (this.state.me.y - this.state.me.height > this.scene.giveCanvas().height) {
+    if (this.state.me.y - this.state.me.height > this.canvasHeight) {
       setTimeout(() => {
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
@@ -147,7 +163,6 @@ export default class OfflineGame extends GameCore {
         this.state.added = true;
         delete this.state.newPlates;
       }
-      // this.scene.moveLeft(evt);
     }
   }
 
@@ -169,7 +184,7 @@ export default class OfflineGame extends GameCore {
 
   onGameStarted(state) {
     this.controller.start(); // начинаем слушать события нажатий клавиш
-    this.scene.init(state); //
+    this.scene.init(state);
     this.scene.start();
 
     this.lastFrame = performance.now();

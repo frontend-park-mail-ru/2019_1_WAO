@@ -25,8 +25,6 @@ export default class Fizic {
     return b.y - a.y;
   }
 
-  // Генераторы карты
-
   // Установка объектов
 
   setState(state) {
@@ -53,11 +51,7 @@ export default class Fizic {
 
   pushPlates(plates) {
     this.state.plates.push(plates);
-    this.state.plates.sort(this.sortFuncPlates);
   }
-
-  // Функции для просчета составляющих позиции игрока
-
 
   // Обработка коллизий
 
@@ -77,7 +71,7 @@ export default class Fizic {
   }
 
   // Вспомогательная функция для функции коллизии
-
+  // Ищет ближайший по игру блок под игроком
   selectNearestBlock() {
     let nearestBlock;
     let minY = this.canvas.height;
@@ -121,12 +115,13 @@ export default class Fizic {
     this.state.me.dy += (this.gravity * delay);
   }
 
+  // Сдвиг персонажа вниз
+
   move(delay) {
     this.state.me.y += (this.state.me.dy * delay);
   }
 
-  // Контролирования скроллинга карты
-
+  // Сдвиг все карты вниз
 
   scrollMap(delay) {
     for (const plate of this.state.plates) {
@@ -142,14 +137,10 @@ export default class Fizic {
     this.state.me.x -= this.state.me.dx * delay;
     this.processSpeed(delay);
     this.collision(delay);
-    // this.mapController();
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(delay);
-    } //else {
-      
-    // }
+    }
     this.move(delay);
-    // this.gravitation(delay);
     return this.state;
   }
 
@@ -158,14 +149,10 @@ export default class Fizic {
     this.state.me.x += this.state.me.dx * delay;
     this.processSpeed(delay);
     this.collision(delay);
-    // this.mapController();
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(delay);
-    } //else {
-      
-    // }
+    }
     this.move(delay);
-    // this.gravitation(delay);
     return this.state;
   }
 
@@ -176,11 +163,8 @@ export default class Fizic {
     this.collision(delay);
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(delay);
-    } //else {
-      
-    // }
+    }
     this.move(delay);
-    // this.gravitation(delay);
     return this.state;
   }
 }

@@ -63,7 +63,6 @@ export default class GameScene {
 
     this.local.me.x = this.state.me.x;
     this.local.me.y = this.state.me.y;
-    // this.local.me.dy = this.state.me.dy; // Вверх
     this.local.me.dx = this.state.me.dx;
 
     this.local.me.id = scene.push(this.local.me);
@@ -96,7 +95,6 @@ export default class GameScene {
           b.width = 90;
           b.x = lPlate.x;
           b.y = lPlate.y;
-          // b.dy = lPlate.dy;
           b.idPhys = lPlate.idPhys;
           this.local.field.push(b);
         }
@@ -107,18 +105,8 @@ export default class GameScene {
             i--;
           }
         }
-        // this.local.field = this.local.field.filter((item) => {
-        //   return item.y <= this.canvas.height;
-        // });
-        // for (const lPlate of this.local.field) {
-        //   if (lPlate.y > this.canvas.height) {
-        //     delete lPlate;
-        //   }
-        // }
-        // Array.prototype.push.apply(this.local.field, this.state.newPlates);
       }
     }
-    // console.log(this.local.me.x, this.local.me.y);
   }
 
   renderScene(now) {
