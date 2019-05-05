@@ -162,7 +162,8 @@ export default class GameScene {
     this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
 
-  stop() {
+  destroy() {
+    console.log("GameScene");
     if (this.requestFrameId) {
       window.cancelAnimationFrame(this.requestFrameId);
       this.requestFrameId = null;

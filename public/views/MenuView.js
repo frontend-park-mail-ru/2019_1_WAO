@@ -7,7 +7,7 @@ const viewData = {
     {
       text: 'Мультиплеер',
       href: '/gameonline',
-      public: false,
+      public: true,
     },
     {
       text: 'Синглплеер',
