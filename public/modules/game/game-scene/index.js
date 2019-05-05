@@ -59,24 +59,50 @@ export default class GameScene {
       return b;
     });
     // инициализация игроков для рендеринга
-    this.local.me = new GamePlayerFigure(ctx);
+    this.local.players = [];
+    for (const Lplayer of this.state.players) {
+      let player = new GamePlayerFigure(ctx);
 
-    this.local.me.x = this.state.me.x;
-    this.local.me.y = this.state.me.y;
-    this.local.me.dx = this.state.me.dx;
+      player.x = Lplayer.x;
+      player.y = Lplayer.y;
+      player.dx = Lplayer.dx;
+      player.id = scene.push(player);
 
-    this.local.me.id = scene.push(this.local.me);
+      this.local.players.push(player);
+    }
+
+
+    // this.local.me = new GamePlayerFigure(ctx);
+
+    // this.local.me.x = this.state.me.x;
+    // this.local.me.y = this.state.me.y;
+    // this.local.me.dx = this.state.me.dx;
+
+    // this.local.me.id = scene.push(this.local.me);
   }
 
   giveCanvas() {
     return this.canvas;
   }
 
+  foundPlayer(id) {
+    return this.state.players.filter((player) => {
+      player.id === id;
+    })[0];
+  }
+
   setState(state) {
     const { scene } = this;
     this.state = state;
-    this.local.me.x = this.state.me.x;
-    this.local.me.y = this.state.me.y;
+
+    for (const Lplayer of this.local.players) {
+      const player = this.foundPlayer(Lplayer.id);
+      Lplayer.x = player.x;
+      Lplayer.y = player.y;
+    }
+
+    // this.local.me.x = this.state.me.x;
+    // this.local.me.y = this.state.me.y;
     if (this.state.plates[0].dy !== 0) {
       for (const plate of this.state.plates) {
         for (let i = 0; i < this.local.field.length; i++) {

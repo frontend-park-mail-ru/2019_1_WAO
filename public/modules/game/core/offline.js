@@ -20,9 +20,9 @@ export default class OfflineGame extends GameCore {
     this.plate = {};
     this.plate.width = 90;
     this.plate.height = 15;
-    
+
     // Физический контроллер игры
-    this.player = new Physics(this.state, scene.giveCanvas());
+    this.physics = new Physics(this.state, scene.giveCanvas());
     // Переменные для корректной отрисовки и анимации
     this.duration = 1000 / 60;
     this.maxDuration = 1000 / 16;
@@ -47,18 +47,20 @@ export default class OfflineGame extends GameCore {
   start() {
     super.start();
     this.state = {
-      me: {
+      players: [{
         x: 0,
         y: 0,
         dx: 0.2,
         dy: 0.002,
         width: 50,
         height: 40,
+        id: 0,
       },
+    ],
     };
     this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
     this.setPlayerOnPlate(this.state.plates[0]);
-    this.player.setState(this.state);
+    this.physics.setState(this.state);
 
     setTimeout(
       () => {
@@ -90,7 +92,7 @@ export default class OfflineGame extends GameCore {
   // Скроллинг карты
   mapController() {
     // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
-    if (this.state.me.y <= this.maxScrollHeight && this.stateScrollMap === false) {
+    if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
       this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else 
 
       this.state.newPlates = this.genMap();
@@ -108,20 +110,20 @@ export default class OfflineGame extends GameCore {
       for (const plate of this.state.plates) {
         plate.dy = this.koefScrollSpeed;
       }
-      this.state.me.dy += this.koefScrollSpeed;
-    } else if (this.state.me.y > this.minScrollHeight && this.stateScrollMap === true) {
+      this.state.players[0].dy += this.koefScrollSpeed;
+    } else if (this.state.players[0].y > this.minScrollHeight && this.stateScrollMap === true) {
       this.stateScrollMap = false; // Закончился скроллинг
       this.stateGenerateNewMap = false;
       for (const plate of this.state.plates) {
         plate.dy = 0;
       }
-      this.state.me.dy -= this.koefScrollSpeed;
+      this.state.players[0].dy -= this.koefScrollSpeed;
     }
   }
 
   setPlayerOnPlate(plate) {
-    this.state.me.y = plate.y - this.plate.height;
-    this.state.me.x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
+    this.state.players[0].y = plate.y - this.plate.height;
+    this.state.players[0].x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
   }
 
   gameloop() {
@@ -134,15 +136,20 @@ export default class OfflineGame extends GameCore {
       }
       this.lastFrame = this.now;
       this.mapController();
-      this.state = this.player.engine(this.delay);
-      console.log(this.state.plates);
+      this.state.commands = [{
+        id: 0,
+        direction: '',
+        delay: this.delay,
+      }];
+      this.state = this.physics.engine();
+      delete this.state.commands;
       gameBus.trigger('state_changed', this.state);
       if (this.stateGenerateNewMap === true) {
         this.state.added = true;
         delete this.state.newPlates;
       }
     }
-    if (this.state.me.y - this.state.me.height > this.canvasHeight) {
+    if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
@@ -156,8 +163,15 @@ export default class OfflineGame extends GameCore {
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
       this.mapController();
-      this.state = this.player.moveLeft(this.delay);
-      console.log('LEFT!!!!', this.state.me);
+      
+      this.state.commands = [{
+        id: 0,
+        direction: 'LEFT',
+        delay: this.delay,
+      }];
+      this.state = this.physics.engine();
+      delete this.state.commands;
+
       this.scene.setState(this.state);
       if (this.stateGenerateNewMap === true) {
         this.state.added = true;
@@ -172,8 +186,15 @@ export default class OfflineGame extends GameCore {
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
       this.mapController();
-      this.state = this.player.moveRight(this.delay);
-      console.log('RIGHT!!!!', this.state.me);
+      
+      this.state.commands = [{
+        id: 0,
+        direction: 'RIGHT',
+        delay: this.delay,
+      }];
+      this.state = this.physics.engine();
+      delete this.state.commands;
+
       this.scene.setState(this.state);
       if (this.stateGenerateNewMap === true) {
         this.state.added = true;
