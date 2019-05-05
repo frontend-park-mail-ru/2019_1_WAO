@@ -61,11 +61,12 @@ export default class GameScene {
     // инициализация игроков для рендеринга
     this.local.players = [];
     for (const Lplayer of this.state.players) {
-      let player = new GamePlayerFigure(ctx);
+      const player = new GamePlayerFigure(ctx);
 
       player.x = Lplayer.x;
       player.y = Lplayer.y;
       player.dx = Lplayer.dx;
+      player.idP = Lplayer.idP;
       player.id = scene.push(player);
 
       this.local.players.push(player);
@@ -86,20 +87,31 @@ export default class GameScene {
   }
 
   foundPlayer(id) {
-    return this.state.players.filter((player) => {
-      player.id === id;
-    })[0];
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === id) {
+        return this.state.players[i];
+      }
+    }
+    return undefined;
   }
+
+  // foundPlayer(idP) {
+  //   return this.state.players.filter((player) => {
+  //     return player.idP === idP;
+  //   })[0];
+  // }
 
   setState(state) {
     const { scene } = this;
     this.state = state;
 
-    for (const Lplayer of this.local.players) {
-      const player = this.foundPlayer(Lplayer.id);
+    this.local.players.forEach((Lplayer) => {
+      const player = this.foundPlayer(Lplayer.idP);
       Lplayer.x = player.x;
       Lplayer.y = player.y;
-    }
+      Lplayer.idP = player.idP;
+    });
 
     // this.local.me.x = this.state.me.x;
     // this.local.me.y = this.state.me.y;

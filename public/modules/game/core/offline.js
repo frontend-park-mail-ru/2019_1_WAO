@@ -54,9 +54,9 @@ export default class OfflineGame extends GameCore {
         dy: 0.002,
         width: 50,
         height: 40,
-        id: 0,
+        idP: 0,
       },
-    ],
+      ],
     };
     this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
     this.setPlayerOnPlate(this.state.plates[0]);
@@ -82,7 +82,7 @@ export default class OfflineGame extends GameCore {
         x: currentX,
         y: currentY,
         dy: 0,
-        idPhys: this.idPhysicBlockCounter++,  // Уникальный идентификатор нужен для отрисовки новых объектов 
+        idPhys: this.idPhysicBlockCounter++,  // Уникальный идентификатор нужен для отрисовки новых объектов
       });
       currentY -= p;
     }
@@ -93,7 +93,7 @@ export default class OfflineGame extends GameCore {
   mapController() {
     // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
     if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
-      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else 
+      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
 
       this.state.newPlates = this.genMap();
       Array.prototype.push.apply(this.state.plates, this.state.newPlates);
@@ -110,14 +110,19 @@ export default class OfflineGame extends GameCore {
       for (const plate of this.state.plates) {
         plate.dy = this.koefScrollSpeed;
       }
-      this.state.players[0].dy += this.koefScrollSpeed;
+      this.state.players.forEach((element) => {
+        element.dy += this.koefScrollSpeed;
+      });
     } else if (this.state.players[0].y > this.minScrollHeight && this.stateScrollMap === true) {
       this.stateScrollMap = false; // Закончился скроллинг
       this.stateGenerateNewMap = false;
       for (const plate of this.state.plates) {
         plate.dy = 0;
       }
-      this.state.players[0].dy -= this.koefScrollSpeed;
+      this.state.players.forEach((element) => {
+        element.dy -= this.koefScrollSpeed;
+      });
+      // this.state.players[0].dy -= this.koefScrollSpeed;
     }
   }
 
@@ -137,10 +142,11 @@ export default class OfflineGame extends GameCore {
       this.lastFrame = this.now;
       this.mapController();
       this.state.commands = [{
-        id: 0,
+        idP: 0,
         direction: '',
         delay: this.delay,
-      }];
+      },
+      ];
       this.state = this.physics.engine();
       delete this.state.commands;
       gameBus.trigger('state_changed', this.state);
@@ -163,12 +169,13 @@ export default class OfflineGame extends GameCore {
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
       this.mapController();
-      
+
       this.state.commands = [{
-        id: 0,
+        idP: 0,
         direction: 'LEFT',
         delay: this.delay,
-      }];
+      },
+      ];
       this.state = this.physics.engine();
       delete this.state.commands;
 
@@ -186,12 +193,13 @@ export default class OfflineGame extends GameCore {
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
       this.mapController();
-      
+
       this.state.commands = [{
-        id: 0,
+        idP: 0,
         direction: 'RIGHT',
         delay: this.delay,
-      }];
+      },
+      ];
       this.state = this.physics.engine();
       delete this.state.commands;
 

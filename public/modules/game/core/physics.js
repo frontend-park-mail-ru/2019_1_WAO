@@ -34,7 +34,7 @@ export default class Fizic {
   // Обработка коллизий
 
   collision(command) {
-    const player = this.foundPlayer(command.id);
+    let player = this.foundPlayer(command.idP);
     const plate = this.selectNearestBlock(player);
     if (!plate) {
       return;
@@ -44,7 +44,8 @@ export default class Fizic {
         return;
       }
       player.statePlateUnderMe = true;
-      this.setPlayerOnPlate(player, plate);
+      // this.setPlayerOnPlate(player, plate);
+      player.y = plate.y - 15;
       this.jump(player);
     }
   }
@@ -79,9 +80,9 @@ export default class Fizic {
 
   // функции для прыжка
 
-  setPlayerOnPlate(player, plate) {
-    player.y = plate.y - 15;
-  }
+  // setPlayerOnPlate(player, plate) {
+  //   player.y = plate.y - 15;
+  // }
 
   jump(player) {
     player.dy = -0.35;
@@ -93,14 +94,21 @@ export default class Fizic {
   // функции изменения скорости
 
   processSpeed(command) {
-    const player = this.foundPlayer(command.id);
-    player.dy += (this.gravity * command.delay);
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === command.idP) {
+        let player = this.state.players[i];
+        console.log(player);
+        player.dy += (this.gravity * command.delay);
+        return;
+      }
+    }
   }
 
   // Сдвиг персонажа вниз
 
   move(command) {
-    const player = this.foundPlayer(command.id);
+    let player = this.foundPlayer(command.idP);
     player.y += (player.dy * command.delay);
   }
 
@@ -112,13 +120,24 @@ export default class Fizic {
     }
   }
 
-  // Поиск игрока по id
-
+  // Поиск игрока по idP
   foundPlayer(id) {
-    return this.state.players.filter((player) => {
-      player.id == id;
-    })[0];
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === id) {
+        return this.state.players[i];
+      }
+    }
+    return undefined;
   }
+  // foundPlayer(idP) {
+    
+  //   let out = this.state.players.filter((player) => {
+  //     return player.idP === idP;
+  //   });
+  //   return out;
+  //   // alert(out);
+  // }
 
   // Контролеры карты
 
@@ -128,9 +147,8 @@ export default class Fizic {
 
   engine() {
     this.circleDraw();
-    let command;
-    for (command of this.state.commands) {
-      let player = this.foundPlayer(command.id);
+    this.state.commands.forEach((command) => {
+      let player = this.foundPlayer(command.idP);
       if (command.direction === 'LEFT') {
         player.x -= player.dx * command.delay;
       } else if (command.direction === 'RIGHT') {
@@ -138,13 +156,13 @@ export default class Fizic {
       }
       this.processSpeed(command);
       this.collision(command);
-    }
+    });
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(this.state.players[0]);
     }
-    for (const command of this.state.commands) {
+    this.state.commands.forEach((command) => {
       this.move(command);
-    }
+    });
     return this.state;
   }
 }
