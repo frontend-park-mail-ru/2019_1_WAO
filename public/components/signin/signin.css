@@ -1,7 +1,7 @@
 .signin-form {
   margin: 5% auto;
   max-width: 420px;
-  width: 100%;
+  width: 95vw;
   opacity: 0.7;
   border-radius: 8px;
   border: solid 1px var(--formColor);
@@ -11,6 +11,5 @@
   grid-gap: 10px;
   text-align: center;
   vertical-align: middle;
-  justify-content: center;
-  align-items: center;
+  padding-bottom: 30px;
 }

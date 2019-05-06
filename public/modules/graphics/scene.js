@@ -1,6 +1,20 @@
 export default class Scene {
   constructor(ctx) {
     this.ctx = ctx;
+    // this.gameWidth = 400;
+    // this.gameHeight = 700;
+    // this.koefScaleWidth = 1;
+    // this.koefScaleHeight = 1;
+    // if (document.body.clientWidth < this.gameWidth) {
+    //   this.koefScaleWidth = document.body.clientWidth / this.koefScaleWidth;
+    //   ctx.width = document.body.clientWidth;
+    // }
+    // if (document.body.clientHeight < this.gameHeight) {
+    //   this.koefScaleHeight = document.body.clientHeight / this.koefScaleHeight;
+    //   ctx.height = document.body.clientHeight;
+    // }
+    
+    // ctx.scale(this.koefScaleWidth, this.koefScaleHeight);
     this.frontView = [];
     this.backView = [];
     this.figures = {};

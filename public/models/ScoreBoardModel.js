@@ -31,10 +31,16 @@ export default class ScoreBoardModel {
       console.log('score ok');
       console.log(data);
       // this.page = data.page;
-      // this.pages = data.pages;
-      this.pages = 1;
+      if (data.pages) {
+        this.pages = data.pages;
+      } else {
+        this.pages = 1;
+      }
       console.log(data);
-
+      data.users.forEach((element, i) => {
+        // немножко математики и нумерация списка готова
+        element.number = (i + 1) + (this.page - 1) * 10;
+      });
       this.eventBus.trigger('render', data);
       this.eventBus.trigger('show', data);
     } catch (err) {

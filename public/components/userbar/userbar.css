@@ -1,6 +1,4 @@
-:root {
-  --userbarColor: #d8d8d87f;
-}
+@import '../common/vars.css';
 
 @media (max-width: 1200px) {
   .userbar {
@@ -56,6 +54,10 @@
 }
 
 .userbar__nickname {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: white;
   font-size: 30px;
 }
