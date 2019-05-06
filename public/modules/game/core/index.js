@@ -55,9 +55,17 @@ export default class GameCore {
     gameBus.off('game_finish', this.onGameFinished);
     gameBus.off('controls_pressed', this.onControllsPressed);
     gameBus.off('state_changed', this.onGameStateChanged);
-
+    
+    gameBus.off('left_pressed', this.onPressedLeftControl);
+    gameBus.off('right_pressed', this.onPressedRightControl);
+    
+    if (this.gameloopRequestId) {
+      window.cancelAnimationFrame(this.gameloopRequestId);
+      this.gameloopRequestId = null;
+    }
+    // this.physics.destroy();
     this.controller.destroy();
-    this.scene.stop();
+    this.scene.destroy();
   }
 
   /* Зачем это?

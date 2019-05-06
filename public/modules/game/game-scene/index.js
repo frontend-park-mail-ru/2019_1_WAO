@@ -59,25 +59,62 @@ export default class GameScene {
       return b;
     });
     // инициализация игроков для рендеринга
-    this.local.me = new GamePlayerFigure(ctx);
+    this.local.players = [];
+    for (const Lplayer of this.state.players) {
+      const player = new GamePlayerFigure(ctx);
 
-    this.local.me.x = this.state.me.x;
-    this.local.me.y = this.state.me.y;
-    // this.local.me.dy = this.state.me.dy; // Вверх
-    this.local.me.dx = this.state.me.dx;
+      player.x = Lplayer.x;
+      player.y = Lplayer.y;
+      player.dx = Lplayer.dx;
+      player.idP = Lplayer.idP;
+      player.id = scene.push(player);
 
-    this.local.me.id = scene.push(this.local.me);
+      this.local.players.push(player);
+    }
+
+
+    // this.local.me = new GamePlayerFigure(ctx);
+
+    // this.local.me.x = this.state.me.x;
+    // this.local.me.y = this.state.me.y;
+    // this.local.me.dx = this.state.me.dx;
+
+    // this.local.me.id = scene.push(this.local.me);
   }
 
   giveCanvas() {
     return this.canvas;
   }
 
+  foundPlayer(id) {
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === id) {
+        return this.state.players[i];
+      }
+    }
+    return undefined;
+  }
+
+  // foundPlayer(idP) {
+  //   return this.state.players.filter((player) => {
+  //     return player.idP === idP;
+  //   })[0];
+  // }
+
   setState(state) {
     const { scene } = this;
     this.state = state;
-    this.local.me.x = this.state.me.x;
-    this.local.me.y = this.state.me.y;
+
+    this.local.players.forEach((Lplayer) => {
+      const player = this.foundPlayer(Lplayer.idP);
+      Lplayer.x = player.x;
+      Lplayer.y = player.y;
+      Lplayer.idP = player.idP;
+    });
+
+    // this.local.me.x = this.state.me.x;
+    // this.local.me.y = this.state.me.y;
     if (this.state.plates[0].dy !== 0) {
       for (const plate of this.state.plates) {
         for (let i = 0; i < this.local.field.length; i++) {
@@ -96,7 +133,6 @@ export default class GameScene {
           b.width = 90;
           b.x = lPlate.x;
           b.y = lPlate.y;
-          // b.dy = lPlate.dy;
           b.idPhys = lPlate.idPhys;
           this.local.field.push(b);
         }
@@ -107,18 +143,8 @@ export default class GameScene {
             i--;
           }
         }
-        // this.local.field = this.local.field.filter((item) => {
-        //   return item.y <= this.canvas.height;
-        // });
-        // for (const lPlate of this.local.field) {
-        //   if (lPlate.y > this.canvas.height) {
-        //     delete lPlate;
-        //   }
-        // }
-        // Array.prototype.push.apply(this.local.field, this.state.newPlates);
       }
     }
-    // console.log(this.local.me.x, this.local.me.y);
   }
 
   renderScene(now) {
@@ -136,7 +162,8 @@ export default class GameScene {
     this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
 
-  stop() {
+  destroy() {
+    console.log("GameScene");
     if (this.requestFrameId) {
       window.cancelAnimationFrame(this.requestFrameId);
       this.requestFrameId = null;

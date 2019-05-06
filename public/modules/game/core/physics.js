@@ -25,66 +25,40 @@ export default class Fizic {
     return b.y - a.y;
   }
 
-  // Генераторы карты
-
   // Установка объектов
 
   setState(state) {
     this.state = state;
-    this.state.plates.sort(this.sortFuncPlates);
   }
-
-  setPlates(plates) {
-    if (!this.state.plates) {
-      this.state.plates = plates;
-      this.state.plates.sort(this.sortFuncPlates);
-    } else {
-      console.error('You have already set plates!');
-    }
-  }
-
-  setPlayer(me) {
-    if (!this.state.me) {
-      this.state.me = me;
-    } else {
-      console.error('You have already set player!');
-    }
-  }
-
-  pushPlates(plates) {
-    this.state.plates.push(plates);
-    this.state.plates.sort(this.sortFuncPlates);
-  }
-
-  // Функции для просчета составляющих позиции игрока
-
 
   // Обработка коллизий
 
-  collision(delay) {
-    const plate = this.selectNearestBlock();
+  collision(command) {
+    let player = this.foundPlayer(command.idP);
+    const plate = this.selectNearestBlock(player);
     if (!plate) {
       return;
     }
-    if (this.state.me.dy >= 0) {
-      if (this.state.me.y + this.state.me.dy * delay < plate.y - 15) {
+    if (player.dy >= 0) {
+      if (player.y + player.dy * command.delay < plate.y - 15) {
         return;
       }
-      this.state.me.statePlateUnderMe = true;
-      this.setPlayerOnPlate(plate);
-      this.jump(delay);
+      player.statePlateUnderMe = true;
+      // this.setPlayerOnPlate(player, plate);
+      player.y = plate.y - 15;
+      this.jump(player);
     }
   }
 
   // Вспомогательная функция для функции коллизии
-
-  selectNearestBlock() {
+  // Ищет ближайший по игру блок под игроком
+  selectNearestBlock(player) {
     let nearestBlock;
     let minY = this.canvas.height;
     for (const plate of this.state.plates) {
-      if ((this.state.me.x + this.state.me.width >= plate.x && this.state.me.x <= plate.x + 90)) {
-        if ((plate.y - this.state.me.y < minY && this.state.me.y <= plate.y)) {
-          minY = plate.y - this.state.me.y;
+      if ((player.x + player.width >= plate.x && player.x <= plate.x + 90)) {
+        if ((plate.y - player.y < minY && player.y <= plate.y)) {
+          minY = plate.y - player.y;
           nearestBlock = plate;
         }
       }
@@ -95,38 +69,50 @@ export default class Fizic {
   // Отрисовка по кругу
 
   circleDraw() {
-    if (this.state.me.x > this.canvas.width) {
-      this.state.me.x = 0;
-    } else if (this.state.me.x < 0) {
-      this.state.me.x = this.canvas.width;
+    for (const player of this.state.players) {
+      if (player.x > this.canvas.width) {
+        player.x = 0;
+      } else if (player.x < 0) {
+        player.x = this.canvas.width;
+      }
     }
   }
 
   // функции для прыжка
 
-  setPlayerOnPlate(plate) {
-    this.state.me.y = plate.y - 15;
-  }
+  // setPlayerOnPlate(player, plate) {
+  //   player.y = plate.y - 15;
+  // }
 
-  jump() {
-    this.state.me.dy = -0.35;
+  jump(player) {
+    player.dy = -0.35;
     if (this.state.plates[0].dy !== 0) {
-      this.state.me.dy = -0.35 + this.state.plates[0].dy;
-    } 
+      player.dy = -0.35 + this.state.plates[0].dy;
+    }
   }
 
   // функции изменения скорости
 
-  processSpeed(delay) {
-    this.state.me.dy += (this.gravity * delay);
+  processSpeed(command) {
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === command.idP) {
+        let player = this.state.players[i];
+        console.log(player);
+        player.dy += (this.gravity * command.delay);
+        return;
+      }
+    }
   }
 
-  move(delay) {
-    this.state.me.y += (this.state.me.dy * delay);
+  // Сдвиг персонажа вниз
+
+  move(command) {
+    let player = this.foundPlayer(command.idP);
+    player.y += (player.dy * command.delay);
   }
 
-  // Контролирования скроллинга карты
-
+  // Сдвиг все карты вниз
 
   scrollMap(delay) {
     for (const plate of this.state.plates) {
@@ -134,53 +120,49 @@ export default class Fizic {
     }
   }
 
+  // Поиск игрока по idP
+  foundPlayer(id) {
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === id) {
+        return this.state.players[i];
+      }
+    }
+    return undefined;
+  }
+  // foundPlayer(idP) {
+    
+  //   let out = this.state.players.filter((player) => {
+  //     return player.idP === idP;
+  //   });
+  //   return out;
+  //   // alert(out);
+  // }
+
   // Контролеры карты
 
-  moveLeft(delay) {
+  /*
+  Command: id, "LEFT", delay
+  */
+
+  engine() {
     this.circleDraw();
-
-    this.state.me.x -= this.state.me.dx * delay;
-    this.processSpeed(delay);
-    this.collision(delay);
-    // this.mapController();
+    this.state.commands.forEach((command) => {
+      let player = this.foundPlayer(command.idP);
+      if (command.direction === 'LEFT') {
+        player.x -= player.dx * command.delay;
+      } else if (command.direction === 'RIGHT') {
+        player.x += player.dx * command.delay;
+      }
+      this.processSpeed(command);
+      this.collision(command);
+    });
     if (this.state.plates[0].dy !== 0) {
-      this.scrollMap(delay);
-    } //else {
-      
-    // }
-    this.move(delay);
-    // this.gravitation(delay);
-    return this.state;
-  }
-
-  moveRight(delay) {
-    this.circleDraw();
-    this.state.me.x += this.state.me.dx * delay;
-    this.processSpeed(delay);
-    this.collision(delay);
-    // this.mapController();
-    if (this.state.plates[0].dy !== 0) {
-      this.scrollMap(delay);
-    } //else {
-      
-    // }
-    this.move(delay);
-    // this.gravitation(delay);
-    return this.state;
-  }
-
-
-  engine(delay) {
-    this.circleDraw();
-    this.processSpeed(delay);
-    this.collision(delay);
-    if (this.state.plates[0].dy !== 0) {
-      this.scrollMap(delay);
-    } //else {
-      
-    // }
-    this.move(delay);
-    // this.gravitation(delay);
+      this.scrollMap(this.state.commands[0].delay);
+    }
+    this.state.commands.forEach((command) => {
+      this.move(command);
+    });
     return this.state;
   }
 }
