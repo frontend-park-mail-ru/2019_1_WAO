@@ -2,6 +2,9 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 require('babel-polyfill');
 const autoprefixer = require('autoprefixer');
+const postcss = require('postcss');
+const nested = require('postcss-nested');
+const bem = require('postcss-bem');
 
 module.exports = {
   entry: {
@@ -38,6 +41,15 @@ module.exports = {
               plugins: [
                 autoprefixer({
                   browsers: ['ie >= 8', 'last 4 version'],
+                }),
+                bem({
+                  style: 'bem',
+                  separators: {
+                    descendent: '__',
+                  },
+                  shortcuts: {
+                    utility: 'util',
+                  },
                 }),
               ],
               sourceMap: true,

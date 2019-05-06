@@ -99,6 +99,30 @@
   border-radius: 50%;
 }
 
-.developer__name {
-  font-size: 20px;
+/*
+@b developer {
+  display: grid;
+  grid-template-rows: auto;
+  justify-content: center;
+  grid-gap: 20px;
+
+  @e role {
+    font-size: 20px;
+  }
+
+  @e image {
+    object-fit: cover;
+    object-position: center center;
+    width: 100px;
+    height: 100px;
+    border: solid;
+    border-color: #979797;
+    border-radius: 50%;
+  }
+
+  @e name {
+    font-size: 20px;
+  }
+  */
 }
+

@@ -7,5 +7,14 @@ module.exports = {
     'postcss-cssnext': {
       browsers: ['last 2 versions', '> 5%'],
     },
+    'postcss-bem': {
+      style: 'bem',
+      separators: {
+        descendent: '__',
+      },
+      shortcuts: {
+        utility: 'util',
+      },
+    },
   },
 };
