@@ -78,7 +78,6 @@
   }
 }
 
-/*
 .developer {
   display: grid;
   grid-template-rows: auto;
@@ -99,9 +98,8 @@
   border-color: #979797;
   border-radius: 50%;
 }
-*/
 
-
+/*
 .developer {
   display: grid;
   grid-template-rows: auto;
@@ -126,4 +124,4 @@
     font-size: 20px;
   }
 }
-
+*/
