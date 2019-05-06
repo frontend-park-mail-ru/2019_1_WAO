@@ -1,5 +1,5 @@
 // Для запуска на локалхост
-export const host = '127.0.0.1:3000';
+export const host = 'http://89.208.197.150:8000';
 export const baseUrl = `http://${host}`;
 
 // Для деплоя
