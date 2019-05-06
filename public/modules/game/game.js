@@ -31,6 +31,8 @@ export default class Game {
   }
 
   destroy() {
-    this.gameCore.destroy();
+    // this.gameCore.destroy();
+    this.gameCore.destroy(); 
+    this.gameCore = null;
   }
 }

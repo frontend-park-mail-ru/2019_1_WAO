@@ -71,7 +71,11 @@ export default class OfflineGame extends GameCore {
 
   // Генератор карты
 
-  genMap(beginY = (this.state.plates[this.state.plates.length - 1].y - 20), b = (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y), k = (this.koefGeneratePlates * (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y)).toFixed()) {
+  genMap(
+    beginY = (this.state.plates[this.state.plates.length - 1].y - 20),
+    b = (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y),
+    k = (this.koefGeneratePlates * (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y)).toFixed(),
+  ) {
     const newBlocks = [];
     const p = b / k; // Плотность распределения пластин
     let currentX;
@@ -227,5 +231,10 @@ export default class OfflineGame extends GameCore {
 
   onGameStateChanged(state) {
     this.scene.setState(state);
+  }
+
+  destroy() {
+    super.destroy();
+    cancelAnimationFrame(this.gameloopRequestId);
   }
 }

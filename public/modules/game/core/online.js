@@ -2,7 +2,9 @@ import GameCore from './index';
 import { gameBus } from '../../eventbus';
 import Physics from './physics';
 
-export const socket = new WebSocket('ws://25.86.85.225:8080/websocket');
+// const onlineAdr = '25.86.85.225:8080';
+const onlineAdr = '192.168.43.4:8080';
+// const onlineAdr = '127.0.0.1:8000';
 export default class OnlineGame extends GameCore {
   constructor(controller, scene) {
     super(controller, scene);
@@ -45,8 +47,9 @@ export default class OnlineGame extends GameCore {
     this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
 
 
-    this.socket = socket;
+    this.socket = new WebSocket(`ws://${onlineAdr}/websocket`);
     this.socket.onopen = function (event) {
+      this.socket.send("Conected");
       alert('Соединение установлено.');
     };
     this.socket.onclose = function (event) {
@@ -203,6 +206,10 @@ export default class OnlineGame extends GameCore {
         delay: this.delay,
       },
       ];
+      this.socket.send(JSON.stringify({
+        type: 'move',
+        payload: this.state.commands[0],
+      }));
       this.state = this.physics.engine();
       delete this.state.commands;
 
@@ -227,6 +234,10 @@ export default class OnlineGame extends GameCore {
         delay: this.delay,
       },
       ];
+      this.socket.send(JSON.stringify({
+        type: 'move',
+        payload: this.state.commands[0],
+      }));
       this.state = this.physics.engine();
       delete this.state.commands;
 
@@ -248,11 +259,21 @@ export default class OnlineGame extends GameCore {
   }
 
   onGameFinished() {
+    this.socket.send(JSON.stringify({
+      type: 'lose',
+      // payload: this.state.commands[0],
+    }));
     cancelAnimationFrame(this.gameloopRequestId);
     gameBus.trigger('game_close');
   }
 
   onGameStateChanged(state) {
     this.scene.setState(state);
+  }
+
+  destroy() {
+    this.socket.close();
+    super.destroy();
+    cancelAnimationFrame(this.gameloopRequestId);
   }
 }

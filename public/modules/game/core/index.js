@@ -63,7 +63,7 @@ export default class GameCore {
       window.cancelAnimationFrame(this.gameloopRequestId);
       this.gameloopRequestId = null;
     }
-
+    // this.physics.destroy();
     this.controller.destroy();
     this.scene.destroy();
   }
