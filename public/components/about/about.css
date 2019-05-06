@@ -78,6 +78,7 @@
   }
 }
 
+/*
 .developer {
   display: grid;
   grid-template-rows: auto;
@@ -98,19 +99,20 @@
   border-color: #979797;
   border-radius: 50%;
 }
+*/
 
-/*
-@b developer {
+
+.developer {
   display: grid;
   grid-template-rows: auto;
   justify-content: center;
   grid-gap: 20px;
 
-  @e role {
+  &__role {
     font-size: 20px;
   }
 
-  @e image {
+  &__image {
     object-fit: cover;
     object-position: center center;
     width: 100px;
@@ -120,9 +122,8 @@
     border-radius: 50%;
   }
 
-  @e name {
+  &__name {
     font-size: 20px;
   }
-  */
 }
 
