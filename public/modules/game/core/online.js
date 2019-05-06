@@ -3,7 +3,7 @@ import { gameBus } from '../../eventbus';
 import Physics from './physics';
 
 // const onlineAdr = '25.86.85.225:8080';
-const onlineAdr = '192.168.43.4:8080';
+const onlineAdr = 'waoteam.tk';
 // const onlineAdr = '127.0.0.1:8000';
 export default class OnlineGame extends GameCore {
   constructor(controller, scene) {
