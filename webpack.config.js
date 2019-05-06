@@ -1,6 +1,10 @@
-const HtmlWebPackPlugin  = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 require('babel-polyfill');
+const autoprefixer = require('autoprefixer');
+const postcssPresetEnv = require('postcss-preset-env');
+const nextCss = require('postcss-cssnext');
+const importCss = require('postcss-import');
 
 module.exports = {
   entry: {
@@ -27,7 +31,30 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        // use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                autoprefixer({
+                  browsers: ['ie >= 8', 'last 4 version'],
+                }),
+                postcssPresetEnv({
+                  stage: 1,
+                  features: ['css-nesting'],
+                }),
+                nextCss({
+                  browsers: ['last 2 versions', '> 5%'],
+                }),
+                importCss({}),
+              ],
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: /\.html$/,
@@ -39,24 +66,16 @@ module.exports = {
       },
       {
         test: /\.(png|jp(e*)g|svg)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 10, // Convert images < 8kb to base64 strings
-            name: 'images/[name].[ext]',
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10, // Convert images < 8kb to base64 strings
+              name: 'images/[name].[ext]',
+            },
           },
-        }],
+        ],
       },
-      /* Пока вручную, а то и без него проблем не мало
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {
-          // eslint options (if necessary)
-        }
-      },
-      */
       {
         test: /\.hbs$/,
         loader: 'handlebars-loader',

@@ -17,4 +17,10 @@ export default class BasePresenter {
   call() {
     this.eventBus.trigger('call');
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  stop() {
+    // this.view.hide();
+    this.eventBus.trigger('hide');
+  }
 }

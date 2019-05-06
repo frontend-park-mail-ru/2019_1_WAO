@@ -9,7 +9,10 @@ import SignInPresenter from './presenters/SigninPresenter';
 import SignUpPresenter from './presenters/SignupPresenter';
 import AboutPresenter from './presenters/AboutPresenter';
 import StorePresenter from './presenters/StorePresenter';
-import GamePresenter from './presenters/GamePresenter';
+import OfflineGamePresenter from './presenters/OfflineGamePresenter';
+import OnlineGamePresenter from './presenters/OnlineGamePresenter';
+import PresentationPresenter from './presenters/PresentationPresenter';
+import ChatPresenter from './presenters/ChatPresenter';
 
 import './img/user.png';
 import './img/door.svg';
@@ -27,7 +30,7 @@ function registerSW() {
 }
 
 /**
- * Пописака на события глобальной шины
+ * Подписка на события глобальной шины
  */
 function subscribeGlobalBus() {
   GlobalBus.on('auth_bad', () => {
@@ -35,10 +38,12 @@ function subscribeGlobalBus() {
   });
 
   GlobalBus.on('auth_out', () => {
+    console.log('Try to out');
     delAuth()
       .then(checkStatus)
       .then(() => {
-        Router.route('/signin');
+        Router.route('/');
+        // Router.route('/signin');
       })
       .catch((err) => {
         console.log(err);
@@ -54,15 +59,28 @@ function start() {
   console.log('Start');
 
   const application = document.getElementById('application');
+  const common = document.createElement('div');
+  common.classList.add('common');
+  application.appendChild(common);
+  const appEl = document.createElement('div');
+  const userEl = document.createElement('div');
+  // const chatEl = document.createElement('div');
+  application.appendChild(appEl);
+  application.appendChild(userEl);
+  // application.appendChild(chatEl);
+
   Router.setRoot(application);
-  Router.add('/',         new MenuPresenter());
-  Router.add('/users',    new ScoreBoardPresenter());
-  Router.add('/profile',  new ProfilePresenter());
-  Router.add('/signin',   new SignInPresenter());
-  Router.add('/signup',   new SignUpPresenter());
-  Router.add('/about',    new AboutPresenter());
-  Router.add('/store',    new StorePresenter());
-  Router.add('/gameoffline', new GamePresenter());
+  Router.add('/',         new MenuPresenter([appEl, userEl]));
+  Router.add('/users',    new ScoreBoardPresenter([appEl, userEl]));
+  Router.add('/profile',  new ProfilePresenter([appEl, userEl]));
+  Router.add('/signin',   new SignInPresenter([appEl]));
+  Router.add('/signup',   new SignUpPresenter([appEl]));
+  Router.add('/about',    new AboutPresenter([appEl, userEl]));
+  Router.add('/store',    new StorePresenter([appEl, userEl]));
+  Router.add('/gameoffline', new OfflineGamePresenter([appEl]));
+  Router.add('/gameonline',  new OnlineGamePresenter([appEl]));
+  Router.add('/show',  new PresentationPresenter([appEl]));
+  Router.add('/chat',  new ChatPresenter(GlobalBus, appEl));
 
   subscribeGlobalBus();
 

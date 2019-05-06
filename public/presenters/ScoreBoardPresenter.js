@@ -3,7 +3,7 @@ import ScoreBoardModel from '../models/ScoreBoardModel';
 import { EventBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
-import Router from '../modules/router';
+// import Router from '../modules/router';
 
 /**
  * ScoreBoardPresenter view
@@ -15,26 +15,19 @@ export default class ScoreBoardPresenter extends BasePresenter {
    * Создает Модель и Представление элемента
    * Подписывается на события
    */
-  constructor() {
-    const application = document.getElementById('application');
+  constructor(elements) {
+    const [appEl, userEl] = elements;
     const eventBus = new EventBus();
 
-    const userbar = new UserbarPresenter(eventBus);
+    const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new ScoreBoardView(application, eventBus, [userbar.view]);
+    const view = new ScoreBoardView(appEl, eventBus, [userbar.view]);
     const model = new ScoreBoardModel(eventBus);
 
     super(view, model, eventBus);
 
-    eventBus.on('users_rx', (data) => {
-      console.log('users_rx');
-      console.log(data);
-      this.view.render(application, data);
-    });
-
-    eventBus.on('url_change', (data) => {
-      console.log(`/users/${data.toString()}`);
-      Router.changeUrl(`/users/${data.toString()}`);
+    this.eventBus.on('call', () => {
+      this.eventBus.trigger('data_req');
     });
   }
 }

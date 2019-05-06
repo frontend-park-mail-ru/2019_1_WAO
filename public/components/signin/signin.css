@@ -1,53 +1,15 @@
 .signin-form {
   margin: 5% auto;
-  width: 420px;
-  opacity: 0.6;
+  max-width: 420px;
+  width: 95vw;
+  opacity: 0.7;
   border-radius: 8px;
-  border: solid 1px #979797;
+  border: solid 1px var(--formColor);
   background-color: #d8d8d8;
   display: grid;
   grid-template-rows: auto;
   grid-gap: 10px;
   text-align: center;
   vertical-align: middle;
-  justify-content: center;
-  user-select: none;
-}
-
-.signin-form__advance {
-  display: none !important;
-  width: 380px;
-  height: 21px;
-  font-size: 18px;
-  color: #ffffff;
-  opacity: 1;
-}
-
-.signin-form__button-vk {
-  display: none !important;
-  margin-left: auto;
-  margin-right: auto;
-  width: 36px;
-  height: 36px;
-  border-radius: 2px;
-  border: solid 1px #979797;
-  background-color: #5b88bd;
-  color: #ffffff;
-  opacity: 1;
-}
-
-.signin-form__signup-btn {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px;
-  border: solid;
-  border-width: 1px;
-  border-radius: 8px;
-  color: #0f8bec;
-  font-size: 24px;
-  margin: 10px 0px 30px 0px;
-}
-
-.signin-form__signup-btn:hover {
-  box-shadow: 0 0 5px #0f8bec;
+  padding-bottom: 30px;
 }

@@ -13,6 +13,27 @@ export default class GameControllers {
    * Начинаем слушать события клавиатуры
    */
   start() {
+    // let initialPoint;
+    // let finalPoint;
+    // document.addEventListener('touchstart', (event) => {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    //   initialPoint = event.changedTouches[0];
+    // }, false);
+    // document.addEventListener('touchend', (event) => {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    //   finalPoint = event.changedTouches[0];
+    //   const xAbs = Math.abs(initialPoint.pageX - finalPoint.pageX);
+    //   const yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);
+    //   if (xAbs > 20 || yAbs > 20) {
+    //     if (xAbs > yAbs) {
+    //       if (finalPoint.pageX < initialPoint.pageX) {
+    //         /* СВАЙП ВЛЕВО */ }           else {
+    //         /* СВАЙП ВПРАВО */ }
+    //     }
+    //   }
+    // }, false);
     document.addEventListener('keydown', this.onPress);
     document.addEventListener('keyup', this.onUp);
   }
@@ -21,6 +42,8 @@ export default class GameControllers {
    * Прекращаем слушать события клавиатуры
    */
   destroy() {
+    // document.removeEventListener('touchstart');
+    // document.removeEventListener('touchend');
     document.removeEventListener('keydown', this.onPress);
     document.removeEventListener('keyup', this.onUp);
   }

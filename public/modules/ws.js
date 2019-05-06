@@ -1,47 +1,37 @@
-// сырой класс, тут надо исправить
-import bus from './bus';
+import { host } from './api';
 
-class Ws {
+export default class WS {
   constructor() {
-    if (Ws.__instance) {
-      return Ws.__instance;
-    }
+    this.host = host;
+  }
 
-    const address = `${window.location.protocol.replace('http', 'ws')}//${
-      Ws.host
-    }/ws`;
-    this.ws = new WebSocket(address);
-    this.ws.onopen = (event) => {
-      console.log(`WebSocket on address ${address} opened`);
-      console.dir(this.ws);
-
-      this.ws.onmessage = this.handleMessage.bind(this);
-
-      this.ws.onclose = () => {
-        console.log('WebSocket closed');
-      };
+  // eslint-disable-next-line no-unused-vars
+  connect(callback, ...params) {
+    this.ws = new WebSocket(`ws://${this.host}/ws`);
+    this.ws.onmessage = (event) => {
+      console.log(event);
+      // callback(...params);
     };
-
-    Ws.__instance = this;
   }
 
-  handleMessage(event) {
-    const messageText = event.data;
-
-    try {
-      const message = JSON.parse(messageText);
-      bus.emit(message.type, message.payload);
-    } catch (err) {
-      console.error('smth went wront in handleMessage: ', err);
-    }
+  sent(message = '') {
+    this.ws.send(message);
   }
 
-  send(type, payload) {
-    this.ws.send(JSON.stringify({ type, payload }));
+  close() {
+    this.ws.close();
   }
 }
 
-Ws.host = window.location.host;
+/*
+handleMessage(event) {
+  const messageText = event.data;
 
-const WS = new Ws();
-export default WS;
+  try {
+    const message = JSON.parse(messageText);
+    bus.emit(message.type, message.payload);
+  } catch (err) {
+    console.error('smth went wront in handleMessage: ', err);
+  }
+}
+*/

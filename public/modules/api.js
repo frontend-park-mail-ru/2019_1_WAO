@@ -1,5 +1,13 @@
-const baseUrl = 'http://127.0.0.1:3000';
-const apiUrl = '/api';
+// Для запуска на локалхост
+export const host = '127.0.0.1:3000';
+export const baseUrl = `http://${host}`;
+
+// Для деплоя
+// export const host = 'waogame.herokuapp.com';
+// export const baseUrl = `https://${host}`;
+
+const apiUrl = '';
+// const apiUrl = '/api';
 const reqUrl = baseUrl + apiUrl;
 
 /**
@@ -89,7 +97,7 @@ export function parseJSON(res) {
  * return {Promise<Responce>}
  */
 export function getAuth() {
-  return getFetch('/session');
+  return getFetch('/api/session');
 }
 
 /**
@@ -97,7 +105,7 @@ export function getAuth() {
  * return {Promise<Responce>}
  */
 export function delAuth() {
-  return delFetch('/session');
+  return delFetch('/api/session');
 }
 
 /**
@@ -106,16 +114,26 @@ export function delAuth() {
  * return {Promise<Responce>}
  */
 export function getUser(nickname) {
-  return getFetch(`/user/${nickname}`);
+  return getFetch(`/api/users/${nickname}`);
 }
 
-/**
+/** НЕ ИСПОЛЬЗУЕТСЯ БУДЕТ УДАЛЕН
  * Обертка над GET-запросом для получения страницы таблицы лидеров
  * @param {page} int Номер страницы в таблице лидеров
  * return {Promise<Responce>}
  */
 export function getScoreBoard(page = 1) {
-  return getFetch(`/users/${page.toString()}`);
+  return getFetch(`/api/users/${page.toString()}`);
+}
+
+/**
+ * Обертка над GET-запросом для получения списка пользователей
+ * @param {limit} int Кол-во запрашиваемых пользоваетелей
+ * @param {offet} int Смещение относительно начала списка пользователей
+ * return {Promise<Responce>}
+ */
+export function getUsers(limit = 10, offset = 0) {
+  return getFetch(`/api/users?limit=${limit}&offset=${offset}`);
 }
 
 /**
@@ -133,7 +151,8 @@ export function postSignIn(body = {}) {
  * return {Promise<Responce>}
  */
 export function postSignUp(body = {}) {
-  return postFetch('/signup', body);
+  // return postFetch('/signup', body);
+  return postFetch('/api/users', body);
 }
 
 /**
@@ -143,5 +162,5 @@ export function postSignUp(body = {}) {
  * return {Promise<Responce>}
  */
 export function putProfile(nickname, body = {}) {
-  return putFetch(`/user/${nickname}`, body);
+  return putFetch(`/api/users/${nickname}`, body);
 }

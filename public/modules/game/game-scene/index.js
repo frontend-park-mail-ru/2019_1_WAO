@@ -4,7 +4,7 @@ import FadingBlock from './fading-block';
 import GamePlayerFigure from './player';
 import Circle from '../../graphics/circle';
 import BlockPlate from './block';
-// import bus from '../../bus';
+import { gameBus } from '../../eventbus';
 
 const grav = 10;
 
@@ -16,7 +16,6 @@ const KEYS = {
 
 export default class GameScene {
   constructor(canvas) {
-    // this.bus = bus;
     this.canvas = canvas;
     const ctx = canvas.getContext('2d');
     this.ctx = ctx;
@@ -29,18 +28,15 @@ export default class GameScene {
     this.requestFrameId = null;
 
     this.lastFrameTime = 0;
-
-    this.field = [];
-    this.me = null;
+    this.local = {};
+    this.local.field = [];
+    this.local.me = null;
 
     this.renderScene = this.renderScene.bind(this);
 
-    /*
-    this.me.x , y, // Значения на момент рендеринге
-    xConst, yConst, // Значения при init()
-    jumpHeight, jumpLength, jumpPressed, //переменные для смещения по У - организовывают прыжок
-    dltX, dltY // Значение смещения для сдвига
-    */
+    this.stateAddedMap = true;
+
+    gameBus.on('game_close', this.stop);
   }
 
   init(state) {
@@ -48,8 +44,8 @@ export default class GameScene {
     const { scene } = this;
 
     this.state = state;
-
-    this.field = this.state.plates.map((item) => {
+    // инициализация пластин для рендеринга
+    this.local.field = this.state.plates.map((item) => {
       const b = new FadingBlock(ctx);
       b.id = scene.push(b);
 
@@ -57,193 +53,107 @@ export default class GameScene {
       b.width = 90;
       b.x = item.x;
       b.y = item.y;
+      // b.dy = item.dy;
+      b.idPhys = item.idPhys;
 
       return b;
     });
-    this.me = new GamePlayerFigure(ctx);
+    // инициализация игроков для рендеринга
+    this.local.players = [];
+    for (const Lplayer of this.state.players) {
+      const player = new GamePlayerFigure(ctx);
 
-    // this.me.y = 660 + state.me.y;
-    // this.me.x = 50 + state.me.x;
-    this.me.x = 250;
-    this.me.y = 390;
+      player.x = Lplayer.x;
+      player.y = Lplayer.y;
+      player.dx = Lplayer.dx;
+      player.idP = Lplayer.idP;
+      player.id = scene.push(player);
 
-    this.me.id = scene.push(this.me);
-    this.me.jumpCount = 0;
+      this.local.players.push(player);
+    }
 
-    // Для игры
-    // this.me.jumpHeight = 0;
-    // this.me.jumpLength = 100;
-    // this.me.jumpPressed = true;
 
-    this.me.dy = 0; // Вверх
-    this.me.dx = 0;
-    this.me.collision = false;
-    this.gravity = 0.1;
+    // this.local.me = new GamePlayerFigure(ctx);
+
+    // this.local.me.x = this.state.me.x;
+    // this.local.me.y = this.state.me.y;
+    // this.local.me.dx = this.state.me.dx;
+
+    // this.local.me.id = scene.push(this.local.me);
   }
+
+  giveCanvas() {
+    return this.canvas;
+  }
+
+  foundPlayer(id) {
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === id) {
+        return this.state.players[i];
+      }
+    }
+    return undefined;
+  }
+
+  // foundPlayer(idP) {
+  //   return this.state.players.filter((player) => {
+  //     return player.idP === idP;
+  //   })[0];
+  // }
 
   setState(state) {
     const { scene } = this;
     this.state = state;
 
-    // this.me.y = state.me.y - 10;
-  }
+    this.local.players.forEach((Lplayer) => {
+      const player = this.foundPlayer(Lplayer.idP);
+      Lplayer.x = player.x;
+      Lplayer.y = player.y;
+      Lplayer.idP = player.idP;
+    });
 
-  moveLeft(evt) {
-    // this.me.moveLeft = true;
-    this.me.x -= 3;
-    // scene.remove(this.s)
-    // this.requestFrameId = requestAnimationFrame(this.renderScene);
-  }
+    // this.local.me.x = this.state.me.x;
+    // this.local.me.y = this.state.me.y;
+    if (this.state.plates[0].dy !== 0) {
+      for (const plate of this.state.plates) {
+        for (let i = 0; i < this.local.field.length; i++) {
+          if (this.local.field[i].idPhys === plate.idPhys) {
+            this.local.field[i].y = plate.y;
+            break;
+          }
+        }
+      }
+      if (this.state.added === false) {
+        for (const lPlate of this.state.newPlates) {
+          const b = new FadingBlock(this.ctx);
+          b.id = scene.push(b);
 
-  moveRight(evt) {
-    // this.me.moveLeft = true;
-    this.me.x += 3;
-    // scene.remove(this.s)
-    // this.requestFrameId = requestAnimationFrame(this.renderScene);
-  }
-
-  collision() {
-    // Пролетает через платформы
-    if (this.me.dy >= 6) {
-      this.me.dy = 6;
-    }
-    for (const plateIndex in this.field) {
-      if (Object.prototype.hasOwnProperty.call(this.field, plateIndex)) {
-        const plate = this.field[plateIndex];
-        if (this.me.dy >= 0) {
-          if (this.me.x >= plate.x && this.me.x <= plate.x + plate.width) {
-            if (Math.abs(this.me.y - plate.y + plate.height) <= 3) {
-              this.me.collision = true;
-              break;
-            }
+          b.height = 15;
+          b.width = 90;
+          b.x = lPlate.x;
+          b.y = lPlate.y;
+          b.idPhys = lPlate.idPhys;
+          this.local.field.push(b);
+        }
+        for (let i = 0; i < this.local.field.length; i++) {
+          if (this.local.field[i].y > this.canvas.height) {
+            this.scene.remove(this.local.field[i].id);
+            this.local.field.splice(i, 1);
+            i--;
           }
         }
       }
     }
-  }
-
-  collis(p1, p2, p3, p4) {
-    const v1 = this.vector_mult(
-      p4.x - p3.x,
-      p4.y - p3.y,
-      p1.x - p3.x,
-      p1.y - p3.y,
-    );
-    const v2 = this.vector_mult(
-      p4.x - p3.x,
-      p4.y - p3.y,
-      p2.x - p3.x,
-      p2.y - p3.y,
-    );
-    const v3 = this.vector_mult(
-      p2.x - p1.x,
-      p2.y - p1.y,
-      p3.x - p1.x,
-      p3.y - p1.y,
-    );
-    const v4 = this.vector_mult(
-      p2.x - p1.x,
-      p2.y - p1.y,
-      p4.x - p1.x,
-      p4.y - p1.y,
-    );
-    if (v1 * v2 <= 0 && v3 * v4 <= 0) return true;
-    return false;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  vector_mult(ax, ay, bx, by) {
-    // camelCase, Димас !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    return ax * by - bx * ay;
-  }
-
-  upgrCollision() {
-    for (const plateIndex in this.field) {
-      if (Object.prototype.hasOwnProperty.call(this.field, plateIndex)) {
-        const nextPlayerPosition = {};
-        for (const key in this.me) {
-          // остальные for in так же делай
-          if (Object.prototype.hasOwnProperty.call(this.me, key)) {
-            nextPlayerPosition[key] = this.me[key];
-          }
-        }
-        nextPlayerPosition.y += this.me.dy + this.field[plateIndex].height;
-
-        const Player = {};
-        for (const key in this.me) {
-          Player[key] = this.me[key];
-        }
-        Player.y += this.field[plateIndex].height;
-
-        const plate1 = {};
-        for (const key in this.field[plateIndex]) {
-          plate1[key] = this.field[plateIndex][key];
-        }
-        plate1.x -= this.me.body.width;
-
-        const plate2 = {};
-        for (const key in this.field[plateIndex]) {
-          plate2[key] = this.field[plateIndex][key];
-        }
-        plate2.x += this.field[plateIndex].width;
-
-        if (this.collis(Player, nextPlayerPosition, plate1, plate2)) {
-          this.me.collision = true;
-        }
-      }
-    }
-  }
-
-  jump(delay) {
-    if (this.me.collision === true) {
-      this.me.dy = -6;
-    }
-    this.me.collision = false;
-  }
-
-  gravitation(delay) {
-    this.me.y += this.me.dy;
-    this.me.dy += this.gravity;
-    // if (this.me.dy <= -3) this.me.dy = -this.me.dy;
-    // if (this.me.dy >= 3) this.me.dy = -this.me.dy;
-  }
-
-  engine(delay) {
-    this.upgrCollision();
-    this.jump(delay);
-    this.gravitation(delay);
   }
 
   renderScene(now) {
     const { ctx } = this;
     const { scene } = this;
     const delay = now - this.lastFrameTime;
-    // отрисовка движений влево -вправо
-    // if (this.me.moveLeft) {
-    //  this.me.x -= 3;
-    // }
-    // Логика прыжка
-    /*
-    if (this.me.jumpPressed) {
-      this.me.jumpCount++;
-      this.me.jumpHeight =
-        -4 *
-        this.me.jumpLength *
-        Math.sin((Math.PI * this.me.jumpCount) / this.me.jumpLength);
-    }
-    if (this.me.jumpCount > this.me.jumpLength) {
-      this.me.jumpCount = 0;
-      this.me.jumpPressed = false;
-      this.me.jumpHeight = 0;
-    }
-    if (this.me.jumpPressed === false) this.me.jumpPressed = true;
-    this.me.y = this.me.jumpHeight + 600;
-    */
-    // ------- //
-    this.engine(delay);
+
     this.lastFrameTime = now;
     scene.render();
-
     this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
 
@@ -252,7 +162,8 @@ export default class GameScene {
     this.requestFrameId = requestAnimationFrame(this.renderScene);
   }
 
-  stop() {
+  destroy() {
+    console.log("GameScene");
     if (this.requestFrameId) {
       window.cancelAnimationFrame(this.requestFrameId);
       this.requestFrameId = null;

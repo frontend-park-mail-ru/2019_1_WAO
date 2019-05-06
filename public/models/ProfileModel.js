@@ -1,10 +1,9 @@
 import {
-  getAuth, putProfile, checkStatus, parseJSON,
+  putProfile, checkStatus, parseJSON,
 } from '../modules/api';
 import User from '../modules/user';
 import checkXSS from '../modules/safe';
 import { isCorrectNickname, isCorrectEmail, isCorrectPassword } from '../modules/validation';
-import { GlobalBus } from '../modules/eventbus';
 
 /**
  * Модель Профиля пользователя
@@ -17,30 +16,15 @@ export default class ProfileModel {
    */
   constructor(eventBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('call', () => {
-      this.eventBus.trigger('render');
-      this.checkAuth();
+    this.eventBus.on('ready', (data) => {
+      console.log(data);
+      this.eventBus.trigger('render', data);
+      this.eventBus.trigger('show', data);
     });
-  }
 
-  /**
-   * Проверка авторизации
-   */
-  async checkAuth() {
-    try {
-      const res = await getAuth();
-      const status = await checkStatus(res);
-      const data = await parseJSON(status);
-      console.log('profile auth ok');
-      User.set(data);
-      User.isAuth = true;
-      this.eventBus.trigger('users_rx', { data: User, err: {} });
+    this.eventBus.on('view_show', () => {
       this.processForm();
-    } catch (err) {
-      console.log('profile auth bad');
-      console.log(err);
-      GlobalBus.trigger('auth_bad');
-    }
+    });
   }
 
   /**
@@ -120,7 +104,8 @@ export default class ProfileModel {
       User.isAuth = true;
       console.log(User);
       console.log('update ok');
-      this.eventBus.trigger('update_ok', { User: data, err: {} });
+      this.eventBus.trigger('render', data);
+      this.eventBus.trigger('show', data);
     } catch (err) {
       const form = document.querySelector('form');
       form.elements.nickname.value = '';

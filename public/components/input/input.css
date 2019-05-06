@@ -4,8 +4,11 @@
   grid-gap: 10px;
   text-align: center;
   vertical-align: middle;
-  justify-content: center;
-  user-select: none;
+  user-select: none;  
+  max-width: 360px;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
 }
 
 .input-area__label {
@@ -15,8 +18,9 @@
 }
 
 .input-area__input {
+  max-width: 360px;
+  width: 100%;
   padding-left: 15px;
-  width: 360px;
   height: 45px;
   opacity: 0.98;
   border-radius: 8px;
@@ -26,7 +30,7 @@
 }
 
 .input-area__input:active {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px #00006F66;
   transition: 0.3s;
 }
 

@@ -1,0 +1,25 @@
+@import '../common/vars.css';
+
+.sign-button {
+  max-width: 360px;
+  width: 100%;
+  border-width: 1px;
+  border-radius: 8px;
+  border: solid 1px #287191;
+  font-size: 24px;
+  color: var(--mainBlueColor);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-self: center;
+  justify-self: center;
+}
+
+.sign-button:hover {
+  box-shadow: 0 0 20px #00006f66;
+  transition: 0.3s;
+}
+
+
+.form-button:not(hover) {
+  transition: 0.6s;
+}

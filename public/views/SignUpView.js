@@ -36,6 +36,14 @@ const viewData = {
   title: {
     text: 'Регистрация',
   },
+  sign: {
+    text: 'Обратно',
+    href: '/signin',
+  },
+  menu: {
+    text: 'В меню',
+    href: '/',
+  },
 };
 
 /**
@@ -48,12 +56,11 @@ export default class SignUpView extends BaseView {
    * @param {document.body} el Куда отображать
    * @param {EventBus} eventBus Локальная шина событий
    */
-  constructor(el, eventBus, components = []) {
+  constructor(el, eventBus) {
     super({
       el,
       eventBus,
       template,
-      components,
       viewData,
     });
 

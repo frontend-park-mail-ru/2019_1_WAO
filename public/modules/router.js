@@ -9,7 +9,7 @@ class Router {
     root = document.body,
   } = {}) {
     this.root = root;
-    this.presenters = {};
+    this.presenters = new Map();
     this.prevPath = null;
   }
 
@@ -27,7 +27,8 @@ class Router {
    * @param {Presenter} presenter Представитель элемента
    * */
   add(path, presenter) {
-    this.presenters[path] = presenter;
+    // this.presenters[path] = presenter;
+    this.presenters.set(path, presenter);
   }
 
   /**
@@ -36,15 +37,15 @@ class Router {
    * @param {string} page Страница3
    * */
   route(path = '/', page = '') {
-    if (!Object.prototype.hasOwnProperty.call(this.presenters, path)) {
-      // открыть свою 404 либо вызвать уведомление
+    if (!this.presenters.has(path)) {
       console.log('404');
       return;
     }
 
-    if (Object.prototype.hasOwnProperty.call(this.presenters, this.prevPath)) {
-      this.presenters[this.prevPath].view.hide();
+    if (this.presenters.has(this.prevPath)) {
+      this.presenters.get(this.prevPath).stop();
     }
+
     this.prevPath = path;
     console.log(`route to ${path}`);
 
@@ -52,7 +53,7 @@ class Router {
       Router.history(path + page);
     }
 
-    this.presenters[path].call();
+    this.presenters.get(path).call();
   }
 
   static history(path) {

@@ -1,4 +1,6 @@
-import { getAuth, checkStatus, parseJSON } from '../modules/api';
+// import {
+//   getAuth, checkStatus, parseJSON, getUser,
+// } from '../modules/api';
 import { GlobalBus } from '../modules/eventbus';
 import User from '../modules/user';
 
@@ -10,52 +12,38 @@ export default class UserbarModel {
    * Конструктор. Подписывает на проверку авторизации
    * @param {EventBus} eventBus
    */
-  constructor(eventBus) {
+  constructor(eventBus, localBus) {
     this.eventBus = eventBus;
-    this.eventBus.on('call', () => {
-      console.log('call');
-      this.checkAuth();
+    this.localBus = localBus;
+    this.eventBus.on('data_req', () => {
+      console.log('data_req via Userbar Model');
+      this.ckeckUser();
+    });
+
+    this.eventBus.on('view_show', () => {
+      UserbarModel.waitAction();
     });
   }
 
   /**
-   * Проверка авторизации
+   * Установка данных пользователя
    */
-  async checkAuth() {
-    try {
-      const res = await getAuth();
-      const status = await checkStatus(res);
-      const data = await parseJSON(status);
-      console.log('menu auth ok');
-      console.log(data);
-      this.eventBus.trigger('render', data);
-      UserbarModel.waitAction();
-    } catch (err) {
-      console.log(err);
-      console.log('menu auth bad');
-      GlobalBus.trigger('auth_bad');
-    }
+  async ckeckUser() {
+    await User.load();
+    console.log('ready');
+    this.localBus.trigger('show', User);
+    this.eventBus.trigger('ready', User);
   }
-
-  /*
-  checkAuth() {
-    console.log("UserbarModel User.auth: ", User.isAuth);
-    if (User.isAuth) {
-      console.log("UserbarModel User: ", User);
-      this.eventBus.trigger('render', User);
-      this.waitAction();
-    } else {
-      console.log('menu auth bad');
-      GlobalBus.trigger('auth_bad');
-    }
-  }
-  */
 
   /**
    * Отклик на клики пользователя
    */
   static waitAction() {
-    const [buttonOut] = document.getElementsByClassName('userbar__door');
+    const buttons = document.getElementsByClassName('app-actions__out');
+    if (buttons.length === 0) {
+      return;
+    }
+    const [buttonOut] = buttons;
     buttonOut.addEventListener('click', (event) => {
       event.preventDefault();
       console.log('PRESS OUT');

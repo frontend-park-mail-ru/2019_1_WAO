@@ -3,9 +3,13 @@
   <a class="userbar__nickname" data-href="/profile">
     {{nickname}}
   </a>
-  <a class="userbar__score" data-href="/users">
-    {{score}}
-  </a>
-  <a class="userbar__menu" data-href="/">МЕНЮ</a>
-  <a class="userbar__door" data-href="/">ВЫЙТИ</a>
+  <div class="app-actions">
+    {{#if isAuth}}
+      <a class="app-actions__label" data-href="/">МЕНЮ</a>
+      <a class="app-actions__label app-actions__out" data-href="#">ВЫХОД</a>
+    {{else}}
+      <a class="app-actions__label" data-href="/">МЕНЮ</a>
+      <a class="app-actions__label" data-href="/signin">ВХОД</a>
+    {{/if}}
+  </div>
 </div>

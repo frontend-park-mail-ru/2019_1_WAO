@@ -1,8 +1,9 @@
 import ProfileView from '../views/ProfileView';
 import ProfileModel from '../models/ProfileModel';
-import { EventBus } from '../modules/eventbus';
+import { EventBus, GlobalBus } from '../modules/eventbus';
 import BasePresenter from './BasePresenter';
 import UserbarPresenter from './UserbarPresenter';
+import User from '../modules/user';
 
 /**
  * ProfilePresenter view
@@ -14,26 +15,24 @@ export default class ProfilePresenter extends BasePresenter {
    * Создает Модель и Представление элемента
    * Подписывается на события
    */
-  constructor() {
-    const application = document.getElementById('application');
+  constructor(elements) {
+    const [appEl, userEl] = elements;
     const eventBus = new EventBus();
 
-    const userbar = new UserbarPresenter(eventBus);
+    // eslint-disable-next-line no-unused-vars
+    const userbar = new UserbarPresenter(eventBus, userEl);
 
-    const view = new ProfileView(application, eventBus, [userbar.view]);
+    const view = new ProfileView(appEl, eventBus);
     const model = new ProfileModel(eventBus);
 
     super(view, model, eventBus);
 
-    eventBus.on('users_rx', (data) => {
-      console.log('users_rx');
-      console.log(data);
-      this.view.render(application, data);
-    });
-
-    eventBus.on('update_ok', (data) => {
-      console.log('update_ok');
-      this.view.render(application, data);
+    this.eventBus.on('call', () => {
+      if (User.isAuth) {
+        this.eventBus.trigger('data_req');
+      } else {
+        GlobalBus.trigger('auth_bad');
+      }
     });
   }
 }
