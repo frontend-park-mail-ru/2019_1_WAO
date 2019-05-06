@@ -2,9 +2,6 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 require('babel-polyfill');
 const autoprefixer = require('autoprefixer');
-const postcssPresetEnv = require('postcss-preset-env');
-const nextCss = require('postcss-cssnext');
-const importCss = require('postcss-import');
 
 module.exports = {
   entry: {
@@ -38,18 +35,12 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
+              // parser: 'sugarss',
+              // exec: true,
               plugins: [
                 autoprefixer({
                   browsers: ['ie >= 8', 'last 4 version'],
                 }),
-                postcssPresetEnv({
-                  stage: 1,
-                  features: ['css-nesting'],
-                }),
-                nextCss({
-                  browsers: ['last 2 versions', '> 5%'],
-                }),
-                importCss({}),
               ],
               sourceMap: true,
             },
