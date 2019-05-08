@@ -114,9 +114,12 @@ export default class Fizic {
 
   // Сдвиг все карты вниз
 
-  scrollMap(delay) {
+  scrollMap(delay) {  // Работает только для текущего игрока
     for (const plate of this.state.plates) {
       plate.y += plate.dy * delay;
+    }
+    if (this.mapGapSpeed !== 0) {
+      this.mapGap += this.mapGapSpeed * delay;
     }
   }
 
