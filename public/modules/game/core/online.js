@@ -53,7 +53,7 @@ export default class OnlineGame extends GameCore {
     this.mapGapSpeed = 0;
 
     this.state.commands = [];
-    this.socket = new WebSocket('ws://127.0.0.1:8080/websocket');
+    this.socket = new WebSocket('ws://192.168.200.84:8080/websocket');
     this.socket.onopen = function (event) {
       alert('Соединение установлено.');
     };
@@ -150,7 +150,6 @@ export default class OnlineGame extends GameCore {
       this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
       this.socket.send(JSON.stringify({
         type: 'map',
-        payload: this.state.commands[0],
       }));
 
       // Очистить this.state от старых элементов
