@@ -246,14 +246,14 @@ export default class OnlineGame extends GameCore {
       if (this.state.commands === []) {
         this.state.commands.push({
           idP: this.state.myIdP,
-          direction: '',
+          direction: 'LEFT',
           delay: this.delay,
         },
         );
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
-          direction: '',
+          direction: 'LEFT',
           delay: this.delay,
         },
         );
@@ -283,14 +283,14 @@ export default class OnlineGame extends GameCore {
       if (this.state.commands === []) {
         this.state.commands.push({
           idP: this.state.myIdP,
-          direction: '',
+          direction: 'RIGHT',
           delay: this.delay,
         },
         );
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
-          direction: '',
+          direction: 'RIGHT',
           delay: this.delay,
         },
         );
