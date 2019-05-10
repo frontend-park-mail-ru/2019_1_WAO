@@ -52,7 +52,8 @@ export default class OnlineGame extends GameCore {
     this.mapGap = 0;
     this.mapGapSpeed = 0;
 
-    this.socket = new WebSocket('ws://25.86.85.225:8080/websocket');
+    this.state.commands = [];
+    this.socket = new WebSocket('ws://127.0.0.1:8080/websocket');
     this.socket.onopen = function (event) {
       alert('Соединение установлено.');
     };
@@ -67,13 +68,15 @@ export default class OnlineGame extends GameCore {
 
     this.socket.onmessage = ( (event) => {
       const msg = JSON.parse(event.data);
-      console.log(this);
+      // console.log(this);
       console.log(msg.payload);
       switch (msg.type) {
         case 'init':
+          this.state.players = [];
           // console.log(msg.payload);
+          this.state.myIdP = msg.payload.players[0].idP;
           msg.payload.players.forEach((elem) => {
-            this.state.players = [];
+            
             this.state.players.push({
               x: elem.x,
               y: elem.y,
@@ -99,7 +102,7 @@ export default class OnlineGame extends GameCore {
             elem.y += this.mapGap;
           });
           this.mapGap = 0;
-          console.log(this.state.newPlates);
+          // console.log(this.state.newPlates);
           Array.prototype.push.apply(this.state.plates, this.state.newPlates);
           this.state.added = false;
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
@@ -108,7 +111,7 @@ export default class OnlineGame extends GameCore {
           this.stateSocketSendedMap = true;
           break;
         case 'move':
-          this.state.commands.push(msg);
+          this.state.commands.push(msg.payload);
           break;
         default:
           break;
@@ -145,7 +148,10 @@ export default class OnlineGame extends GameCore {
     // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
     if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
       this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
-      this.socket.send('map');
+      this.socket.send(JSON.stringify({
+        type: 'map',
+        payload: this.state.commands[0],
+      }));
 
       // Очистить this.state от старых элементов
       for (let i = 0; i < this.state.plates.length; i++) {
@@ -179,14 +185,6 @@ export default class OnlineGame extends GameCore {
     }
   }
 
-  scrollMapOn() {
-
-  }
-
-  scrollMapOff() {
-
-  }
-
   setPlayerOnPlate(plate) {
     this.state.players[0].y = plate.y - this.plate.height;
     this.state.players[0].x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
@@ -202,18 +200,28 @@ export default class OnlineGame extends GameCore {
       }
       this.lastFrame = this.now;
       this.mapController();
-      this.state.commands = [{
-        idP: 0,
-        direction: '',
-        delay: this.delay,
-      },
-      ];
+      if (this.state.commands === []) {
+        this.state.commands.push({
+          idP: this.state.myIdP,
+          direction: '',
+          delay: this.delay,
+        },
+        );
+      } else {
+        this.state.commands.unshift({
+          idP: this.state.myIdP,
+          direction: '',
+          delay: this.delay,
+        },
+        );
+      }
+      
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
-      delete this.state.commands;
+      this.state.commands = [];
       gameBus.trigger('state_changed', this.state);
       if (this.stateGenerateNewMap === true) {
         this.state.added = true;
@@ -235,18 +243,27 @@ export default class OnlineGame extends GameCore {
       this.lastFrame = this.now;
       this.mapController();
 
-      this.state.commands = [{
-        idP: 0,
-        direction: 'LEFT',
-        delay: this.delay,
-      },
-      ];
+      if (this.state.commands === []) {
+        this.state.commands.push({
+          idP: this.state.myIdP,
+          direction: '',
+          delay: this.delay,
+        },
+        );
+      } else {
+        this.state.commands.unshift({
+          idP: this.state.myIdP,
+          direction: '',
+          delay: this.delay,
+        },
+        );
+      }
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
-      delete this.state.commands;
+      this.state.commands = [];
 
       this.scene.setState(this.state);
       if (this.stateGenerateNewMap === true) {
@@ -263,18 +280,27 @@ export default class OnlineGame extends GameCore {
       this.lastFrame = this.now;
       this.mapController();
 
-      this.state.commands = [{
-        idP: 0,
-        direction: 'RIGHT',
-        delay: this.delay,
-      },
-      ];
+      if (this.state.commands === []) {
+        this.state.commands.push({
+          idP: this.state.myIdP,
+          direction: '',
+          delay: this.delay,
+        },
+        );
+      } else {
+        this.state.commands.unshift({
+          idP: this.state.myIdP,
+          direction: '',
+          delay: this.delay,
+        },
+        );
+      }
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
-      delete this.state.commands;
+      this.state.commands = [];
 
       this.scene.setState(this.state);
       if (this.stateGenerateNewMap === true) {

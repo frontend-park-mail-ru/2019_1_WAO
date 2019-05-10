@@ -34,6 +34,9 @@ export default class Fizic {
   // Обработка коллизий
 
   collision(command) {
+    // if (command.idP !== 0) {
+    //   alert("1");
+    // }
     let player = this.foundPlayer(command.idP);
     const plate = this.selectNearestBlock(player);
     if (!plate) {
@@ -151,6 +154,9 @@ export default class Fizic {
   engine() {
     this.circleDraw();
     this.state.commands.forEach((command) => {
+      // if (command.idP !== this.state.myIdP) {
+      //   alert("1");
+      // }
       let player = this.foundPlayer(command.idP);
       if (command.direction === 'LEFT') {
         player.x -= player.dx * command.delay;
