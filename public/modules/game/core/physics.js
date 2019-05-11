@@ -101,7 +101,7 @@ export default class Fizic {
     for (;i < this.state.players.length; i++) {
       if (this.state.players[i].idP === command.idP) {
         let player = this.state.players[i];
-        console.log(player);
+        // console.log(player);
         player.dy += (this.gravity * command.delay);
         return;
       }

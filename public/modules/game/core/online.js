@@ -1,11 +1,11 @@
 /* eslint-disable func-names */
+import { ENOMEM } from 'constants';
 import GameCore from './index';
 import { gameBus } from '../../eventbus';
 import Physics from './physics';
 
-// const onlineAdr = '25.86.85.225:8080';
-// const onlineAdr = 'waoteam.tk';
-// const onlineAdr = '127.0.0.1:8000';
+import { settings } from '../../../config';
+
 export default class OnlineGame extends GameCore {
   constructor(controller, scene) {
     super(controller, scene);
@@ -53,7 +53,7 @@ export default class OnlineGame extends GameCore {
     this.mapGapSpeed = 0;
 
     this.state.commands = [];
-    this.socket = new WebSocket('ws://127.0.0.1:8080/websocket');
+    this.socket = new WebSocket(`ws://${  settings.game.address  }/websocket`);
     this.socket.onopen = function (event) {
       alert('Соединение установлено.');
     };
@@ -66,7 +66,7 @@ export default class OnlineGame extends GameCore {
       // alert(`Код: ${event.code} причина: ${event.reason}`);
     };
 
-    this.socket.onmessage = ( (event) => {
+    this.socket.onmessage = ((event) => {
       const msg = JSON.parse(event.data);
       // console.log(this);
       console.log(msg.payload);
@@ -76,7 +76,6 @@ export default class OnlineGame extends GameCore {
           // console.log(msg.payload);
           this.state.myIdP = msg.payload.players[0].idP;
           msg.payload.players.forEach((elem) => {
-            
             this.state.players.push({
               x: elem.x,
               y: elem.y,
@@ -85,9 +84,13 @@ export default class OnlineGame extends GameCore {
               width: 50,
               height: 40,
               idP: elem.idP,
+
             });
           });
           this.state.plates = msg.payload.blocks;
+          this.state.plates.forEach((elem) => {
+            elem.idPhys = this.idPhysicBlockCounter++;
+          });
           this.physics.setState(this.state);
 
           setTimeout(
@@ -97,9 +100,10 @@ export default class OnlineGame extends GameCore {
           );
           break;
         case 'map':
-          this.state.newPlates = msg.payload;
+          this.state.newPlates = msg.payload.blocks;
           this.state.newPlates.forEach((elem) => {
             elem.y += this.mapGap;
+            elem.idPhys = this.idPhysicBlockCounter++;
           });
           this.mapGap = 0;
           // console.log(this.state.newPlates);
@@ -107,8 +111,15 @@ export default class OnlineGame extends GameCore {
           this.state.added = false;
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
           this.stateGenerateNewMap = true;
-          // Проверка того, что сокет прислал инфу
-          this.stateSocketSendedMap = true;
+
+          msg.payload.players.forEach((elem) => {
+            const player = this.foundPlayer(elem.idP);
+            player.x = elem.x;
+            player.y = elem.y;
+            player.dy = elem.dy;
+            player.dx = elem.dx;
+          });
+
           break;
         case 'move':
           this.state.commands.push(msg.payload);
@@ -125,23 +136,17 @@ export default class OnlineGame extends GameCore {
 
   start() {
     super.start();
-    // this.state = {
-    //   players: [{
-    //     x: 0,
-    //     y: 0,
-    //     dx: 0.2,
-    //     dy: 0.002,
-    //     width: 50,
-    //     height: 40,
-    //     idP: 0,
-    //   },
-    //   ],
-    // };
-    // this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
-    // this.setPlayerOnPlate(this.state.plates[0]);
   }
 
-  // Генератор карты
+  foundPlayer(id) {
+    let i = 0;
+    for (;i < this.state.players.length; i++) {
+      if (this.state.players[i].idP === id) {
+        return this.state.players[i];
+      }
+    }
+    return undefined;
+  }
 
   // Скроллинг карты
   mapController() {
@@ -150,9 +155,7 @@ export default class OnlineGame extends GameCore {
       this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
       this.socket.send(JSON.stringify({
         type: 'map',
-        payload: this.state.commands[0],
       }));
-
       // Очистить this.state от старых элементов
       for (let i = 0; i < this.state.plates.length; i++) {
         if (this.state.plates[i].y > this.canvasHeight) {
@@ -205,17 +208,15 @@ export default class OnlineGame extends GameCore {
           idP: this.state.myIdP,
           direction: '',
           delay: this.delay,
-        },
-        );
+        });
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
           direction: '',
           delay: this.delay,
-        },
-        );
+        });
       }
-      
+
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
@@ -230,6 +231,7 @@ export default class OnlineGame extends GameCore {
     }
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
+        alert('LOSE');
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
       });
@@ -248,15 +250,13 @@ export default class OnlineGame extends GameCore {
           idP: this.state.myIdP,
           direction: 'LEFT',
           delay: this.delay,
-        },
-        );
+        });
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
           direction: 'LEFT',
           delay: this.delay,
-        },
-        );
+        });
       }
       this.socket.send(JSON.stringify({
         type: 'move',
@@ -285,15 +285,13 @@ export default class OnlineGame extends GameCore {
           idP: this.state.myIdP,
           direction: 'RIGHT',
           delay: this.delay,
-        },
-        );
+        });
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
           direction: 'RIGHT',
           delay: this.delay,
-        },
-        );
+        });
       }
       this.socket.send(JSON.stringify({
         type: 'move',
