@@ -112,13 +112,13 @@ export default class OnlineGame extends GameCore {
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
           this.stateGenerateNewMap = true;
 
-          // msg.payload.players.forEach((elem) => {
-          //   const player = this.foundPlayer(elem.idP);
-          //   player.x = elem.x;
-          //   player.y = elem.y;
-          //   player.dy = elem.dy;
-          //   player.dx = elem.dx;
-          // });
+          msg.payload.players.forEach((elem) => {
+            const player = this.foundPlayer(elem.idP);
+            player.x = elem.x;
+            player.y = elem.y;
+            player.dy = elem.dy;
+            player.dx = elem.dx;
+          });
 
           break;
         case 'move':
