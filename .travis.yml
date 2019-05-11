@@ -10,5 +10,4 @@ branches:
   only:
   - deploy
 before_install:
-- openssl aes-256-cbc -K $encrypted_c0283fe098bd_key -iv $encrypted_c0283fe098bd_iv
-  -in 2019_1_WAO_id_rsa.pem.enc -out ./2019_1_WAO_id_rsa.pem -d
+- openssl aes-256-cbc -K $encrypted_c0283fe098bd_key -iv $encrypted_c0283fe098bd_iv -in 2019_1_WAO_id_rsa.pem.enc -out ./2019_1_WAO_id_rsa.pem -d
