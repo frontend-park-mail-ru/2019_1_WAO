@@ -1,14 +1,13 @@
 /* eslint-disable func-names */
 /* eslint-disable quotes */
 import User from "./user";
-import { host } from "./api";
 import { GlobalBus } from './eventbus';
 
-const chatAdr = '192.168.43.245:8080';
+import { settings } from '../config';
 
 class Chat {
   constructor() {
-    this.host = host;
+    this.host = settings.backend.address;
     this.connected = false;
   }
 
@@ -17,7 +16,7 @@ class Chat {
       return;
     }
     // this.ws = new WebSocket(`ws://${this.host}/socket`);
-    this.ws = new WebSocket(`ws://${chatAdr}/socket`);
+    this.ws = new WebSocket(`ws://${settings.chat.address}/socket`);
     console.log('WS START');
     this.connected = true;
 

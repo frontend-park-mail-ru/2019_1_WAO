@@ -34,6 +34,9 @@ export default class Fizic {
   // Обработка коллизий
 
   collision(command) {
+    // if (command.idP !== 0) {
+    //   alert("1");
+    // }
     let player = this.foundPlayer(command.idP);
     const plate = this.selectNearestBlock(player);
     if (!plate) {
@@ -98,7 +101,7 @@ export default class Fizic {
     for (;i < this.state.players.length; i++) {
       if (this.state.players[i].idP === command.idP) {
         let player = this.state.players[i];
-        console.log(player);
+        // console.log(player);
         player.dy += (this.gravity * command.delay);
         return;
       }
@@ -114,9 +117,12 @@ export default class Fizic {
 
   // Сдвиг все карты вниз
 
-  scrollMap(delay) {
+  scrollMap(delay) {  // Работает только для текущего игрока
     for (const plate of this.state.plates) {
       plate.y += plate.dy * delay;
+    }
+    if (this.mapGapSpeed !== 0) {
+      this.mapGap += this.mapGapSpeed * delay;
     }
   }
 
@@ -148,6 +154,9 @@ export default class Fizic {
   engine() {
     this.circleDraw();
     this.state.commands.forEach((command) => {
+      // if (command.idP !== this.state.myIdP) {
+      //   alert("1");
+      // }
       let player = this.foundPlayer(command.idP);
       if (command.direction === 'LEFT') {
         player.x -= player.dx * command.delay;

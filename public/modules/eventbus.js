@@ -30,6 +30,7 @@ export const EVENTS = [
   'reset',
   'url_change',
   'chat_rx',
+  'game_score',
 ];
 
 const GAME_EVENTS = [

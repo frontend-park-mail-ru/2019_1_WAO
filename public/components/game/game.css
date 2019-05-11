@@ -4,6 +4,7 @@
 
 .game-view__canvas {
   position: absolute;
+  z-index: -1;
   display: block;
   width: 400px;
   height: 700px;

@@ -1,5 +1,11 @@
+import { settings } from '../config';
+
 // Для запуска на локалхост
+<<<<<<< HEAD
 export const host = '89.208.197.150:8000';
+=======
+export const host = settings.backend.address;
+>>>>>>> develop
 export const baseUrl = `http://${host}`;
 
 // Для деплоя
