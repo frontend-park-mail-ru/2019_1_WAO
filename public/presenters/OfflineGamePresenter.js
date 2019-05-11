@@ -25,7 +25,8 @@ export default class OfflineGamePresenter extends BasePresenter {
     this.view.render();
     const [canvas] = document.getElementsByClassName('game-view__canvas');
     this.view.canvas = canvas;
-    this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas);
+    const [scoreField] = document.getElementsByClassName('game-bar__score-value');
+    this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas, scoreField);
     this.game.start();
   }
 
