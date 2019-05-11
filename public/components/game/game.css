@@ -13,3 +13,32 @@
   transform: translate(-50%, -50%);
   border: 1px solid black;
 }
+
+.game-bar {
+  border: solid 1px;
+  border-radius: 10px;
+  margin: 10px auto auto 10px;
+  width: 250px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "menu menu"
+    "label value";
+  align-content: center;
+  justify-content: center;
+  background: #0f8bec1f;
+}
+
+.game-bar__menu {
+  grid-area: menu;
+}
+
+.game-bar__score-label {
+  grid-area: label;
+}
+
+.game-bar__score-value {
+  grid-area: value;
+}

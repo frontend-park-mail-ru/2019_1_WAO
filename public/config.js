@@ -4,7 +4,7 @@ const settings = {
     address: '127.0.0.1',
   },
   backend: {
-    address: '89.208.197.150:8000',
+    address: '127.0.0.1',
   },
   game: {
     address: '192.168.200.32:8080',
