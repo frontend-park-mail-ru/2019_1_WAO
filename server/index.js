@@ -24,15 +24,9 @@ app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(body.json());
 app.use(cookie());
 
-<<<<<<< HEAD
-const front_adress = 'http://89.208.197.150:8000';
+const front_adress = 'https://waojump.tk';
 // const front_adress = 'https://wao2019.herokuapp.com';
 const back_adress = 'http://89.208.197.150:8000';
-=======
-const front_adress = 'http://192.168.200.84:3000';
-// const front_adress = 'https://wao2019.herokuapp.com';
-const back_adress = 'http://192.168.200.84:3000';
->>>>>>> develop
 // const back_adress = 'https://waogame.herokuapp.com';
 const default_image = `${back_adress}/uploads/user.png`;
 
