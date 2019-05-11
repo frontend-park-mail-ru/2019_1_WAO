@@ -1,6 +1,6 @@
-<div>
-  <h1>Ваш счет {{ score }}</h1>
+<div class="resultboard">
+  <h1 class="title">Ваш счет {{ score }}</h1>
   {{#each buttons}}
-  {{> ../form-button/form-button.hbs button}}
+    {{> ../sign-button/sign-button.hbs this}}
   {{/each}}
 </div>
