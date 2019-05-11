@@ -13,6 +13,7 @@ import OfflineGamePresenter from './presenters/OfflineGamePresenter';
 import OnlineGamePresenter from './presenters/OnlineGamePresenter';
 import PresentationPresenter from './presenters/PresentationPresenter';
 import ChatPresenter from './presenters/ChatPresenter';
+import ResultBoardPresenter from './presenters/ResultBoardPresenter';
 
 import './img/user.png';
 import './img/door.svg';
@@ -49,6 +50,10 @@ function subscribeGlobalBus() {
         console.log(err);
       });
   });
+
+  GlobalBus.on('game_score', () => {
+    Router.route('/resultboard');
+  });
 }
 
 /**
@@ -81,6 +86,7 @@ function start() {
   Router.add('/gameonline',  new OnlineGamePresenter([appEl]));
   Router.add('/show',  new PresentationPresenter([appEl]));
   Router.add('/chat',  new ChatPresenter(GlobalBus, appEl));
+  Router.add('/resultboard',  new ResultBoardPresenter([appEl]));
 
   subscribeGlobalBus();
 
