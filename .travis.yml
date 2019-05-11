@@ -1,7 +1,10 @@
 language: node_js
 node_js: 10
 script:
-- echo "wao hello"
+- echo 'Hello here'
+- chmod 600 ~\/Downloads/2019_1_WAO_id_rsa.pem
+- ssh-keyscan -H 89.208.197.150 >> ~/.ssh/known_hosts
+- scp -i ~\/Downloads/2019_1_WAO_id_rsa.pem ./index.html ubuntu@89.208.197.150:/home/ubuntu/2019_1_WAO/dist
 branches:
   only:
   - deploy
