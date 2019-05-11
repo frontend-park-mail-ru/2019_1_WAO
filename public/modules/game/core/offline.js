@@ -1,5 +1,5 @@
 import GameCore from './index';
-import { gameBus } from '../../eventbus';
+import { gameBus, GlobalBus } from '../../eventbus';
 import Physics from './physics';
 
 export default class OfflineGame extends GameCore {
@@ -43,9 +43,10 @@ export default class OfflineGame extends GameCore {
     this.rightIndent = 91;
     this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
     // Расчет счета
-    this.score.score = 0;
-    this.score.maxHeight = 0;
-    this.score.height = 0;
+    this.meScore = 0;
+    // this.score.score = 0;
+    // this.score.maxHeight = 0;
+    // this.score.height = 0;
   }
 
   start() {
@@ -173,6 +174,7 @@ export default class OfflineGame extends GameCore {
     }
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
+        GlobalBus.trigger('game_score', { score: this.meScore });
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
       });

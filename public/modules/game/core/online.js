@@ -1,7 +1,7 @@
 /* eslint-disable func-names */
 import { ENOMEM } from 'constants';
 import GameCore from './index';
-import { gameBus } from '../../eventbus';
+import { gameBus, GlobalBus } from '../../eventbus';
 import Physics from './physics';
 
 import { settings } from '../../../config';
@@ -51,6 +51,8 @@ export default class OnlineGame extends GameCore {
     this.stateSocketSendedMap = false;
     this.mapGap = 0;
     this.mapGapSpeed = 0;
+    // Для счета
+    this.meScore = 0;
 
     this.state.commands = [];
     this.socket = new WebSocket(`ws://${  settings.game.address  }/websocket`);
@@ -153,9 +155,9 @@ export default class OnlineGame extends GameCore {
     // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
     if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
       this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
-      this.socket.send(JSON.stringify({
-        type: 'map',
-      }));
+      // this.socket.send(JSON.stringify({
+      //   type: 'map',
+      // }));
       // Очистить this.state от старых элементов
       for (let i = 0; i < this.state.plates.length; i++) {
         if (this.state.plates[i].y > this.canvasHeight) {
@@ -232,6 +234,7 @@ export default class OnlineGame extends GameCore {
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
         alert('LOSE');
+        GlobalBus.trigger('game_score', { score: this.meScore });
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
       });

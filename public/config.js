@@ -1,12 +1,13 @@
 const settings = {
+  prefix: 'http://',
   chat: {
-    address: '192.168.43.245:8080',
+    address: '127.0.0.1',
   },
   backend: {
-    address: '192.168.200.84:3000',
+    address: '89.208.197.150:8000',
   },
   game: {
     address: '192.168.200.32:8080',
-  }
+  },
 };
 export { settings };
