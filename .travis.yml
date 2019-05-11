@@ -2,6 +2,8 @@ language: node_js
 node_js: 10
 script:
 - echo 'Hello here'
+- npm i
+- npm run build
 - chmod 600 ~\/Downloads/2019_1_WAO_id_rsa.pem
 - ssh-keyscan -H 89.208.197.150 >> ~/.ssh/known_hosts
 - scp -i ~\/Downloads/2019_1_WAO_id_rsa.pem ./index.html ubuntu@89.208.197.150:/home/ubuntu/2019_1_WAO/dist
