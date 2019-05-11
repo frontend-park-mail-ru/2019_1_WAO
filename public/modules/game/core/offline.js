@@ -42,6 +42,10 @@ export default class OfflineGame extends GameCore {
     this.leftIndent = 91;
     this.rightIndent = 91;
     this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
+    // Расчет счета
+    this.score.score = 0;
+    this.score.maxHeight = 0;
+    this.score.height = 0;
   }
 
   start() {
@@ -133,6 +137,14 @@ export default class OfflineGame extends GameCore {
   setPlayerOnPlate(plate) {
     this.state.players[0].y = plate.y - this.plate.height;
     this.state.players[0].x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
+  }
+
+  scoreCounter() {
+    if (this.score.height > this.score.maxHeight) {
+      this.score.score += this.score.height - this.score.maxHeight;
+      this.score.maxHeight = this.score.height;
+    }
+    return this.score.score;
   }
 
   gameloop() {

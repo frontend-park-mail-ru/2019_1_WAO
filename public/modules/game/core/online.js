@@ -4,9 +4,8 @@ import GameCore from './index';
 import { gameBus } from '../../eventbus';
 import Physics from './physics';
 
-// const onlineAdr = '25.86.85.225:8080';
-// const onlineAdr = 'waoteam.tk';
-// const onlineAdr = '127.0.0.1:8000';
+import { settings } from '../../../config';
+
 export default class OnlineGame extends GameCore {
   constructor(controller, scene) {
     super(controller, scene);
@@ -54,7 +53,7 @@ export default class OnlineGame extends GameCore {
     this.mapGapSpeed = 0;
 
     this.state.commands = [];
-    this.socket = new WebSocket('ws://192.168.200.32:8080/websocket');
+    this.socket = new WebSocket(`ws://${  settings.game.address  }/websocket`);
     this.socket.onopen = function (event) {
       alert('Соединение установлено.');
     };
@@ -85,7 +84,7 @@ export default class OnlineGame extends GameCore {
               width: 50,
               height: 40,
               idP: elem.idP,
-              
+
             });
           });
           this.state.plates = msg.payload.blocks;
@@ -209,13 +208,13 @@ export default class OnlineGame extends GameCore {
           idP: this.state.myIdP,
           direction: '',
           delay: this.delay,
-        },);
+        });
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
           direction: '',
           delay: this.delay,
-        },);
+        });
       }
 
       this.socket.send(JSON.stringify({
@@ -232,7 +231,7 @@ export default class OnlineGame extends GameCore {
     }
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
-        alert("LOSE");
+        alert('LOSE');
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
       });
@@ -251,13 +250,13 @@ export default class OnlineGame extends GameCore {
           idP: this.state.myIdP,
           direction: 'LEFT',
           delay: this.delay,
-        },);
+        });
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
           direction: 'LEFT',
           delay: this.delay,
-        },);
+        });
       }
       this.socket.send(JSON.stringify({
         type: 'move',
@@ -286,13 +285,13 @@ export default class OnlineGame extends GameCore {
           idP: this.state.myIdP,
           direction: 'RIGHT',
           delay: this.delay,
-        },);
+        });
       } else {
         this.state.commands.unshift({
           idP: this.state.myIdP,
           direction: 'RIGHT',
           delay: this.delay,
-        },);
+        });
       }
       this.socket.send(JSON.stringify({
         type: 'move',
