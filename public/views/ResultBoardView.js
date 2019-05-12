@@ -3,7 +3,7 @@ import template from '../components/resultboard/resultboard.hbs';
 import '../components/resultboard/resultboard.css';
 
 const viewData = {
-  score: 718,
+  // score: 718,
   buttons: [
     {
       text: 'Можем повторить',
@@ -11,7 +11,7 @@ const viewData = {
     },
     {
       text: 'Таблица лидеров',
-      href: '/scoreboard',
+      href: '/users',
     },
     {
       text: 'Меню',
