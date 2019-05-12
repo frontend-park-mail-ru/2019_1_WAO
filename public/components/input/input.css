@@ -36,4 +36,11 @@
 
 .input-area__input_wrong {
   border: solid 1px #ff0000;
+  animation: wrong-mov 0.1s ease-in 0s 2 reverse both;
 }
+
+@keyframes wrong-mov {
+    from{transform:translateX(0px)}
+    to{transform:translateX(5px)}
+}
+

@@ -92,6 +92,8 @@ export default class SignInModel {
       form.elements.password.value = '';
       form.elements.nickname.placeholder = 'НЕВЕРНО';
       form.elements.password.placeholder = 'НЕВЕРНО';
+      const [errorArea] = form.getElementsByClassName('error-area');
+      errorArea.text = 'НЕВЕРНО';
       this.processForm();
     }
   }

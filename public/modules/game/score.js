@@ -34,8 +34,8 @@ export default class Score {
 
   scoreCounter() {
     if (this.stateHasBeenUpdate === true) {
-      if (this.foundPlate(this.score.currentPlatePhysId).y > this.foundPlate(this.score.lastPlatePhysId).y) {
-        this.score.score += this.foundPlate(this.score.currentPlatePhysId).y - this.foundPlate(this.score.lastPlatePhysId).y;
+      if (this.foundPlate(this.score.currentPlatePhysId).y < this.foundPlate(this.score.lastPlatePhysId).y) {
+        this.score.score += this.foundPlate(this.score.lastPlatePhysId).y - this.foundPlate(this.score.currentPlatePhysId).y;
         this.score.lastPlatePhysId = this.score.currentPlatePhysId;
       }
       this.stateHasBeenUpdate = false;

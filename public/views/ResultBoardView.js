@@ -3,7 +3,21 @@ import template from '../components/resultboard/resultboard.hbs';
 import '../components/resultboard/resultboard.css';
 
 const viewData = {
-
+  score: 718,
+  buttons: [
+    {
+      text: 'Можем повторить',
+      href: '/gameoffline',
+    },
+    {
+      text: 'Таблица лидеров',
+      href: '/scoreboard',
+    },
+    {
+      text: 'Меню',
+      href: '/',
+    },
+  ],
 };
 
 /**

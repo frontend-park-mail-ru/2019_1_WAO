@@ -28,7 +28,8 @@ export default class OnlineGamePresenter extends BasePresenter {
       this.view.render();
       const [canvas] = document.getElementsByClassName('game-view__canvas');
       this.view.canvas = canvas;
-      this.game = new Game(GAME_MODES.ONLINE, this.view.canvas);
+      const [scoreField] = document.getElementsByClassName('game-bar__score-value');
+      this.game = new Game(GAME_MODES.ONLINE, this.view.canvas, scoreField);
       this.game.start();
     } else {
       GlobalBus.trigger('auth_bad');
