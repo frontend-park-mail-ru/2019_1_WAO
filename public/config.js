@@ -1,10 +1,10 @@
 const settings = {
   prefix: 'http://',
   chat: {
-    address: '127.0.0.1',
+    address: '89.208.197.150:8000',
   },
   backend: {
-    address: '127.0.0.1:3000',
+    address: '89.208.197.150:8000',
   },
   game: {
     address: 'http://waoteam.tk',
