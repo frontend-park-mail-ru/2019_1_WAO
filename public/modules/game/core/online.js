@@ -251,7 +251,7 @@ export default class OnlineGame extends GameCore {
         alert('LOSE');
         GlobalBus.trigger('game_score', { score: this.score.scoreCounter() });
         gameBus.trigger('game_finish');
-        gameBus.trigger('game close');
+        // gameBus.trigger('game_close');
       });
     }
   }

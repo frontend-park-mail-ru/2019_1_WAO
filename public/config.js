@@ -7,7 +7,7 @@ const settings = {
     address: '89.208.197.150:8000',
   },
   game: {
-    address: 'http://waoteam.tk',
+    address: 'waoteam.tk',
   },
 };
 export { settings };

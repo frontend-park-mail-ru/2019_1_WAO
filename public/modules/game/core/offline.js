@@ -168,7 +168,7 @@ export default class OfflineGame extends GameCore {
       setTimeout(() => {
         GlobalBus.trigger('game_score', { score: this.score.scoreCounter() });
         gameBus.trigger('game_finish');
-        gameBus.trigger('game close');
+        // gameBus.trigger('game_close');
       });
     }
   }
