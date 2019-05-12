@@ -20,7 +20,7 @@ app.ws('/socket', (ws) => {
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 // app.use(express.static(path.resolve(__dirname, '..', 'dist', 'docs')));
-// app.use(fallback('index.html', { root: 'dist' }));
+app.use(fallback('index.html', { root: 'dist' }));
 app.use(body.json());
 app.use(cookie());
 

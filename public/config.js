@@ -4,7 +4,7 @@ const settings = {
     address: '89.208.197.150:8000',
   },
   backend: {
-    address: '89.208.197.150:8000',
+    address: '89.208.197.150:8080',
   },
   game: {
     address: 'waoteam.tk',
