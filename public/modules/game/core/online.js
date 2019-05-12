@@ -7,7 +7,7 @@ import Physics from './physics';
 import { settings } from '../../../config';
 
 export default class OnlineGame extends GameCore {
-  constructor(controller, scene) {
+  constructor(controller, scene, scorePlace) {
     super(controller, scene);
     // Основная шина для общения с другими классами
     // physics.js & index.js
@@ -102,6 +102,7 @@ export default class OnlineGame extends GameCore {
           );
           break;
         case 'map':
+          alert("MAP!");
           this.state.newPlates = msg.payload.blocks;
           this.state.newPlates.forEach((elem) => {
             elem.y += this.mapGap;
@@ -114,13 +115,13 @@ export default class OnlineGame extends GameCore {
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
           this.stateGenerateNewMap = true;
 
-          msg.payload.players.forEach((elem) => {
-            const player = this.foundPlayer(elem.idP);
-            player.x = elem.x;
-            player.y = elem.y;
-            player.dy = elem.dy;
-            player.dx = elem.dx;
-          });
+          // msg.payload.players.forEach((elem) => {
+          //   const player = this.foundPlayer(elem.idP);
+          //   player.x = elem.x;
+          //   player.y = elem.y;
+          //   player.dy = elem.dy;
+          //   player.dx = elem.dx;
+          // });
 
           break;
         case 'move':
@@ -334,6 +335,7 @@ export default class OnlineGame extends GameCore {
   }
 
   destroy() {
+    this.socket.close();
     this.socket.close();
     super.destroy();
     cancelAnimationFrame(this.gameloopRequestId);

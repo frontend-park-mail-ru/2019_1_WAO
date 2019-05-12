@@ -1,7 +1,8 @@
 
 export default class Fizic {
-  constructor(state, canvas) {
+  constructor(state, canvas, score) {
   // передаваемые данные
+    this.score = score;
     this.canvas = canvas;
     this.state = state;
     // Объявляемые переменные
@@ -45,6 +46,10 @@ export default class Fizic {
     if (player.dy >= 0) {
       if (player.y + player.dy * command.delay < plate.y - 15) {
         return;
+      }
+      // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
+      if (this.score) {
+        this.score.giveCurrentPlate(plate);
       }
       player.statePlateUnderMe = true;
       // this.setPlayerOnPlate(player, plate);
@@ -136,14 +141,6 @@ export default class Fizic {
     }
     return undefined;
   }
-  // foundPlayer(idP) {
-    
-  //   let out = this.state.players.filter((player) => {
-  //     return player.idP === idP;
-  //   });
-  //   return out;
-  //   // alert(out);
-  // }
 
   // Контролеры карты
 
