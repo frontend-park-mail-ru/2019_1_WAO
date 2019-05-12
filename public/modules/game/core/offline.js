@@ -1,9 +1,10 @@
 import GameCore from './index';
 import { gameBus, GlobalBus } from '../../eventbus';
 import Physics from './physics';
+import Score from '../score';
 
 export default class OfflineGame extends GameCore {
-  constructor(controller, scene) {
+  constructor(controller, scene, scorePlace) {
     super(controller, scene);
     // Основная шина для общения с другими классами
     // physics.js & index.js
@@ -11,6 +12,11 @@ export default class OfflineGame extends GameCore {
     // Переменные для начала анимации
     this.gameloop = this.gameloop.bind(this);
     this.gameloopRequestId = null;
+
+    // Контроллер очков
+    this.score = new Score(this.state, scorePlace);
+    // Физический контроллер игры
+    this.physics = new Physics(this.state, scene.giveCanvas(), this.score);
 
     // Константы
     // - Задаю канвас
@@ -20,9 +26,6 @@ export default class OfflineGame extends GameCore {
     this.plate = {};
     this.plate.width = 90;
     this.plate.height = 15;
-
-    // Физический контроллер игры
-    this.physics = new Physics(this.state, scene.giveCanvas());
     // Переменные для корректной отрисовки и анимации
     this.duration = 1000 / 60;
     this.maxDuration = 1000 / 16;
@@ -42,11 +45,6 @@ export default class OfflineGame extends GameCore {
     this.leftIndent = 91;
     this.rightIndent = 91;
     this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
-    // Расчет счета
-    this.meScore = 0;
-    // this.score.score = 0;
-    // this.score.maxHeight = 0;
-    // this.score.height = 0;
   }
 
   start() {
@@ -66,6 +64,7 @@ export default class OfflineGame extends GameCore {
     this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
     this.setPlayerOnPlate(this.state.plates[0]);
     this.physics.setState(this.state);
+    this.score.setState(this.state);
 
     setTimeout(
       () => {
@@ -140,14 +139,6 @@ export default class OfflineGame extends GameCore {
     this.state.players[0].x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
   }
 
-  scoreCounter() {
-    if (this.score.height > this.score.maxHeight) {
-      this.score.score += this.score.height - this.score.maxHeight;
-      this.score.maxHeight = this.score.height;
-    }
-    return this.score.score;
-  }
-
   gameloop() {
     this.gameloopRequestId = requestAnimationFrame(this.gameloop);
     this.now = performance.now();
@@ -165,6 +156,7 @@ export default class OfflineGame extends GameCore {
       },
       ];
       this.state = this.physics.engine();
+      this.score.renderScore();
       delete this.state.commands;
       gameBus.trigger('state_changed', this.state);
       if (this.stateGenerateNewMap === true) {
@@ -174,7 +166,7 @@ export default class OfflineGame extends GameCore {
     }
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
-        GlobalBus.trigger('game_score', { score: this.meScore });
+        GlobalBus.trigger('game_score', { score: this.score.score });
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
       });
@@ -195,6 +187,7 @@ export default class OfflineGame extends GameCore {
       },
       ];
       this.state = this.physics.engine();
+      this.score.renderScore();
       delete this.state.commands;
 
       this.scene.setState(this.state);
@@ -219,6 +212,7 @@ export default class OfflineGame extends GameCore {
       },
       ];
       this.state = this.physics.engine();
+      this.score.renderScore();
       delete this.state.commands;
 
       this.scene.setState(this.state);

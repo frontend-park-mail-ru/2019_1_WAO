@@ -262,7 +262,7 @@ app.post('/api/users', (req, res) => {
   console.log('ids[id]: ', ids, 'users[nickname]: ', users);
 
   res.cookie('sessionid', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10),
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 2),
   });
   res.status(201).json(users[nickname]);
 });
