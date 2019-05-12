@@ -7,7 +7,7 @@ const settings = {
     address: '127.0.0.1:3000',
   },
   game: {
-    address: 'http://waoteam.tk',
+    address: 'waoteam.tk',
   },
 };
 export { settings };
