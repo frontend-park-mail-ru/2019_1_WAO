@@ -126,8 +126,8 @@ export default class Fizic {
     for (const plate of this.state.plates) {
       plate.y += plate.dy * delay;
     }
-    if (this.mapGapSpeed !== 0) {
-      this.mapGap += this.mapGapSpeed * delay;
+    if (this.state.mapGapSpeed !== 0) {
+      this.state.mapGap += this.state.mapGapSpeed * delay;
     }
   }
 

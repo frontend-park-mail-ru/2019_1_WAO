@@ -13,6 +13,11 @@ export default class OfflineGame extends GameCore {
     this.gameloop = this.gameloop.bind(this);
     this.gameloopRequestId = null;
 
+    // Контроллер очков
+    this.score = new Score(this.state, scorePlace);
+    // Физический контроллер игры
+    this.physics = new Physics(this.state, scene.giveCanvas(), this.score);
+
     // Константы
     // - Задаю канвас
     this.canvasHeight = this.scene.giveCanvas().height;
@@ -40,11 +45,6 @@ export default class OfflineGame extends GameCore {
     this.leftIndent = 91;
     this.rightIndent = 91;
     this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
-
-    // Контроллер очков
-    this.score = new Score(this.state, scorePlace);
-    // Физический контроллер игры
-    this.physics = new Physics(this.state, scene.giveCanvas(), this.score);
   }
 
   start() {
@@ -187,6 +187,7 @@ export default class OfflineGame extends GameCore {
       },
       ];
       this.state = this.physics.engine();
+      this.score.renderScore();
       delete this.state.commands;
 
       this.scene.setState(this.state);
@@ -211,6 +212,7 @@ export default class OfflineGame extends GameCore {
       },
       ];
       this.state = this.physics.engine();
+      this.score.renderScore();
       delete this.state.commands;
 
       this.scene.setState(this.state);
