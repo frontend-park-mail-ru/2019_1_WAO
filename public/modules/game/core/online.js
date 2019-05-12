@@ -3,11 +3,12 @@ import { ENOMEM } from 'constants';
 import GameCore from './index';
 import { gameBus, GlobalBus } from '../../eventbus';
 import Physics from './physics';
+import Score from '../score';
 
 import { settings } from '../../../config';
 
 export default class OnlineGame extends GameCore {
-  constructor(controller, scene) {
+  constructor(controller, scene, scorePlace) {
     super(controller, scene);
     // Основная шина для общения с другими классами
     // physics.js & index.js
@@ -26,8 +27,10 @@ export default class OnlineGame extends GameCore {
     this.plate.width = 90;
     this.plate.height = 15;
 
+    // Контроллер очков
+    this.score = new Score(this.state, scorePlace);
     // Физический контроллер игры
-    this.physics = new Physics(this.state, scene.giveCanvas());
+    this.physics = new Physics(this.state, scene.giveCanvas(), this.score);
     // Переменные для корректной отрисовки и анимации
     this.duration = 1000 / 60;
     this.maxDuration = 1000 / 16;
@@ -49,13 +52,13 @@ export default class OnlineGame extends GameCore {
     this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
     // Для мультиплеера
     this.stateSocketSendedMap = false;
-    this.mapGap = 0;
-    this.mapGapSpeed = 0;
+    this.state.mapGap = 0;
+    this.state.mapGapSpeed = 0;
     // Для счета
     this.meScore = 0;
 
     this.state.commands = [];
-    this.socket = new WebSocket(`ws://${  settings.game.address  }/websocket`);
+    this.socket = new WebSocket(`ws://${settings.game.address}/websocket`);
     this.socket.onopen = function (event) {
       alert('Соединение установлено.');
     };
@@ -71,7 +74,7 @@ export default class OnlineGame extends GameCore {
     this.socket.onmessage = ((event) => {
       const msg = JSON.parse(event.data);
       // console.log(this);
-      console.log(msg.payload);
+      // console.log(msg.payload);
       switch (msg.type) {
         case 'init':
           this.state.players = [];
@@ -93,8 +96,9 @@ export default class OnlineGame extends GameCore {
           this.state.plates.forEach((elem) => {
             elem.idPhys = this.idPhysicBlockCounter++;
           });
+          // Инициализация физики и блоков
           this.physics.setState(this.state);
-
+          this.score.setState(this.state);
           setTimeout(
             () => {
               gameBus.trigger('game_start', this.state);
@@ -103,24 +107,34 @@ export default class OnlineGame extends GameCore {
           break;
         case 'map':
           this.state.newPlates = msg.payload.blocks;
+          const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20)
+            - this.state.newPlates[0].y;
           this.state.newPlates.forEach((elem) => {
-            elem.y += this.mapGap;
+            elem.y += mapGap;
             elem.idPhys = this.idPhysicBlockCounter++;
           });
-          this.mapGap = 0;
+          console.log(`Мои блоки:`);
+          this.state.plates.forEach((elem) => {
+            console.log(elem);
+          });
+          console.log(`\nПрисланные:`);
+          this.state.newPlates.forEach((elem) => {
+            console.log(elem);
+          });
+          this.state.mapGap = 0;  // ------------------
           // console.log(this.state.newPlates);
           Array.prototype.push.apply(this.state.plates, this.state.newPlates);
           this.state.added = false;
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
           this.stateGenerateNewMap = true;
 
-          msg.payload.players.forEach((elem) => {
-            const player = this.foundPlayer(elem.idP);
-            player.x = elem.x;
-            player.y = elem.y;
-            player.dy = elem.dy;
-            player.dx = elem.dx;
-          });
+          // msg.payload.players.forEach((elem) => {
+          //   const player = this.foundPlayer(elem.idP);
+          //   player.x = elem.x;
+          //   player.y = elem.y;
+          //   player.dy = elem.dy;
+          //   player.dx = elem.dx;
+          // });
 
           break;
         case 'move':
@@ -173,10 +187,9 @@ export default class OnlineGame extends GameCore {
         element.dy += this.koefScrollSpeed;
       });
       // Расчет разрыва для мультиплеера
-      this.mapGapSpeed = this.koefScrollSpeed;
+      this.state.mapGapSpeed = this.koefScrollSpeed;
     } else if (this.state.players[0].y > this.minScrollHeight && this.stateScrollMap === true) {
       this.stateScrollMap = false; // Закончился скроллинг
-      this.stateGenerateNewMap = false;
       for (const plate of this.state.plates) {
         plate.dy = 0;
       }
@@ -186,7 +199,7 @@ export default class OnlineGame extends GameCore {
       // this.state.players[0].dy -= this.koefScrollSpeed;
 
       // Расчет разрыва для мультиплеера
-      this.mapGapSpeed = 0;
+      this.state.mapGapSpeed = 0;
     }
   }
 
@@ -224,9 +237,11 @@ export default class OnlineGame extends GameCore {
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
+      this.score.renderScore();
       this.state.commands = [];
       gameBus.trigger('state_changed', this.state);
       if (this.stateGenerateNewMap === true) {
+        this.stateGenerateNewMap = false;
         this.state.added = true;
         delete this.state.newPlates;
       }
@@ -266,6 +281,7 @@ export default class OnlineGame extends GameCore {
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
+      this.score.renderScore();
       this.state.commands = [];
 
       this.scene.setState(this.state);
@@ -301,6 +317,7 @@ export default class OnlineGame extends GameCore {
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
+      this.score.renderScore();
       this.state.commands = [];
 
       this.scene.setState(this.state);
@@ -334,6 +351,7 @@ export default class OnlineGame extends GameCore {
   }
 
   destroy() {
+    this.socket.close();
     this.socket.close();
     super.destroy();
     cancelAnimationFrame(this.gameloopRequestId);

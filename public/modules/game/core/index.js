@@ -41,7 +41,7 @@ export default class GameCore {
       } */
       const actions = controller.costumeControl();
       if (actions.arrowleft === true) {
-        console.log('Action:', actions.arrowleft);
+        // console.log('Action:', actions.arrowleft);
         gameBus.trigger('left_pressed', actions);
       } else {
         gameBus.trigger('right_pressed', actions);
