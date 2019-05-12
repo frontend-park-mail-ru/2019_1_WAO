@@ -249,7 +249,7 @@ export default class OnlineGame extends GameCore {
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
         alert('LOSE');
-        GlobalBus.trigger('game_score', { score: this.meScore });
+        GlobalBus.trigger('game_score', { score: this.score.scoreCounter() });
         gameBus.trigger('game_finish');
         gameBus.trigger('game close');
       });

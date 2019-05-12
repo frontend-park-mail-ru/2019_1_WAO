@@ -36,7 +36,7 @@ class Router {
    * @param {string} path
    * @param {string} page Страница3
    * */
-  route(path = '/', page = '') {
+  route(path = '/', page = '', data = {}) {
     if (!this.presenters.has(path)) {
       console.log('404');
       return;
@@ -53,7 +53,7 @@ class Router {
       Router.history(path + page);
     }
 
-    this.presenters.get(path).call();
+    this.presenters.get(path).call(data);
   }
 
   static history(path) {

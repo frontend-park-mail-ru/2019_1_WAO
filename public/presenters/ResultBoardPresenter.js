@@ -20,8 +20,9 @@ export default class ResultBoardPresenter extends BasePresenter {
     const view = new ResultBoardView(appEl, eventBus);
     super(view, {}, eventBus);
 
-    this.eventBus.on('call', () => {
-      this.eventBus.trigger('show');
+    this.eventBus.on('call', (data) => {
+      console.log(data);
+      this.eventBus.trigger('show', data);
     });
   }
 }

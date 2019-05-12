@@ -51,8 +51,8 @@ function subscribeGlobalBus() {
       });
   });
 
-  GlobalBus.on('game_score', () => {
-    Router.route('/resultboard');
+  GlobalBus.on('game_score', (data) => {
+    Router.route('/resultboard', '', data);
   });
 }
 
