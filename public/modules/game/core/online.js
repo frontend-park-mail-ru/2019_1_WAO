@@ -134,13 +134,14 @@ export default class OnlineGame extends GameCore {
                     this.state.commands.push(msg.payload);
                     break;
                 case 'updatePositions':
-                    msg.payload.players.forEach((elem) => {
+                    msg.payload.forEach((elem) => {
                         const player = this.foundPlayer(elem.idP);
                         player.x = elem.x;
                         player.y = elem.y;
                         player.dy = elem.dy;
                         player.dx = elem.dx;
                     });
+                    break;
                 default:
                     break;
             }
@@ -249,7 +250,7 @@ export default class OnlineGame extends GameCore {
         }
         if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
             setTimeout(() => {
-                alert('LOSE');
+                // alert('LOSE');
                 GlobalBus.trigger('game_score', { score: this.score.scoreCounter() });
                 gameBus.trigger('game_finish');
                 gameBus.trigger('game close');
