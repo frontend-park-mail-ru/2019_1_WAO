@@ -113,9 +113,7 @@ export default class GameScene {
       Lplayer.idP = player.idP;
     });
 
-    // this.local.me.x = this.state.me.x;
-    // this.local.me.y = this.state.me.y;
-    // if (this.state.plates[0].dy !== 0) {
+    if (this.state.plates[0].dy !== 0) {
       for (const plate of this.state.plates) {
         for (let i = 0; i < this.local.field.length; i++) {
           if (this.local.field[i].idPhys === plate.idPhys) {
@@ -125,13 +123,13 @@ export default class GameScene {
         }
       }
       if (this.state.added === false) {
-        for (let i = 0; i < this.local.field.length; i++) {
-          if (this.local.field[i].y > this.canvas.height) {
-            this.scene.remove(this.local.field[i].id);
-            this.local.field.splice(i, 1);
-            i--;
-          }
-        }
+        // for (let i = 0; i < this.local.field.length; i++) {
+        //   if (this.local.field[i].y > this.canvas.height) {
+        //     this.scene.remove(this.local.field[i].id);
+        //     this.local.field.splice(i, 1);
+        //     i--;
+        //   }
+        // }
         for (const lPlate of this.state.newPlates) {
           const b = new FadingBlock(this.ctx);
           b.id = scene.push(b);
@@ -144,7 +142,7 @@ export default class GameScene {
           this.local.field.push(b);
         }
       }
-    // }
+    }
   }
 
   renderScene(now) {

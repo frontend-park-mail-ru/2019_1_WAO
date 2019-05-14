@@ -2,6 +2,7 @@ import GameCore from './index';
 import { gameBus, GlobalBus } from '../../eventbus';
 import Physics from './physics';
 import Score from '../score';
+import { genMap } from './mapLogic';
 
 export default class OfflineGame extends GameCore {
   constructor(controller, scene, scorePlace) {
@@ -32,19 +33,14 @@ export default class OfflineGame extends GameCore {
     this.delay = 0;
     this.lastFrame = 0;
     this.now = performance.now();
-    // Скроллинг карты
-    this.maxScrollHeight = 0.25 * this.canvasHeight;
-    this.minScrollHeight = 0.75 * this.canvasHeight;
-    this.koefScrollSpeed = 0.5; // Скорость с которой все объекты будут падать вниз
     // this.state = true;
     this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
-    this.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
+    this.state.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
     // Настройки генерации карты
     this.koefGeneratePlates = 0.01;
     this.koefHeightOfMaxGenerateSlice = 2000;
     this.leftIndent = 91;
     this.rightIndent = 91;
-    this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
   }
 
   start() {
@@ -57,11 +53,15 @@ export default class OfflineGame extends GameCore {
         dy: 0.002,
         width: 50,
         height: 40,
-        idP: 0,
+        idP: 0, 
       },
       ],
     };
-    this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
+    this.state.idPhysicBlockCounter = {};
+    this.state.idPhysicBlockCounter.idPhys = 0;
+    this.state.added = true;
+    this.state.plates = genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice, this.state.idPhysicBlockCounter);
+    this.state.idPhysicBlockCounter.Phys += 1;
     this.setPlayerOnPlate(this.state.plates[0]);
     this.physics.setState(this.state);
     this.score.setState(this.state);
@@ -71,68 +71,7 @@ export default class OfflineGame extends GameCore {
         gameBus.trigger('game_start', this.state);
       },
     );
-  }
-
-  // Генератор карты
-
-  genMap(
-    beginY = (this.state.plates[this.state.plates.length - 1].y - 20),
-    b = (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y),
-    k = (this.koefGeneratePlates * (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y)).toFixed(),
-  ) {
-    const newBlocks = [];
-    const p = b / k; // Плотность распределения пластин
-    let currentX;
-    let currentY = beginY;
-    for (let i = 0; i < k; i++) {
-      currentX = Math.random() * ((this.canvasWidth - this.rightIndent) - this.leftIndent + 1) + this.leftIndent;
-      newBlocks.push({
-        x: currentX,
-        y: currentY,
-        dy: 0,
-        idPhys: this.idPhysicBlockCounter++,  // Уникальный идентификатор нужен для отрисовки новых объектов
-      });
-      currentY -= p;
-    }
-    return newBlocks;
-  }
-
-  // Скроллинг карты
-  mapController() {
-    // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
-    if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
-      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
-
-      this.state.newPlates = this.genMap();
-      Array.prototype.push.apply(this.state.plates, this.state.newPlates);
-      // Очистить this.state от старых элементов
-      for (let i = 0; i < this.state.plates.length; i++) {
-        if (this.state.plates[i].y > this.canvasHeight) {
-          this.state.plates.splice(i, 1);
-          i--;
-        }
-      }
-      this.state.added = false; // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
-      this.stateGenerateNewMap = true;
-      // Задаем всем объектам скорость вниз
-      this.state.plates.forEach((plate) => {
-        plate.dy = this.koefScrollSpeed;
-      });
-      this.state.players.forEach((element) => {
-        element.dy += this.koefScrollSpeed;
-      });
-    } else if (this.state.players[0].y > this.minScrollHeight && this.stateScrollMap === true) {
-      this.stateScrollMap = false; // Закончился скроллинг
-      this.stateGenerateNewMap = false;
-      for (const plate of this.state.plates) {
-        plate.dy = 0;
-      }
-      this.state.players.forEach((element) => {
-        element.dy -= this.koefScrollSpeed;
-      });
-      // this.state.players[0].dy -= this.koefScrollSpeed;
-    }
-  }
+  } 
 
   setPlayerOnPlate(plate) {
     this.state.players[0].y = plate.y - this.plate.height;
@@ -148,7 +87,7 @@ export default class OfflineGame extends GameCore {
         this.delay = this.maxDuration;
       }
       this.lastFrame = this.now;
-      this.mapController();
+      // this.mapController();
       this.state.commands = [{
         idP: 0,
         direction: '',
@@ -159,7 +98,7 @@ export default class OfflineGame extends GameCore {
       this.score.renderScore();
       delete this.state.commands;
       gameBus.trigger('state_changed', this.state);
-      if (this.stateGenerateNewMap === true) {
+      if (this.state.stateGenerateNewMap === true) {
         this.state.added = true;
         delete this.state.newPlates;
       }
@@ -178,7 +117,7 @@ export default class OfflineGame extends GameCore {
       this.now = performance.now();
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
-      this.mapController();
+      // this.mapController();
 
       this.state.commands = [{
         idP: 0,
@@ -191,7 +130,7 @@ export default class OfflineGame extends GameCore {
       delete this.state.commands;
 
       this.scene.setState(this.state);
-      if (this.stateGenerateNewMap === true) {
+      if (this.state.stateGenerateNewMap === true) {
         this.state.added = true;
         delete this.state.newPlates;
       }
@@ -203,7 +142,7 @@ export default class OfflineGame extends GameCore {
       this.now = performance.now();
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
-      this.mapController();
+      // this.mapController();
 
       this.state.commands = [{
         idP: 0,
@@ -216,7 +155,7 @@ export default class OfflineGame extends GameCore {
       delete this.state.commands;
 
       this.scene.setState(this.state);
-      if (this.stateGenerateNewMap === true) {
+      if (this.state.stateGenerateNewMap === true) {
         this.state.added = true;
         delete this.state.newPlates;
       }
