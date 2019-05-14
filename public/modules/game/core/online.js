@@ -97,7 +97,7 @@ export default class OnlineGame extends GameCore {
           );
           break;
         case 'map':
-          this.score = 0;
+        //   this.score = 0;
           this.state.newPlates = msg.payload.blocks;
           const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20) - this.state.newPlates[0].y;
           this.state.newPlates.forEach((elem) => {
