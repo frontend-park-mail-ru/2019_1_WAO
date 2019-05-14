@@ -4,10 +4,10 @@ const settings = {
         address: '127.0.0.1',
     },
     backend: {
-        address: '192.168.43.224:3000',
+        address: '25.86.85.183:3000',
     },
     game: {
-        address: '192.168.43.224:8080',
+        address: '25.86.85.183:8080',
     },
 };
 export { settings };

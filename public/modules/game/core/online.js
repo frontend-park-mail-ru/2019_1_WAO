@@ -124,7 +124,7 @@ export default class OnlineGame extends GameCore {
         case 'move':
           this.state.commands.push(msg.payload);
           break;
-        case 'updatePositions':
+        case 'updatePositions_':
           msg.payload.forEach((elem) => {
             const player = this.foundPlayer(elem.idP);
             player.x = elem.x;
@@ -208,14 +208,14 @@ export default class OnlineGame extends GameCore {
         delete this.state.newPlates;
       }
     }
-    if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
-      setTimeout(() => {
-        alert('LOSE');
-        // GlobalBus.trigger('game_score', { score: this.score });
-        // gameBus.trigger('game_finish');
-        // gameBus.trigger('game close');
-      });
-    }
+    // if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
+    //   setTimeout(() => {
+    //     alert('LOSE');
+    //     // GlobalBus.trigger('game_score', { score: this.score });
+    //     // gameBus.trigger('game_finish');
+    //     // gameBus.trigger('game close');
+    //   });
+    // }
   }
 
   onPressedLeftControl(evt) {

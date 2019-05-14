@@ -240,7 +240,7 @@ export default class Fizic {
       this.mapControllerOnline();
     } else {
       this.mapControllerOfline();
-    }
+    } 
     this.circleDraw();
     this.state.commands.forEach((command) => {
       // if (command.idP !== this.state.myIdP) {
