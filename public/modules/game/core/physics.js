@@ -2,6 +2,7 @@
 /* eslint-disable max-len */
 import { gameSettings } from '../gameConfig';
 import { genMap } from './mapLogic';
+
 export default class Fizic {
   constructor(state, canvas, score, multiplayer = false) {
   // передаваемые данные
@@ -152,7 +153,16 @@ export default class Fizic {
     return undefined;
   }
 
-  // Генератор карты
+  // Определение координат самого нижнего игрока
+  foundLowerPlayer() {
+    let lowestY = this.state.players[0].y;
+    this.state.players.forEach((elem) => {
+      if (elem.y < lowestY) {
+        lowestY = elem.y;
+      }
+    });
+    return lowestY;
+  }
 
 
   // Скроллинг карты
@@ -164,8 +174,9 @@ export default class Fizic {
       //   type: 'map',
       // }));
       // Очистить this.state от старых элементов
+      const lowestY = this.foundLowerPlayer();
       for (let i = 0; i < this.state.plates.length; i++) {
-        if (this.state.plates[i].y > this.canvasHeight) {
+        if (this.state.plates[i].y > this.canvasHeight && this.state.plates[i].y < lowestY) {
           this.state.plates.splice(i, 1);
           i--;
         }

@@ -39,23 +39,9 @@ export default class OnlineGame extends GameCore {
     this.delay = 0;
     this.lastFrame = 0;
     this.now = performance.now();
-    // Скроллинг карты
-    this.state.maxScrollHeight = 0.25 * this.canvasHeight;
-    this.state.minScrollHeight = 0.75 * this.canvasHeight;
-    this.koefScrollSpeed = 0.5; // Скорость с которой все объекты будут падать вниз
     // this.state = true;
     this.state.stateScrollMap = false; // Нужен для отслеживания другими классами состояния скроллинга
     this.state.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
-    // Настройки генерации карты
-    this.koefGeneratePlates = 0.01;
-    this.koefHeightOfMaxGenerateSlice = 2000;
-    this.leftIndent = 91;
-    this.rightIndent = 91;
-    this.idPhysicBlockCounter = 0; // Уникальный идентификатор нужен для отрисовки новых объектов
-    // Для мультиплеера
-    this.stateSocketSendedMap = false;
-    this.state.mapGap = 0;
-    this.state.mapGapSpeed = 0;
     // Для счета
     this.meScore = 0;
 
@@ -80,7 +66,10 @@ export default class OnlineGame extends GameCore {
       switch (msg.type) {
         case 'init':
           this.state.players = [];
-          // console.log(msg.payload);
+          this.state.idPhysicBlockCounter = {};
+          this.state.idPhysicBlockCounter.idPhys = 0;
+          this.state.added = true;
+
           this.state.myIdP = msg.payload.players[0].idP;
           msg.payload.players.forEach((elem) => {
             this.state.players.push({
@@ -96,7 +85,7 @@ export default class OnlineGame extends GameCore {
           });
           this.state.plates = msg.payload.blocks;
           this.state.plates.forEach((elem) => {
-            elem.idPhys = this.idPhysicBlockCounter++;
+            elem.idPhys = this.state.idPhysicBlockCounter.idPhys++;
           });
           // Инициализация физики и блоков
           this.physics.setState(this.state);
@@ -109,11 +98,10 @@ export default class OnlineGame extends GameCore {
           break;
         case 'map':
           this.state.newPlates = msg.payload.blocks;
-          const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20)
-                        - this.state.newPlates[0].y;
+          const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20) - this.state.newPlates[0].y;
           this.state.newPlates.forEach((elem) => {
             elem.y += mapGap;
-            elem.idPhys = this.idPhysicBlockCounter++;
+            elem.idPhys = this.state.idPhysicBlockCounter.idPhys++;
           });
           console.log('Мои блоки:');
           this.state.plates.forEach((elem) => {
@@ -132,10 +120,10 @@ export default class OnlineGame extends GameCore {
 
 
           break;
-        case 'move_':
+        case 'move':
           this.state.commands.push(msg.payload);
           break;
-        case 'updatePositions':
+        case 'updatePositions_':
           msg.payload.forEach((elem) => {
             const player = this.foundPlayer(elem.idP);
             player.x = elem.x;
@@ -182,7 +170,7 @@ export default class OnlineGame extends GameCore {
         this.delay = this.maxDuration;
       }
       this.lastFrame = this.now;
-    //   this.mapController();
+      //   this.mapController();
       if (this.state.commands === []) {
         this.state.commands.push({
           idP: this.state.myIdP,
@@ -226,7 +214,7 @@ export default class OnlineGame extends GameCore {
       this.now = performance.now();
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
-    //   this.mapController();
+      //   this.mapController();
 
       if (this.state.commands === []) {
         this.state.commands.push({
@@ -262,7 +250,7 @@ export default class OnlineGame extends GameCore {
       this.now = performance.now();
       this.delay = this.now - this.lastFrame;
       this.lastFrame = this.now;
-    //   this.mapController();
+      //   this.mapController();
 
       if (this.state.commands === []) {
         this.state.commands.push({
