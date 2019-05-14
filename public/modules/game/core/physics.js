@@ -13,19 +13,12 @@ export default class Fizic {
     this.gameSettings = gameSettings;
     // Объявляемые переменные
     this.state.plates = [];
-    this.state.me = {
-      statePlateUnderMe: false, // Игрок на пластине
-      stateLastPlateUnderMe: false, // Игрок на прошлом кадре был на пластине
-      dx: 0.2,
-      dy: 0.002,
-      x: 0,
-      y: 0,
-    };
 
     // Постоянные для прыжка
     this.gravity = 0.0004;
 
     // Скроллинг карты
+    this.koefJump = -0.35;
     this.koefGeneratePlates = 0.01;
     this.koefHeightOfMaxGenerateSlice = 2000;
     this.maxScrollHeight = 0.25 * 700;
@@ -107,9 +100,9 @@ export default class Fizic {
   // }
 
   jump(player) {
-    player.dy = -0.35;
+    player.dy = this.koefJump;
     if (this.state.plates[0].dy !== 0) {
-      player.dy = -0.35 + this.state.plates[0].dy;
+      player.dy = this.koefJump + this.state.plates[0].dy;
     }
   }
 

@@ -48,7 +48,7 @@ export default class GameScene {
     this.local.field = this.state.plates.map((item) => {
       const b = new FadingBlock(ctx);
       b.id = scene.push(b);
-
+      // scene.backView(b.id);
       b.height = 15;
       b.width = 90;
       b.x = item.x;
@@ -96,6 +96,19 @@ export default class GameScene {
     return undefined;
   }
 
+  foundPlayerInLocal(id) {
+    let i = 0;
+    for (;i < this.local.players.length; i++) {
+      if (this.local.players[i].idP === id) {
+        return this.local.players[i];
+      }
+    }
+    return undefined;
+  }
+
+  deletePlayer(id) {
+    this.scene.remove(this.foundPlayerInLocal(id));
+  }
   // foundPlayer(idP) {
   //   return this.state.players.filter((player) => {
   //     return player.idP === idP;
@@ -133,7 +146,7 @@ export default class GameScene {
         for (const lPlate of this.state.newPlates) {
           const b = new FadingBlock(this.ctx);
           b.id = scene.push(b);
-
+          // scene.backView(b.id);
           b.height = 15;
           b.width = 90;
           b.x = lPlate.x;

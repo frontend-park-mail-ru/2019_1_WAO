@@ -7,11 +7,11 @@ export default class GamePlayerFigure extends Figure {
     super(ctx);
 
     this.body = new Rect(ctx);
-    this.gun = new Circle(ctx);
-
+    // this.gun = new Circle(ctx);
+    this.body.fillStyle = 'rgb(11, 168, 25)';
     this.body.width = 50;
     this.body.height = 40;
-    this.gun.radius = 5;
+    // this.gun.radius = 5;
     this.mass = 1;
   }
 

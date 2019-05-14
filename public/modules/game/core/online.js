@@ -97,6 +97,7 @@ export default class OnlineGame extends GameCore {
           );
           break;
         case 'map':
+          this.score = 0;
           this.state.newPlates = msg.payload.blocks;
           const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20) - this.state.newPlates[0].y;
           this.state.newPlates.forEach((elem) => {
@@ -123,7 +124,7 @@ export default class OnlineGame extends GameCore {
         case 'move':
           this.state.commands.push(msg.payload);
           break;
-        case 'updatePositions_':
+        case 'updatePositions':
           msg.payload.forEach((elem) => {
             const player = this.foundPlayer(elem.idP);
             player.x = elem.x;
@@ -131,6 +132,14 @@ export default class OnlineGame extends GameCore {
             player.dy = elem.dy;
             player.dx = elem.dx;
           });
+          break;
+        case 'lose':
+          this.scene.deletePlayer(msg.payload);
+          break;
+        case 'endgame':
+          GlobalBus.trigger('game_score', { score: msg.payload });
+          gameBus.trigger('game_finish');
+          gameBus.trigger('game close');
           break;
         default:
           break;
@@ -201,10 +210,10 @@ export default class OnlineGame extends GameCore {
     }
     if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
       setTimeout(() => {
-        // alert('LOSE');
-        GlobalBus.trigger('game_score', { score: this.score.scoreCounter() });
-        gameBus.trigger('game_finish');
-        gameBus.trigger('game close');
+        alert('LOSE');
+        // GlobalBus.trigger('game_score', { score: this.score });
+        // gameBus.trigger('game_finish');
+        // gameBus.trigger('game close');
       });
     }
   }
