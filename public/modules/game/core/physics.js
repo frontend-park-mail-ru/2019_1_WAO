@@ -102,7 +102,7 @@ export default class Fizic {
   jump(player) {
     player.dy = this.koefJump;
     if (this.state.plates[0].dy !== 0) {
-      player.dy = this.koefJump + this.state.plates[0].dy;
+      player.dy = player.dy - this.stateScrollSpeed;
     }
   }
 
