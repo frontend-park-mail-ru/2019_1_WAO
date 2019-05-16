@@ -135,6 +135,7 @@ export default class GameScene {
           }
         }
       }
+      console.log(this.state.newPlates);
       if (this.state.newPlates) {
         // for (let i = 0; i < this.local.field.length; i++) {
         //   if (this.local.field[i].y > this.canvas.height) {

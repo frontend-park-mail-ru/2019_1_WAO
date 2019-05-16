@@ -104,14 +104,14 @@ export default class OnlineGame extends GameCore {
             elem.y += mapGap;
             elem.idPhys = this.state.idPhysicBlockCounter.idPhys++;
           });
-          console.log('Мои блоки:');
-          this.state.plates.forEach((elem) => {
-            console.log(elem);
-          });
-          console.log('\nПрисланные:');
-          this.state.newPlates.forEach((elem) => {
-            console.log(elem);
-          });
+        //   console.log('Мои блоки:');
+        //   this.state.plates.forEach((elem) => {
+        //     console.log(elem);
+        //   });
+        //   console.log('\nПрисланные:');
+        //   this.state.newPlates.forEach((elem) => {
+        //     console.log(elem);
+        //   });
           this.state.mapGap = 0; // ------------------
           // console.log(this.state.newPlates);
           Array.prototype.push.apply(this.state.plates, this.state.newPlates);

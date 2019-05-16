@@ -135,6 +135,11 @@ export default class Fizic {
     for (const plate of this.state.plates) {
       plate.y += plate.dy * delay;
     }
+    if (this.state.newPlates) {
+      this.state.newPlates.forEach((elem) => {
+        elem.y += this.state.plates[0].dy * delay;
+      });
+    }
   }
 
   // Поиск игрока по idP
