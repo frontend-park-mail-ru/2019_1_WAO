@@ -43,15 +43,17 @@ export default class Fizic {
 
   collision(command) {
     // if (command.idP !== 0) {
-    //   alert("1");
+    // alert("1");
     // }
     const player = this.foundPlayer(command.idP);
     const plate = this.selectNearestBlock(player);
     if (!plate) {
       return;
     }
-    if (player.dy >= 0) {
-      if (player.y + player.dy * command.delay < plate.y - 15) {
+    if (player.dy >= 0 && this.stateScrollMap === false
+    || player.dy - this.koefScrollSpeed >= 0 && this.stateScrollMap === true) {
+      if ((player.dy >= 0 && this.stateScrollMap === false) && (player.y + player.dy * command.delay < plate.y - 15)
+    || (player.dy - this.koefScrollSpeed >= 0 && this.stateScrollMap === true) && (player.y + (player.dy - this.koefScrollSpeed) * command.delay < plate.y - 15)) {
         return;
       }
       // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
@@ -102,7 +104,7 @@ export default class Fizic {
   jump(player) {
     player.dy = this.koefJump;
     if (this.state.plates[0].dy !== 0) {
-      player.dy = player.dy - this.stateScrollSpeed;
+      player.dy = this.koefJump + this.state.plates[0].dy;
     }
   }
 
@@ -183,6 +185,7 @@ export default class Fizic {
       });
     } else if (this.state.players[0].y > this.minScrollHeight && this.state.stateScrollMap === true) {
       this.state.stateScrollMap = false; // Закончился скроллинг
+      this.state.stateGenerateNewMap = true;
       for (const plate of this.state.plates) {
         plate.dy = 0;
       }
@@ -240,7 +243,7 @@ export default class Fizic {
       this.mapControllerOnline();
     } else {
       this.mapControllerOfline();
-    } 
+    }
     this.circleDraw();
     this.state.commands.forEach((command) => {
       // if (command.idP !== this.state.myIdP) {
@@ -254,13 +257,11 @@ export default class Fizic {
       }
       this.processSpeed(command);
       this.collision(command);
+      this.move(command);
     });
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(this.state.commands[0].delay);
     }
-    this.state.commands.forEach((command) => {
-      this.move(command);
-    });
     return this.state;
   }
 }

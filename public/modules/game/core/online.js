@@ -203,7 +203,7 @@ export default class OnlineGame extends GameCore {
       this.state.commands = [];
       gameBus.trigger('state_changed', this.state);
       if (this.state.stateGenerateNewMap === true) {
-        this.state.stateGenerateNewMap = false;
+        // this.state.stateGenerateNewMap = false;
         this.state.added = true;
         delete this.state.newPlates;
       }
@@ -248,6 +248,7 @@ export default class OnlineGame extends GameCore {
 
       this.scene.setState(this.state);
       if (this.state.stateGenerateNewMap === true) {
+        // this.state.stateGenerateNewMap = false;
         this.state.added = true;
         delete this.state.newPlates;
       }
@@ -284,6 +285,7 @@ export default class OnlineGame extends GameCore {
 
       this.scene.setState(this.state);
       if (this.state.stateGenerateNewMap === true) {
+        // this.state.stateGenerateNewMap = false;
         this.state.added = true;
         delete this.state.newPlates;
       }

@@ -135,7 +135,7 @@ export default class GameScene {
           }
         }
       }
-      if (this.state.added === false) {
+      if (this.state.newPlates) {
         // for (let i = 0; i < this.local.field.length; i++) {
         //   if (this.local.field[i].y > this.canvas.height) {
         //     this.scene.remove(this.local.field[i].id);
@@ -143,8 +143,8 @@ export default class GameScene {
         //     i--;
         //   }
         // }
-        for (const lPlate of this.state.newPlates) {
-          const b = new FadingBlock(this.ctx);
+        for (let lPlate of this.state.newPlates) {
+          let b = new FadingBlock(this.ctx);
           b.id = scene.push(b);
           // scene.backView(b.id);
           b.height = 15;
