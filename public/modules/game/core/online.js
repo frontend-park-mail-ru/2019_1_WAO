@@ -40,7 +40,7 @@ export default class OnlineGame extends GameCore {
     this.lastFrame = 0;
     this.now = performance.now();
     // this.state = true;
-    this.state.stateScrollMap = false; // Нужен для отслеживания другими классами состояния скроллинга
+    // this.stateScrollMap = false; // Нужен для отслеживания другими классами состояния скроллинга
     this.state.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
     // Для счета
     this.meScore = 0;
@@ -205,7 +205,8 @@ export default class OnlineGame extends GameCore {
       if (this.state.stateGenerateNewMap === true) {
         // this.state.stateGenerateNewMap = false;
         this.state.added = true;
-        delete this.state.newPlates;
+        // delete this.state.newPlates;
+        this.state.newPlates = [];
       }
     }
     // if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
@@ -250,7 +251,8 @@ export default class OnlineGame extends GameCore {
       if (this.state.stateGenerateNewMap === true) {
         // this.state.stateGenerateNewMap = false;
         this.state.added = true;
-        delete this.state.newPlates;
+        // delete this.state.newPlates;
+        this.state.newPlates = [];
       }
     }
   }
@@ -287,7 +289,7 @@ export default class OnlineGame extends GameCore {
       if (this.state.stateGenerateNewMap === true) {
         // this.state.stateGenerateNewMap = false;
         this.state.added = true;
-        delete this.state.newPlates;
+        this.state.newPlates = [];
       }
     }
   }

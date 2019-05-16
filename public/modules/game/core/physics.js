@@ -102,9 +102,11 @@ export default class Fizic {
   // }
 
   jump(player) {
-    player.dy = this.koefJump;
     if (this.state.plates[0].dy !== 0) {
       player.dy = this.koefJump + this.state.plates[0].dy;
+    }
+    else {
+      player.dy = this.koefJump;
     }
   }
 
@@ -135,7 +137,7 @@ export default class Fizic {
     for (const plate of this.state.plates) {
       plate.y += plate.dy * delay;
     }
-    if (this.state.newPlates) {
+    if (this.state.newPlates.length > 0) {
       this.state.newPlates.forEach((elem) => {
         elem.y += this.state.plates[0].dy * delay;
       });
@@ -157,7 +159,7 @@ export default class Fizic {
   foundLowerPlayer() {
     let lowestY = this.state.players[0].y;
     this.state.players.forEach((elem) => {
-      if (elem.y < lowestY) {
+      if (elem.y > lowestY) {
         lowestY = elem.y;
       }
     });
@@ -168,8 +170,8 @@ export default class Fizic {
   // Скроллинг карты
   mapControllerOnline() {
     // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
-    if (this.state.players[0].y <= this.maxScrollHeight && this.state.stateScrollMap === false) {
-      this.state.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
+    if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
+      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
       // this.socket.send(JSON.stringify({
       //   type: 'map',
       // }));
@@ -181,6 +183,8 @@ export default class Fizic {
           i--;
         }
       }
+      this.state.added = false; // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
+      this.state.stateGenerateNewMap = true;
       // Задаем всем объектам скорость вниз
       this.state.plates.forEach((plate) => {
         plate.dy = this.koefScrollSpeed;
@@ -188,9 +192,8 @@ export default class Fizic {
       this.state.players.forEach((element) => {
         element.dy += this.koefScrollSpeed;
       });
-    } else if (this.state.players[0].y > this.minScrollHeight && this.state.stateScrollMap === true) {
-      this.state.stateScrollMap = false; // Закончился скроллинг
-      this.state.stateGenerateNewMap = true;
+    } else if (this.state.players[0].y > this.minScrollHeight && this.stateScrollMap === true) {
+      this.stateScrollMap = false; // Закончился скроллинг
       for (const plate of this.state.plates) {
         plate.dy = 0;
       }

@@ -135,8 +135,8 @@ export default class GameScene {
           }
         }
       }
-      console.log(this.state.newPlates);
-      if (this.state.newPlates) {
+      // console.log(this.state.newPlates);
+      if (this.state.newPlates.length > 0) {
         // for (let i = 0; i < this.local.field.length; i++) {
         //   if (this.local.field[i].y > this.canvas.height) {
         //     this.scene.remove(this.local.field[i].id);
@@ -155,6 +155,7 @@ export default class GameScene {
           b.idPhys = lPlate.idPhys;
           this.local.field.push(b);
         }
+        this.state.newPlates = [];
       }
     }
   }

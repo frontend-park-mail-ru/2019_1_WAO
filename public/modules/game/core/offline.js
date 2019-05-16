@@ -34,7 +34,7 @@ export default class OfflineGame extends GameCore {
     this.lastFrame = 0;
     this.now = performance.now();
     // this.state = true;
-    this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
+    // this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
     this.state.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
     // Настройки генерации карты
     this.koefGeneratePlates = 0.01;
