@@ -90,6 +90,7 @@
 }
 
 .developer__image {
+  justify-self: center;
   object-fit: cover;
   object-position: center center;
   width: 100px;
