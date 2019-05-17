@@ -202,12 +202,9 @@ export default class OnlineGame extends GameCore {
       this.score.renderScore();
       this.state.commands = [];
       gameBus.trigger('state_changed', this.state);
-      if (this.state.stateGenerateNewMap === true) {
-        // this.state.stateGenerateNewMap = false;
-        this.state.added = true;
-        // delete this.state.newPlates;
-        this.state.newPlates = [];
-      }
+      // if (this.state.stateGenerateNewMap === true) {
+      //   this.state.newPlates = [];
+      // }
     }
     // if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
     //   setTimeout(() => {
@@ -248,12 +245,6 @@ export default class OnlineGame extends GameCore {
       this.state.commands = [];
 
       this.scene.setState(this.state);
-      if (this.state.stateGenerateNewMap === true) {
-        // this.state.stateGenerateNewMap = false;
-        this.state.added = true;
-        // delete this.state.newPlates;
-        this.state.newPlates = [];
-      }
     }
   }
 
@@ -286,11 +277,6 @@ export default class OnlineGame extends GameCore {
       this.state.commands = [];
 
       this.scene.setState(this.state);
-      if (this.state.stateGenerateNewMap === true) {
-        // this.state.stateGenerateNewMap = false;
-        this.state.added = true;
-        this.state.newPlates = [];
-      }
     }
   }
 

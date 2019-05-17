@@ -104,10 +104,9 @@ export default class Fizic {
   jump(player) {
     if (this.state.plates[0].dy !== 0) {
       player.dy = this.koefJump + this.state.plates[0].dy;
+      return;
     }
-    else {
       player.dy = this.koefJump;
-    }
   }
 
   // функции изменения скорости
