@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server",
     "build": "webpack -w",
+    "build-prod": "webpack --config webpack.prod.js",
     "lint_show": "eslint --ext .js public/",
     "lint_fix": "eslint --fix public/"
   },
