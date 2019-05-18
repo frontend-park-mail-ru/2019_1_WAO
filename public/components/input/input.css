@@ -1,3 +1,5 @@
+@import '../common/vars.css';
+
 .input-area {
   display: grid;
   grid-template-rows: auto;
@@ -9,6 +11,7 @@
   width: 100%;
   align-self: center;
   justify-self: center;
+  position: relative;
 }
 
 .input-area__label {
@@ -37,6 +40,15 @@
 .input-area__input_wrong {
   border: solid 1px #ff0000;
   animation: wrong-mov 0.1s ease-in 0s 2 reverse both;
+}
+
+.input-area__icon {
+  position: absolute;
+  top: 52px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+  fill: var(--mainBlueColor);
 }
 
 @keyframes wrong-mov {

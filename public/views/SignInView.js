@@ -16,6 +16,7 @@ const viewData = {
         type: 'password',
         name: 'password',
         placeholder: 'Пароль',
+        icon: './images/access.svg',
       },
     ],
   button: {

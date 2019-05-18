@@ -18,6 +18,7 @@ import ResultBoardPresenter from './presenters/ResultBoardPresenter';
 import './img/user.png';
 import './img/door.svg';
 import './img/menu.png';
+import './img/access.svg';
 
 /**
  * Регистрация Service Worker

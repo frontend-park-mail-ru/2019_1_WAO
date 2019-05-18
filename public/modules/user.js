@@ -11,7 +11,8 @@ const User = {
   score: 0,
   wins: 0,
   games: 0,
-  image: `${baseUrl}/uploads/user.png`,
+  // image: `${baseUrl}/uploads/user.png`,
+  image: 'https://365psd.com/images/istock/previews/9353/93539553-flat-vector-avatar-face-character-person-portrait-user-icon.jpg',
   isAuth: false,
 };
 

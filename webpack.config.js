@@ -62,7 +62,6 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 10,
               name: 'images/[name].[ext]',
             },
           },
@@ -97,7 +96,7 @@ module.exports = {
         webpackBin(),
         ['--config', __filename], {
           silent: true,
-        }
+        },
       ),
       // eslint-disable-next-line global-require
       numWorkers: () => require('os').cpus().length,
