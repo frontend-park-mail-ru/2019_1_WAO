@@ -42,6 +42,7 @@ export default class OnlineGame extends GameCore {
     // this.state = true;
     // this.stateScrollMap = false; // Нужен для отслеживания другими классами состояния скроллинга
     this.state.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
+    this.state.newPlates = [];
     // Для счета
     this.meScore = 0;
 
@@ -102,14 +103,6 @@ export default class OnlineGame extends GameCore {
           // } else {
           this.state.newPlates = msg.payload.blocks;
           // }
-          const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20) - this.state.newPlates[0].y;
-          this.state.newPlates.forEach((elem) => {
-            elem.y += mapGap;
-            elem.idPhys = this.state.idPhysicBlockCounter.idPhys++;
-          });
-          Array.prototype.push.apply(this.state.plates, this.state.newPlates);
-          this.scene.addNewPlatesOnCanvas(this.state.newPlates);
-          this.state.newPlates = [];
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
           break;
 
@@ -147,6 +140,15 @@ export default class OnlineGame extends GameCore {
     super.start();
   }
 
+  fixedBlocksCoordinate(plates) {
+    const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20) - plates[0].y;
+    plates.forEach((elem) => {
+      elem.y += mapGap;
+      elem.idPhys = this.state.idPhysicBlockCounter.idPhys++;
+    });
+    return plates;
+  }
+
   foundPlayer(id) {
     let i = 0;
     for (; i < this.state.players.length; i++) {
@@ -182,6 +184,12 @@ export default class OnlineGame extends GameCore {
         type: 'move',
         payload: this.state.commands[0],
       }));
+      if (this.state.newPlates.length !== 0) {
+        this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
+        Array.prototype.push.apply(this.state.plates, this.state.newPlates);
+        this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+        this.state.newPlates = [];
+      }
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
@@ -224,6 +232,12 @@ export default class OnlineGame extends GameCore {
         type: 'move',
         payload: this.state.commands[0],
       }));
+      if (this.state.newPlates.length !== 0) {
+        this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
+        Array.prototype.push.apply(this.state.plates, this.state.newPlates);
+        this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+        this.state.newPlates = [];
+      }
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
@@ -257,6 +271,12 @@ export default class OnlineGame extends GameCore {
         type: 'move',
         payload: this.state.commands[0],
       }));
+      if (this.state.newPlates.length !== 0) {
+        this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
+        Array.prototype.push.apply(this.state.plates, this.state.newPlates);
+        this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+        this.state.newPlates = [];
+      }
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();

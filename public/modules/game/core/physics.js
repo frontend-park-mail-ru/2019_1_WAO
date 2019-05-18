@@ -156,7 +156,7 @@ export default class Fizic {
 
   // Определение координат самого нижнего игрока
   foundLowerPlayer() {
-    let lowestY = this.state.players[0].y;
+    let lowestY = -Number.MAX_SAFE_INTEGER;
     this.state.players.forEach((elem) => {
       if (elem.y > lowestY) {
         lowestY = elem.y;
@@ -175,13 +175,13 @@ export default class Fizic {
       //   type: 'map',
       // }));
       // Очистить this.state от старых элементов
-      const lowestY = this.foundLowerPlayer();
-      for (let i = 0; i < this.state.plates.length; i++) {
-        if (this.state.plates[i].y > this.canvasHeight && this.state.plates[i].y < lowestY) {
-          this.state.plates.splice(i, 1);
-          i--;
-        }
-      }
+      // const lowestY = this.foundLowerPlayer();
+      // for (let i = 0; i < this.state.plates.length; i++) {
+      //   if (this.state.plates[i].y > this.canvasHeight && this.state.plates[i].y < lowestY) {
+      //     this.state.plates.splice(i, 1);
+      //     i--;
+      //   }
+      // }
       // Задаем всем объектам скорость вниз
       this.state.plates.forEach((plate) => {
         plate.dy = this.koefScrollSpeed;
@@ -269,10 +269,10 @@ export default class Fizic {
     }
     // Отладка
     if (this.state.players[0].dy > 1.5) {
-      alert(`Player 0 Failed ${ this.state.players[0].y }`);
+      console.log(`Player 0 Failed ${ this.state.players[0].y }`);
     }
     if (this.state.players[1].dy > 1.5) {
-      alert(`Player 1 Failed ${ this.state.players[1].y }`);
+      console.log(`Player 1 Failed ${ this.state.players[1].y }`);
     }
     // this.state.commands = [];
     return this.state;

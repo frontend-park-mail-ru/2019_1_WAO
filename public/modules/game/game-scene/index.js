@@ -62,7 +62,11 @@ export default class GameScene {
     this.local.players = [];
     for (const Lplayer of this.state.players) {
       const player = new GamePlayerFigure(ctx);
-
+      player.setColor({
+        r: (Math.random() * 255).toFixed(0),
+        g: (Math.random() * 255).toFixed(0),
+        b: (Math.random() * 255).toFixed(0),
+      });
       player.x = Lplayer.x;
       player.y = Lplayer.y;
       player.dx = Lplayer.dx;
