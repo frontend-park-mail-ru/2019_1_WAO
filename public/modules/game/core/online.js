@@ -97,30 +97,22 @@ export default class OnlineGame extends GameCore {
           );
           break;
         case 'map':
-        //   this.score = 0;
+          // if (this.state.newPlates.length !== 0) {
+          //   Array.prototype.push.apply(this.state.newPlates, msg.payload.blocks);
+          // } else {
           this.state.newPlates = msg.payload.blocks;
+          // }
           const mapGap = (this.state.plates[this.state.plates.length - 1].y - 20) - this.state.newPlates[0].y;
           this.state.newPlates.forEach((elem) => {
             elem.y += mapGap;
             elem.idPhys = this.state.idPhysicBlockCounter.idPhys++;
           });
-        //   console.log('Мои блоки:');
-        //   this.state.plates.forEach((elem) => {
-        //     console.log(elem);
-        //   });
-        //   console.log('\nПрисланные:');
-        //   this.state.newPlates.forEach((elem) => {
-        //     console.log(elem);
-        //   });
-          this.state.mapGap = 0; // ------------------
-          // console.log(this.state.newPlates);
           Array.prototype.push.apply(this.state.plates, this.state.newPlates);
-          this.state.added = false;
+          this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+          this.state.newPlates = [];
           // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
-          this.state.stateGenerateNewMap = true;
-
-
           break;
+
         case 'move':
           this.state.commands.push(msg.payload);
           break;
@@ -180,28 +172,20 @@ export default class OnlineGame extends GameCore {
       }
       this.lastFrame = this.now;
       //   this.mapController();
-      if (this.state.commands === []) {
-        this.state.commands.push({
-          idP: this.state.myIdP,
-          direction: '',
-          delay: this.delay,
-        });
-      } else {
-        this.state.commands.unshift({
-          idP: this.state.myIdP,
-          direction: '',
-          delay: this.delay,
-        });
-      }
+      this.state.commands.unshift({
+        idP: this.state.myIdP,
+        direction: '',
+        delay: this.delay,
+      });
 
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
+      gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
       this.state.commands = [];
-      gameBus.trigger('state_changed', this.state);
       // if (this.state.stateGenerateNewMap === true) {
       //   this.state.newPlates = [];
       // }
@@ -223,7 +207,7 @@ export default class OnlineGame extends GameCore {
       this.lastFrame = this.now;
       //   this.mapController();
 
-      if (this.state.commands === []) {
+      if (this.state.commands.length === 0) {
         this.state.commands.push({
           idP: this.state.myIdP,
           direction: 'LEFT',
@@ -241,6 +225,7 @@ export default class OnlineGame extends GameCore {
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
+      gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
       this.state.commands = [];
 
@@ -255,7 +240,7 @@ export default class OnlineGame extends GameCore {
       this.lastFrame = this.now;
       //   this.mapController();
 
-      if (this.state.commands === []) {
+      if (this.state.commands.length === 0) {
         this.state.commands.push({
           idP: this.state.myIdP,
           direction: 'RIGHT',
@@ -273,6 +258,7 @@ export default class OnlineGame extends GameCore {
         payload: this.state.commands[0],
       }));
       this.state = this.physics.engine();
+      gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
       this.state.commands = [];
 

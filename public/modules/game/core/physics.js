@@ -136,11 +136,11 @@ export default class Fizic {
     for (const plate of this.state.plates) {
       plate.y += plate.dy * delay;
     }
-    if (this.state.newPlates.length > 0) {
-      this.state.newPlates.forEach((elem) => {
-        elem.y += this.state.plates[0].dy * delay;
-      });
-    }
+    // if (this.state.newPlates.length > 0) {
+    //   this.state.newPlates.forEach((elem) => {
+    //     elem.y += this.state.plates[0].dy * delay;
+    //   });
+    // }
   }
 
   // Поиск игрока по idP
@@ -182,8 +182,6 @@ export default class Fizic {
           i--;
         }
       }
-      this.state.added = false; // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
-      this.state.stateGenerateNewMap = true;
       // Задаем всем объектам скорость вниз
       this.state.plates.forEach((plate) => {
         plate.dy = this.koefScrollSpeed;
@@ -269,6 +267,14 @@ export default class Fizic {
     if (this.state.plates[0].dy !== 0) {
       this.scrollMap(this.state.commands[0].delay);
     }
+    // Отладка
+    if (this.state.players[0].dy > 1.5) {
+      alert(`Player 0 Failed ${ this.state.players[0].y }`);
+    }
+    if (this.state.players[1].dy > 1.5) {
+      alert(`Player 1 Failed ${ this.state.players[1].y }`);
+    }
+    // this.state.commands = [];
     return this.state;
   }
 }

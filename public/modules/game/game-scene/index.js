@@ -115,6 +115,19 @@ export default class GameScene {
   //   })[0];
   // }
 
+  addNewPlatesOnCanvas(plates) {
+    plates.forEach((lPlate) => {
+      const b = new FadingBlock(this.ctx);
+      b.id = this.scene.push(b);
+      b.height = 15;
+      b.width = 90;
+      b.x = lPlate.x;
+      b.y = lPlate.y;
+      b.idPhys = lPlate.idPhys;
+      this.local.field.push(b);
+    });
+  }
+
   setState(state) {
     const { scene } = this;
     this.state = state;
@@ -126,7 +139,7 @@ export default class GameScene {
       Lplayer.idP = player.idP;
     });
 
-    if (this.state.plates[0].dy !== 0) {
+    // if (this.state.plates[0].dy !== 0) {
       for (const plate of this.state.plates) {
         for (let i = 0; i < this.local.field.length; i++) {
           if (this.local.field[i].idPhys === plate.idPhys) {
@@ -136,28 +149,28 @@ export default class GameScene {
         }
       }
       // console.log(this.state.newPlates);
-      if (this.state.newPlates.length > 0) {
-        // for (let i = 0; i < this.local.field.length; i++) {
-        //   if (this.local.field[i].y > this.canvas.height) {
-        //     this.scene.remove(this.local.field[i].id);
-        //     this.local.field.splice(i, 1);
-        //     i--;
-        //   }
-        // }
-        for (let lPlate of this.state.newPlates) {
-          let b = new FadingBlock(this.ctx);
-          b.id = scene.push(b);
-          // scene.backView(b.id);
-          b.height = 15;
-          b.width = 90;
-          b.x = lPlate.x;
-          b.y = lPlate.y;
-          b.idPhys = lPlate.idPhys;
-          this.local.field.push(b);
-        }
-        this.state.newPlates = [];
-      }
-    }
+      // if (this.state.newPlates.length !== 0) {
+      //   // for (let i = 0; i < this.local.field.length; i++) {
+      //   //   if (this.local.field[i].y > this.canvas.height) {
+      //   //     this.scene.remove(this.local.field[i].id);
+      //   //     this.local.field.splice(i, 1);
+      //   //     i--;
+      //   //   }
+      //   // }
+      //   this.state.newPlates.forEach(function(lPlate) {
+      //     let b = new FadingBlock(ctx);
+      //     b.id = scene.push(b);
+      //     // scene.backView(b.id);
+      //     b.height = 15;
+      //     b.width = 90;
+      //     b.x = lPlate.x;
+      //     b.y = lPlate.y;
+      //     b.idPhys = lPlate.idPhys;
+      //     this.local.field.push(b);
+      //   });
+      //   this.state.newPlates = [];
+      // }
+    // }
   }
 
   renderScene(now) {
@@ -176,7 +189,7 @@ export default class GameScene {
   }
 
   destroy() {
-    console.log("GameScene");
+    console.log('GameScene');
     if (this.requestFrameId) {
       window.cancelAnimationFrame(this.requestFrameId);
       this.requestFrameId = null;
