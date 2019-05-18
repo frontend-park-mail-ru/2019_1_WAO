@@ -22,12 +22,14 @@ const viewData = {
         type: 'password',
         name: 'password',
         placeholder: 'Пароль',
+        icon: './images/access.svg',
       },
       {
         label: 'Пароль еще раз',
         type: 'password',
         name: 'passwordRepeat',
         placeholder: 'Повторите пароль',
+        icon: './images/access.svg',
       },
     ],
   button: {
