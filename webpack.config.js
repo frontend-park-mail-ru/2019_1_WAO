@@ -73,6 +73,9 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    minimize: false,
+  },
   plugins: [
     // делает index.html и подключает в него результаты сборки
     new HtmlWebPackPlugin({

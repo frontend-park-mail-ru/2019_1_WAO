@@ -2,17 +2,18 @@ import {
   baseUrl, getAuth, checkStatus, parseJSON, getUser,
 } from './api';
 
+const imageDefaultPath = `${baseUrl}/uploads/user.png`;
+
 /**
  * Данные о пользоваетеле
  */
 const User = {
-  nickname: 'New Player',
-  email: 'Empty',
+  nickname: 'Гость',
+  email: 'У гостя нет почты',
   score: 0,
   wins: 0,
   games: 0,
-  // image: `${baseUrl}/uploads/user.png`,
-  image: 'https://365psd.com/images/istock/previews/9353/93539553-flat-vector-avatar-face-character-person-portrait-user-icon.jpg',
+  image: imageDefaultPath,
   isAuth: false,
 };
 
@@ -26,11 +27,11 @@ User.set = function set(data) {
 };
 
 User.reset = function reset() {
-  User.nickname = 'New Player';
-  User.email = 'Empty';
+  User.nickname = 'Гость';
+  User.email = 'У гостя нет почты';
   User.score = 0;
   User.wins = 0;
-  User.image = `${baseUrl}/uploads/user.png`;
+  User.image = imageDefaultPath;
   User.isAuth = false;
 };
 
