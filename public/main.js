@@ -19,6 +19,7 @@ import './img/user.png';
 import './img/door.svg';
 import './img/menu.png';
 import './img/access.svg';
+import './fonts/Exo2-Regular.ttf';
 
 /**
  * Регистрация Service Worker
@@ -61,7 +62,7 @@ function subscribeGlobalBus() {
  * Точка входа
  */
 function start() {
-  // registerSW();
+  registerSW();
   console.log('Start');
 
   const application = document.getElementById('application');
@@ -73,6 +74,12 @@ function start() {
   // const chatEl = document.createElement('div');
   application.appendChild(appEl);
   application.appendChild(userEl);
+  const offlineNotice = document.createElement('div');
+  offlineNotice.classList.add('offline-notice');
+  offlineNotice.textContent = 'НЕТ СЕТИ!';
+  offlineNotice.style.display = 'none';
+  // offlineNotice.style.setProperty('display', 'none', 'important');
+  common.appendChild(offlineNotice);
   // application.appendChild(chatEl);
 
   Router.setRoot(application);

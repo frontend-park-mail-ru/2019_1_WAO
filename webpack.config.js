@@ -28,6 +28,19 @@ module.exports = {
         },
       },
       {
+        test: /\.scss$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'sass-loader',
+          options: {
+            includePaths: ['absolute/path/a', 'absolute/path/b'],
+          },
+        }],
+      },
+      {
         test: /\.css$/,
         // use: ['style-loader', 'css-loader'],
         use: [
@@ -68,6 +81,17 @@ module.exports = {
         ],
       },
       {
+        test: /\.(eot|woff|woff2|ttf|otf)$/,
+        use: [
+          {
+            loader: 'ttf-loader',
+            options: {
+              name: './fonts/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
@@ -103,7 +127,7 @@ module.exports = {
       ),
       // eslint-disable-next-line global-require
       numWorkers: () => require('os').cpus().length,
-      minModules: 10,
+      minModules: 2,
     }),
   ],
 };

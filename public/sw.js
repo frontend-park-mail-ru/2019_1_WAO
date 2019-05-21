@@ -17,13 +17,28 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('Происходит запрос на сервер');
+  // console.log('Происходит запрос на сервер');
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
         if (!navigator.onLine && cachedResponse) {
+          console.log('OFFLINE MODE');
+          // const elements = document.getElementsByClassName('offline-notice');
+          // if (elements.length > 0) {
+          //   const [el] = elements;
+          //   el.style.setProperty('display', 'none', 'important');
+          // }
           return cachedResponse;
         }
+
+        // if (navigator.onLine) {
+        //   console.log('ONLINE MODE');
+        //   const elements = document.getElementsByClassName('offline-notice');
+        //   if (elements.length > 0) {
+        //     const [el] = elements;
+        //     el.style.display = null;
+        //   }
+        // }
 
         return fetch(event.request)
           .then(res => caches
