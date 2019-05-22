@@ -1,4 +1,6 @@
 /* eslint-disable no-restricted-globals */
+import { GlobalBus } from './modules/eventbus';
+
 const KEY = 'wao2019';
 
 const { assets } = global.serviceWorkerOption;
@@ -22,22 +24,12 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request)
       .then((cachedResponse) => {
         if (!navigator.onLine && cachedResponse) {
-          console.log('OFFLINE MODE');
-          // const elements = document.getElementsByClassName('offline-notice');
-          // if (elements.length > 0) {
-          //   const [el] = elements;
-          //   el.style.setProperty('display', 'none', 'important');
-          // }
+          GlobalBus.trigger('to_offline');
           return cachedResponse;
         }
 
         // if (navigator.onLine) {
-        //   console.log('ONLINE MODE');
-        //   const elements = document.getElementsByClassName('offline-notice');
-        //   if (elements.length > 0) {
-        //     const [el] = elements;
-        //     el.style.display = null;
-        //   }
+
         // }
 
         return fetch(event.request)

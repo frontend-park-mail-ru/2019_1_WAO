@@ -31,6 +31,8 @@ export const EVENTS = [
   'url_change',
   'chat_rx',
   'game_score',
+  'to_offline',
+  'to_online',
 ];
 
 const GAME_EVENTS = [

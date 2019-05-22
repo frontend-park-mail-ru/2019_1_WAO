@@ -13,7 +13,7 @@ const viewData = {
       },
       {
         label: 'Email',
-        type: 'text',
+        type: 'email',
         name: 'email',
         placeholder: 'Почта',
       },

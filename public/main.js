@@ -25,8 +25,13 @@ import './fonts/Exo2-Regular.ttf';
  * Регистрация Service Worker
  */
 function registerSW() {
-  if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === '127.0.0.1')) {
-    navigator.serviceWorker.register('/sw.js')
+  if (
+    'serviceWorker' in navigator
+    && (window.location.protocol === 'https:'
+      || window.location.hostname === '127.0.0.1')
+  ) {
+    navigator.serviceWorker
+      .register('/sw.js')
       .then(reg => console.log('SW success: ', reg))
       .catch(err => console.error('SW fail: ', err));
   }
@@ -56,6 +61,24 @@ function subscribeGlobalBus() {
   GlobalBus.on('game_score', (data) => {
     Router.route('/resultboard', '', data);
   });
+
+  GlobalBus.on('to_offline', () => {
+    console.log('OFFLINE MODE');
+    const elements = document.getElementsByClassName('offline-notice');
+    if (elements.length > 0) {
+      const [el] = elements;
+      el.style.setProperty('display', 'none', 'important');
+    }
+  });
+
+  GlobalBus.on('to_offline', () => {
+    console.log('ONLINE MODE');
+    const elements = document.getElementsByClassName('offline-notice');
+    if (elements.length > 0) {
+      const [el] = elements;
+      el.style.display = null;
+    }
+  });
 }
 
 /**
@@ -83,18 +106,18 @@ function start() {
   // application.appendChild(chatEl);
 
   Router.setRoot(application);
-  Router.add('/',         new MenuPresenter([appEl, userEl]));
-  Router.add('/users',    new ScoreBoardPresenter([appEl, userEl]));
-  Router.add('/profile',  new ProfilePresenter([appEl, userEl]));
-  Router.add('/signin',   new SignInPresenter([appEl]));
-  Router.add('/signup',   new SignUpPresenter([appEl]));
-  Router.add('/about',    new AboutPresenter([appEl, userEl]));
-  Router.add('/store',    new StorePresenter([appEl, userEl]));
+  Router.add('/', new MenuPresenter([appEl, userEl]));
+  Router.add('/users', new ScoreBoardPresenter([appEl, userEl]));
+  Router.add('/profile', new ProfilePresenter([appEl, userEl]));
+  Router.add('/signin', new SignInPresenter([appEl]));
+  Router.add('/signup', new SignUpPresenter([appEl]));
+  Router.add('/about', new AboutPresenter([appEl, userEl]));
+  Router.add('/store', new StorePresenter([appEl, userEl]));
   Router.add('/gameoffline', new OfflineGamePresenter([appEl]));
-  Router.add('/gameonline',  new OnlineGamePresenter([appEl]));
-  Router.add('/show',  new PresentationPresenter([appEl]));
-  Router.add('/chat',  new ChatPresenter(GlobalBus, appEl));
-  Router.add('/resultboard',  new ResultBoardPresenter([appEl]));
+  Router.add('/gameonline', new OnlineGamePresenter([appEl]));
+  Router.add('/show', new PresentationPresenter([appEl]));
+  Router.add('/chat', new ChatPresenter(GlobalBus, appEl));
+  Router.add('/resultboard', new ResultBoardPresenter([appEl]));
 
   subscribeGlobalBus();
 
