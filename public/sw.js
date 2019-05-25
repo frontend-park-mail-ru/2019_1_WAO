@@ -1,4 +1,6 @@
 /* eslint-disable no-restricted-globals */
+import { GlobalBus } from './modules/eventbus';
+
 const KEY = 'wao2019';
 
 const { assets } = global.serviceWorkerOption;
@@ -17,13 +19,18 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('Происходит запрос на сервер');
+  // console.log('Происходит запрос на сервер');
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
         if (!navigator.onLine && cachedResponse) {
+          GlobalBus.trigger('to_offline');
           return cachedResponse;
         }
+
+        // if (navigator.onLine) {
+
+        // }
 
         return fetch(event.request)
           .then(res => caches

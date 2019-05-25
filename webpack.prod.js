@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 require('babel-polyfill');
 const autoprefixer = require('autoprefixer');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -25,6 +26,19 @@ module.exports = {
             plugins: ['transform-regenerator'],
           },
         },
+      },
+      {
+        test: /\.scss$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'sass-loader',
+          options: {
+            includePaths: ['absolute/path/a', 'absolute/path/b'],
+          },
+        }],
       },
       {
         test: /\.css$/,
@@ -70,6 +84,39 @@ module.exports = {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
+    ],
+  },
+  mode: 'production',
+  optimization: {
+    runtimeChunk: true,
+    // выносит общие библиотеки для чанков в отдельный чанк
+    // Удобно для кеширования внешних библиотек и уменьшения веса чанков
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          name: 'commons',
+          test: 'commons',
+          enforce: true,
+          minChunks: 2,
+        },
+      },
+    },
+    // минимизирует скрипты
+    minimizer: [
+      new UglifyJSPlugin({
+        uglifyOptions: {
+          warnings: false,
+          parse: {},
+          compress: {},
+          mangle: true,
+          output: null,
+          toplevel: false,
+          nameCache: null,
+          ie8: false,
+          keep_fnames: false,
+        },
+      }),
     ],
   },
   plugins: [
