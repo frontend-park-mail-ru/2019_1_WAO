@@ -81,6 +81,17 @@ module.exports = {
         ],
       },
       {
+        test: /\.(eot|woff|woff2|ttf|otf)$/,
+        use: [
+          {
+            loader: 'ttf-loader',
+            options: {
+              name: './fonts/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
