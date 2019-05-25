@@ -33,6 +33,7 @@ export const EVENTS = [
   'game_score',
   'to_offline',
   'to_online',
+  'gap_changed',
 ];
 
 const GAME_EVENTS = [

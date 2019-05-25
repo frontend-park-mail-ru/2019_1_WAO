@@ -28,7 +28,7 @@ const viewData = {
     {
       role: 'Backend',
       image: 'https://pp.userapi.com/c847124/v847124016/136919/eOtmAzTnUbM.jpg',
-      name: 'Дима Сервер',
+      name: 'Дима',
     },
     {
       role: 'Backend',
