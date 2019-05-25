@@ -4,10 +4,11 @@ const settings = {
         address: '127.0.0.1',
     },
     backend: {
-        address: '127.0.0.1:3000',
+        address: '192.168.200.86:3000',
     },
     game: {
-        address: '127.0.0.1:8080',
+        address: '192.168.200.86:8080',
+        prefix: 'ws',
     },
 };
 export { settings };

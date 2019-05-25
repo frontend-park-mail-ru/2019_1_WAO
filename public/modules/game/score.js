@@ -17,26 +17,16 @@ export default class Score {
     this.state = state;
   }
 
-  foundPlate(id) {
-    let i = 0;
-    for (;i < this.state.plates.length; i++) {
-      if (this.state.plates[i].idPhys === id) {
-        return this.state.plates[i];
-      }
-    }
-    return undefined;
-  }
-
-  giveCurrentPlate(plate) {
-    this.score.currentPlatePhysId = plate.idPhys;
+  giveCurrentPlate(id) {
+    this.score.currentPlatePhysId = id;
     this.stateHasBeenUpdate = true;
   }
 
   scoreCounter() {
     if (this.stateHasBeenUpdate === true) {
-      if (this.foundPlate(this.score.currentPlatePhysId).y < this.foundPlate(this.score.lastPlatePhysId).y) {
-        this.score.score += this.foundPlate(this.score.lastPlatePhysId).y - this.foundPlate(this.score.currentPlatePhysId).y;
-        this.score.score = (~~(this.score.score*100))/100;
+      if (this.state.plates[this.score.currentPlatePhysId].y < this.state.plates[this.score.lastPlatePhysId].y) {
+        this.score.score += this.state.plates[this.score.lastPlatePhysId].y - this.state.plates[this.score.currentPlatePhysId].y;
+        this.score.score = ~~this.score.score;
         this.score.lastPlatePhysId = this.score.currentPlatePhysId;
       }
       this.stateHasBeenUpdate = false;
