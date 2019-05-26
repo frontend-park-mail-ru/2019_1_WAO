@@ -1,4 +1,4 @@
-import { EventBus } from '../modules/eventbus';
+import { EventBus, GlobalBus } from '../modules/eventbus';
 import Game from '../modules/game/game';
 import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
@@ -19,6 +19,17 @@ export default class OfflineGamePresenter extends BasePresenter {
     const eventBus = new EventBus();
     const view = new GameView(appEl, eventBus);
     super(view, {}, eventBus);
+
+    GlobalBus.on('gap_changed', (gap) => {
+      if (gap >= 100) {
+        document.body.style.setProperty('--barGood', `${gap}%`);
+        document.body.style.setProperty('--barBad', '0%');
+      } else {
+        gap *= -1;
+        document.body.style.setProperty('--barGood', '0%');
+        document.body.style.setProperty('--barBad', `${gap}%`);
+      }
+    });
   }
 
   call() {
@@ -26,6 +37,8 @@ export default class OfflineGamePresenter extends BasePresenter {
     const [canvas] = document.getElementsByClassName('game-view__canvas');
     this.view.canvas = canvas;
     const [scoreField] = document.getElementsByClassName('game-bar__score-value');
+    document.body.style.setProperty('--barGood', '0%');
+    document.body.style.setProperty('--barBad', '0%');
     this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas, scoreField);
     this.game.start();
   }

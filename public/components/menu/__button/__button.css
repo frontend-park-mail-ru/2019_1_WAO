@@ -10,6 +10,11 @@
   padding: 15px;
   color: #0f8bec;
   background: #d8d8d860;
+  /*
+  background: #d8d8d860;
+  animation: Grad 20s infinite ease;
+  -webkit-animation: Grad 20s infinite ease;
+  */
 }
 
 .menu-bar__button:hover {
@@ -27,3 +32,33 @@
   color: #ffffff;
   background-color: #0f8bec;
 }
+
+/*
+@keyframes Grad {
+  0% {
+    background-color: #d8d8d8dd;
+  }
+  50% {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    background-color: #3c8ab0dd;
+  }
+  100% {
+    background-color: #d8d8d8dd;
+  }
+}
+
+@-webkit-keyframes Grad {
+  0% {
+    background-color: #d8d8d8dd;
+  }
+  50% {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    background-color: #3c8ab0dd;
+  }
+  100% {
+    background-color: #d8d8d8dd;
+  }
+}
+*/

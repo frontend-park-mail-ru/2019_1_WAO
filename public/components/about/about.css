@@ -2,8 +2,8 @@
 
 @media (max-width: 1200px) {
   .about {
-    max-width: 800px;
     width: 95%;
+    max-width: 800px;
     margin-top: 130px;
 
     opacity: 0.7;
@@ -24,7 +24,7 @@
   .about {
     width: 800px;
     margin-top: calc(450px - 20vw);
-    padding: 20px 10px 20px 10px;
+    padding: 20px 20px 20px 20px;
 
     opacity: 0.7;
     border-radius: 8px;
@@ -44,7 +44,7 @@
   .about {
     width: 800px;
     margin-top: 5%;
-    padding: 20px 10px 20px 10px;
+    padding: 20px 20px 20px 20px;
 
     opacity: 0.7;
     border-radius: 8px;

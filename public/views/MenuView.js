@@ -14,11 +14,11 @@ const viewData = {
       href: '/gameoffline',
       public: true,
     },
-    {
-      text: 'Магазин',
-      href: '/store',
-      public: true,
-    },
+    // {
+    //   text: 'Магазин',
+    //   href: '/store',
+    //   public: true,
+    // },
     {
       text: 'Профиль',
       href: '/profile',

@@ -42,6 +42,7 @@
     align-items: center;
     width: 400px;
     height: 100px;
+    animation: jump 1s ease 0s infinite alternate both;
   }
 }
 
@@ -81,4 +82,10 @@
 }
 .app-actions__label:hover {
   color: #888888;
+}
+
+
+@keyframes jump{
+  from{transform:translateY(0px)}
+  to{transform:translateY(-10px)}
 }
