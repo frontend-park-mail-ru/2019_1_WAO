@@ -6,22 +6,24 @@
 .game-view {
   position: relative;
   color: #0f8bec;
-  margin-top: 100px;
+  margin-top: 3%;
   margin-left: auto;
   margin-right: auto;
   width: 400px;
-  height: 700px;
 }
 
 .game-view__canvas {
   margin-left: auto;
   margin-right: auto;
   width: 400px;
-  border: 1px solid black;
+  height: 90%;
+  border: 2px solid #333;
+  border-radius: 10px;
 }
 
 .game-bar {
   position: absolute;
+  z-index: 10;
   top: 0px;
   right: -220px;
   border: solid 1px;
@@ -31,18 +33,20 @@
   padding-bottom: 10px;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto;
+  grid-template-rows: 3fr 2fr;
   grid-template-areas:
     "menu menu"
     "label value";
-  align-content: center;
-  justify-content: center;
+  align-items: center;
+  justify-items: center;
   background: #0f8bec7f;
   color: #FFFFFF;
 }
 
 .game-bar__menu {
   grid-area: menu;
+  font-size: 1.2em;
+  text-decoration: underline;
 }
 
 .game-bar__score-label {
@@ -55,6 +59,7 @@
 
 .game-progress__good {
   position: absolute;
+  z-index: -1;
   left: -50px;
   top: 0px;
   background: #333;
@@ -78,6 +83,7 @@
 
 .game-progress__bad {
   position: absolute;
+  z-index: -1;
   left: -50px;
   top: 50%;
   background: #333;

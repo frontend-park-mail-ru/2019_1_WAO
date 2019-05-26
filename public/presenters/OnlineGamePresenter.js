@@ -20,6 +20,17 @@ export default class OnlineGamePresenter extends BasePresenter {
     const eventBus = new EventBus();
     const view = new GameView(appEl, eventBus);
     super(view, {}, eventBus);
+
+    GlobalBus.on('gap_changed', (gap) => {
+      if (gap >= 100) {
+        document.body.style.setProperty('--barGood', `${gap}%`);
+        document.body.style.setProperty('--barBad', '0%');
+      } else {
+        gap *= -1;
+        document.body.style.setProperty('--barGood', '0%');
+        document.body.style.setProperty('--barBad', `${gap}%`);
+      }
+    });
   }
 
 

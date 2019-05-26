@@ -21,10 +21,11 @@ export default class OfflineGamePresenter extends BasePresenter {
     super(view, {}, eventBus);
 
     GlobalBus.on('gap_changed', (gap) => {
-      if (gap > 100) {
+      if (gap >= 100) {
         document.body.style.setProperty('--barGood', `${gap}%`);
         document.body.style.setProperty('--barBad', '0%');
       } else {
+        gap *= -1;
         document.body.style.setProperty('--barGood', '0%');
         document.body.style.setProperty('--barBad', `${gap}%`);
       }
