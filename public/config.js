@@ -7,7 +7,7 @@ const settings = {
     address: 'waojump.tk',
   },
   game: {
-    address: 'waoteam.tk',
+    address: 'waojump.tk',
   },
 };
 export { settings };
