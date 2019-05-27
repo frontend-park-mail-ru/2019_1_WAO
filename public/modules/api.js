@@ -1,6 +1,8 @@
+import { settings } from '../config';
+
 // Для запуска на локалхост
-export const host = '127.0.0.1:3000';
-export const baseUrl = `http://${host}`;
+export const host = settings.backend.address;
+export const baseUrl = `${settings.prefix}${host}`;
 
 // Для деплоя
 // export const host = 'waogame.herokuapp.com';

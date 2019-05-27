@@ -1,55 +1,46 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable func-names */
+import { ENOMEM } from 'constants';
 import GameCore from './index';
-import { gameBus } from '../../eventbus';
+import { gameBus, GlobalBus } from '../../eventbus';
 import Physics from './physics';
+import Score from '../score';
 
-// const onlineAdr = '25.86.85.225:8080';
-const onlineAdr = 'waoteam.tk';
-// const onlineAdr = '127.0.0.1:8000';
+import { gameConfig } from '../gameConfig';
+import { settings } from '../../../config';
+
 export default class OnlineGame extends GameCore {
-  constructor(controller, scene) {
+  constructor(controller, scene, scorePlace) {
     super(controller, scene);
     // Основная шина для общения с другими классами
     // physics.js & index.js
     this.state = {};
+    this.state.otladka = true;
+    // this.state.players = [{}];
     // Переменные для начала анимации
     this.gameloop = this.gameloop.bind(this);
     this.gameloopRequestId = null;
-
     // Константы
+    // - Все настройки игры
+    this.settings = {};
+    Object.assign(this.settings, gameConfig);
     // - Задаю канвас
-    this.canvasHeight = this.scene.giveCanvas().height;
-    this.canvasWidth = this.scene.giveCanvas().width;
-    // - Задаю параметры одной пластины
-    this.plate = {};
-    this.plate.width = 90;
-    this.plate.height = 15;
-
+    this.settings.map.canvasHeight = this.scene.giveCanvas().height;
+    this.settings.map.canvasWidth = this.scene.giveCanvas().width;
+    // Контроллер очков
+    this.score = new Score(this.state, scorePlace);
     // Физический контроллер игры
-    this.physics = new Physics(this.state, scene.giveCanvas());
+    this.multiplayer = true;
+    this.physics = new Physics(this.state, scene.giveCanvas(), this.score, this.settings, this.multiplayer);
     // Переменные для корректной отрисовки и анимации
-    this.duration = 1000 / 60;
-    this.maxDuration = 1000 / 16;
-    this.delay = 0;
-    this.lastFrame = 0;
-    this.now = performance.now();
-    // Скроллинг карты
-    this.maxScrollHeight = 0.25 * this.canvasHeight;
-    this.minScrollHeight = 0.75 * this.canvasHeight;
-    this.koefScrollSpeed = 0.5; // Скорость с которой все объекты будут падать вниз
-    // this.state = true;
-    this.stateScrollMap = false;  // Нужен для отслеживания другими классами состояния скроллинга
-    this.stateGenerateNewMap = false; // Нужен для отслеживания другими классами момента когда надо добавить к своей карте вновь сгенерированный кусок this.state.newPlates
-    // Настройки генерации карты
-    this.koefGeneratePlates = 0.01;
-    this.koefHeightOfMaxGenerateSlice = 2000;
-    this.leftIndent = 91;
-    this.rightIndent = 91;
-    this.idPhysicBlockCounter = 0;  // Уникальный идентификатор нужен для отрисовки новых объектов
+    this.settings.render.now = performance.now();
+    this.state.newPlates = {};
+    // Для счета
+    this.meScore = 0;
 
-
-    this.socket = new WebSocket(`ws://${onlineAdr}/websocket`);
+    this.state.commands = [];
+    this.socket = new WebSocket(`${settings.game.prefix}://${settings.game.address}/websocket`);
     this.socket.onopen = function (event) {
-      this.socket.send("Conected");
       alert('Соединение установлено.');
     };
     this.socket.onclose = function (event) {
@@ -61,9 +52,76 @@ export default class OnlineGame extends GameCore {
       // alert(`Код: ${event.code} причина: ${event.reason}`);
     };
 
-    this.socket.onmessage = function (event) {
-      console.log(`Клавиша ${event.data} обработана`);
-    };
+    this.socket.onmessage = ((event) => {
+      const msg = JSON.parse(event.data);
+      switch (msg.type) {
+        case 'init':
+          GlobalBus.trigger('init_players');
+
+          this.state.players = {};
+          this.state.plates = {};
+          this.state.idPhysicBlockCounter = {};
+          this.state.idPhysicBlockCounter.idPhys = 0;
+
+          this.state.myIdP = msg.payload.players[0].idP;
+          msg.payload.players.forEach((elem) => {
+            this.state.players[elem.idP] = {
+              x: elem.x,
+              y: elem.y,
+              dx: 0.2,
+              dy: 0.002,
+              width: 50,
+              height: 40,
+              idP: elem.idP,
+            };
+          });
+          msg.payload.blocks.forEach((elem) => {
+            elem.idPhys = this.state.idPhysicBlockCounter.idPhys;
+            this.state.plates[this.state.idPhysicBlockCounter.idPhys] = elem;
+            this.state.idPhysicBlockCounter.idPhys += 1;
+          });
+          // Инициализация физики и блоков
+          this.physics.setState(this.state);
+          this.score.setState(this.state);
+          GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+          setTimeout(
+            () => {
+              gameBus.trigger('game_start', this.state);
+            },
+          );
+          break;
+        case 'map':
+          msg.payload.blocks.forEach((elem) => {
+            this.state.newPlates[this.state.idPhysicBlockCounter.idPhys] = elem;
+            this.state.newPlates[this.state.idPhysicBlockCounter.idPhys].idPhys = this.state.idPhysicBlockCounter.idPhys;
+            this.state.idPhysicBlockCounter.idPhys += 1;
+          });
+          break;
+
+        case 'move':
+          this.state.commands.push(msg.payload);
+          break;
+        case 'updatePositions_':
+          msg.payload.forEach((elem) => {
+            const player = this.state.players[elem.idP];
+            player.x = elem.x;
+            player.y = elem.y;
+            player.dy = elem.dy;
+            player.dx = elem.dx;
+          });
+          break;
+        case 'lose':
+          this.scene.deletePlayer(msg.payload);
+          break;
+        case 'endgame':
+          GlobalBus.trigger('game_score', { score: msg.payload });
+          gameBus.trigger('game_finish');
+          gameBus.trigger('game close');
+          break;
+        default:
+          break;
+      }
+    });
 
     this.socket.onerror = function (error) {
       alert(`Ошибка ${error.message}`);
@@ -72,180 +130,137 @@ export default class OnlineGame extends GameCore {
 
   start() {
     super.start();
-    this.state = {
-      players: [{
-        x: 0,
-        y: 0,
-        dx: 0.2,
-        dy: 0.002,
-        width: 50,
-        height: 40,
-        idP: 0,
-      },
-      ],
-    };
-    this.state.plates = this.genMap((this.canvasHeight - 20), this.koefHeightOfMaxGenerateSlice, this.koefGeneratePlates * this.koefHeightOfMaxGenerateSlice);
-    this.setPlayerOnPlate(this.state.plates[0]);
-    this.physics.setState(this.state);
-
-    setTimeout(
-      () => {
-        gameBus.trigger('game_start', this.state);
-      },
-    );
   }
 
-  // Генератор карты
-
-  genMap(beginY = (this.state.plates[this.state.plates.length - 1].y - 20), b = (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y), k = (this.koefGeneratePlates * (this.koefHeightOfMaxGenerateSlice + this.state.plates[this.state.plates.length - 1].y)).toFixed()) {
-    const newBlocks = [];
-    const p = b / k; // Плотность распределения пластин
-    let currentX;
-    let currentY = beginY;
-    for (let i = 0; i < k; i++) {
-      currentX = Math.random() * ((this.canvasWidth - this.rightIndent) - this.leftIndent + 1) + this.leftIndent;
-      newBlocks.push({
-        x: currentX,
-        y: currentY,
-        dy: 0,
-        idPhys: this.idPhysicBlockCounter++,  // Уникальный идентификатор нужен для отрисовки новых объектов
-      });
-      currentY -= p;
-    }
-    return newBlocks;
-  }
-
-  // Скроллинг карты
-  mapController() {
-    // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
-    if (this.state.players[0].y <= this.maxScrollHeight && this.stateScrollMap === false) {
-      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
-
-      this.state.newPlates = this.genMap();
-      Array.prototype.push.apply(this.state.plates, this.state.newPlates);
-      // Очистить this.state от старых элементов
-      for (let i = 0; i < this.state.plates.length; i++) {
-        if (this.state.plates[i].y > this.canvasHeight) {
-          this.state.plates.splice(i, 1);
-          i--;
-        }
-      }
-      this.state.added = false; // Сигнал для index.js о том, что пора начать отрисовывать новый кусок карты и почистить старую
-      this.stateGenerateNewMap = true;
-      // Задаем всем объектам скорость вниз
-      this.state.plates.forEach((plate) => {
-        plate.dy = this.koefScrollSpeed;
-      });
-      this.state.players.forEach((element) => {
-        element.dy += this.koefScrollSpeed;
-      });
-    } else if (this.state.players[0].y > this.minScrollHeight && this.stateScrollMap === true) {
-      this.stateScrollMap = false; // Закончился скроллинг
-      this.stateGenerateNewMap = false;
-      for (const plate of this.state.plates) {
-        plate.dy = 0;
-      }
-      this.state.players.forEach((element) => {
-        element.dy -= this.koefScrollSpeed;
-      });
-      // this.state.players[0].dy -= this.koefScrollSpeed;
-    }
-  }
-
-  setPlayerOnPlate(plate) {
-    this.state.players[0].y = plate.y - this.plate.height;
-    this.state.players[0].x = plate.x + this.plate.width / 2; // Отцентровка игрока по середине
+  fixedBlocksCoordinate(plates) {
+    const mapGap = (this.state.plates[Object.values(this.state.plates).length - 1].y - 20) - Object.values(plates)[0].y;
+    Object.values(plates).forEach((elem) => {
+      elem.y += mapGap;
+    });
+    return plates;
   }
 
   gameloop() {
     this.gameloopRequestId = requestAnimationFrame(this.gameloop);
-    this.now = performance.now();
-    this.delay = this.now - this.lastFrame;
-    if (this.delay > this.duration) {
-      if (this.delay >= this.maxDuration) {
-        this.delay = this.maxDuration;
+    this.settings.render.now = performance.now();
+    this.settings.render.delay = this.settings.render.now - this.settings.render.lastFrame;
+    if (this.settings.render.delay > this.settings.render.duration) {
+      if (this.settings.render.delay >= this.settings.render.maxDuration) {
+        this.settings.render.delay = this.settings.render.maxDuration;
       }
-      this.lastFrame = this.now;
-      this.mapController();
-      this.state.commands = [{
-        idP: 0,
+      this.settings.render.lastFrame = this.settings.render.now;
+      //   this.mapController();
+      this.state.commands.unshift({
+        idP: this.state.myIdP,
         direction: '',
-        delay: this.delay,
-      },
-      ];
+        delay: this.settings.render.delay,
+      });
+
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
-      this.state = this.physics.engine();
-      delete this.state.commands;
-      gameBus.trigger('state_changed', this.state);
-      if (this.stateGenerateNewMap === true) {
-        this.state.added = true;
-        delete this.state.newPlates;
+      if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
+        this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
+        Object.assign(this.state.plates, this.state.newPlates);
+        this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+        this.state.newPlates = {};
       }
+      this.state = this.physics.engine();
+      console.log(`Player 0 y: ${ this.state.players[0].y }, dy: ${ this.state.players[0].dy };\n
+      Player 1 y: ${ this.state.players[1].y }, dy: ${ this.state.players[1].dy };`);
+      gameBus.trigger('state_changed', this.state);
+      this.score.renderScore();
+      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+      this.state.commands = [];
     }
-    if (this.state.players[0].y - this.state.players[0].height > this.canvasHeight) {
-      setTimeout(() => {
-        gameBus.trigger('game_finish');
-        gameBus.trigger('game close');
-      });
-    }
+    // if (this.state.players[0].y - this.state.players[0].height > this.settings.map.canvasHeight) {
+    //   setTimeout(() => {
+    //     alert('LOSE');
+    //     // GlobalBus.trigger('game_score', { score: this.score });
+    //     // gameBus.trigger('game_finish');
+    //     // gameBus.trigger('game close');
+    //   });
+    // }
   }
 
   onPressedLeftControl(evt) {
     if (this.pressed('LEFT', evt)) {
-      this.now = performance.now();
-      this.delay = this.now - this.lastFrame;
-      this.lastFrame = this.now;
-      this.mapController();
+      this.settings.render.now = performance.now();
+      this.settings.render.delay = this.settings.render.now - this.settings.render.lastFrame;
+      this.settings.render.lastFrame = this.settings.render.now;
+      //   this.mapController();
 
-      this.state.commands = [{
-        idP: 0,
-        direction: 'LEFT',
-        delay: this.delay,
-      },
-      ];
+      if (this.state.commands.length === 0) {
+        this.state.commands.push({
+          idP: this.state.myIdP,
+          direction: 'LEFT',
+          delay: this.settings.render.delay,
+        });
+      } else {
+        this.state.commands.unshift({
+          idP: this.state.myIdP,
+          direction: 'LEFT',
+          delay: this.settings.render.delay,
+        });
+      }
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
-      this.state = this.physics.engine();
-      delete this.state.commands;
-
-      this.scene.setState(this.state);
-      if (this.stateGenerateNewMap === true) {
-        this.state.added = true;
-        delete this.state.newPlates;
+      if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
+        this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
+        Object.assign(this.state.plates, this.state.newPlates);
+        this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+        this.state.newPlates = {};
       }
+      this.state = this.physics.engine();
+      gameBus.trigger('state_changed', this.state);
+      this.score.renderScore();
+      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+      this.state.commands = [];
+
+      // this.scene.setState(this.state);
     }
   }
 
   onPressedRightControl(evt) {
     if (this.pressed('RIGHT', evt)) {
-      this.now = performance.now();
-      this.delay = this.now - this.lastFrame;
-      this.lastFrame = this.now;
-      this.mapController();
+      this.settings.render.now = performance.now();
+      this.settings.render.delay = this.settings.render.now - this.settings.render.lastFrame;
+      this.settings.render.lastFrame = this.settings.render.now;
+      //   this.mapController();
 
-      this.state.commands = [{
-        idP: 0,
-        direction: 'RIGHT',
-        delay: this.delay,
-      },
-      ];
+      if (this.state.commands.length === 0) {
+        this.state.commands.push({
+          idP: this.state.myIdP,
+          direction: 'RIGHT',
+          delay: this.settings.render.delay,
+        });
+      } else {
+        this.state.commands.unshift({
+          idP: this.state.myIdP,
+          direction: 'RIGHT',
+          delay: this.settings.render.delay,
+        });
+      }
       this.socket.send(JSON.stringify({
         type: 'move',
         payload: this.state.commands[0],
       }));
-      this.state = this.physics.engine();
-      delete this.state.commands;
-
-      this.scene.setState(this.state);
-      if (this.stateGenerateNewMap === true) {
-        this.state.added = true;
-        delete this.state.newPlates;
+      if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
+        this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
+        Object.assign(this.state.plates, this.state.newPlates);
+        this.scene.addNewPlatesOnCanvas(this.state.newPlates);
+        this.state.newPlates = {};
       }
+      this.state = this.physics.engine();
+      gameBus.trigger('state_changed', this.state);
+      this.score.renderScore();
+      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+      this.state.commands = [];
+
+      // this.scene.setState(this.state);
     }
   }
 
@@ -254,7 +269,7 @@ export default class OnlineGame extends GameCore {
     this.scene.init(state);
     this.scene.start();
 
-    this.lastFrame = performance.now();
+    this.settings.render.lastFrame = performance.now();
     this.gameloopRequestId = requestAnimationFrame(this.gameloop);
   }
 
@@ -272,6 +287,7 @@ export default class OnlineGame extends GameCore {
   }
 
   destroy() {
+    this.socket.close();
     this.socket.close();
     super.destroy();
     cancelAnimationFrame(this.gameloopRequestId);

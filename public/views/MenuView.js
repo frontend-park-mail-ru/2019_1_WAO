@@ -1,6 +1,6 @@
 import BaseView from './BaseView';
 import template from '../components/menu/menu.hbs';
-import '../components/menu/menu.css';
+import '../components/menu/menu.scss';
 
 const viewData = {
   menuButtons: [
@@ -14,11 +14,11 @@ const viewData = {
       href: '/gameoffline',
       public: true,
     },
-    {
-      text: 'Магазин',
-      href: '/store',
-      public: true,
-    },
+    // {
+    //   text: 'Магазин',
+    //   href: '/store',
+    //   public: true,
+    // },
     {
       text: 'Профиль',
       href: '/profile',

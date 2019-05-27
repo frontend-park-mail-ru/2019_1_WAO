@@ -1,7 +1,10 @@
+@import '../common/vars.css';
+
 .signin-form {
   margin: 5% auto;
   max-width: 420px;
-  width: 95vw;
+  width: 90vw;
+  padding: 10px;
   opacity: 0.7;
   border-radius: 8px;
   border: solid 1px var(--formColor);

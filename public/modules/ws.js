@@ -1,8 +1,8 @@
-import { host } from './api';
+import { settings } from '../config';
 
 export default class WS {
   constructor() {
-    this.host = host;
+    this.host = settings.backend.address;
   }
 
   // eslint-disable-next-line no-unused-vars

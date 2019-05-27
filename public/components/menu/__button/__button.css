@@ -1,40 +1,24 @@
+.menu-bar__button {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 
-@media (max-width: 600px) {
-  .menu-bar__button {
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;  
-  
-    border-style: solid;
-    border-color: #90a5a5;
-    border-width: 2px;
-    border-radius: 30px;
-    padding: 15px;
-    color: #0f8bec;
-    font-size: 24px;
-    background: #d8d8d860;
-  }
-}
-
-@media (min-width: 600px) {
-  .menu-bar__button {
-    margin-left: auto;
-    margin-right: auto;
-    width: 300px;  
-  
-    border-style: solid;
-    border-color: #90a5a5;
-    border-width: 2px;
-    border-radius: 30px;
-    padding: 15px;
-    color: #0f8bec;
-    font-size: 24px;
-    background: #d8d8d860;
-  }
+  border-style: solid;
+  border-color: #90a5a5;
+  border-width: 2px;
+  border-radius: 30px;
+  padding: 15px 0px 15px 0px;
+  color: #0f8bec;
+  background: #d8d8d860;
+  /*
+  background: #d8d8d860;
+  animation: Grad 20s infinite ease;
+  -webkit-animation: Grad 20s infinite ease;
+  */
 }
 
 .menu-bar__button:hover {
-  background-color: #d8d8d8DD;
+  background-color: #d8d8d8dd;
   border-color: rgb(47, 155, 238);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   transition: 0.3s;
@@ -48,3 +32,33 @@
   color: #ffffff;
   background-color: #0f8bec;
 }
+
+/*
+@keyframes Grad {
+  0% {
+    background-color: #d8d8d8dd;
+  }
+  50% {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    background-color: #3c8ab0dd;
+  }
+  100% {
+    background-color: #d8d8d8dd;
+  }
+}
+
+@-webkit-keyframes Grad {
+  0% {
+    background-color: #d8d8d8dd;
+  }
+  50% {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    background-color: #3c8ab0dd;
+  }
+  100% {
+    background-color: #d8d8d8dd;
+  }
+}
+*/

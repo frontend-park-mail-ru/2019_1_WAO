@@ -1,22 +1,21 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable max-len */
+import { gameSettings } from '../gameConfig';
+import { genMap } from './mapLogic';
 
+import { gameConfig } from '../gameConfig';
 export default class Fizic {
-  constructor(state, canvas) {
+  constructor(state, canvas, score, settings, multiplayer = false) {
   // передаваемые данные
+    this.score = score;
     this.canvas = canvas;
     this.state = state;
+    this.settings = settings
+    this.multiplayer = multiplayer;
+    this.gameSettings = gameSettings;
     // Объявляемые переменные
     this.state.plates = [];
-    this.state.me = {
-      statePlateUnderMe: false, // Игрок на пластине
-      stateLastPlateUnderMe: false, // Игрок на прошлом кадре был на пластине
-      dx: 0.2,
-      dy: 0.002,
-      x: 0,
-      y: 0,
-    };
-
-    // Постоянные для прыжка
-    this.gravity = 0.0004;
+    this.stateScrollMap = false;
   }
 
   // Доп сервисы
@@ -34,17 +33,40 @@ export default class Fizic {
   // Обработка коллизий
 
   collision(command) {
-    let player = this.foundPlayer(command.idP);
+    const { stateScrollMap } = this;
+    const { koefScrollSpeed } = this.settings.player ;
+    function playerFalls(player) {
+      return player.dy >= 0;
+    }
+    function playerFallsWithoutScrollingSpeed(player) {
+      return (player.dy - koefScrollSpeed) >= 0;
+    }
+    function mapDoesntScroll() {
+      return stateScrollMap === false;
+    }
+    function playerNextPositionUnderPlate(player, plate) {
+      return (player.y + player.dy * command.delay) < (plate.y - 15);
+    }
+    function playerNextPositionUnderPlateWithoutScroll(player, plate) {
+      return (player.y + (player.dy - koefScrollSpeed) * command.delay) < (plate.y - 15);
+    }
+
+    const player = this.state.players[command.idP];
     const plate = this.selectNearestBlock(player);
-    if (!plate) {
+    if (Object.getOwnPropertyNames(plate).length === 0) {
       return;
     }
-    if (player.dy >= 0) {
-      if (player.y + player.dy * command.delay < plate.y - 15) {
+    if ((playerFalls(player) && mapDoesntScroll())
+      || (playerFallsWithoutScrollingSpeed(player) && !mapDoesntScroll())) {
+      if (((playerFalls(player) && mapDoesntScroll()) && (playerNextPositionUnderPlate(player, plate)))
+         || ((playerFallsWithoutScrollingSpeed(player) && !mapDoesntScroll()) && playerNextPositionUnderPlateWithoutScroll(player, plate))) {
         return;
       }
-      player.statePlateUnderMe = true;
-      // this.setPlayerOnPlate(player, plate);
+      
+      // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
+      if (this.score) {
+        this.score.giveCurrentPlate(plate.idPhys);
+      }
       player.y = plate.y - 15;
       this.jump(player);
     }
@@ -53,102 +75,151 @@ export default class Fizic {
   // Вспомогательная функция для функции коллизии
   // Ищет ближайший по игру блок под игроком
   selectNearestBlock(player) {
-    let nearestBlock;
+    let nearestBlock = {};
     let minY = this.canvas.height;
-    for (const plate of this.state.plates) {
-      if ((player.x + player.width >= plate.x && player.x <= plate.x + 90)) {
-        if ((plate.y - player.y < minY && player.y <= plate.y)) {
+    function playerInAreaOfPlate(plate) {
+      return (player.x + player.width >= plate.x && player.x <= plate.x + 90);
+    }
+    function playerAbouteAPlate(plate) {
+      return (plate.y - player.y < minY && player.y <= plate.y);
+    }
+    Object.values(this.state.plates).forEach((plate) => {
+      if (playerInAreaOfPlate(plate)) {
+        if (playerAbouteAPlate(plate)) {
           minY = plate.y - player.y;
           nearestBlock = plate;
         }
       }
-    }
+    });
     return nearestBlock;
   }
 
   // Отрисовка по кругу
 
   circleDraw() {
-    for (const player of this.state.players) {
+    Object.values(this.state.players).forEach((player) => {
       if (player.x > this.canvas.width) {
         player.x = 0;
       } else if (player.x < 0) {
         player.x = this.canvas.width;
       }
-    }
+    });
   }
 
   // функции для прыжка
 
-  // setPlayerOnPlate(player, plate) {
-  //   player.y = plate.y - 15;
-  // }
-
   jump(player) {
-    player.dy = -0.35;
-    if (this.state.plates[0].dy !== 0) {
-      player.dy = -0.35 + this.state.plates[0].dy;
+    const plate = Object.values(this.state.plates)[0];
+    if (plate.dy !== 0) {
+      player.dy = this.settings.player.koefJump + plate.dy;
+    } else {
+      player.dy = this.settings.player.koefJump;
     }
   }
 
   // функции изменения скорости
 
   processSpeed(command) {
-    let i = 0;
-    for (;i < this.state.players.length; i++) {
-      if (this.state.players[i].idP === command.idP) {
-        let player = this.state.players[i];
-        console.log(player);
-        player.dy += (this.gravity * command.delay);
-        return;
-      }
-    }
+    const player = this.state.players[command.idP];
+    player.dy += (this.settings.player.gravity * command.delay);
   }
 
   // Сдвиг персонажа вниз
 
   move(command) {
-    let player = this.foundPlayer(command.idP);
+    const player = this.state.players[command.idP];
     player.y += (player.dy * command.delay);
   }
 
   // Сдвиг все карты вниз
 
-  scrollMap(delay) {
-    for (const plate of this.state.plates) {
-      plate.y += plate.dy * delay;
-    }
+  scrollMap(delay) {  // Работает только для текущего игрока
+    Object.values(this.state.plates).forEach((plate) => { plate.y += plate.dy * delay; });
+    // if (this.state.newPlates.length > 0) {
+    //   this.state.newPlates.forEach((elem) => {
+    //     elem.y += this.state.plates[0].dy * delay;
+    //   });
+    // }
   }
 
-  // Поиск игрока по idP
-  foundPlayer(id) {
-    let i = 0;
-    for (;i < this.state.players.length; i++) {
-      if (this.state.players[i].idP === id) {
-        return this.state.players[i];
+  // Определение координат самого нижнего игрока
+  foundLowerPlayer() {
+    let lowestY = -Number.MAX_SAFE_INTEGER;
+    Object.values(this.state.players).forEach((player) => {
+      if (player.y > lowestY) {
+        lowestY = player.y;
       }
-    }
-    return undefined;
+    });
+    return lowestY;
   }
-  // foundPlayer(idP) {
-    
-  //   let out = this.state.players.filter((player) => {
-  //     return player.idP === idP;
-  //   });
-  //   return out;
-  //   // alert(out);
-  // }
 
-  // Контролеры карты
 
-  /*
-  Command: id, "LEFT", delay
-  */
+  // Скроллинг карты
+  mapControllerOnline() {
+    // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
+    if (this.state.players[this.state.myIdP].y <= this.settings.player.maxScrollHeight && this.stateScrollMap === false) {
+      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
+      // this.socket.send(JSON.stringify({
+      //   type: 'map',
+      // }));
+      // Очистить this.state от старых элементов
+      // const lowestY = this.foundLowerPlayer();
+      // for (let i = 0; i < this.state.plates.length; i++) {
+      //   if (this.state.plates[i].y > this.settings.map.canvasHeight && this.state.plates[i].y < lowestY) {
+      //     this.state.plates.splice(i, 1);
+      //     i--;
+      //   }
+      // }
+      // Задаем всем объектам скорость вниз
+      Object.values(this.state.plates).forEach((plate) => {
+        plate.dy = this.settings.player.koefScrollSpeed;
+      });
+      Object.values(this.state.players).forEach((element) => {
+        element.dy += this.settings.player.koefScrollSpeed;
+      });
+    } else if (this.state.players[this.state.myIdP].y > this.settings.player.minScrollHeight && this.stateScrollMap === true) {
+      this.stateScrollMap = false; // Закончился скроллинг
+      Object.values(this.state.plates).forEach((plate) => { plate.dy = 0; });
+      Object.values(this.state.players).forEach((element) => { element.dy -= this.settings.player.koefScrollSpeed; });
+    }
+  }
+
+  // Скроллинг карты
+  mapControllerOfline() {
+    // Игрок добрался до 3/4 экрана, то все плиты и игрок резко смещаются вниз пока игрок не окажется на 1/4 экрана
+    if (this.state.players[this.state.myIdP].y <= this.settings.player.maxScrollHeight && this.stateScrollMap === false) {
+      this.stateScrollMap = true; // Сигнал запрещающий выполнять этот код еще раз пока не выполнится else
+      const platesSliceLenght = Object.values(this.state.plates).length;
+      this.state.newPlates = genMap(
+        (this.state.plates[platesSliceLenght - 1].y - 20),
+        (this.settings.map.koefHeightOfMaxGenerateSlice + this.state.plates[platesSliceLenght - 1].y),
+        (this.settings.map.koefGeneratePlates * (this.settings.map.koefHeightOfMaxGenerateSlice + this.state.plates[platesSliceLenght - 1].y)).toFixed(),
+        this.state.idPhysicBlockCounter,
+      );
+      this.state.idPhysicBlockCounter.Phys += 1;
+      Object.assign(this.state.plates, this.state.newPlates);
+      // Очистить this.state от старых элементов
+      Object.values(this.state.plates).filter(plate => { return plate.y <= 700;});
+
+      // Задаем всем объектам скорость вниз
+      Object.values(this.state.plates).forEach((plate) => { plate.dy = this.settings.player.koefScrollSpeed; });
+      Object.values(this.state.players).forEach((element) => { element.dy += this.settings.player.koefScrollSpeed; });
+    } else if (this.state.players[this.state.myIdP].y > this.settings.player.minScrollHeight && this.stateScrollMap === true) {
+      this.stateScrollMap = false; // Закончился скроллинг
+      Object.values(this.state.plates).forEach((plate) => { plate.dy = 0; });
+      Object.values(this.state.players).forEach((element) => { element.dy -= this.settings.player.koefScrollSpeed; });
+    }
+  }
 
   engine() {
+    if (this.multiplayer === true) {
+      this.mapControllerOnline();
+    } else {
+      this.mapControllerOfline();
+    }
     this.circleDraw();
     this.state.commands.forEach((command) => {
-      let player = this.foundPlayer(command.idP);
+      const player = this.state.players[command.idP];
       if (command.direction === 'LEFT') {
         player.x -= player.dx * command.delay;
       } else if (command.direction === 'RIGHT') {
@@ -156,13 +227,22 @@ export default class Fizic {
       }
       this.processSpeed(command);
       this.collision(command);
-    });
-    if (this.state.plates[0].dy !== 0) {
-      this.scrollMap(this.state.commands[0].delay);
-    }
-    this.state.commands.forEach((command) => {
       this.move(command);
     });
+    if (Object.values(this.state.plates)[0].dy !== 0) {
+      this.scrollMap(this.state.commands[0].delay);
+    }
+    // Отладка
+    // if (this.state.otladka === true) {
+    //   if (this.state.players[0].dy > 1.5) {
+    //     alert(`Player 0 Failed ${ this.state.players[0].y }`);
+    //   }
+    //   if (this.state.players[1].dy > 1.5) {
+    //     alert(`Player 1 Failed ${ this.state.players[1].y }`);
+    //   }
+    //   this.state.otladka = false;
+    // }
+    this.state.commands = [];
     return this.state;
   }
 }

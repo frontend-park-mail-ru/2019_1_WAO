@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 import Scene from '../../graphics/scene';
 import FadingBlock from './fading-block';
@@ -5,6 +6,9 @@ import GamePlayerFigure from './player';
 import Circle from '../../graphics/circle';
 import BlockPlate from './block';
 import { gameBus } from '../../eventbus';
+
+import Sheep from './sheep';
+import * as sheepImage from './sheep.png';
 
 const grav = 10;
 
@@ -29,12 +33,10 @@ export default class GameScene {
 
     this.lastFrameTime = 0;
     this.local = {};
-    this.local.field = [];
+    this.local.plates = {};
     this.local.me = null;
 
     this.renderScene = this.renderScene.bind(this);
-
-    this.stateAddedMap = true;
 
     gameBus.on('game_close', this.stop);
   }
@@ -45,105 +47,90 @@ export default class GameScene {
 
     this.state = state;
     // инициализация пластин для рендеринга
-    this.local.field = this.state.plates.map((item) => {
+    Object.values(this.state.plates).forEach((elem) => {
       const b = new FadingBlock(ctx);
-      b.id = scene.push(b);
-
+      b.id = this.scene.push(b);
       b.height = 15;
       b.width = 90;
-      b.x = item.x;
-      b.y = item.y;
-      // b.dy = item.dy;
-      b.idPhys = item.idPhys;
-
-      return b;
+      b.x = elem.x;
+      b.y = elem.y;
+      b.idPhys = elem.idPhys;
+      this.local.plates[elem.idPhys] = b;
     });
-    // инициализация игроков для рендеринга
-    this.local.players = [];
-    for (const Lplayer of this.state.players) {
-      const player = new GamePlayerFigure(ctx);
 
+    // инициализация игроков для рендеринга
+    let sheepPicture =  new Image(50, 40);
+    sheepPicture.src = sheepImage.default;
+    this.local.players = {};
+    Object.values(this.state.players).forEach((Lplayer) => {
+      const player = new Sheep(ctx, sheepPicture);
       player.x = Lplayer.x;
       player.y = Lplayer.y;
       player.dx = Lplayer.dx;
+      player.id = this.scene.push(player);
       player.idP = Lplayer.idP;
-      player.id = scene.push(player);
-
-      this.local.players.push(player);
-    }
-
-
-    // this.local.me = new GamePlayerFigure(ctx);
-
-    // this.local.me.x = this.state.me.x;
-    // this.local.me.y = this.state.me.y;
-    // this.local.me.dx = this.state.me.dx;
-
-    // this.local.me.id = scene.push(this.local.me);
+      this.local.players[Lplayer.idP] = player;
+    });
   }
 
   giveCanvas() {
     return this.canvas;
   }
 
-  foundPlayer(id) {
-    let i = 0;
-    for (;i < this.state.players.length; i++) {
-      if (this.state.players[i].idP === id) {
-        return this.state.players[i];
-      }
-    }
-    return undefined;
+  deletePlayer(id) {
+    this.scene.remove(this.local.players[id]);
   }
 
-  // foundPlayer(idP) {
-  //   return this.state.players.filter((player) => {
-  //     return player.idP === idP;
-  //   })[0];
-  // }
+  addNewPlatesOnCanvas(plates) {
+    const { ctx } = this;
+    Object.values(plates).forEach((elem) => {
+      const b = new FadingBlock(ctx);
+      b.id = this.scene.push(b);
+      b.height = 15;
+      b.width = 90;
+      b.x = elem.x;
+      b.y = elem.y;
+      b.idPhys = elem.idPhys;
+      this.local.plates[elem.idPhys] = b;
+    });
+  }
 
   setState(state) {
     const { scene } = this;
     this.state = state;
-
-    this.local.players.forEach((Lplayer) => {
-      const player = this.foundPlayer(Lplayer.idP);
+    // Неявная передача новый координат от 1го игрока другому
+    Object.values(this.local.players).forEach((Lplayer) => {
+      const player = this.state.players[Lplayer.idP];
       Lplayer.x = player.x;
       Lplayer.y = player.y;
-      Lplayer.idP = player.idP;
     });
 
-    // this.local.me.x = this.state.me.x;
-    // this.local.me.y = this.state.me.y;
     if (this.state.plates[0].dy !== 0) {
-      for (const plate of this.state.plates) {
-        for (let i = 0; i < this.local.field.length; i++) {
-          if (this.local.field[i].idPhys === plate.idPhys) {
-            this.local.field[i].y = plate.y;
-            break;
-          }
-        }
-      }
-      if (this.state.added === false) {
-        for (const lPlate of this.state.newPlates) {
-          const b = new FadingBlock(this.ctx);
-          b.id = scene.push(b);
-
-          b.height = 15;
-          b.width = 90;
-          b.x = lPlate.x;
-          b.y = lPlate.y;
-          b.idPhys = lPlate.idPhys;
-          this.local.field.push(b);
-        }
-        for (let i = 0; i < this.local.field.length; i++) {
-          if (this.local.field[i].y > this.canvas.height) {
-            this.scene.remove(this.local.field[i].id);
-            this.local.field.splice(i, 1);
-            i--;
-          }
-        }
-      }
+      Object.values(this.state.plates).forEach((plate) => {
+        this.local.plates[plate.idPhys].y = this.state.plates[plate.idPhys].y;
+      });
+    // console.log(this.state.newPlates);
+    // if (this.state.newPlates.length !== 0) {
+    //   // for (let i = 0; i < this.local.plates.length; i++) {
+    //   //   if (this.local.plates[i].y > this.canvas.height) {
+    //   //     this.scene.remove(this.local.plates[i].id);
+    //   //     this.local.plates.splice(i, 1);
+    //   //     i--;
+    //   //   }
+    //   // }
+    //   this.state.newPlates.forEach(function(lPlate) {
+    //     let b = new FadingBlock(ctx);
+    //     b.id = scene.push(b);
+    //     // scene.backView(b.id);
+    //     b.height = 15;
+    //     b.width = 90;
+    //     b.x = lPlate.x;
+    //     b.y = lPlate.y;
+    //     b.idPhys = lPlate.idPhys;
+    //     this.local.plates.push(b);
+    //   });
+    //   this.state.newPlates = [];
+    // }
     }
   }
 
@@ -163,7 +150,7 @@ export default class GameScene {
   }
 
   destroy() {
-    console.log("GameScene");
+    console.log('GameScene');
     if (this.requestFrameId) {
       window.cancelAnimationFrame(this.requestFrameId);
       this.requestFrameId = null;

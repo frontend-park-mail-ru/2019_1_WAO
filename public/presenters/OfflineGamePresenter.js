@@ -1,4 +1,4 @@
-import { EventBus } from '../modules/eventbus';
+import { EventBus, GlobalBus } from '../modules/eventbus';
 import Game from '../modules/game/game';
 import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
@@ -19,18 +19,39 @@ export default class OfflineGamePresenter extends BasePresenter {
     const eventBus = new EventBus();
     const view = new GameView(appEl, eventBus);
     super(view, {}, eventBus);
+
+    GlobalBus.on('gap_changed', (gap) => {
+      if (gap >= 100) {
+        document.body.style.setProperty('--barGood', `${gap}%`);
+        document.body.style.setProperty('--barBad', '0%');
+      } else {
+        gap *= -1;
+        document.body.style.setProperty('--barGood', '0%');
+        document.body.style.setProperty('--barBad', `${gap}%`);
+      }
+    });
   }
 
   call() {
+    this.audio = new Audio('./sounds/media1.mp3');
+    this.audio.play();
     this.view.render();
+    const [bar1] = document.getElementsByClassName('game-progress__good');
+    const [bar2] = document.getElementsByClassName('game-progress__bad');
+    bar1.style.setProperty('display', 'none', 'important');
+    bar2.style.setProperty('display', 'none', 'important');
     const [canvas] = document.getElementsByClassName('game-view__canvas');
     this.view.canvas = canvas;
-    this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas);
+    const [scoreField] = document.getElementsByClassName('game-bar__score-value');
+    document.body.style.setProperty('--barGood', '0%');
+    document.body.style.setProperty('--barBad', '0%');
+    this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas, scoreField);
     this.game.start();
   }
 
   // eslint-disable-next-line class-methods-use-this
   stop() {
+    this.audio.pause();
     console.log('game close');
     this.game.destroy();
   }

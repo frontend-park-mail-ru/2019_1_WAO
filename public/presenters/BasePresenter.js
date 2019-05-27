@@ -14,8 +14,8 @@ export default class BasePresenter {
     this.eventBus = eventBus;
   }
 
-  call() {
-    this.eventBus.trigger('call');
+  call(data = {}) {
+    this.eventBus.trigger('call', data);
   }
 
   // eslint-disable-next-line class-methods-use-this
