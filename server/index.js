@@ -286,7 +286,7 @@ app.post('/signin', (req, res) => {
     ids[id] = nickname;
 
     res.cookie('sessionid', id, {
-        expires: new Date(Date.now() + 1000 * 60 * 10),
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 2),
     });
     res.status(200).json(users[nickname]);
 });

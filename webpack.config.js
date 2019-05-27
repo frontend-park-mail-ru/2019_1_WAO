@@ -23,7 +23,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['transform-regenerator', '@babel/plugin-proposal-object-rest-spread'],
+            //plugins: ['transform-regenerator', '@babel/plugin-proposal-object-rest-spread'],
           },
         },
       },
