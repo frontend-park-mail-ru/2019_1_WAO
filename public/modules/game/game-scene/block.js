@@ -11,7 +11,7 @@ export default class Block extends Rect {
   }
 
   setColor(color) {
-    this.color = {
+    this.fillStyle = {
       r: color.r || 15,
       g: color.g || 247,
       b: color.b || 77,

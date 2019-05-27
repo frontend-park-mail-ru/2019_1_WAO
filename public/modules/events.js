@@ -29,6 +29,7 @@ const EVENTS = [
   'game_score',
   'to_offline',
   'to_online',
+  'init_players',
   'gap_changed',
 ];
 

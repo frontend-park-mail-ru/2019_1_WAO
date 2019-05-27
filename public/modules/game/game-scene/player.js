@@ -8,7 +8,7 @@ export default class GamePlayerFigure extends Figure {
 
     this.body = new Rect(ctx);
     // this.gun = new Circle(ctx);
-    this.body.fillStyle = 'rgb(11, 168, 25)';
+    this.body.fillStyle = 'rgb(101, 168, 25)';
     this.body.width = 50;
     this.body.height = 40;
     // this.gun.radius = 5;
@@ -29,6 +29,13 @@ export default class GamePlayerFigure extends Figure {
     // this.gun.render();
   }
 
+  setColor(color) {
+    const { ctx } = this;
+    ctx.fillStyle = color;
+  }
+
   // eslint-disable-next-line class-methods-use-this
-  setup() {}
+  setup() {
+    
+  }
 }

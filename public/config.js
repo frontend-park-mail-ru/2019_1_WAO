@@ -1,13 +1,13 @@
 const settings = {
-  prefix: 'https://',
+  prefix: 'http://',
   chat: {
-    address: 'waojump.tk',
+    address: '89.208.197.150:8000',
   },
   backend: {
-    address: 'waojump.tk',
+    address: '127.0.0.1:3000',
   },
   game: {
-    address: 'waojump.tk',
+    address: 'waoteam.tk',
   },
 };
 export { settings };
