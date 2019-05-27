@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'Exo2';
+  font-family: "Exo2";
   font-display: fallback;
   font-weight: normal;
   font-style: normal;
-  src: url(/fonts/Exo2-Regular.ttf) format('truetype'),
-       url(/fonts/Exo2-Regular.woff) format('woff');
+  src: url(/fonts/Exo2-Regular.ttf) format("truetype"),
+    url(/fonts/Exo2-Regular.woff) format("woff");
 }
 
 body {
-  font-family: 'Exo2', sans-serif;
+  font-family: "Exo2", sans-serif;
   font-size: 28px;
   outline: none;
 }
@@ -22,34 +22,17 @@ a {
   user-select: none;
 }
 
-@media (orientation: landscape) {
-  .common {
-    position: fixed;
-    z-index: -1;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    background-image: url("../../img/background1.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-  }
-}
-
-@media (orientation: portrait) {
-  .common {
-    position: fixed;
-    z-index: -1;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    background-image: url("../../img/background1.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-  }
+.common {
+  position: fixed;
+  z-index: -1;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../img/background1.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .offline-notice {
@@ -59,8 +42,8 @@ a {
   top: 0;
   width: 100%;
   height: 20px;
-  background-color: #FF0000;
-  color: #FFFFFF;
+  background-color: #ff0000;
+  color: #ffffff;
   font-style: bold;
   font-size: 14px;
   text-align: center;
