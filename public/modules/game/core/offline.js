@@ -17,7 +17,6 @@ export default class OfflineGame extends GameCore {
     // Переменные для начала анимации
     this.gameloop = this.gameloop.bind(this);
     this.gameloopRequestId = null;
-
     // Константы
     // - Все настройки игры
     this.settings = Object.assign({}, gameConfig);
@@ -51,6 +50,7 @@ export default class OfflineGame extends GameCore {
 
       },
     };
+    this.state.myIdP = 0;
     this.state.idPhysicBlockCounter = {};
     this.state.idPhysicBlockCounter.idPhys = 0;
     this.state.plates = genMap(

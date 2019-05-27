@@ -34,7 +34,7 @@ export default class Fizic {
 
   collision(command) {
     const { stateScrollMap } = this;
-    const { koefScrollSpeed } = this.settings.player.;
+    const { koefScrollSpeed } = this.settings.player ;
     function playerFalls(player) {
       return player.dy >= 0;
     }
@@ -235,16 +235,16 @@ export default class Fizic {
       this.scrollMap(this.state.commands[0].delay);
     }
     // Отладка
-    if (this.state.otladka === true) {
-      if (this.state.players[0].dy > 1.5) {
-        alert(`Player 0 Failed ${ this.state.players[0].y }`);
-      }
-      if (this.state.players[1].dy > 1.5) {
-        alert(`Player 1 Failed ${ this.state.players[1].y }`);
-      }
-      this.state.otladka = false;
-    }
-    this.state.commands = []];
+    // if (this.state.otladka === true) {
+    //   if (this.state.players[0].dy > 1.5) {
+    //     alert(`Player 0 Failed ${ this.state.players[0].y }`);
+    //   }
+    //   if (this.state.players[1].dy > 1.5) {
+    //     alert(`Player 1 Failed ${ this.state.players[1].y }`);
+    //   }
+    //   this.state.otladka = false;
+    // }
+    this.state.commands = [];
     return this.state;
   }
 }

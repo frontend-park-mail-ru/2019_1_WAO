@@ -7,6 +7,9 @@ import Circle from '../../graphics/circle';
 import BlockPlate from './block';
 import { gameBus } from '../../eventbus';
 
+import Sheep from './sheep';
+import * as sheepImage from './sheep.png';
+
 const grav = 10;
 
 const KEYS = {
@@ -56,9 +59,11 @@ export default class GameScene {
     });
 
     // инициализация игроков для рендеринга
+    let sheepPicture =  new Image(50, 40);
+    sheepPicture.src = sheepImage.default;
     this.local.players = {};
     Object.values(this.state.players).forEach((Lplayer) => {
-      const player = new GamePlayerFigure(ctx);
+      const player = new Sheep(ctx, sheepPicture);
       player.x = Lplayer.x;
       player.y = Lplayer.y;
       player.dx = Lplayer.dx;
