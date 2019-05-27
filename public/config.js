@@ -8,6 +8,7 @@ const settings = {
   },
   game: {
     address: 'waojump.tk',
+    prefix: 'wss',
   },
 };
 export { settings };
