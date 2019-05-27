@@ -35,6 +35,8 @@ export default class OnlineGamePresenter extends BasePresenter {
 
 
   call() {
+    this.audio = new Audio('./sounds/media1.mp3');
+    this.audio.play();
     if (User.isAuth) {
       this.view.render();
       const [canvas] = document.getElementsByClassName('game-view__canvas');
@@ -49,6 +51,7 @@ export default class OnlineGamePresenter extends BasePresenter {
 
   // eslint-disable-next-line class-methods-use-this
   stop() {
+    this.audio.pause();
     console.log('game close');
     // console.log("OnlineGamePresenter");
     this.game.destroy();

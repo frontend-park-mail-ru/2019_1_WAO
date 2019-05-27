@@ -225,7 +225,10 @@ app.delete('/api/session', (req, res) => {
 app.post('/api/users', (req, res) => {
     res = setHeaders(res, setHeadearListOnPage);
     const { nickname } = req.body;
-    const { email } = req.body;
+    let { email } = req.body;
+    if (!email) {
+        email = 'empty';
+    }
     const { password } = req.body;
     const image = default_image;
 

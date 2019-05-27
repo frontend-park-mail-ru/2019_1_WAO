@@ -1,5 +1,6 @@
 @font-face {
   font-family: 'Exo2';
+  font-display: fallback;
   font-weight: normal;
   font-style: normal;
   src: url(/fonts/Exo2-Regular.ttf) format('truetype'),
@@ -21,16 +22,34 @@ a {
   user-select: none;
 }
 
-.common {
-  position: fixed;
-  z-index: -1;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-image: url("../../img/background1.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
+@media (orientation: landscape) {
+  .common {
+    position: fixed;
+    z-index: -1;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../img/background1.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+}
+
+@media (orientation: portrait) {
+  .common {
+    position: fixed;
+    z-index: -1;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../img/background1.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+  }
 }
 
 .offline-notice {
