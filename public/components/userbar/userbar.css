@@ -79,6 +79,7 @@
   color: #ffffff;
   font-size: 24px;
   height: 60%;
+  margin-bottom: 5px;
 }
 .app-actions__label:hover {
   color: #888888;

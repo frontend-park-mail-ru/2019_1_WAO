@@ -6,10 +6,10 @@ const viewData = {
   fields:
     [
       {
-        label: 'Логин',
+        label: 'Логин или Email',
         type: 'text',
         name: 'nickname',
-        placeholder: 'Логин',
+        placeholder: 'Логин/Email',
       },
       {
         label: 'Пароль',

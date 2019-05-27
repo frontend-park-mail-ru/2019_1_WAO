@@ -33,7 +33,13 @@ export default class OfflineGamePresenter extends BasePresenter {
   }
 
   call() {
+    this.audio = new Audio('./sounds/media1.mp3');
+    this.audio.play();
     this.view.render();
+    const [bar1] = document.getElementsByClassName('game-progress__good');
+    const [bar2] = document.getElementsByClassName('game-progress__bad');
+    bar1.style.setProperty('display', 'none', 'important');
+    bar2.style.setProperty('display', 'none', 'important');
     const [canvas] = document.getElementsByClassName('game-view__canvas');
     this.view.canvas = canvas;
     const [scoreField] = document.getElementsByClassName('game-bar__score-value');
@@ -45,6 +51,7 @@ export default class OfflineGamePresenter extends BasePresenter {
 
   // eslint-disable-next-line class-methods-use-this
   stop() {
+    this.audio.pause();
     console.log('game close');
     this.game.destroy();
   }

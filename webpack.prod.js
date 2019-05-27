@@ -73,7 +73,7 @@ module.exports = {
         test: /\.(png|jp(e*)g|svg)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
               name: 'images/[name].[ext]',
             },
@@ -94,6 +94,28 @@ module.exports = {
       {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
+      },
+      {
+        test: /\.mp3$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'sounds/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.ico/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
       },
     ],
   },
