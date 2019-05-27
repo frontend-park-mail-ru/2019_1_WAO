@@ -56,6 +56,8 @@ export default class OnlineGame extends GameCore {
       const msg = JSON.parse(event.data);
       switch (msg.type) {
         case 'init':
+          GlobalBus.trigger('init_players');
+
           this.state.players = {};
           this.state.plates = {};
           this.state.idPhysicBlockCounter = {};
@@ -81,6 +83,7 @@ export default class OnlineGame extends GameCore {
           // Инициализация физики и блоков
           this.physics.setState(this.state);
           this.score.setState(this.state);
+          GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
           setTimeout(
             () => {
               gameBus.trigger('game_start', this.state);
@@ -168,6 +171,7 @@ export default class OnlineGame extends GameCore {
       Player 1 y: ${ this.state.players[1].y }, dy: ${ this.state.players[1].dy };`);
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
+      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
       this.state.commands = [];
     }
     // if (this.state.players[0].y - this.state.players[0].height > this.settings.map.canvasHeight) {
@@ -213,6 +217,7 @@ export default class OnlineGame extends GameCore {
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
+      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
       this.state.commands = [];
 
       // this.scene.setState(this.state);
@@ -252,6 +257,7 @@ export default class OnlineGame extends GameCore {
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
+      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
       this.state.commands = [];
 
       // this.scene.setState(this.state);
