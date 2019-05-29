@@ -78,6 +78,7 @@ export default class SignInModel {
   async makeSignin(body = {}) {
     try {
       const res = await postSignIn(body);
+      // eslint-disable-next-line no-unused-vars
       const status = await checkStatus(res);
       const res1 = await getUser(body.nickname);
       const status1 = await checkStatus(res1);

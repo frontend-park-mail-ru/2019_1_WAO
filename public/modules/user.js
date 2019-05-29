@@ -39,11 +39,11 @@ User.update = async function update() {
   try {
     const res = await getAuth();
     const status = await checkStatus(res);
-    const nickname = await parseJSON(status);
+    const nicknameObj = await parseJSON(status);
     // const { nickname } = nickname0;
-    console.log(`session ok for ${nickname}`);
+    console.log(`session ok for ${nicknameObj.nickname}`);
 
-    const res2 = await getUser(nickname);
+    const res2 = await getUser(nicknameObj.nickname);
     const status2 = await checkStatus(res2);
     const data = await parseJSON(status2);
     console.log('get user ok');
