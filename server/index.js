@@ -201,7 +201,7 @@ const isAuth = (req, res) => {
             image: users[nickname].image,
         };
         // res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
-        res.json(nickname);
+        res.json({ nickname });
     } else {
         return res.status(401).json({ error: 'Не авторизован' });
     }
