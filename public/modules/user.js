@@ -37,7 +37,7 @@ User.reset = function reset() {
   User.image = imageDefaultPath;
   User.isAuth = false;
   // eslint-disable-next-line no-use-before-define
-  setCookie('sessionid', '', {
+  setCookie('session_id', '', {
     expires: -1,
   });
 };
