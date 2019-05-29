@@ -23,6 +23,7 @@ import './img/access.svg';
 import './fonts/Exo2-Regular.ttf';
 import './sounds/media1.mp3';
 import './img/background1.jpg';
+import User from './modules/user';
 
 /**
  * Регистрация Service Worker
@@ -54,6 +55,7 @@ function subscribeGlobalBus() {
       .then(checkStatus)
       .then(() => {
         Router.route('/');
+        User.reset();
         // Router.route('/signin');
       })
       .catch((err) => {
