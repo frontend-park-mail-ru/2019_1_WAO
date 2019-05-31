@@ -1,10 +1,10 @@
 ﻿import Figure from '../../graphics/figure';
 
-export default class Sheep extends Figure {
+export default class Grass extends Figure {
   constructor(ctx, pic) {
     super(ctx);
-    this.width = 50;
-    this.height = 40;
+    this.width = 90;
+    this.height = 15;
     this.pic = pic;
   }
 
@@ -25,15 +25,15 @@ export default class Sheep extends Figure {
     const { ctx } = this;
 
     ctx.translate(this.x, this.y);
-
-    switch (this.animationState) {
-      case 'jumped':
-        this.animationStep = 1;
-        break;
     
-      default:
-        this.animationStep = 0;
-        break;
-    }
+    // switch (this.animationState) {
+    //   case 'droped':
+    //     this.animationStep = 1;
+    //     break;
+    
+    //   default:
+    //     this.animationStep = 0;
+    //     break;
+    // }
   }
 }
