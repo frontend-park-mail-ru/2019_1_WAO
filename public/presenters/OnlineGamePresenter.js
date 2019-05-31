@@ -29,6 +29,7 @@ export default class OnlineGamePresenter extends BasePresenter {
     // this.loader.innerHTML = template();
 
     GlobalBus.on('gap_changed', (gap) => {
+      console.log('gap_changed');
       if (gap >= 100) {
         document.body.style.setProperty('--barGood', `${gap}%`);
         document.body.style.setProperty('--barBad', '0%');
@@ -40,6 +41,7 @@ export default class OnlineGamePresenter extends BasePresenter {
     });
 
     GlobalBus.on('init_players', () => {
+      console.log('Players - init');
       this.loader.style.setProperty('display', 'none', 'important');
     });
   }

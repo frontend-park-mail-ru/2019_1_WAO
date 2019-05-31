@@ -108,11 +108,8 @@ export default class ProfileModel {
       this.eventBus.trigger('show', data);
     } catch (err) {
       const form = document.querySelector('form');
-      form.elements.nickname.value = '';
-      form.elements.email.value = '';
+      form.elements.email.value = User.email;
       form.elements.password.value = '';
-      form.elements.nickname.placeholder = 'НЕВЕРНО';
-      form.elements.email.placeholder = 'НЕВЕРНО';
       form.elements.password.placeholder = 'НЕВЕРНО';
       this.processForm();
     }
