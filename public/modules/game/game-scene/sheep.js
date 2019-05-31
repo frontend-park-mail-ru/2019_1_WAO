@@ -14,7 +14,7 @@ export default class Sheep extends Figure {
   draw() {
     const { ctx } = this;
     ctx.beginPath();
-    ctx.drawImage(this.pic, this.animationStep * this.width, 0, this.width, this.height,
+    ctx.drawImage(this.pic, //this.animationStep * this.width, 0, this.width, this.height,
       -this.width, -this.height, this.width, this.height); // Основное описание картинки без смещения
       
     ctx.closePath();
@@ -26,14 +26,14 @@ export default class Sheep extends Figure {
 
     ctx.translate(this.x, this.y);
 
-    switch (this.animationState) {
-      case 'jumped':
-        this.animationStep = 1;
-        break;
+    // switch (this.animationState) {
+    //   case 'jumped':
+    //     this.animationStep = 1;
+    //     break;
     
-      default:
-        this.animationStep = 0;
-        break;
-    }
+    //   default:
+    //     this.animationStep = 0;
+    //     break;
+    // }
   }
 }
