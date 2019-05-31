@@ -90,7 +90,7 @@ function subscribeGlobalBus() {
  * Точка входа
  */
 function start() {
-  registerSW();
+  // registerSW();
   console.log('Start');
 
   const application = document.getElementById('application');
