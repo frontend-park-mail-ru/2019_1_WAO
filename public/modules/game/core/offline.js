@@ -98,9 +98,9 @@ export default class OfflineGame extends GameCore {
     }
     if (this.state.players[0].y - this.state.players[0].height > this.settings.map.canvasHeight) {
       setTimeout(() => {
-        GlobalBus.trigger('game_score', { score: this.score.score });
+        GlobalBus.trigger('game_score', { score: this.score.scoreCounter() });
         gameBus.trigger('game_finish');
-        gameBus.trigger('game close');
+        // gameBus.trigger('game_close');
       });
     }
   }

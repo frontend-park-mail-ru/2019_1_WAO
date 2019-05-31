@@ -1,0 +1,136 @@
+@import "../common/vars.css";
+
+.profile-form {
+  @media (max-width: 1200px) {
+    margin-top: 130px;
+    max-width: 500px;
+  }
+
+  @media (min-width: 1200px) and (max-width: 1800px) {
+    margin-top: calc(450px - 20vw);
+    max-width: 800px;
+  }
+
+  @media (min-width: 1800px) {
+    margin-top: 5%;
+    max-width: 800px;
+  }
+
+  width: 90%;
+  height: auto;
+  padding: 20px 10px 20px 10px;
+
+  opacity: 0.7;
+  border-radius: 8px;
+  border: solid 1px var(--formColor);
+  background-color: #d8d8d8;
+
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: block;
+}
+
+.profile-card {
+  display: grid;
+
+  @media (max-width: 1200px) {
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas: "image" "labels" "fields" "button";
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-rows: auto;
+    grid-template-columns: 60% 40%;
+    grid-template-areas:
+      "fields image"
+      "button labels";
+  }
+
+  justify-items: center;
+  align-items: center;
+  grid-row-gap: 10px;
+  margin-top: 20px;
+
+  &__fields {
+    grid-area: fields;
+    justify-items: center;
+  }
+
+  &__button {
+    grid-area: button;
+    width: 100%;
+  }
+
+  &__image {
+    grid-area: image;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    &:hover {
+      opacity: 0.5;
+      border-color: #777777;
+      background-color: #AAAAAAAA;
+    }
+
+    &:active {
+      opacity: 0.75;
+      background-color: #99999999;
+      border-color: #99999999;
+    }
+  }
+
+  &__labels {
+    grid-area: labels;
+  }
+
+  &__label {
+    display: block;
+    font-size: 24px;
+    color: #0f8bec;
+  }
+}
+
+.profile-input {
+  padding-left: 15px;
+  width: 360px;
+  height: 45px;
+  opacity: 0.98;
+  border-radius: 8px;
+  border: solid 1px #267ea5;
+  background-color: #d8d8d8;
+  font-size: 60%;
+  margin-top: 20px;
+
+  &:active {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    transition: 0.3s;
+  }
+}
+
+.profile-form__image-input {
+  position: absolute;
+  z-index: 10;
+  margin-top: -180px;
+  margin-left: -90px;
+  opacity: 0;
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  
+  &:hover {
+    color: var(--formColor);
+    opacity: 0.5;
+    border-color: #777777;
+    background-color: #AAAAAAAA;
+  }
+
+  &:active {
+    color: var(--formColor);
+    opacity: 0.75;
+    background-color: #99999999;
+    border-color: #99999999;
+  }
+}

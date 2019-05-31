@@ -25,6 +25,7 @@ app.use(body.json());
 app.use(cookie());
 
 const front_adress = 'https://waojump.tk';
+// const front_adress = 'ttp://127.0.0.1:3001';
 // const front_adress = 'https://wao2019.herokuapp.com';
 const back_adress = 'http://89.208.197.150:8000';
 // const back_adress = 'https://waogame.herokuapp.com';
@@ -200,7 +201,7 @@ const isAuth = (req, res) => {
             image: users[nickname].image,
         };
         // res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
-        res.json(nickname);
+        res.json({ nickname });
     } else {
         return res.status(401).json({ error: 'Не авторизован' });
     }
@@ -224,7 +225,10 @@ app.delete('/api/session', (req, res) => {
 app.post('/api/users', (req, res) => {
     res = setHeaders(res, setHeadearListOnPage);
     const { nickname } = req.body;
-    const { email } = req.body;
+    let { email } = req.body;
+    if (!email) {
+        email = 'empty';
+    }
     const { password } = req.body;
     const image = default_image;
 

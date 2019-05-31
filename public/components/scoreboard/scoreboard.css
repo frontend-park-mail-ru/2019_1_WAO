@@ -12,7 +12,8 @@
     border: solid 1px var(--formColor);
     background-color: #d8d8d8;
     text-align: center;
-    padding: 1%;
+    padding: 2%;
+    font-size: 20px;
   }
 }
 
@@ -29,6 +30,7 @@
     background-color: #d8d8d8;
     text-align: center;
     padding: 20px 40px 20px 40px;
+    font-size: 24px;
   }
 }
 
@@ -45,6 +47,7 @@
     background-color: #d8d8d8;
     text-align: center;
     padding: 20px 40px 20px 40px;
+    font-size: 24px;
   }
 }
 
@@ -53,8 +56,35 @@
   color: #0f8bec;
 }
 
+/*
+@media (max-width: 1200px) {
+  .scoreboard__table {
+    font-size: 18px;
+    margin: 20px 0px 0px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto;
+    grid-row-gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .scoreboard__table {
+    font-size: 24px;
+    margin: 20px 0px 0px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto;
+    grid-row-gap: 20px;
+  }
+}
+*/
+
 .scoreboard__table {
-  font-size: 24px;
   margin: 20px 0px 0px 0px;
   margin-left: auto;
   margin-right: auto;

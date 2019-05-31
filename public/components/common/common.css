@@ -1,5 +1,14 @@
+@font-face {
+  font-family: "Exo2";
+  font-display: fallback;
+  font-weight: normal;
+  font-style: normal;
+  src: url(/fonts/Exo2-Regular.ttf) format("truetype"),
+    url(/fonts/Exo2-Regular.woff) format("woff");
+}
+
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Exo2", sans-serif;
   font-size: 28px;
   outline: none;
 }
@@ -21,6 +30,22 @@ a {
   width: 100%;
   height: 100%;
   background-image: url("../../img/background1.jpg");
-  background-position: center bottom;
+  background-position: center center;
   background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.offline-notice {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #ff0000;
+  color: #ffffff;
+  font-style: bold;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 3px;
 }

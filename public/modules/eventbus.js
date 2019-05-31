@@ -1,49 +1,7 @@
 /**
  * Список событий
  */
-
-export const EVENTS = [
-  'call',
-  'data_req',
-  'ready',
-  'render',
-  'show',
-  'hide',
-  'auth_check',
-  'auth_ok',
-  'auth_bad',
-  'auth_out',
-  'signin_ok',
-  'signin_bad',
-  'signup_ok',
-  'signup_bad',
-  'users_rx',
-  'view_show',
-  'view_hide',
-  'chat_show',
-  'user_show',
-  'view_rend',
-  'users_req',
-  'update_ok',
-  'update_bad',
-  'valid_err',
-  'reset',
-  'url_change',
-  'chat_rx',
-  'game_score',
-];
-
-const GAME_EVENTS = [
-  'game_start',
-  'game_finish',
-  'game_close',
-  'controls_pressed',
-  'state_changed',
-  'left_pressed',
-  'right_pressed',
-  'fire_pressed',
-];
-
+import { EVENTS, GAME_EVENTS } from './events';
 /**
  * Модуль шины событий
  * @class EventBus

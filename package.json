@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server",
     "build": "webpack -w",
+    "build-prod": "webpack --config webpack.prod.js",
     "lint_show": "eslint --ext .js public/",
     "lint_fix": "eslint --fix public/"
   },
@@ -63,13 +64,17 @@
     "hard-source-webpack-plugin": "^0.13.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.12.0",
     "postcss-bem": "^0.4.1",
     "postcss-cli": "^6.1.2",
     "postcss-cssnext": "^3.1.0",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.2",
     "postcss-nesting": "^7.0.0",
+    "sass-loader": "^7.1.0",
+    "ttf-loader": "^1.0.2",
+    "uglifyjs-webpack-plugin": "^2.1.3",
     "url-loader": "^1.1.2",
-    "webpack": "^4.29.6"
+    "webpack": "^4.32.0"
   }
 }

@@ -28,6 +28,19 @@ module.exports = {
         },
       },
       {
+        test: /\.scss$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'sass-loader',
+          options: {
+            includePaths: ['absolute/path/a', 'absolute/path/b'],
+          },
+        }],
+      },
+      {
         test: /\.css$/,
         // use: ['style-loader', 'css-loader'],
         use: [
@@ -60,10 +73,20 @@ module.exports = {
         test: /\.(png|jp(e*)g|svg)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
-              limit: 10,
               name: 'images/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(eot|woff|woff2|ttf|otf)$/,
+        use: [
+          {
+            loader: 'ttf-loader',
+            options: {
+              name: './fonts/[name].[ext]',
             },
           },
         ],
@@ -72,7 +95,32 @@ module.exports = {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
+      {
+        test: /\.mp3$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'sounds/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.ico/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
+  },
+  optimization: {
+    minimize: false,
   },
   plugins: [
     // делает index.html и подключает в него результаты сборки
@@ -97,11 +145,11 @@ module.exports = {
         webpackBin(),
         ['--config', __filename], {
           silent: true,
-        }
+        },
       ),
       // eslint-disable-next-line global-require
       numWorkers: () => require('os').cpus().length,
-      minModules: 10,
+      minModules: 2,
     }),
   ],
 };
