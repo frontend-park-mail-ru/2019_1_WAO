@@ -38,6 +38,10 @@ export default class OnlineGamePresenter extends BasePresenter {
         document.body.style.setProperty('--barBad', `${gap}%`);
       }
     });
+
+    GlobalBus.on('init_players', () => {
+      this.loader.style.setProperty('display', 'none', 'important');
+    });
   }
 
   call() {

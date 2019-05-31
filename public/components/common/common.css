@@ -22,6 +22,10 @@ a {
   user-select: none;
 }
 
+p {
+  user-select: none;
+}
+
 .common {
   position: fixed;
   z-index: -1;
