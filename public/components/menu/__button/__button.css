@@ -18,19 +18,23 @@
 }
 
 .menu-bar__button:hover {
-  background-color: #d8d8d8dd;
-  border-color: rgb(47, 155, 238);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  background-color: #0f8bec;
+  border-color: #0f8bec;
+  box-shadow: 0 0 20px #0f8bec7f;
+  transition: 0.3s;
+}
+
+.menu-bar__button:active {
+  color: #cfcfcf;
+  background-color: #0b548b;
+  border-color: #0b548b;
+  box-shadow: 0 0 20px #0b548b9f;
   transition: 0.3s;
 }
 
 .menu-bar__button:not(hover) {
   transition: 0.6s;
-}
-
-.menu-bar__button:active {
-  color: #ffffff;
-  background-color: #0f8bec;
 }
 
 /*
