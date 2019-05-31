@@ -8,7 +8,9 @@ import BlockPlate from './block';
 import { gameBus } from '../../eventbus';
 
 import Sheep from './sheep';
+import Grass from './grass';
 import * as sheepImage from './sheep.png';
+import * as grassImage from './grass.png';
 
 const grav = 10;
 
@@ -47,8 +49,10 @@ export default class GameScene {
 
     this.state = state;
     // инициализация пластин для рендеринга
+    let grassPicture =  new Image(90, 15);
+    grassPicture.src = grassImage.default;
     Object.values(this.state.plates).forEach((elem) => {
-      const b = new FadingBlock(ctx);
+      const b = new Grass(ctx, grassPicture);
       b.id = this.scene.push(b);
       b.height = 15;
       b.width = 90;
