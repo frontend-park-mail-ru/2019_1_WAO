@@ -48,6 +48,7 @@ export default class OfflineGame extends GameCore {
           idP: 0,
         },
       },
+      myCommandIndex: 0,
       newPlates: {
 
       },
@@ -90,6 +91,7 @@ export default class OfflineGame extends GameCore {
         delay: this.settings.render.delay,
       },
       ];
+      this.state.myCommandIndex = 0;
       this.state = this.physics.engine();
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.scene.addNewPlatesOnCanvas(this.state.newPlates);
@@ -122,6 +124,7 @@ export default class OfflineGame extends GameCore {
         delay: this.settings.render.delay,
       },
       ];
+      this.state.myCommandIndex = 0;
       this.state = this.physics.engine();
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.scene.addNewPlatesOnCanvas(this.state.newPlates);
@@ -129,7 +132,7 @@ export default class OfflineGame extends GameCore {
       }
       this.animation.animate();
       gameBus.trigger('state_changed', this.state);
-      this.score.renderScore();
+      // this.score.renderScore();
       this.state.commands = [];
 
       this.scene.setState(this.state);
@@ -149,6 +152,7 @@ export default class OfflineGame extends GameCore {
         delay: this.settings.render.delay,
       },
       ];
+      this.state.myCommandIndex = 0;
       this.state = this.physics.engine();
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.scene.addNewPlatesOnCanvas(this.state.newPlates);
@@ -156,7 +160,7 @@ export default class OfflineGame extends GameCore {
       }
       this.animation.animate();
       gameBus.trigger('state_changed', this.state);
-      this.score.renderScore();
+      // this.score.renderScore();
       this.state.commands = [];
 
       this.scene.setState(this.state);

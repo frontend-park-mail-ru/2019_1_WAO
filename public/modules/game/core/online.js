@@ -139,6 +139,9 @@ export default class OnlineGame extends GameCore {
     const mapGap = (this.state.plates[Object.values(this.state.plates).length - 1].y - 20) - Object.values(plates)[0].y;
     Object.values(plates).forEach((elem) => {
       elem.y += mapGap;
+      if (this.state.plates[Object.values(this.state.plates).length - 1].dy != 0) {
+        elem.dy = this.settings.player.koefScrollSpeed;
+      }
     });
     return plates;
   }
@@ -162,15 +165,16 @@ export default class OnlineGame extends GameCore {
       }
       this.settings.render.lastFrame = this.settings.render.now;
       //   this.mapController();
-      this.state.commands.unshift({
+      const command = {
         idP: this.state.myIdP,
         direction: '',
         delay: this.settings.render.delay,
-      });
-
+      };
+      this.state.commands.push(command);
+      this.state.myCommandIndex = this.state.commands.length - 1;
       this.socket.send(JSON.stringify({
         type: 'move',
-        payload: this.state.commands[0],
+        payload: command,
       }));
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
@@ -204,22 +208,15 @@ export default class OnlineGame extends GameCore {
       this.settings.render.lastFrame = this.settings.render.now;
       //   this.mapController();
 
-      if (this.state.commands.length === 0) {
-        this.state.commands.push({
+      const command = {
           idP: this.state.myIdP,
           direction: 'LEFT',
           delay: this.settings.render.delay,
-        });
-      } else {
-        this.state.commands.unshift({
-          idP: this.state.myIdP,
-          direction: 'LEFT',
-          delay: this.settings.render.delay,
-        });
-      }
+      };
+      this.state.commands.push(command);
       this.socket.send(JSON.stringify({
         type: 'move',
-        payload: this.state.commands[0],
+        payload: command,
       }));
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
@@ -245,22 +242,15 @@ export default class OnlineGame extends GameCore {
       this.settings.render.lastFrame = this.settings.render.now;
       //   this.mapController();
 
-      if (this.state.commands.length === 0) {
-        this.state.commands.push({
+      const command = {
           idP: this.state.myIdP,
           direction: 'RIGHT',
           delay: this.settings.render.delay,
-        });
-      } else {
-        this.state.commands.unshift({
-          idP: this.state.myIdP,
-          direction: 'RIGHT',
-          delay: this.settings.render.delay,
-        });
-      }
+        };
+        this.state.commands.push(command);
       this.socket.send(JSON.stringify({
         type: 'move',
-        payload: this.state.commands[0],
+        payload: command,
       }));
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
@@ -291,7 +281,6 @@ export default class OnlineGame extends GameCore {
   onGameFinished() {
     this.socket.send(JSON.stringify({
       type: 'lose',
-      // payload: this.state.commands[0],
     }));
     cancelAnimationFrame(this.gameloopRequestId);
     gameBus.trigger('game_close');

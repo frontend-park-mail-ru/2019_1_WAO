@@ -32,37 +32,60 @@ export default class Fizic {
 
   // Обработка коллизий
 
+  // collision(command) {
+  //   const { stateScrollMap } = this;
+  //   const { koefScrollSpeed } = this.settings.player ;
+  //   function playerFalls(player) {
+  //     return player.dy >= 0;
+  //   }
+  //   function playerFallsWithoutScrollingSpeed(player) {
+  //     return (player.dy - koefScrollSpeed) >= 0;
+  //   }
+  //   function mapDoesntScroll() {
+  //     return stateScrollMap === false;
+  //   }
+  //   function playerNextPositionUnderPlate(player, plate) {
+  //     return (player.y + player.dy * command.delay) < (plate.y - 15);
+  //   }
+  //   function playerNextPositionUnderPlateWithoutScroll(player, plate) {
+  //     return (player.y + (player.dy - koefScrollSpeed) * command.delay) < (plate.y - 15);
+  //   }
+
+  //   const player = this.state.players[command.idP];
+  //   const plate = this.selectNearestBlock(player);
+  //   if (Object.getOwnPropertyNames(plate).length === 0) {
+  //     return;
+  //   }
+  //   if ((playerFalls(player) && mapDoesntScroll())
+  //     || (playerFallsWithoutScrollingSpeed(player) && !mapDoesntScroll())) {
+  //     if (((playerFalls(player) && mapDoesntScroll()) && (playerNextPositionUnderPlate(player, plate)))
+  //        || ((playerFallsWithoutScrollingSpeed(player) && !mapDoesntScroll()) && playerNextPositionUnderPlateWithoutScroll(player, plate))) {
+  //       return;
+  //     }
+      
+  //     // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
+  //     if (this.score) {
+  //       this.score.giveCurrentPlate(plate.idPhys);
+  //     }
+  //     player.y = plate.y - 15;
+  //     this.jump(player);
+  //   }
+  // }
+
   collision(command) {
     const { stateScrollMap } = this;
-    const { koefScrollSpeed } = this.settings.player ;
-    function playerFalls(player) {
-      return player.dy >= 0;
-    }
-    function playerFallsWithoutScrollingSpeed(player) {
-      return (player.dy - koefScrollSpeed) >= 0;
-    }
-    function mapDoesntScroll() {
-      return stateScrollMap === false;
-    }
-    function playerNextPositionUnderPlate(player, plate) {
-      return (player.y + player.dy * command.delay) < (plate.y - 15);
-    }
-    function playerNextPositionUnderPlateWithoutScroll(player, plate) {
-      return (player.y + (player.dy - koefScrollSpeed) * command.delay) < (plate.y - 15);
-    }
-
+    const { koefScrollSpeed } = this.settings.player;
     const player = this.state.players[command.idP];
     const plate = this.selectNearestBlock(player);
     if (Object.getOwnPropertyNames(plate).length === 0) {
       return;
     }
-    if ((playerFalls(player) && mapDoesntScroll())
-      || (playerFallsWithoutScrollingSpeed(player) && !mapDoesntScroll())) {
-      if (((playerFalls(player) && mapDoesntScroll()) && (playerNextPositionUnderPlate(player, plate)))
-         || ((playerFallsWithoutScrollingSpeed(player) && !mapDoesntScroll()) && playerNextPositionUnderPlateWithoutScroll(player, plate))) {
+    if (player.dy >= 0 && this.stateScrollMap === false
+    || player.dy - this.koefScrollSpeed >= 0 && this.stateScrollMap === true) {
+      if ((player.dy >= 0 && this.stateScrollMap === false) && (player.y + player.dy * command.delay < plate.y - 15)
+    || (player.dy - this.koefScrollSpeed >= 0 && this.stateScrollMap === true) && (player.y + (player.dy - this.koefScrollSpeed) * command.delay < plate.y - 15)) {
         return;
       }
-      
       // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
       if (player.idP === this.state.myIdP) {
         if (this.score) {
@@ -73,7 +96,6 @@ export default class Fizic {
       this.jump(player);
     }
   }
-
   // Вспомогательная функция для функции коллизии
   // Ищет ближайший по игру блок под игроком
   selectNearestBlock(player) {
@@ -232,7 +254,7 @@ export default class Fizic {
       this.move(command);
     });
     if (Object.values(this.state.plates)[0].dy !== 0) {
-      this.scrollMap(this.state.commands[0].delay);
+      this.scrollMap(this.state.commands[this.state.myCommandIndex].delay);
     }
     // Отладка
     // if (this.state.otladka === true) {
@@ -244,7 +266,6 @@ export default class Fizic {
     //   }
     //   this.state.otladka = false;
     // }
-    // this.state.commands = [];
     return this.state;
   }
 }
