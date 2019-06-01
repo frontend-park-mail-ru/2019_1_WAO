@@ -148,6 +148,30 @@
   width: 80vw;
   height: auto;
   text-align: center;
-  vertical-align: center;
   color: #FFFFFF;
+}
+
+.sound {
+  position: fixed;
+  z-index: 2000;
+  top: 2%;
+  left: 5%;
+  background: url(../../img/iconmonstr-sound-thin.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 70px;
+}
+
+.sound_disable {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-70%, -50%);
+  transform: rotate(30deg);
+  width: 80px;
+  height: 7px;
+  background-color: #000000;
+  border-radius: 4px;
 }
