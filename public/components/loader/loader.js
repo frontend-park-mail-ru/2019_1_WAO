@@ -7,7 +7,7 @@ export default class Loader {
 
     this.loaderText = document.createElement('p');
     this.loaderText.id = 'loadingText';
-    this.loaderText.textContent = 'Ждем игроков';
+    this.loaderText.textContent = 'Ждем игрока';
 
     this.loader.appendChild(this.loaderText);
     parent.appendChild(this.loader);
