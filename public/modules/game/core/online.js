@@ -83,7 +83,7 @@ export default class OnlineGame extends GameCore {
           // Инициализация физики и блоков
           this.physics.setState(this.state);
           this.score.setState(this.state);
-          GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+          GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
           setTimeout(
             () => {
               gameBus.trigger('game_start', this.state);
