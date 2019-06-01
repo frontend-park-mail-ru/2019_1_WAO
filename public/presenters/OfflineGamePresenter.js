@@ -22,20 +22,23 @@ export default class OfflineGamePresenter extends BasePresenter {
     super(view, {}, eventBus);
     // this.appEl = appEl;
 
-    GlobalBus.on('gap_changed', (gap) => {
-      if (gap >= 100) {
-        document.body.style.setProperty('--barGood', `${gap}%`);
-        document.body.style.setProperty('--barBad', '0%');
-      } else {
-        gap *= -1;
-        document.body.style.setProperty('--barGood', '0%');
-        document.body.style.setProperty('--barBad', `${gap}%`);
-      }
-    });
+    // GlobalBus.on('gap_changed', (gap) => {
+    //   if (gap >= 100) {
+    //     document.body.style.setProperty('--barGood', `${gap}%`);
+    //     document.body.style.setProperty('--barBad', '0%');
+    //   } else {
+    //     gap *= -1;
+    //     document.body.style.setProperty('--barGood', '0%');
+    //     document.body.style.setProperty('--barBad', `${gap}%`);
+    //   }
+    // });
   }
 
   call() {
-    this.audio = new Audio('./sounds/media1.mp3');
+    let rand = 0.5 + 3 * Math.random();
+    rand = Math.round(rand);
+
+    this.audio = new Audio(`./sounds/media${rand}.mp3`);
     this.audio.play();
     this.view.render();
     // this.loader.show();
