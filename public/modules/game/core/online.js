@@ -86,7 +86,7 @@ export default class OnlineGame extends GameCore {
           this.physics.setState(this.state);
           this.score.setState(this.state);
           this.animation.getStateAndIndex(this.state, this.scene.giveIndex());
-          GlobalBus.trigger('gap_changed', #progressBarCounter());
+          GlobalBus.trigger('gap_changed', this.progressBarCounter());
           setTimeout(
             () => {
               gameBus.trigger('game_start', this.state);
@@ -143,13 +143,13 @@ export default class OnlineGame extends GameCore {
     return plates;
   }
 
-  #progressBarCounter() {
+  progressBarCounter() {
     if (this.state.myIdP === 0) {
-      return (this.state.players[0].y - this.state.players[1].y) / 1400 * 100;
-    } else {
+      console.log((this.state.players[1].y - this.state.players[0].y) / 1400 * 100);
       return (this.state.players[1].y - this.state.players[0].y) / 1400 * 100;
     }
-    
+    console.log((this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+    return (this.state.players[0].y - this.state.players[1].y) / 1400 * 100;    
   }
 
   gameloop() {
@@ -184,7 +184,7 @@ export default class OnlineGame extends GameCore {
       // Player 1 y: ${ this.state.players[1].y }, dy: ${ this.state.players[1].dy };`);
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', #progressBarCounter());
+      GlobalBus.trigger('gap_changed', this.progressBarCounter());
       this.state.commands = [];
     }
     // if (this.state.players[0].y - this.state.players[0].height > this.settings.map.canvasHeight) {
@@ -231,7 +231,7 @@ export default class OnlineGame extends GameCore {
       this.animation.animate();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed',  #progressBarCounter());
+      GlobalBus.trigger('gap_changed',  this.progressBarCounter());
       this.state.commands = [];
 
       // this.scene.setState(this.state);
@@ -272,7 +272,7 @@ export default class OnlineGame extends GameCore {
       this.animation.animate();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed',  #progressBarCounter());
+      GlobalBus.trigger('gap_changed', this.progressBarCounter());
       this.state.commands = [];
 
       // this.scene.setState(this.state);
