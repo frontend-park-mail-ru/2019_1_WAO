@@ -52,6 +52,7 @@ export default class OfflineGame extends GameCore {
 
       },
     };
+    this.state.myCommandIndex = 0;
     this.state.myIdP = 0;
     this.state.idPhysicBlockCounter = {};
     this.state.idPhysicBlockCounter.idPhys = 0;
@@ -90,6 +91,7 @@ export default class OfflineGame extends GameCore {
         delay: this.settings.render.delay,
       },
       ];
+      this.state.myCommandIndex = 0;
       this.state = this.physics.engine();
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.scene.addNewPlatesOnCanvas(this.state.newPlates);
@@ -122,6 +124,7 @@ export default class OfflineGame extends GameCore {
         delay: this.settings.render.delay,
       },
       ];
+      this.state.myCommandIndex = 0;
       this.state = this.physics.engine();
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.scene.addNewPlatesOnCanvas(this.state.newPlates);
@@ -149,6 +152,7 @@ export default class OfflineGame extends GameCore {
         delay: this.settings.render.delay,
       },
       ];
+      this.state.myCommandIndex = 0;
       this.state = this.physics.engine();
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.scene.addNewPlatesOnCanvas(this.state.newPlates);
