@@ -1,6 +1,7 @@
 import BaseView from './BaseView';
 import template from '../components/menu/menu.hbs';
 import '../components/menu/menu.scss';
+import '../components/project-title/project-title.scss';
 
 const viewData = {
   menuButtons: [

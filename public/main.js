@@ -14,6 +14,7 @@ import OnlineGamePresenter from './presenters/OnlineGamePresenter';
 import PresentationPresenter from './presenters/PresentationPresenter';
 import ChatPresenter from './presenters/ChatPresenter';
 import ResultBoardPresenter from './presenters/ResultBoardPresenter';
+import OAuthPresenter from './presenters/OAuthPresenter';
 
 import './favicon.ico';
 import './img/user.png';
@@ -22,6 +23,8 @@ import './img/menu.png';
 import './img/access.svg';
 import './fonts/Exo2-Regular.ttf';
 import './sounds/media1.mp3';
+import './sounds/media2.mp3';
+import './sounds/media3.mp3';
 import './img/background1.jpg';
 import User from './modules/user';
 
@@ -123,6 +126,7 @@ function start() {
   Router.add('/show', new PresentationPresenter([appEl]));
   Router.add('/chat', new ChatPresenter(GlobalBus, appEl));
   Router.add('/resultboard', new ResultBoardPresenter([appEl]));
+  Router.add('/oauth', new OAuthPresenter());
 
   subscribeGlobalBus();
 

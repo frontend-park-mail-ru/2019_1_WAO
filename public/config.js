@@ -1,7 +1,7 @@
 const settings = {
   prefix: 'http://',
   chat: {
-    address: 'waojump.tk',
+    address: '127.0.0.1:3000',
   },
   backend: {
     address: '192.168.200.86:3000',

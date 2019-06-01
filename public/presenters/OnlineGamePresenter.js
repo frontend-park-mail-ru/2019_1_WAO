@@ -4,6 +4,7 @@ import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
 import User from '../modules/user';
 import BasePresenter from './BasePresenter';
+import Loader from '../components/loader/loader';
 
 /**
  * Представитель Игры
@@ -20,25 +21,47 @@ export default class OnlineGamePresenter extends BasePresenter {
     const eventBus = new EventBus();
     const view = new GameView(appEl, eventBus);
     super(view, {}, eventBus);
+    this.appEl = appEl;
+
+    // this.appEl = appEl;
+    // this.loader = document.createElement('div');
+    // this.appEl.appendClild(this.loader);
+    // this.loader.innerHTML = template();
 
     GlobalBus.on('gap_changed', (gap) => {
-      if (gap >= 100) {
-        document.body.style.setProperty('--barGood', `${gap}%`);
-        document.body.style.setProperty('--barBad', '0%');
+      console.log('gap_changed', gap);
+      if (gap >= 0) {
+        if (gap > 100) {
+          gap = 100;
+        }
+        document.documentElement.style.setProperty('--barGood', `${gap}%`);
+        document.documentElement.style.setProperty('--barBad', '0%');
       } else {
         gap *= -1;
-        document.body.style.setProperty('--barGood', '0%');
-        document.body.style.setProperty('--barBad', `${gap}%`);
+        if (gap > 100) {
+          gap = 100;
+        }
+        document.documentElement.style.setProperty('--barGood', '0%');
+        document.documentElement.style.setProperty('--barBad', `${gap}%`);
       }
+    });
+
+    GlobalBus.on('init_players', () => {
+      console.log('Players - init');
+      this.loader.loader.style.setProperty('display', 'none', 'important');
     });
   }
 
-
   call() {
-    this.audio = new Audio('./sounds/media1.mp3');
+    let rand = 0.5 + 3 * Math.random();
+    rand = Math.round(rand);
+    this.audio = new Audio(`./sounds/media${rand}.mp3`);
     this.audio.play();
     if (User.isAuth) {
       this.view.render();
+
+      this.loader = new Loader(this.appEl);
+
       const [canvas] = document.getElementsByClassName('game-view__canvas');
       this.view.canvas = canvas;
       const [scoreField] = document.getElementsByClassName('game-bar__score-value');
