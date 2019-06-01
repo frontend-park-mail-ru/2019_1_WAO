@@ -27,17 +27,16 @@ export default class OnlineGamePresenter extends BasePresenter {
     // this.loader = document.createElement('div');
     // this.appEl.appendClild(this.loader);
     // this.loader.innerHTML = template();
-    this.barEl = document.documentElement;
 
     GlobalBus.on('gap_changed', (gap) => {
       console.log('gap_changed', gap);
-      if (gap >= 100) {
-        this.barEl.style.setProperty('--barGood', `${gap}%`);
-        this.barEl.style.setProperty('--barBad', '0%');
+      if (gap >= 0) {
+        document.documentElement.style.setProperty('--barGood', `${gap}%`);
+        document.documentElement.style.setProperty('--barBad', '0%');
       } else {
         gap *= -1;
-        this.barEl.style.setProperty('--barGood', '0%');
-        this.barEl.style.setProperty('--barBad', `${gap}%`);
+        document.documentElement.style.setProperty('--barGood', '0%');
+        document.documentElement.style.setProperty('--barBad', `${gap}%`);
       }
     });
 
