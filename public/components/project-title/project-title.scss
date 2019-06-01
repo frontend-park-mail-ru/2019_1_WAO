@@ -17,7 +17,8 @@
 
   transform: translate(-50%);
   // background: linear-gradient(to right, #FFF 10%, #D55597 20%, #FFF 30%);
-  background: linear-gradient(to right, #FFF 10%, var(--mainBlueColor) 20%, #FFF 30%);
+  // background: linear-gradient(to right, #FFF 10%, var(--mainBlueColor) 20%, #FFF 30%);
+  background: linear-gradient(to right, #FFF 10%, #1f404f 20%, #FFF 30%);
   background-size: 200% auto; 
   color: #000;
   background-clip: text;

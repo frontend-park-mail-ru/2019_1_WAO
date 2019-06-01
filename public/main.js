@@ -22,6 +22,8 @@ import './img/menu.png';
 import './img/access.svg';
 import './fonts/Exo2-Regular.ttf';
 import './sounds/media1.mp3';
+import './sounds/media2.mp3';
+import './sounds/media3.mp3';
 import './img/background1.jpg';
 import User from './modules/user';
 

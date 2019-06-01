@@ -42,7 +42,7 @@ export default class OnlineGamePresenter extends BasePresenter {
 
     GlobalBus.on('init_players', () => {
       console.log('Players - init');
-      this.loader.style.setProperty('display', 'none', 'important');
+      this.loader.loader.style.setProperty('display', 'none', 'important');
     });
   }
 
