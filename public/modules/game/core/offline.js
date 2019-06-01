@@ -31,7 +31,7 @@ export default class OfflineGame extends GameCore {
     this.score = new Score(this.state, scorePlace);
     // Физический контроллер игры
     this.physics = new Physics(this.state, scene.giveCanvas(), this.score, this.settings);
-    this.animation = new Animator(this.state, this.scene.giveIndex());
+    this.animation = new Animator(this.state, scene.giveIndex());
   }
 
   start() {

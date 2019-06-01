@@ -10,6 +10,7 @@ import { gameBus } from '../../eventbus';
 import Sheep from './sheep';
 import Grass from './grass';
 import * as sheepImage from './testAnimation.png';
+import * as anotherSheepImage from './testAnimationAnotherPlayer.png';
 import * as grassImage from './grass.png';
 
 const grav = 10;
@@ -49,7 +50,7 @@ export default class GameScene {
 
     this.state = state;
     // инициализация пластин для рендеринга
-    let grassPicture =  new Image(90, 15);
+    const grassPicture =  new Image(90, 15);
     grassPicture.src = grassImage.default;
     Object.values(this.state.plates).forEach((elem) => {
       const b = new Grass(ctx, grassPicture);
@@ -63,17 +64,29 @@ export default class GameScene {
     });
 
     // инициализация игроков для рендеринга
-    let sheepPicture =  new Image(50, 40);
+    const sheepPicture =  new Image(50, 40);
     sheepPicture.src = sheepImage.default;
+    const anotherSheepPicture =  new Image(50, 40);
+    anotherSheepPicture.src = anotherSheepImage.default;
     this.local.players = {};
     Object.values(this.state.players).forEach((Lplayer) => {
-      const player = new Sheep(ctx, sheepPicture);
-      player.x = Lplayer.x;
-      player.y = Lplayer.y;
-      player.dx = Lplayer.dx;
-      player.id = this.scene.push(player);
-      player.idP = Lplayer.idP;
-      this.local.players[Lplayer.idP] = player;
+      if (Lplayer.idP === this.state.myIdP) {
+        const player = new Sheep(ctx, sheepPicture);
+        player.x = Lplayer.x;
+        player.y = Lplayer.y;
+        player.dx = Lplayer.dx;
+        player.id = this.scene.push(player);
+        player.idP = Lplayer.idP;
+        this.local.players[Lplayer.idP] = player;
+      } else {
+        const player = new Sheep(ctx, anotherSheepPicture);
+        player.x = Lplayer.x;
+        player.y = Lplayer.y;
+        player.dx = Lplayer.dx;
+        player.id = this.scene.push(player);
+        player.idP = Lplayer.idP;
+        this.local.players[Lplayer.idP] = player;
+      }
     });
   }
 
@@ -91,7 +104,7 @@ export default class GameScene {
 
   addNewPlatesOnCanvas(plates) {
     const { ctx } = this;
-    let grassPicture =  new Image(90, 15);
+    const grassPicture =  new Image(90, 15);
     grassPicture.src = grassImage.default;
     Object.values(plates).forEach((elem) => {
       const b = new Grass(ctx, grassPicture);

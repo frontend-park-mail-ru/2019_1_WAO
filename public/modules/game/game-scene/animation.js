@@ -19,12 +19,13 @@ export default class Animator {
         direction: command.direction,
       };
     });
+    console.log(playersDurations);
     Object.values(playersDurations).forEach((playerCommand) => {
       const player = this.state.players[playerCommand.idP];
       switch (playerCommand.direction) {
         case '':
           if (player.dy < 0) {
-            // console.log('# jump', playerCommand.direction);
+            console.log('# jump', playerCommand.direction);
             this.index.players[playerCommand.idP].animationState = 'jump';
           } else {
             // console.log('# fall', playerCommand.direction);

@@ -4,10 +4,10 @@ const settings = {
     address: 'waojump.tk',
   },
   backend: {
-    address: '127.0.0.1:3000',
+    address: '192.168.200.86:3000',
   },
   game: {
-    address: 'waojump.tk',
+    address: '192.168.200.34:8080',
     prefix: 'ws',
   },
 };
