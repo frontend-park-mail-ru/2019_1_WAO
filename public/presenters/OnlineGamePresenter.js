@@ -27,16 +27,17 @@ export default class OnlineGamePresenter extends BasePresenter {
     // this.loader = document.createElement('div');
     // this.appEl.appendClild(this.loader);
     // this.loader.innerHTML = template();
+    this.barEl = document.documentElement;
 
     GlobalBus.on('gap_changed', (gap) => {
-      console.log('gap_changed');
+      console.log('gap_changed', gap);
       if (gap >= 100) {
-        document.body.style.setProperty('--barGood', `${gap}%`);
-        document.body.style.setProperty('--barBad', '0%');
+        this.barEl.style.setProperty('--barGood', `${gap}%`);
+        this.barEl.style.setProperty('--barBad', '0%');
       } else {
         gap *= -1;
-        document.body.style.setProperty('--barGood', '0%');
-        document.body.style.setProperty('--barBad', `${gap}%`);
+        this.barEl.style.setProperty('--barGood', '0%');
+        this.barEl.style.setProperty('--barBad', `${gap}%`);
       }
     });
 
@@ -47,7 +48,9 @@ export default class OnlineGamePresenter extends BasePresenter {
   }
 
   call() {
-    this.audio = new Audio('./sounds/media1.mp3');
+    let rand = 0.5 + 3 * Math.random();
+    rand = Math.round(rand);
+    this.audio = new Audio(`./sounds/media${rand}.mp3`);
     this.audio.play();
     if (User.isAuth) {
       this.view.render();
