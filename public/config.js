@@ -7,7 +7,7 @@ const settings = {
     address: '127.0.0.1:3000',
   },
   game: {
-    address: 'waojump.tk',
+    address: '127.0.0.1:8080',
     prefix: 'ws',
   },
 };
