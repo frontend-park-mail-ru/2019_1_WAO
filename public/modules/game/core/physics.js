@@ -64,8 +64,10 @@ export default class Fizic {
       }
       
       // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
-      if (this.score) {
-        this.score.giveCurrentPlate(plate.idPhys);
+      if (player.idP === this.state.myIdP) {
+        if (this.score) {
+          this.score.giveCurrentPlate(plate.idPhys);
+        }
       }
       player.y = plate.y - 15;
       this.jump(player);
