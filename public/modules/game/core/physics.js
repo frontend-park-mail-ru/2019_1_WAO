@@ -242,7 +242,7 @@ export default class Fizic {
     //   }
     //   this.state.otladka = false;
     // }
-    this.state.commands = [];
+    // this.state.commands = [];
     return this.state;
   }
 }

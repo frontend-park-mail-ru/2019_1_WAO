@@ -9,7 +9,7 @@ import { gameBus } from '../../eventbus';
 
 import Sheep from './sheep';
 import Grass from './grass';
-import * as sheepImage from './sheep.png';
+import * as sheepImage from './testAnimation.png';
 import * as grassImage from './grass.png';
 
 const grav = 10;
@@ -81,14 +81,20 @@ export default class GameScene {
     return this.canvas;
   }
 
+  giveIndex() {
+    return this.local;
+  }
+
   deletePlayer(id) {
     this.scene.remove(this.local.players[id]);
   }
 
   addNewPlatesOnCanvas(plates) {
     const { ctx } = this;
+    let grassPicture =  new Image(90, 15);
+    grassPicture.src = grassImage.default;
     Object.values(plates).forEach((elem) => {
-      const b = new FadingBlock(ctx);
+      const b = new Grass(ctx, grassPicture);
       b.id = this.scene.push(b);
       b.height = 15;
       b.width = 90;
