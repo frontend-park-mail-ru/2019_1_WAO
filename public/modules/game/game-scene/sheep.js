@@ -29,7 +29,7 @@ export default class Sheep extends Figure {
     const { ctx } = this;
 
     ctx.translate(this.x, this.y);
-
+    // console.log("this.animationState: ", this.animationState);
     switch (this.animationState) {
       case 'jump':
         // console.log('jump');

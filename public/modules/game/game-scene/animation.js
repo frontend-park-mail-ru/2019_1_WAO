@@ -19,6 +19,7 @@ export default class Animator {
         direction: command.direction,
       };
     });
+    // console.log(playersDurations);
     Object.values(playersDurations).forEach((playerCommand) => {
       const player = this.state.players[playerCommand.idP];
       switch (playerCommand.direction) {

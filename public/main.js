@@ -14,6 +14,7 @@ import OnlineGamePresenter from './presenters/OnlineGamePresenter';
 import PresentationPresenter from './presenters/PresentationPresenter';
 import ChatPresenter from './presenters/ChatPresenter';
 import ResultBoardPresenter from './presenters/ResultBoardPresenter';
+import OAuthPresenter from './presenters/OAuthPresenter';
 
 import './favicon.ico';
 import './img/user.png';
@@ -125,6 +126,7 @@ function start() {
   Router.add('/show', new PresentationPresenter([appEl]));
   Router.add('/chat', new ChatPresenter(GlobalBus, appEl));
   Router.add('/resultboard', new ResultBoardPresenter([appEl]));
+  Router.add('/oauth', new OAuthPresenter());
 
   subscribeGlobalBus();
 

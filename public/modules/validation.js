@@ -4,11 +4,8 @@
  * @param {Array<String>} errList
  */
 export function isCorrectNickname(nickname = '') {
-  if (nickname.length < 4) {
-    return { status: false, err: 'Не короче 4 символов' };
-  }
-  if (!nickname.match(/^\w+$/)) {
-    return { status: false, err: 'Латиницей' };
+  if (!nickname.match(/^[a-zA-Z][a-zA-Z0-9_.,-]{4,14}$/)) {
+    return { status: false, err: ' Латиница и цифры. Символов 4-15' };
   }
   return { status: true, err: '' };
 }

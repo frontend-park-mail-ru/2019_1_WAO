@@ -8,6 +8,7 @@ import Score from '../score';
 
 import { gameConfig } from '../gameConfig';
 import { settings } from '../../../config';
+import Animator from '../game-scene/animation';
 
 export default class OnlineGame extends GameCore {
   constructor(controller, scene, scorePlace) {
@@ -32,6 +33,7 @@ export default class OnlineGame extends GameCore {
     // Физический контроллер игры
     this.multiplayer = true;
     this.physics = new Physics(this.state, scene.giveCanvas(), this.score, this.settings, this.multiplayer);
+    this.animation = new Animator(this.state, scene.giveIndex());
     // Переменные для корректной отрисовки и анимации
     this.settings.render.now = performance.now();
     this.state.newPlates = {};
@@ -83,7 +85,8 @@ export default class OnlineGame extends GameCore {
           // Инициализация физики и блоков
           this.physics.setState(this.state);
           this.score.setState(this.state);
-          GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+          this.animation.getStateAndIndex(this.state, this.scene.giveIndex());
+          GlobalBus.trigger('gap_changed', this.progressBarCounter());
           setTimeout(
             () => {
               gameBus.trigger('game_start', this.state);
@@ -111,10 +114,15 @@ export default class OnlineGame extends GameCore {
           });
           break;
         case 'lose':
-          this.scene.deletePlayer(msg.payload);
+          this.scene.deletePlayer(msg.payload.idP);
           break;
         case 'endgame':
-          GlobalBus.trigger('game_score', { score: msg.payload });
+          GlobalBus.trigger('game_score', { score: msg.payload.score });
+          gameBus.trigger('game_finish');
+          gameBus.trigger('game close');
+          break;
+        case 'win':
+          GlobalBus.trigger('game_score', { score: msg.payload.score });
           gameBus.trigger('game_finish');
           gameBus.trigger('game close');
           break;
@@ -136,8 +144,20 @@ export default class OnlineGame extends GameCore {
     const mapGap = (this.state.plates[Object.values(this.state.plates).length - 1].y - 20) - Object.values(plates)[0].y;
     Object.values(plates).forEach((elem) => {
       elem.y += mapGap;
+      if (this.state.plates[Object.values(this.state.plates).length - 1].dy != 0) {
+        elem.dy = this.settings.player.koefScrollSpeed;
+      }
     });
     return plates;
+  }
+
+  progressBarCounter() {
+    if (this.state.myIdP === 0) {
+      console.log((this.state.players[1].y - this.state.players[0].y) / 1400 * 100);
+      return (this.state.players[1].y - this.state.players[0].y) / 1400 * 100;
+    }
+    console.log((this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+    return (this.state.players[0].y - this.state.players[1].y) / 1400 * 100;
   }
 
   gameloop() {
@@ -150,15 +170,17 @@ export default class OnlineGame extends GameCore {
       }
       this.settings.render.lastFrame = this.settings.render.now;
       //   this.mapController();
-      this.state.commands.unshift({
+      const command = {
         idP: this.state.myIdP,
         direction: '',
         delay: this.settings.render.delay,
-      });
+      };
+      this.state.commands.push(command);
+      this.state.myCommandIndex = this.state.commands.length - 1;
 
       this.socket.send(JSON.stringify({
         type: 'move',
-        payload: this.state.commands[0],
+        payload: command,
       }));
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
@@ -167,11 +189,12 @@ export default class OnlineGame extends GameCore {
         this.state.newPlates = {};
       }
       this.state = this.physics.engine();
+      this.animation.animate();
       // console.log(`Player 0 y: ${ this.state.players[0].y }, dy: ${ this.state.players[0].dy };\n
       // Player 1 y: ${ this.state.players[1].y }, dy: ${ this.state.players[1].dy };`);
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+      GlobalBus.trigger('gap_changed', this.progressBarCounter());
       this.state.commands = [];
     }
     // if (this.state.players[0].y - this.state.players[0].height > this.settings.map.canvasHeight) {
@@ -190,23 +213,17 @@ export default class OnlineGame extends GameCore {
       this.settings.render.delay = this.settings.render.now - this.settings.render.lastFrame;
       this.settings.render.lastFrame = this.settings.render.now;
       //   this.mapController();
+      const command = {
+        idP: this.state.myIdP,
+        direction: 'LEFT',
+        delay: this.settings.render.delay,
+      };
+      this.state.commands.push(command);
+      this.state.myCommandIndex = this.state.commands.length - 1;
 
-      if (this.state.commands.length === 0) {
-        this.state.commands.push({
-          idP: this.state.myIdP,
-          direction: 'LEFT',
-          delay: this.settings.render.delay,
-        });
-      } else {
-        this.state.commands.unshift({
-          idP: this.state.myIdP,
-          direction: 'LEFT',
-          delay: this.settings.render.delay,
-        });
-      }
       this.socket.send(JSON.stringify({
         type: 'move',
-        payload: this.state.commands[0],
+        payload: command,
       }));
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
@@ -215,9 +232,10 @@ export default class OnlineGame extends GameCore {
         this.state.newPlates = {};
       }
       this.state = this.physics.engine();
+      this.animation.animate();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+      GlobalBus.trigger('gap_changed',  this.progressBarCounter());
       this.state.commands = [];
 
       // this.scene.setState(this.state);
@@ -231,22 +249,17 @@ export default class OnlineGame extends GameCore {
       this.settings.render.lastFrame = this.settings.render.now;
       //   this.mapController();
 
-      if (this.state.commands.length === 0) {
-        this.state.commands.push({
-          idP: this.state.myIdP,
-          direction: 'RIGHT',
-          delay: this.settings.render.delay,
-        });
-      } else {
-        this.state.commands.unshift({
-          idP: this.state.myIdP,
-          direction: 'RIGHT',
-          delay: this.settings.render.delay,
-        });
-      }
+      const command = {
+        idP: this.state.myIdP,
+        direction: 'RIGHT',
+        delay: this.settings.render.delay,
+      };
+      this.state.commands.push(command);
+      this.state.myCommandIndex = this.state.commands.length - 1;
+
       this.socket.send(JSON.stringify({
         type: 'move',
-        payload: this.state.commands[0],
+        payload: command,
       }));
       if (Object.getOwnPropertyNames(this.state.newPlates).length !== 0) {
         this.state.newPlates = this.fixedBlocksCoordinate(this.state.newPlates);
@@ -255,9 +268,10 @@ export default class OnlineGame extends GameCore {
         this.state.newPlates = {};
       }
       this.state = this.physics.engine();
+      this.animation.animate();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+      GlobalBus.trigger('gap_changed', this.progressBarCounter());
       this.state.commands = [];
 
       // this.scene.setState(this.state);

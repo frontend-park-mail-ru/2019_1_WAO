@@ -15,6 +15,11 @@
     font-size: 100px;
   }
 
+  @media (max-height: 800px) {
+    top: 1%;
+    font-size: 72px;
+  }
+
   transform: translate(-50%);
   // background: linear-gradient(to right, #FFF 10%, #D55597 20%, #FFF 30%);
   // background: linear-gradient(to right, #FFF 10%, var(--mainBlueColor) 20%, #FFF 30%);

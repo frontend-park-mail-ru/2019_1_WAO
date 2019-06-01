@@ -32,6 +32,7 @@ export default class OfflineGamePresenter extends BasePresenter {
     //     document.body.style.setProperty('--barBad', `${gap}%`);
     //   }
     // });
+    this.soundActive = true;
   }
 
   call() {
@@ -39,7 +40,9 @@ export default class OfflineGamePresenter extends BasePresenter {
     rand = Math.round(rand);
     this.audio = new Audio(`./sounds/media${rand}.mp3`);
     this.audio.play();
+    this.soundActive = true;
     this.view.render();
+    this.checkMobile();
     // this.loader.show();
     // this.loader = new Loader(this.appEl);
 
@@ -54,12 +57,48 @@ export default class OfflineGamePresenter extends BasePresenter {
     document.body.style.setProperty('--barBad', '0%');
     this.game = new Game(GAME_MODES.OFFLINE, this.view.canvas, scoreField);
     this.game.start();
+    this.waitAction();
   }
 
   // eslint-disable-next-line class-methods-use-this
   stop() {
     this.audio.pause();
+    this.soundActive = false;
     console.log('game close');
     this.game.destroy();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  checkMobile() {
+    const [block] = document.getElementsByClassName('block-content');
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+      console.log('mobile');
+      block.style.display = 'block';
+    } else {
+      console.log('desktop');
+      block.style.display = 'none';
+    }
+  }
+
+  waitAction() {
+    const buttons = document.getElementsByClassName('sound');
+    if (buttons.length === 0) {
+      return;
+    }
+    const [buttonOut] = buttons;
+    buttonOut.addEventListener('click', (event) => {
+      event.preventDefault();
+      const [block] = buttonOut.getElementsByClassName('sound_disable');
+      if (this.soundActive) {
+        this.audio.pause();
+        // buttonOut.classList.add('sound_disable');
+        block.style.display = 'block';
+      } else {
+        this.audio.play();
+        // buttonOut.classList.remove('sound_disable');
+        block.style.display = 'none';
+      }
+      this.soundActive = !this.soundActive;
+    });
   }
 }

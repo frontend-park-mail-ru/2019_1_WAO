@@ -135,3 +135,43 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
+.block-content {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  background-color: #1f404fbf;
+  padding: 10px;
+  width: 80vw;
+  height: auto;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.sound {
+  position: fixed;
+  z-index: 2000;
+  top: 2%;
+  left: 5%;
+  background: url(../../img/iconmonstr-sound-thin.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 70px;
+}
+
+.sound_disable {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-70%, -50%);
+  transform: rotate(30deg);
+  width: 80px;
+  height: 7px;
+  background-color: #000000;
+  border-radius: 4px;
+}
