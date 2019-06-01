@@ -40,6 +40,9 @@ User.reset = function reset() {
   setCookie('session_id', '', {
     expires: -1,
   });
+  setCookie('sessionid', '', {
+    expires: -1,
+  });
 };
 
 User.update = async function update() {

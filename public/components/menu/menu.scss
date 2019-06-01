@@ -1,31 +1,89 @@
 @import "__button/__button.css";
+@import '../common/vars.css';
 
 .menu-bar {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   @media (max-width: 1200px) {
-    margin-top: 130px;
+    // margin-top: 150px;
+    // top: 150px;
     font-size: 24px;
     width: 85%;
   }
 
   @media (min-width: 1200px) and (max-width: 1800px) {
-    margin-top: calc(450px - 20vw);
+    // margin-top: calc(450px - 20vw);
     font-size: 28px;
     width: 300px;
   }
 
   @media (min-width: 1800px) {
-    margin-top: calc(50vh - 250px);
+    // margin-top: calc(50vh - 250px);
     font-size: 30px;
     width: 350px;
   }
 
   display: grid;
-  grid-template-rows: repeat(7, 1fr);
-  grid-gap: 8px;
+  grid-template-rows: auto;
+  grid-gap: 10px;
   text-align: center;
-  vertical-align: middle;
+  // vertical-align: middle;
   user-select: none;
   margin-left: auto;
   margin-right: auto;
+
+  animation: menuShiver 0.1s linear infinite;
 }
+
+@keyframes menuShiver {
+  0% {
+    transform: translate(-50.3%, -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+// @media (min-width: 1800px) {
+//   .svistelka-perdelka {
+//     position: fixed;
+//     left: 400px;
+//     bottom: 100px;
+//   }
+
+//   .platform {
+//     position: absolute;
+//     bottom: 0;
+//     left: 50%;
+//     transform: translate(-50%);
+//     width: 200px;
+//     height: 50px;
+//     border-radius: 50%;
+//     background-color: var(--mainBlueColor);
+//   }
+
+//   .ball {
+//     position: absolute;
+//     bottom: 90;
+//     left: 50%;
+//     transform: translate(-50%);
+
+//     width: 70px;
+//     height: 70px;
+//     background: #CC3F85;
+//     border-radius: 100%;
+//     animation: dws-bounce 2s linear infinite alternate;
+//   }
+
+//   @keyframes dws-bounce {
+//     0% { bottom: 70vh; }
+//     92% { bottom:0; width:70; height:70px; background: #CC3F85;}
+//     96% { bottom:0; width:75px; height:50px; background: #CC3F85;}
+//     100% { bottom:0; width:70px; height:70px; }
+//   }
+// }
+

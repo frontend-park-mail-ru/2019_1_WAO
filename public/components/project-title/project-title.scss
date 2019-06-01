@@ -1,0 +1,44 @@
+@import '../common/vars.css';
+
+.project {
+  position: fixed;
+  left: 50%;
+  z-index: -1;
+  font-weight: bold;
+  @media (max-width: 1200px) {
+    bottom: 1%;
+    font-size: 9vw;
+  }
+
+  @media (min-width: 1200px) {
+    top: 2%;
+    font-size: 100px;
+  }
+
+  transform: translate(-50%);
+  // background: linear-gradient(to right, #FFF 10%, #D55597 20%, #FFF 30%);
+  background: linear-gradient(to right, #FFF 10%, var(--mainBlueColor) 20%, #FFF 30%);
+  background-size: 200% auto; 
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shine 6s linear infinite;
+  // animation: shine 6s linear infinite,
+  //            shiver 0.1s linear infinite;
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+  @keyframes shiver {
+    0% {
+      transform: translate(-50.3%);
+    }
+    100% {
+      transform: translate(-50%);
+    }
+  }
+}

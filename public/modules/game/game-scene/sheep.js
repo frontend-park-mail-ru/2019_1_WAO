@@ -3,7 +3,6 @@
 export default class Sheep extends Figure {
   constructor(ctx, pic) {
     super(ctx);
-    this.rotation = 0;
     this.width = 50;
     this.height = 40;
     this.pic = pic;
@@ -15,7 +14,9 @@ export default class Sheep extends Figure {
   draw() {
     const { ctx } = this;
     ctx.beginPath();
-    ctx.drawImage(this.pic, -this.width, -this.height, this.width, this.height);
+    ctx.drawImage(this.pic, //this.animationStep * this.width, 0, this.width, this.height,
+      -this.width, -this.height, this.width, this.height); // Основное описание картинки без смещения
+      
     ctx.closePath();
     ctx.fill();
   }
@@ -24,6 +25,15 @@ export default class Sheep extends Figure {
     const { ctx } = this;
 
     ctx.translate(this.x, this.y);
-    // ctx.fillStyle = this.fillStyle;
+
+    // switch (this.animationState) {
+    //   case 'jumped':
+    //     this.animationStep = 1;
+    //     break;
+    
+    //   default:
+    //     this.animationStep = 0;
+    //     break;
+    // }
   }
 }

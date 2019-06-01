@@ -3,6 +3,7 @@ import Game from '../modules/game/game';
 import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
 import BasePresenter from './BasePresenter';
+// import Loader from '../components/loader/loader';
 
 /**
  * Представитель Игры
@@ -19,6 +20,7 @@ export default class OfflineGamePresenter extends BasePresenter {
     const eventBus = new EventBus();
     const view = new GameView(appEl, eventBus);
     super(view, {}, eventBus);
+    // this.appEl = appEl;
 
     GlobalBus.on('gap_changed', (gap) => {
       if (gap >= 100) {
@@ -36,6 +38,9 @@ export default class OfflineGamePresenter extends BasePresenter {
     this.audio = new Audio('./sounds/media1.mp3');
     this.audio.play();
     this.view.render();
+    // this.loader.show();
+    // this.loader = new Loader(this.appEl);
+
     const [bar1] = document.getElementsByClassName('game-progress__good');
     const [bar2] = document.getElementsByClassName('game-progress__bad');
     bar1.style.setProperty('display', 'none', 'important');

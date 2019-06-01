@@ -3,6 +3,8 @@ export default class Figure {
     this.ctx = ctx;
     this.x = 0;
     this.y = 0;
+    this.animationState = '';
+    this.animationStep = 0;
   }
 
   render() {
