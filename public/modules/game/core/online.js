@@ -167,11 +167,11 @@ export default class OnlineGame extends GameCore {
         this.state.newPlates = {};
       }
       this.state = this.physics.engine();
-      console.log(`Player 0 y: ${ this.state.players[0].y }, dy: ${ this.state.players[0].dy };\n
-      Player 1 y: ${ this.state.players[1].y }, dy: ${ this.state.players[1].dy };`);
+      console.log(`Player 0 y: ${this.state.players[0].y}, dy: ${this.state.players[0].dy};\n
+      Player 1 y: ${this.state.players[1].y}, dy: ${this.state.players[1].dy};`);
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+      GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
       this.state.commands = [];
     }
     // if (this.state.players[0].y - this.state.players[0].height > this.settings.map.canvasHeight) {
@@ -217,7 +217,7 @@ export default class OnlineGame extends GameCore {
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+      GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
       this.state.commands = [];
 
       // this.scene.setState(this.state);
@@ -257,7 +257,7 @@ export default class OnlineGame extends GameCore {
       this.state = this.physics.engine();
       gameBus.trigger('state_changed', this.state);
       this.score.renderScore();
-      GlobalBus.trigger('gap_changed', (this.state.players[0] - this.state.players[1]) / 1400 * 100);
+      GlobalBus.trigger('gap_changed', (this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
       this.state.commands = [];
 
       // this.scene.setState(this.state);
