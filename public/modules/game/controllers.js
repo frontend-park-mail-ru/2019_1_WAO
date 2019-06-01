@@ -75,7 +75,7 @@ export default class GameControllers {
    * @returns {*}
    */
   diff() {
-    console.log('Diff say: ', this.previous, ' ', this.keys);
+    // console.log('Diff say: ', this.previous, ' ', this.keys);
     let allkeys = [];
     // allkeys.push.apply(allkeys, Object.keys(this.previous)); // передает все предыдущие кнопки в allkeys
     // allkeys.push.apply(allkeys, Object.keys(this.keys)); // передает все keys кнопки в allkeys

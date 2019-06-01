@@ -16,7 +16,7 @@ export default class Grass extends Figure {
   draw() {
     const { ctx } = this;
     ctx.beginPath();
-    console.log(this.pic.width, this.pic.height, this.pic.naturalWidth, this.pic.naturalHeight);
+    // console.log(this.pic.width, this.pic.height, this.pic.naturalWidth, this.pic.naturalHeight);
     ctx.drawImage(this.pic, /*this.animationStep * this.width*/0, 0, this.pic.naturalWidth, this.pic.naturalHeight,
       -this.width/2, -this.height, this.width, this.height); // Основное описание картинки без смещения
       
