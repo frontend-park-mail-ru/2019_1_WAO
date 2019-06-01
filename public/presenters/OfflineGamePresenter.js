@@ -1,4 +1,4 @@
-import { EventBus, GlobalBus } from '../modules/eventbus';
+import { EventBus } from '../modules/eventbus';
 import Game from '../modules/game/game';
 import { GAME_MODES } from '../modules/game/modes';
 import GameView from '../views/GameView';
@@ -37,7 +37,6 @@ export default class OfflineGamePresenter extends BasePresenter {
   call() {
     let rand = 0.5 + 3 * Math.random();
     rand = Math.round(rand);
-
     this.audio = new Audio(`./sounds/media${rand}.mp3`);
     this.audio.play();
     this.view.render();
