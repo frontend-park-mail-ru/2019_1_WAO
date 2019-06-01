@@ -31,10 +31,16 @@ export default class OnlineGamePresenter extends BasePresenter {
     GlobalBus.on('gap_changed', (gap) => {
       console.log('gap_changed', gap);
       if (gap >= 0) {
+        if (gap > 100) {
+          gap = 100;
+        }
         document.documentElement.style.setProperty('--barGood', `${gap}%`);
         document.documentElement.style.setProperty('--barBad', '0%');
       } else {
         gap *= -1;
+        if (gap > 100) {
+          gap = 100;
+        }
         document.documentElement.style.setProperty('--barGood', '0%');
         document.documentElement.style.setProperty('--barBad', `${gap}%`);
       }
