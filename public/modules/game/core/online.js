@@ -114,9 +114,11 @@ export default class OnlineGame extends GameCore {
           });
           break;
         case 'lose':
+          console.log('lose');
           this.scene.deletePlayer(msg.payload.idP);
           break;
         case 'endgame':
+          console.log('endgame');
           GlobalBus.trigger('game_score', {
             score: msg.payload.score,
           });
@@ -124,6 +126,7 @@ export default class OnlineGame extends GameCore {
           gameBus.trigger('game close');
           break;
         case 'win':
+          console.log('win');
           GlobalBus.trigger('game_score', {
             score: msg.payload.score,
             won: 'Вы победили',
