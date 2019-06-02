@@ -1,8 +1,26 @@
 # WAO JUMP
-Любишь простые геометрические фигуры и прыгать? Эта игра для тебя!
+Любишь прыгать? Эта игра для тебя!
 ![](game.jpg)
 
 [Играть сюда](https://waojump.tk/)
+
+## Фичи:
+* Real-time online
+* Virtual canvas
+
+## Технологии:
+* SPA
+* HTML5, CSS3, JS6+
+* SASS, PostCSS
+* Babel
+* webpack
+* nodejs
+* handlebars
+* Travis CI
+* NGINX (+ http2 и ssl)
+* Service Worker
+* brotli (сжатие)
+* Адаптивный дизайн
 
 ## Разработчики
 * [Гурин Владислав](https://github.com/Vlad104)

@@ -22,7 +22,7 @@ const viewData = {
     },
     {
       role: 'Ментор',
-      image: 'https://www.hawksearch.com/wp-content/uploads/Developer.png',
+      image: 'https://pp.userapi.com/c844723/v844723554/13c384/wEBB6qM2ICE.jpg?ava=1',
       name: 'Дима',
     },
     {

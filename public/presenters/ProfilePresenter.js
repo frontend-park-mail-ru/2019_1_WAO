@@ -27,12 +27,13 @@ export default class ProfilePresenter extends BasePresenter {
 
     super(view, model, eventBus);
 
-    this.eventBus.on('call', () => {
-      if (User.isAuth) {
-        this.eventBus.trigger('data_req');
-      } else {
-        GlobalBus.trigger('auth_bad');
-      }
+    this.eventBus.on('call', () => {      
+      this.eventBus.trigger('data_req');
+      // if (User.isAuth) {
+      //   this.eventBus.trigger('data_req');
+      // } else {
+      //   GlobalBus.trigger('auth_bad');
+      // }
     });
   }
 }

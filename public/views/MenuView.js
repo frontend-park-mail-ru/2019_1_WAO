@@ -1,6 +1,7 @@
 import BaseView from './BaseView';
 import template from '../components/menu/menu.hbs';
 import '../components/menu/menu.scss';
+import '../components/project-title/project-title.scss';
 
 const viewData = {
   menuButtons: [
@@ -32,6 +33,11 @@ const viewData = {
     {
       text: 'Об игре',
       href: '/about',
+      public: true,
+    },
+    {
+      text: 'Презентация',
+      href: '/show',
       public: true,
     },
   ],

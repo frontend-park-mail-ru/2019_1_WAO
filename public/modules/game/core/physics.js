@@ -64,8 +64,10 @@ export default class Fizic {
       }
       
       // Если был включен счетчик очков, то передать в него пластину от которой будем прыгать
-      if (this.score) {
-        this.score.giveCurrentPlate(plate.idPhys);
+      if (player.idP === this.state.myIdP) {
+        if (this.score) {
+          this.score.giveCurrentPlate(plate.idPhys);
+        }
       }
       player.y = plate.y - 15;
       this.jump(player);
@@ -230,7 +232,7 @@ export default class Fizic {
       this.move(command);
     });
     if (Object.values(this.state.plates)[0].dy !== 0) {
-      this.scrollMap(this.state.commands[0].delay);
+      this.scrollMap(this.state.commands[this.state.myCommandIndex].delay);
     }
     // Отладка
     // if (this.state.otladka === true) {
@@ -242,7 +244,7 @@ export default class Fizic {
     //   }
     //   this.state.otladka = false;
     // }
-    this.state.commands = [];
+    // this.state.commands = [];
     return this.state;
   }
 }
