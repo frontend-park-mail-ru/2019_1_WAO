@@ -6,6 +6,7 @@
 
 ## Фичи:
 * Real-time online
+* Virtual canvas
 
 ## Технологии:
 * SPA
