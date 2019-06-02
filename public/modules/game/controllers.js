@@ -1,9 +1,12 @@
 /* eslint-disable max-len */
+import { gameBus } from '../eventbus';
+
 export default class GameControllers {
   constructor(root) {
     this.root = root;
     this.previous = {};
     this.keys = {};
+    this.controllersLoopIntervalId = null;
 
     this.onPress = this.keyHandler.bind(this, 'press');
     this.onUp = this.keyHandler.bind(this, 'up');
@@ -36,6 +39,30 @@ export default class GameControllers {
     // }, false);
     document.addEventListener('keydown', this.onPress);
     document.addEventListener('keyup', this.onUp);
+    const [canvas] = document.getElementsByClassName('game-view__canvas');
+    canvas.addEventListener('touchstart', this.touchLoop);
+    canvas.addEventListener('touchend', this.touchLoopEnd);
+  }
+
+  touchLoopEnd() {
+    clearInterval(this.controllersLoopIntervalId);
+  }
+
+  touchLoop(event) {
+    // console.log(event);
+    this.controllersLoopIntervalId = setInterval(() => {
+      if (event.touches[0].pageX < window.innerWidth / 2) {
+        gameBus.trigger('left_pressed', {
+          arrowleft: true,
+          arrowright: false,
+        });
+      } else {
+        gameBus.trigger('right_pressed', {
+          arrowleft: false,
+          arrowright: true,
+        });
+      }
+    }, 10);
   }
 
   /**
