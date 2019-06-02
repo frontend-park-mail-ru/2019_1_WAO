@@ -30,7 +30,7 @@ export default class OnlineGamePresenter extends BasePresenter {
     this.soundActive = true;
 
     GlobalBus.on('gap_changed', (gap) => {
-      console.log('gap_changed', gap);
+      // console.log('gap_changed', gap);
       if (gap >= 0) {
         if (gap > 100) {
           gap = 100;
