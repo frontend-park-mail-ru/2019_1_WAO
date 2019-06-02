@@ -41,6 +41,9 @@ export default class OnlineGame extends GameCore {
     // Для счета
     this.meScore = 0;
     this.start.myIdP = 0;
+    this.physics.setState(this.state);
+    this.score.setState(this.state);
+    this.animation.getStateAndIndex(this.state, this.scene.giveIndex());
 
     this.state.commands = [];
     this.socket = new WebSocket(`${settings.game.prefix}://${settings.game.address}/websocket`);
