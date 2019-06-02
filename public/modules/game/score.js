@@ -34,6 +34,10 @@ export default class Score {
     return this.score.score;
   }
 
+  getScore() {
+    return this.scoreCounter();
+  }
+
   renderScore() {
     this.scorePlace.text = this.scoreCounter();
   }
