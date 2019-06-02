@@ -117,6 +117,8 @@ export default class OnlineGame extends GameCore {
         case 'lose':
           console.log('lose');
           this.scene.deletePlayer(msg.payload.idP);
+          console.log(this.state.players);
+          console.log(this.start.myIdP);
           if (this.state.players[this.start.myIdP].y - this.state.players[this.start.myIdP].height > this.settings.map.canvasHeight) {
             GlobalBus.trigger('game_score', {
               score: this.state.score.getScore(),
