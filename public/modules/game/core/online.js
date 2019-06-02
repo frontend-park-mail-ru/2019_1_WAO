@@ -125,13 +125,13 @@ export default class OnlineGame extends GameCore {
           console.log(this.start.myIdP);
           if (this.state.players[this.start.myIdP].y - this.state.players[this.start.myIdP].height > this.settings.map.canvasHeight) {
             GlobalBus.trigger('game_score', {
-              score: this.state.score.getScore(),
+              score: this.score.getScore(),
               won: 'Спасибо за игру. Вы проиграли',
             });
             this.hardcode = !this.hardcode;
           } else {
             GlobalBus.trigger('game_score', {
-              score: this.state.score.getScore(),
+              score: this.score.getScore(),
               won: 'Спасибо за игру. Вы выиграли',
             });
             this.hardcode = !this.hardcode;
