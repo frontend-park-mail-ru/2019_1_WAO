@@ -117,19 +117,19 @@ export default class OnlineGame extends GameCore {
         case 'lose':
           console.log('lose');
           this.scene.deletePlayer(msg.payload.idP);
-          if (!this.hardcode) {
-            GlobalBus.trigger('game_score', {
-              score: msg.payload.score,
-              won: 'Вы проиграли',
-            });
-            this.hardcode = !this.hardcode;
-          } else {
-            GlobalBus.trigger('game_score', {
-              score: msg.payload.score,
-              won: 'Вы выиграли',
-            });
-            this.hardcode = !this.hardcode;
-          }
+          // if (!this.hardcode) {
+          //   GlobalBus.trigger('game_score', {
+          //     score: msg.payload.score,
+          //     won: 'Вы проиграли',
+          //   });
+          //   this.hardcode = !this.hardcode;
+          // } else {
+          //   GlobalBus.trigger('game_score', {
+          //     score: msg.payload.score,
+          //     won: 'Вы выиграли',
+          //   });
+          //   this.hardcode = !this.hardcode;
+          // }
           break;
         case 'endgame':
           console.log('endgame');
