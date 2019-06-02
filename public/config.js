@@ -4,10 +4,10 @@ const settings = {
     address: '127.0.0.1:3000',
   },
   backend: {
-    address: '192.168.200.86:3000',
+    address: '192.168.1.64:3000',
   },
   game: {
-    address: '192.168.200.34:8080',
+    address: '192.168.1.64:8080',
     prefix: 'ws',
   },
 };

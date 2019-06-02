@@ -86,7 +86,7 @@ export default class OnlineGame extends GameCore {
           this.physics.setState(this.state);
           this.score.setState(this.state);
           this.animation.getStateAndIndex(this.state, this.scene.giveIndex());
-          GlobalBus.trigger('gap_changed', this.progressBarCounter());
+          GlobalBus.trigger('gap_changed', 0);
           setTimeout(
             () => {
               gameBus.trigger('game_start', this.state);
