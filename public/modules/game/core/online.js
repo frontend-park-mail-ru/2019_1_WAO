@@ -140,7 +140,9 @@ export default class OnlineGame extends GameCore {
     });
 
     this.socket.onerror = function (error) {
-      alert(`Ошибка ${error.message}`);
+      // alert(`Ошибка ${error.message}`);
+      console.log(`Ошибка ${error.message}`);
+      GlobalBus.trigger('auth_out');
     };
   }
 
@@ -161,7 +163,7 @@ export default class OnlineGame extends GameCore {
 
   progressBarCounter() {
     if (this.state.myIdP === 0) {
-      console.log((this.state.players[1].y - this.state.players[0].y) / 1400 * 100);
+      // console.log((this.state.players[1].y - this.state.players[0].y) / 1400 * 100);
       return (this.state.players[1].y - this.state.players[0].y) / 1400 * 100;
     }
     console.log((this.state.players[0].y - this.state.players[1].y) / 1400 * 100);

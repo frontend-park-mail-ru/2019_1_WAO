@@ -21,7 +21,7 @@ export default class ResultBoardPresenter extends BasePresenter {
     super(view, {}, eventBus);
 
     this.eventBus.on('call', (data) => {
-      console.log(data);
+      // console.log(data);
       this.eventBus.trigger('show', data);
     });
   }
