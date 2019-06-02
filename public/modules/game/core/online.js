@@ -40,6 +40,7 @@ export default class OnlineGame extends GameCore {
     this.state.newPlates = {};
     // Для счета
     this.meScore = 0;
+    this.start.myIdP = 0;
 
     this.state.commands = [];
     this.socket = new WebSocket(`${settings.game.prefix}://${settings.game.address}/websocket`);
