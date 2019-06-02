@@ -15,6 +15,7 @@ export default class OnlineGame extends GameCore {
     super(controller, scene);
     // Основная шина для общения с другими классами
     // physics.js & index.js
+    this.hardcode = false;
     this.state = {};
     this.state.otladka = true;
     // this.state.players = [{}];
@@ -116,6 +117,19 @@ export default class OnlineGame extends GameCore {
         case 'lose':
           console.log('lose');
           this.scene.deletePlayer(msg.payload.idP);
+          if (!this.hardcode) {
+            GlobalBus.trigger('game_score', {
+              score: msg.payload.score,
+              won: 'Вы проиграли',
+            });
+            this.hardcode = !this.hardcode;
+          } else {
+            GlobalBus.trigger('game_score', {
+              score: msg.payload.score,
+              won: 'Вы выиграли',
+            });
+            this.hardcode = !this.hardcode;
+          }
           break;
         case 'endgame':
           console.log('endgame');
@@ -166,7 +180,7 @@ export default class OnlineGame extends GameCore {
       // console.log((this.state.players[1].y - this.state.players[0].y) / 1400 * 100);
       return (this.state.players[1].y - this.state.players[0].y) / 1400 * 100;
     }
-    console.log((this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
+    // console.log((this.state.players[0].y - this.state.players[1].y) / 1400 * 100);
     return (this.state.players[0].y - this.state.players[1].y) / 1400 * 100;
   }
 
