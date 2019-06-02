@@ -6,7 +6,11 @@ const viewData = {
   // score: 718,
   buttons: [
     {
-      text: 'Можем повторить',
+      text: 'Можем повторить в сети',
+      href: '/gameonline',
+    },
+    {
+      text: 'Можем повторить локально',
       href: '/gameoffline',
     },
     {
