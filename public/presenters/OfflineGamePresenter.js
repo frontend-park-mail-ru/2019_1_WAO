@@ -73,7 +73,8 @@ export default class OfflineGamePresenter extends BasePresenter {
     const [block] = document.getElementsByClassName('block-content');
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
       console.log('mobile');
-      block.style.display = 'block';
+      // block.style.display = 'block';
+      block.style.display = 'none';
     } else {
       console.log('desktop');
       block.style.display = 'none';
