@@ -122,7 +122,9 @@ export default class OnlineGame extends GameCore {
           gameBus.trigger('game close');
           break;
         case 'win':
-          GlobalBus.trigger('game_score', { score: msg.payload.score });
+          GlobalBus.trigger('result_score', { 
+            score: msg.payload.score,
+            won: 'Вы победили' });
           gameBus.trigger('game_finish');
           gameBus.trigger('game close');
           break;
